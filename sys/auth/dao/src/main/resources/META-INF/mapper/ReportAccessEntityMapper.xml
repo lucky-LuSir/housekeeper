@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.auth.entity.ReportAccessEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.sys.auth.entity.ReportAccessEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_sys_report_access
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.userCode != null and i.userCode != ''">
+                    user_code,
+                </if>
+                <if test="i.deptCode != null and i.deptCode!=''">
+                    dept_code,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.userCode != null and i.userCode != ''">
+                    #{i.userCode},
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    #{i.deptCode},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+
+    <!-- 批量更新数据信息 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.auth.entity.ReportAccessEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_sys_report_access
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.userCode != null and i.userCode != ''">
+                    user_code = #{i.userCode},
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code = #{i.deptCode},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                AND user_code = #{i.userCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!--通过角色Code删除权限-->
+    <delete id="deleteByUserCode" parameterType="string">
+        DELETE FROM t_hkp_sys_report_access WHERE user_code = #{userCode}
+    </delete>
+
+    <!--通过角色Code删除权限-->
+    <delete id="deleteAllByUserCodes" parameterType="java.util.List">
+        DELETE FROM t_hkp_sys_report_access WHERE user_code IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_sys_report_access WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="userCode != null and userCode !=''">
+                AND user_code = #{userCode}
+            </if>
+            <if test="userCodes != null">
+                <choose>
+                    <when test="_userCodes != null">
+                        AND user_code IN (${_userCodes})
+                    </when>
+                    <otherwise>
+                        AND user_code IN
+                        <foreach collection="userCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="userName != null and userName !=''">
+                AND user_name like '%'||#{userName}||'%'
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.auth.entity.RoleEntity">
+        SELECT r.*, d.dept_name, u.user_name FROM t_hkp_sys_report_access r
+        left join t_hkp_sys_user_user u on r.user_code = u.user_code
+        left join t_hkp_hrm_org_dept d on d.dept_code = r.dept_code
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_sys_auth_role
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.auth.entity.RoleEntity">
+        SELECT * FROM (
+            select r.*, d.dept_name, u.user_name from t_hkp_sys_report_access r
+            left join t_hkp_sys_user_user u on u.user_code = r.user_code
+            left join t_hkp_hrm_org_dept d on d.dept_code = r.dept_code
+        ) TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) FROM (
+            select r.*, d.dept_name, u.user_name from t_hkp_sys_report_access r
+            left join t_hkp_sys_user_user u on u.user_code = r.user_code
+            left join t_hkp_hrm_org_dept d on d.dept_code = r.dept_code
+        ) TP
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询用户权限-->
+    <select id="selectAccess" parameterType="string" resultType="java.lang.String">
+        SELECT
+            dept_code
+        FROM
+            t_hkp_sys_report_access
+        where user_code = #{userCode}
+    </select>
+
+    <!-- 查询角色列表，通过(用户)关联的菜单-->
+    <select id="selectDeptAccess" parameterType="java.util.Map" resultMap="baseResultMap">
+        SELECT
+            dept_code,dept_name
+        FROM
+            t_hkp_hrm_org_dept
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="deleteTimeStart != null">
+                AND (delete_time <![CDATA[ >= ]]> #{deleteTimeStart} or delete_time is null)
+            </if>
+            <if test="deleteTimeEnd != null">
+                AND (delete_time <![CDATA[ <= ]]> #{deleteTimeEnd} or delete_time is null)
+            </if>
+            AND dept_level not in ('4','5')
+        </trim>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+</mapper>

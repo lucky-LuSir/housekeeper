@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<timestamp key="byDay" datePattern="yyyy_MM_dd" />
+	<!-- Output to Console -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
+				%msg%n</pattern>
+		</layout>
+	</appender>
+	<!-- 文件输出日志 (文件大小策略进行文件输出，超过指定大小对文件备份) -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>log-hkp-job/msg-${byDay}.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>log-hkp-job/msg-${byDay}.log.%i.bak</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>12</MaxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100MB</MaxFileSize>
+		</triggeringPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
+				%msg%n</pattern>
+		</layout>
+	</appender>
+	<!-- FILE-ERROR -->
+	<appender name="FILE-ERROR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<OnMismatch>DENY</OnMismatch>
+			<OnMatch>ACCEPT</OnMatch>
+		</filter>
+		<File>log-hkp-job/err-${byDay}.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>log-hkp-job/err-${byDay}.log.%i.bak</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>3</MaxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100MB</MaxFileSize>
+		</triggeringPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
+				%msg%n</pattern>
+		</layout>
+	</appender>
+	<!-- Output to File -->
+	<!-- <appender name="FILE-HTML" class="ch.qos.logback.core.FileAppender">
+		<file>log/jgm-${byDay}.log.html</file>
+		<layout class="ch.qos.logback.classic.html.HTMLLayout">
+			<pattern>%date%level%thread%10logger%file%line%msg</pattern>
+		</layout>
+	</appender> -->
+	<!-- Output by Email -->
+	<!-- <appender name="Email" class="ch.qos.logback.classic.net.SMTPAppender">
+		<SMTPHost>stmp host name</SMTPHost> <To>Email Address</To> <To>Email Address</To>
+		<From>Email Address</From> <Subject>TESTING Email Function: %logger{20} -
+		%m</Subject> <layout class="ch.qos.logback.classic.html.HTMLLayout"> <pattern>%date%level%thread%10logger%file%line%msg</pattern>
+		</layout> </appender> -->
+	<!-- Output to Database -->
+	<!-- <appender name="DB" class="ch.qos.logback.classic.db.DBAppender"> <connectionSource
+		class="ch.qos.logback.core.db.DriverManagerConnectionSource"> <driverClass>com.mysql.jdbc.Driver</driverClass>
+		<url>jdbc:mysql://localhost:3306/test</url> <user>root</user> <password>trend_dev</password>
+		</connectionSource> </appender> -->
+	<logger name="com.ibatis" level="DEBUG" />
+	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
+	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" />
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate"
+		level="DEBUG" />
+	<logger name="java.sql.Connection" level="DEBUG" />
+	<logger name="java.sql.Statement" level="DEBUG" />
+	<logger name="java.sql.PreparedStatement" level="DEBUG" />
+	<logger name="com.clztech" level="DEBUG" />
+
+	<root level="DEBUG">
+		<appender-ref ref="CONSOLE" />
+		<!-- <appender-ref ref="LogBuffered" /> -->
+		<appender-ref ref="FILE" />
+		<appender-ref ref="FILE-ERROR" />
+		<!-- <appender-ref ref="Email"/> <appender-ref ref="DB"/> -->
+	</root>
+</configuration>

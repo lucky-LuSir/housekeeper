@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.CustomerApplyHidOrPriEntity">
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerApplyHidOrPriEntity">
+
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cus_apply_hop_code" property="cusApplyHopCode" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="failure_reasons" property="failureReasons" jdbcType="VARCHAR"/>
+
+        <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="cus_phone" property="cusPhone" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="products" property="products" jdbcType="VARCHAR"/>
+        <result column="cus_status" property="cusStatus" jdbcType="VARCHAR"/>
+        <result column="cus_type" property="cusType" jdbcType="VARCHAR"/>
+        <result column="daikan" property="daikan" jdbcType="VARCHAR"/>
+        <result column="dianhua" property="dianhua" jdbcType="VARCHAR"/>
+
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+        <result column="failure_reasons" property="failureReasons" jdbcType="VARCHAR"/>
+        <result column="user_img" property="userImg" jdbcType="VARCHAR"/>
+        <result column="open_flag" property="openFlag" jdbcType="BOOLEAN"/>
+        <result column="cus_sex" property="cusSex" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+
+        <collection property="customerAreaEntityList" columnPrefix="a_"
+                    javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.CustomerAreaEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="region" property="region" jdbcType="VARCHAR"/>
+            <result column="street" property="street" jdbcType="VARCHAR"/>
+            <result column="community" property="community" jdbcType="VARCHAR"/>
+            <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+            <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+            <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+            <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+            <result column="community_name" property="communityName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_crm_customer_apply_hid_or_pri
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.cusApplyHopCode != null and i.cusApplyHopCode != ''">
+                    cus_apply_hop_code,
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode!=''">
+                    owner_code,
+                </if>
+                <if test="i.type != null and i.type!=''">
+                    type,
+                </if>
+                <if test="i.checkCode != null and i.checkCode!=''">
+                    check_code,
+                </if>
+                <if test="i.checkName != null and i.checkName!=''">
+                    check_name,
+                </if>
+                <if test="i.status !=null and i.status!=''">
+                    status,
+                </if>
+                <if test="i.createCode != null and i.createCode!=''">
+                    create_code,
+                </if>
+                <if test="i.createName != null and i.createName!=''">
+                    create_name,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode!=''">
+                    create_dept_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.reason !=null and i.reason !=''">
+                    reason,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.cusApplyHopCode != null and i.cusApplyHopCode != ''">
+                    #{i.cusApplyHopCode},
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode!=''">
+                    #{i.ownerCode},
+                </if>
+                <if test="i.type != null and i.type!=''">
+                    #{i.type},
+                </if>
+                <if test="i.checkCode != null and i.checkCode!=''">
+                    #{i.checkCode},
+                </if>
+                <if test="i.checkName != null and i.checkName!=''">
+                    #{i.checkName},
+                </if>
+                <if test="i.status !=null and i.status!=''">
+                    #{i.status},
+                </if>
+                <if test="i.createCode != null and i.createCode!=''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName!=''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode!=''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.reason !=null and i.reason !=''">
+                    #{i.reason},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <update id="batchUpdate"
+            parameterType="com.kfwy.hkp.crm.customer.entity.CustomerApplyHidOrPriEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_crm_customer_apply_hid_or_pri
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.status != null and i.status != ''">
+                    status=#{i.status},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+                <if test="i.failureReasons != null and i.failureReasons != ''">
+                    failure_reasons=#{i.failureReasons},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="ownerCode != null and ownerCode != ''">
+                AND owner_code = #{ownerCode}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="type!=null">
+                AND type = #{type}
+            </if>
+            <if test="cusPhone != null and cusPhone != ''">
+                AND cus_phone = #{cusPhone}
+            </if>
+            <if test="createCode != null and createCode != ''">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createName != null and createName != ''">
+                AND create_name = #{createName}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="createTime != null">
+                AND create_time <![CDATA[ = ]]> #{createTime}
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerApplyHidOrPriEntity">
+select * from (
+        select d.*,
+        ca.province AS a_province,
+        ca.city AS a_city,
+        ca.region AS a_region,
+        ca.street AS a_street,
+        ca.community AS a_community,
+        ca.province_name AS a_province_name,
+        ca.city_name AS a_city_name,
+        ca.region_name AS a_region_name,
+        ca.street_name AS a_street_name,
+        ca.community_name AS a_community_name
+        from (
+            select * from (
+        select app.*,
+        cus.cus_name,
+        cus.cus_phone,
+        cus.industry,
+        cus.products,
+        cus.cus_status,
+        cus.cus_type,
+        cus.open_flag,
+        cus.cus_sex,
+        us.user_img,
+        (select count(*) from t_hkp_crm_customer_followup upp where upp.followup_type='1' and
+        upp.cus_code=app.owner_code) daikan,
+        (select count(*) from t_hkp_crm_customer_followup upp where upp.followup_type='2' and
+        upp.cus_code=app.owner_code) dianhua
+        from t_hkp_crm_customer_apply_hid_or_pri app
+        left join t_hkp_crm_customer cus on app.owner_code=cus.cus_code
+        left join t_hkp_sys_user_user us on us.user_code=app.create_code
+        )oo
+            <include refid="selectSql"></include>
+           <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+                <if test="limit != null">
+                    limit #{limit}
+                </if>
+                <if test="offset != null">
+                    offset #{offset}
+                </if>
+        )d left join t_hkp_crm_customer_area ca on d.owner_code=ca.cus_code
+)de
+        <include refid="selectSql"></include>
+    </select>
+
+
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*) from (
+            select * from (
+                select app.*,cus.cus_phone from t_hkp_crm_customer_apply_hid_or_pri app
+                left join t_hkp_crm_customer cus on app.owner_code=cus.cus_code
+            )p
+        <include refid="selectSql"/>
+        )d
+    </select>
+
+
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerApplyHidOrPriEntity">
+        select * from t_hkp_crm_customer_apply_hid_or_pri
+        <include refid="selectSql"></include>
+    </select>
+
+
+
+</mapper>

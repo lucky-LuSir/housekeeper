@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exportFile>
+    <fileName>invoiceApplyExport</fileName>
+    <!--导出模板-->
+    <exportType>0</exportType>
+    <cell>
+        <title>订单编号</title>
+        <alias>orderCode</alias>
+    </cell>
+
+    <cell>
+        <title>订单开票编号</title>
+        <alias>orderInvoiceCode</alias>
+    </cell>
+
+    <cell>
+        <title>大区编码</title>
+        <alias>parentDeptCode</alias>
+    </cell>
+    <cell>
+        <title>大区名称</title>
+        <alias>parentDeptName</alias>
+    </cell>
+    <cell>
+        <title>分部编码</title>
+        <alias>deptCode</alias>
+    </cell>
+    <cell>
+        <title>分部名称</title>
+        <alias>deptName</alias>
+    </cell>
+    <cell>
+        <title>申请人编码</title>
+        <alias>applyCode</alias>
+    </cell>
+    <cell>
+        <title>申请人名称</title>
+        <alias>applyName</alias>
+    </cell>
+    <cell>
+        <title>公司名称</title>
+        <alias>cpyName</alias>
+    </cell>
+
+    <cell>
+        <title>税号</title>
+        <alias>creditCode</alias>
+    </cell>
+
+    <cell>
+        <title>地址</title>
+        <alias>address</alias>
+    </cell>
+
+    <cell>
+        <title>电话</title>
+        <alias>phone</alias>
+    </cell>
+
+    <cell>
+        <title>银行支行</title>
+        <alias>bankBranch</alias>
+    </cell>
+
+    <cell>
+        <title>账号</title>
+        <alias>bankCard</alias>
+    </cell>
+
+    <cell>
+        <title>含税金额(开票金额)</title>
+        <alias>invoiceTotalPrice</alias>
+    </cell>
+
+    <cell>
+        <title>不含税金额</title>
+        <alias>invoiceUnitAmount</alias>
+    </cell>
+
+    <cell>
+        <title>税率</title>
+        <alias>invoiceTaxRate</alias>
+    </cell>
+
+    <cell>
+        <title>税金</title>
+        <alias>invoiceTax</alias>
+    </cell>
+    <cell>
+        <title>发票类型</title>
+        <alias>invoiceTypeName</alias>
+    </cell>
+    <cell>
+        <title>备注</title>
+        <alias>remark</alias>
+    </cell>
+    <cell>
+        <title>开票申请日期</title>
+        <alias>invoiceTime</alias>
+    </cell>
+    <cell>
+        <title>收件人名称</title>
+        <alias>consigneeName</alias>
+    </cell>
+
+    <cell>
+        <title>收件人电话</title>
+        <alias>consigneePhone</alias>
+    </cell>
+
+    <cell>
+        <title>收件人地址</title>
+        <alias>consigneeAddress</alias>
+    </cell>
+</exportFile>
+

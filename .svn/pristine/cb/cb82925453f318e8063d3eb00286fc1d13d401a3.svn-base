@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.ContractPeriodEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.ContractPeriodEntity">
+        <result column="contract_year" property="contractYear" jdbcType="VARCHAR"/>
+        <result column="contract_month" property="contractMonth" jdbcType="VARCHAR"/>
+        <result column="contract_num" property="contractNum" jdbcType="NUMERIC" javaType="int"/>
+    </resultMap>
+
+    <!-- 查询有效客户 -->
+    <select id="selectContractPeriodCus" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.ContractPeriodEntity">
+        select
+        count(*) as contract_num,
+        con.contract_year,
+        con.contract_month
+        from (
+        SELECT
+        to_char(contract_end_time, 'yyyy') as contract_year,
+
+        to_char(contract_end_time, 'MM') as contract_month
+        FROM
+        t_hkp_crm_customer
+        WHERE
+        is_deleted = FALSE
+        <if test="userCode != null and userCode!=''">
+            AND emp_code = #{userCode}
+        </if>
+        <if test="deptCodes != null">
+            <choose>
+                <when test="_deptCodes!= null">
+                    AND create_dept_code IN (${_deptCodes})
+                </when>
+                <otherwise>
+                    AND create_dept_code IN
+                    <foreach collection="deptCodes" item="i" open="(" separator=","
+                             close=")">
+                        #{i}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        and contract_end_time <![CDATA[ >= ]]>  #{startTime}
+        and contract_end_time<![CDATA[ < ]]>  #{endTime}
+        ) con
+        GROUP BY con.contract_year,con.contract_month
+        ORDER BY con.contract_year,con.contract_month
+    </select>
+
+
+    <select id="selectContractPeriodHos" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.ContractPeriodEntity">
+        select
+        count(*) as contract_num,
+        con.contract_year,
+        con.contract_month
+        from (
+        SELECT
+        to_char(lease_expiration, 'yyyy') as contract_year,
+
+        to_char(lease_expiration, 'MM') as contract_month
+        FROM
+        t_hkp_hos_house
+        WHERE
+        is_deleted = FALSE
+        <if test="userCode != null and userCode!=''">
+            AND emp_code = #{userCode}
+        </if>
+        <if test="deptCodes != null">
+            <choose>
+                <when test="_deptCodes != null">
+                    AND create_dept_code IN (${_deptCodes})
+                </when>
+                <otherwise>
+                    AND create_dept_code IN
+                    <foreach collection="deptCodes" item="i" open="(" separator=","
+                             close=")">
+                        #{i}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        and lease_expiration <![CDATA[ >= ]]>  #{startTime}
+        and lease_expiration<![CDATA[ < ]]>  #{endTime}
+        ) con
+        GROUP BY con.contract_year,con.contract_month
+        ORDER BY con.contract_year,con.contract_month
+    </select>
+
+
+</mapper>

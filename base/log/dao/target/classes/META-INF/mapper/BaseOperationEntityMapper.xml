@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfwy.hkp.log.entity.BaseOperationEntity">
+
+    <resultMap type="com.kfwy.hkp.log.entity.BaseOperationEntity" id="BaseOperationMap">
+        <result property="id" column="id" jdbcType="NUMERIC" javaType="long"/>
+        <result property="optName" column="opt_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="BOOLEAN"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="optCode" column="opt_code" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="optName != null and optName != ''">
+                and opt_name = #{optName}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="optCode != null and optCode != ''">
+                and opt_code = #{optCode}
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="allColumn">
+        id,opt_name, create_time, is_deleted, url, opt_code
+    </sql>
+
+    <select id="selectByMap" parameterType="map" resultMap="BaseOperationMap">
+        select
+        <include refid="allColumn"/>
+        from t_hkp_base_operation
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*) from (
+        select
+        <include refid="allColumn"/>
+        from t_hkp_base_operation
+        <include refid="selectSql"/>
+        ) count
+
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" parameterType="com.kfwy.hkp.log.entity.BaseOperationEntity" useGeneratedKeys="true">
+        insert into t_hkp_base_operation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="optName != null and optName != ''">
+                opt_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="url != null and url != ''">
+                url,
+            </if>
+            <if test="optCode != null and optCode != ''">
+                opt_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="optName != null and optName != ''">
+                #{optName},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+            <if test="url != null and url != ''">
+                #{url},
+            </if>
+            <if test="optCode != null and optCode != ''">
+                #{optCode},
+            </if>
+        </trim>
+    </insert>
+
+    <!--新增所有列-->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            insert into t_hkp_base_operation
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.id != null">
+                    id,
+                </if>
+                <if test="i.optName != null and i.optName != ''">
+                    opt_name,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.url != null and i.url != ''">
+                    url,
+                </if>
+                <if test="i.optCode != null and i.optCode != ''">
+                    opt_code,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.id != null">
+                    #{i.id},
+                </if>
+                <if test="i.optName != null and i.optName != ''">
+                    #{i.optName},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.url != null and i.url != ''">
+                    #{i.url},
+                </if>
+                <if test="i.optCode != null and i.optCode != ''">
+                    #{i.optCode},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.log.entity.BaseOperationEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_base_operation
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.id != null">
+                    id = #{i.id},
+                </if>
+                <if test="i.optName != null and i.optName != ''">
+                    opt_name = #{i.optName},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted},
+                </if>
+                <if test="i.url != null and i.url != ''">
+                    url = #{i.url},
+                </if>
+                <if test="i.optCode != null and i.optCode != ''">
+                    opt_code = #{i.optCode},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id!=null">
+                    id=#{i.id}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseOperationMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseOperationMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseOperationMap">
+        select
+        <include refid="allColumn"/>
+        from t_hkp_base_operation
+        <include refid="selectSql"></include>
+    </select>
+    <select id="findUrlsByOptCode" parameterType="string" resultType="string">
+        SELECT
+            DISTINCT url
+        FROM
+            t_hkp_base_operation
+        WHERE
+            opt_code=#{optCode}
+    </select>
+</mapper>

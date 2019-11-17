@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.CustomerUpdownEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerUpdownEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="cus_down_type" property="cusDownType" jdbcType="VARCHAR"/>
+        <result column="cus_updown_type" property="cusUpdownType" jdbcType="VARCHAR"/>
+        <result column="cus_down_reason" property="cusDownReason" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="region" property="region" jdbcType="VARCHAR"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+        <result column="deal_people" property="dealPeople" jdbcType="VARCHAR"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="cus_emp_code" property="cusEmpCode" jdbcType="VARCHAR"/>
+        <result column="cus_emp_name" property="cusEmpName" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="contract_start_time" property="contractStartTime" jdbcType="TIMESTAMP"/>
+        <result column="contract_end_time" property="contractEndTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_crm_customer_updown
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.cusCode != null and i.cusCode!=''">
+                    cus_code,
+                </if>
+                <if test="i.cusDownType != null and i.cusDownType!=''">
+                    cus_down_type,
+                </if>
+                <if test="i.cusUpdownType != null and i.cusUpdownType!=''">
+                    cus_updown_type,
+                </if>
+                <if test="i.cusDownReason != null and i.cusDownReason!=''">
+                    cus_down_reason,
+                </if>
+                <if test="i.province != null and i.province!=''">
+                    province,
+                </if>
+                <if test="i.city != null and i.city!=''">
+                    city,
+                </if>
+                <if test="i.region != null and i.region!=''">
+                    region,
+                </if>
+                <if test="i.provinceName != null and i.provinceName!=''">
+                    province_name,
+                </if>
+                <if test="i.cityName != null and i.cityName!=''">
+                    city_name,
+                </if>
+                <if test="i.regionName != null and i.regionName!=''">
+                    region_name,
+                </if>
+                <if test="i.dealPeople != null and i.dealPeople!=''">
+                    deal_people,
+                </if>
+                <if test="i.empCode != null and i.empCode!=''">
+                    emp_code,
+                </if>
+                <if test="i.empName != null and i.empName!=''">
+                    emp_name,
+                </if>
+                <if test="i.cusEmpCode != null and i.cusEmpCode!=''">
+                    cus_emp_code,
+                </if>
+                <if test="i.cusEmpName != null and i.cusEmpName!=''">
+                    cus_emp_name,
+                </if>
+                <if test="i.createCode != null and i.createCode!=''">
+                    create_code,
+                </if>
+                <if test="i.createName != null and i.createName!=''">
+                    create_name,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode!=''">
+                    create_dept_code,
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName!=''">
+                    create_dept_name,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.contractStartTime != null">
+                    contract_start_time,
+                </if>
+                <if test="i.contractEndTime != null">
+                    contract_end_time,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.cusCode != null and i.cusCode!=''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.cusDownType != null and i.cusDownType!=''">
+                    #{i.cusDownType},
+                </if>
+                <if test="i.cusUpdownType != null and i.cusUpdownType!=''">
+                    #{i.cusUpdownType},
+                </if>
+                <if test="i.cusDownReason != null and i.cusDownReason!=''">
+                    #{i.cusDownReason},
+                </if>
+                <if test="i.province != null and i.province!=''">
+                    #{i.province},
+                </if>
+                <if test="i.city != null and i.city!=''">
+                    #{i.city},
+                </if>
+                <if test="i.region != null and i.region!=''">
+                    #{i.region},
+                </if>
+                <if test="i.provinceName != null and i.provinceName!=''">
+                    #{i.provinceName},
+                </if>
+                <if test="i.cityName != null and i.cityName!=''">
+                    #{i.cityName},
+                </if>
+                <if test="i.regionName != null and i.regionName!=''">
+                    #{i.regionName},
+                </if>
+                <if test="i.dealPeople != null and i.dealPeople!=''">
+                    #{i.dealPeople},
+                </if>
+                <if test="i.empCode != null and i.empCode!=''">
+                    #{i.empCode},
+                </if>
+                <if test="i.empName != null and i.empName!=''">
+                    #{i.empName},
+                </if>
+                <if test="i.cusEmpCode != null and i.cusEmpCode!=''">
+                    #{i.cusEmpCode},
+                </if>
+                <if test="i.cusEmpName != null and i.cusEmpName!=''">
+                    #{i.cusEmpName},
+                </if>
+                <if test="i.createCode != null and i.createCode!=''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName!=''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode!=''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName!=''">
+                    #{i.createDeptName},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.contractStartTime != null">
+                    #{i.contractStartTime},
+                </if>
+                <if test="i.contractEndTime != null">
+                    #{i.contractEndTime},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="cusCode != null and cusCode != ''">
+                AND cus_code = #{cusCode}
+            </if>
+            <if test="cusDownType != null and cusDownType!=''">
+                AND cus_down_type = #{cusDownType}
+            </if>
+            <if test="cusUpdownType != null and cusUpdownType!=''">
+                AND cus_updown_type= #{cusUpdownType}
+            </if>
+            <if test="cusDownReason != null and cusDownReason!=''">
+                AND cus_down_reason= #{cusDownReason}
+            </if>
+            <if test="province != null and province!=''">
+                AND province= #{province}
+            </if>
+            <if test="city != null and city!=''">
+                AND city= #{city}
+            </if>
+            <if test="region != null and region!=''">
+                AND region= #{region}
+            </if>
+            <if test="provinceName != null and provinceName!=''">
+                AND province_name= #{provinceName}
+            </if>
+            <if test="cityName != null and cityName!=''">
+                AND city_name= #{cityName}
+            </if>
+            <if test="regionName != null and regionName!=''">
+                AND region_name= #{regionName}
+            </if>
+            <if test="dealPeople != null and dealPeople!=''">
+                AND deal_people= #{dealPeople}
+            </if>
+            <if test="empCode != null and empCode!=''">
+                AND emp_code= #{empCode}
+            </if>
+            <if test="empName != null and empName!=''">
+                AND emp_name= #{empName}
+            </if>
+            <if test="cusEmpCode != null and cusEmpCode!=''">
+                AND cus_emp_code= #{cusEmpCode}
+            </if>
+            <if test="cusEmpName != null and cusEmpName!=''">
+                AND cus_emp_name= #{cusEmpName}
+            </if>
+            <if test="createCode != null and createCode!=''">
+                AND create_code= #{createCode}
+            </if>
+            <if test="createName != null and createName!=''">
+                AND create_name= #{createName}
+            </if>
+            <if test="createDeptCode != null and createDeptCode!=''">
+                AND create_dept_code= #{createDeptCode}
+            </if>
+            <if test="createDeptName != null and createDeptName!=''">
+                AND create_dept_name= #{createDeptName}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted= #{isDeleted}
+            </if>
+
+        </trim>
+    </sql>
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerUpdownEntity">
+        SELECT *
+        from t_hkp_crm_customer_updown
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+
+    </select>
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        SELECT count(1)
+        from t_hkp_crm_customer_updown
+        <include refid="selectSql"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.CustomerContactsEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerContactsEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="contact_code" property="contactCode" jdbcType="VARCHAR"/>
+        <result column="contact_name" property="contactName" jdbcType="VARCHAR"/>
+        <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR"/>
+        <result column="contact_sex" property="contactSex" jdbcType="VARCHAR"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 插入记录 -->
+    <insert id="insertEntity" parameterType="com.kfwy.hkp.crm.customer.entity.CustomerContactsEntity" useGeneratedKeys="true" keyProperty="id">
+            INSERT INTO t_hkp_crm_customer_contacts
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="contactCode != null and contactCode != ''">
+                    contact_code,
+                </if>
+                <if test="contactName != null and contactName != ''">
+                    contact_name,
+                </if>
+                <if test="contactPhone != null and contactPhone != ''">
+                    contact_phone,
+                </if>
+                <if test="contactSex != null and contactSex != ''">
+                    contact_sex,
+                </if>
+                <if test="cusCode != null and cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="remark != null and remark != ''">
+                    remark,
+                </if>
+                <if test="cpyCode != null and cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="createTime != null">
+                    create_time,
+                </if>
+                <if test="lastUpdateTime != null">
+                    last_update_time,
+                </if>
+
+                <if test="createCode != null and createCode != ''">
+                    create_code,
+                </if>
+                <if test="createDeptCode != null and createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="lastUpdateCode != null and lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="contactCode != null and contactCode != ''">
+                    #{contactCode},
+                </if>
+                <if test="contactName != null and contactName != ''">
+                    #{contactName},
+                </if>
+                <if test="contactPhone != null and contactPhone != ''">
+                    #{contactPhone},
+                </if>
+                <if test="contactSex != null and contactSex != ''">
+                    #{contactSex},
+                </if>
+                <if test="cusCode != null and cusCode != ''">
+                    #{cusCode},
+                </if>
+                <if test="remark != null and remark != ''">
+                    #{remark},
+                </if>
+                <if test="cpyCode != null and cpyCode != ''">
+                    #{cpyCode},
+                </if>
+                <if test="createTime != null">
+                    #{createTime},
+                </if>
+                <if test="lastUpdateTime != null">
+                    #{lastUpdateTime},
+                </if>
+
+                <if test="createCode != null and createCode != ''">
+                    #{createCode},
+                </if>
+                <if test="createDeptCode != null and createDeptCode != ''">
+                    #{createDeptCode},
+                </if>
+                <if test="lastUpdateCode != null and lastUpdateCode != ''">
+                    #{lastUpdateCode},
+                </if>
+                <if test="isDeleted != null">
+                    #{isDeleted},
+                </if>
+            </trim>
+    </insert>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_crm_customer_contacts
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.contactCode != null and i.contactCode != ''">
+                    contact_code,
+                </if>
+                <if test="i.contactName != null and i.contactName != ''">
+                    contact_name,
+                </if>
+                <if test="i.contactPhone != null and i.contactPhone != ''">
+                    contact_phone,
+                </if>
+                <if test="i.contactSex != null and i.contactSex != ''">
+                    contact_sex,
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.contactCode != null and i.contactCode != ''">
+                    #{i.contactCode},
+                </if>
+                <if test="i.contactName != null and i.contactName != ''">
+                    #{i.contactName},
+                </if>
+                <if test="i.contactPhone != null and i.contactPhone != ''">
+                    #{i.contactPhone},
+                </if>
+                <if test="i.contactSex != null and i.contactSex != ''">
+                    #{i.contactSex},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.crm.houseowner.entity.HouseownerContactsEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_crm_customer_contacts
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.contactCode != null and i.contactCode != ''">
+                    contact_code=#{i.contactCode},
+                </if>
+                <if test="i.contactName != null and i.contactName != ''">
+                    contact_name=#{i.contactName},
+                </if>
+                <if test="i.contactPhone != null and i.contactPhone != ''">
+                    contact_phone=#{i.contactPhone},
+                </if>
+                <if test="i.contactSex != null and i.contactSex != ''">
+                    contact_sex=#{i.contactSex},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code=#{i.cusCode},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and contact_code = #{i.contactCode}
+            </trim>
+        </foreach>
+    </update>
+
+
+    <!-- 通过客户code批量删除记录 -->
+    <delete id="deleteContactsByCusCode" parameterType="map">
+        DELETE FROM t_hkp_crm_customer_contacts WHERE cus_code = #{cusCode}
+        <if test="notIds != null">
+            <choose>
+                <when test="isPage != null">
+                    AND id NOT IN (${notInIds})
+                </when>
+                <otherwise>
+                    AND id NOT IN
+                    <foreach collection="notIds" item="i" open="(" separator="," close=")">
+                        #{i}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+    </delete>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerContactsEntity">
+        SELECT * FROM t_hkp_crm_customer_contacts
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="cusCode != null and cusCode != ''">
+                AND cus_code = #{cusCode}
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+</mapper>

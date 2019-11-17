@@ -1,0 +1,1824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="cus_status" property="cusStatus" jdbcType="VARCHAR"/>
+        <result column="cus_type" property="cusType" jdbcType="INTEGER"/>
+        <result column="cus_from" property="cusFrom" jdbcType="VARCHAR"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="cus_phone" property="cusPhone" jdbcType="VARCHAR"/>
+        <result column="cus_sex" property="cusSex" jdbcType="VARCHAR"/>
+        <result column="company_name" property="companyName" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="products" property="products" jdbcType="VARCHAR"/>
+        <result column="need_acreage" property="needAcreage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="need_price" property="needPrice" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="price_unit" property="priceUnit" jdbcType="VARCHAR"/>
+        <result column="layer_num" property="layerNum" jdbcType="INTEGER"/>
+        <result column="layer_height" property="layerHeight" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="need_voltage" property="needVoltage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP"/>
+        <result column="expect_term" property="expectTerm" jdbcType="VARCHAR"/>
+        <result column="fire_level" property="fireLevel" jdbcType="VARCHAR"/>
+        <result column="need_eia" property="needEia" jdbcType="BOOLEAN"/>
+        <result column="need_register" property="needRegister" jdbcType="BOOLEAN"/>
+        <result column="need_certificate" property="needCertificate" jdbcType="BOOLEAN"/>
+        <result column="need_single_building" property="needSingleBuilding" jdbcType="BOOLEAN"/>
+        <result column="has_office_area" property="hasOfficeArea" jdbcType="BOOLEAN"/>
+        <result column="open_flag" property="openFlag" jdbcType="BOOLEAN"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="emp_phone" property="empPhone" jdbcType="VARCHAR"/>
+        <result column="owner_dept_name" property="ownerDeptName" jdbcType="VARCHAR"/>
+        <result column="emp_img" property="empImg" jdbcType="VARCHAR"/>
+
+        <result column="last_followup_time" property="lastFollowupTime" jdbcType="TIMESTAMP"/>
+
+        <result column="pt_code" property="ptCode" jdbcType="VARCHAR"/>
+        <result column="pt_name" property="ptName" jdbcType="VARCHAR"/>
+        <result column="divide_type" property="divideType" jdbcType="VARCHAR"/>
+        <result column="divide_ratio" property="divideRatio" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="divide_cash" property="divideCash" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="level" property="level" jdbcType="SMALLINT"/>
+        <result column="cus_prop" property="cusProp" jdbcType="SMALLINT"/>
+        <result column="contract_start_time" property="contractStartTime" jdbcType="TIMESTAMP"/>
+        <result column="contract_end_time" property="contractEndTime" jdbcType="TIMESTAMP"/>
+        <result column="need_nearby_facilities" property="needNearbyFacilities" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="gain_type" property="gainType" jdbcType="VARCHAR"/>
+        <result column="has_favorite" property="hasFavorite" jdbcType="BOOLEAN"/>
+        <result column="last_upshelf_time" property="lastUpshelfTime" jdbcType="TIMESTAMP"/>
+        <result column="last_downshelf_time" property="lastDownshelfTime" jdbcType="TIMESTAMP"/>
+        <result column="down_shelf_reason" property="downShelfReason" jdbcType="VARCHAR"/>
+
+        <result column="cus_up_user" property="cusUpUser" jdbcType="VARCHAR"/>
+        <result column="cus_down_user" property="cusDownUser" jdbcType="VARCHAR"/>
+
+        <result column="cus_up_user_name" property="cusUpUserName" jdbcType="VARCHAR"/>
+        <result column="cus_down_user_name" property="cusDownUserName" jdbcType="VARCHAR"/>
+
+        <collection property="customerContactsEntityList" columnPrefix="s_"
+                    javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.CustomerContactsEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="contact_code" property="contactCode" jdbcType="VARCHAR"/>
+            <result column="contact_name" property="contactName" jdbcType="VARCHAR"/>
+            <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR"/>
+            <result column="contact_sex" property="contactSex" jdbcType="VARCHAR"/>
+            <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        </collection>
+
+        <collection property="customerAreaEntityList" columnPrefix="a_"
+                    javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.CustomerAreaEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="region" property="region" jdbcType="VARCHAR"/>
+            <result column="street" property="street" jdbcType="VARCHAR"/>
+            <result column="community" property="community" jdbcType="VARCHAR"/>
+            <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+            <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+            <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+            <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+            <result column="community_name" property="communityName" jdbcType="VARCHAR"/>
+        </collection>
+
+        <collection property="fileRelationEntityList" columnPrefix="f_"
+                    javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.sys.file.entity.FileRelationEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="file_code" property="fileCode" jdbcType="VARCHAR"/>
+            <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+            <result column="file_type" property="fileType" jdbcType="VARCHAR"/>
+            <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_crm_customer
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code,
+                </if>
+                <if test="i.cusStatus != null and i.cusStatus != ''">
+                    cus_status,
+                </if>
+                <if test="i.cusType != null">
+                    cus_type,
+                </if>
+                <if test="i.cusFrom != null and i.cusFrom != ''">
+                    cus_from,
+                </if>
+                <if test="i.cusName != null and i.cusName != ''">
+                    cus_name,
+                </if>
+                <if test="i.cusPhone != null and i.cusPhone != ''">
+                    cus_phone,
+                </if>
+                <if test="i.cusSex != null and i.cusSex != ''">
+                    cus_sex,
+                </if>
+                <if test="i.companyName != null and i.companyName != ''">
+                    company_name,
+                </if>
+                <if test="i.industry != null and i.industry != ''">
+                    industry,
+                </if>
+                <if test="i.products != null and i.products != ''">
+                    products,
+                </if>
+                <if test="i.needAcreage != null">
+                    need_acreage,
+                </if>
+                <if test="i.needPrice != null">
+                    need_price,
+                </if>
+                <if test="i.priceUnit != null and i.priceUnit != ''">
+                    price_unit,
+                </if>
+                <if test="i.layerNum != null">
+                    layer_num,
+                </if>
+                <if test="i.layerHeight != null">
+                    layer_height,
+                </if>
+                <if test="i.needVoltage != null">
+                    need_voltage,
+                </if>
+                <if test="i.enterTime != null">
+                    enter_time,
+                </if>
+                <if test="i.expectTerm != null and i.expectTerm != ''">
+                    expect_term,
+                </if>
+                <if test="i.fireLevel != null and i.fireLevel != ''">
+                    fire_level,
+                </if>
+                <if test="i.needEia != null">
+                    need_eia,
+                </if>
+                <if test="i.needRegister != null">
+                    need_register,
+                </if>
+                <if test="i.needCertificate != null">
+                    need_certificate,
+                </if>
+                <if test="i.needSingleBuilding != null">
+                    need_single_building,
+                </if>
+                <if test="i.hasOfficeArea != null">
+                    has_office_area,
+                </if>
+                <if test="i.openFlag != null">
+                    open_flag,
+                </if>
+                <if test="i.houseType != null and i.houseType != ''">
+                    house_type,
+                </if>
+                <if test="i.description != null and i.description != ''">
+                    description,
+                </if>
+
+                <if test="i.lastFollowupTime != null">
+                    last_followup_time,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.ptCode != null and i.ptCode != ''">
+                    pt_code,
+                </if>
+                <if test="i.ptName != null and i.ptName != ''">
+                    pt_name,
+                </if>
+                <if test="i.divideType != null and i.divideType != ''">
+                    divide_type,
+                </if>
+                <if test="i.divideRatio != null">
+                    divide_ratio,
+                </if>
+                <if test="i.divideCash != null">
+                    divide_cash,
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.level !=null and i.level!=''">
+                    level,
+                </if>
+                <if test="i.cusProp!=null and i.cusProp !='' ">
+                    cus_prop,
+                </if>
+                <if test="i.contractStartTime !=null">
+                    contract_start_time,
+                </if>
+                <if test="i.contractEndTime !=null">
+                    contract_end_time,
+                </if>
+                <if test="i.needNearbyFacilities !=null and i.needNearbyFacilities!=''">
+                    need_nearby_facilities,
+                </if>
+                <if test="i.category !=null and i.category !=''">
+                    category,
+                </if>
+                <if test="i.gainType !=null and i.gainType!=''">
+                    gain_type,
+                </if>
+                <if test="i.lastUpshelfTime !=null">
+                    last_upshelf_time,
+                </if>
+             <!--   <if test="i.noticeSameDept !=null">
+                    notice_same_dept,
+                </if>-->
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    #{i.empCode},
+                </if>
+                <if test="i.cusStatus != null and i.cusStatus != ''">
+                    #{i.cusStatus},
+                </if>
+                <if test="i.cusType != null">
+                    #{i.cusType},
+                </if>
+                <if test="i.cusFrom != null and i.cusFrom != ''">
+                    #{i.cusFrom},
+                </if>
+                <if test="i.cusName != null and i.cusName != ''">
+                    #{i.cusName},
+                </if>
+                <if test="i.cusPhone != null and i.cusPhone != ''">
+                    #{i.cusPhone},
+                </if>
+                <if test="i.cusSex != null and i.cusSex != ''">
+                    #{i.cusSex},
+                </if>
+                <if test="i.companyName != null and i.companyName != ''">
+                    #{i.companyName},
+                </if>
+                <if test="i.industry != null and i.industry != ''">
+                    #{i.industry},
+                </if>
+                <if test="i.products != null and i.products != ''">
+                    #{i.products},
+                </if>
+                <if test="i.needAcreage != null">
+                    #{i.needAcreage},
+                </if>
+                <if test="i.needPrice != null">
+                    #{i.needPrice},
+                </if>
+                <if test="i.priceUnit != null and i.priceUnit != ''">
+                    #{i.priceUnit},
+                </if>
+                <if test="i.layerNum != null">
+                    #{i.layerNum},
+                </if>
+                <if test="i.layerHeight != null">
+                    #{i.layerHeight},
+                </if>
+                <if test="i.needVoltage != null">
+                    #{i.needVoltage},
+                </if>
+                <if test="i.enterTime != null">
+                    #{i.enterTime},
+                </if>
+                <if test="i.expectTerm != null and i.expectTerm != ''">
+                    #{i.expectTerm},
+                </if>
+                <if test="i.fireLevel != null and i.fireLevel != ''">
+                    #{i.fireLevel},
+                </if>
+                <if test="i.needEia != null">
+                    #{i.needEia},
+                </if>
+                <if test="i.needRegister != null">
+                    #{i.needRegister},
+                </if>
+                <if test="i.needCertificate != null">
+                    #{i.needCertificate},
+                </if>
+                <if test="i.needSingleBuilding != null">
+                    #{i.needSingleBuilding},
+                </if>
+                <if test="i.hasOfficeArea != null">
+                    #{i.hasOfficeArea},
+                </if>
+                <if test="i.openFlag != null">
+                    #{i.openFlag},
+                </if>
+                <if test="i.houseType != null and i.houseType != ''">
+                    #{i.houseType},
+                </if>
+                <if test="i.description != null and i.description != ''">
+                    #{i.description},
+                </if>
+
+                <if test="i.lastFollowupTime != null">
+                    #{i.lastFollowupTime},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.ptCode != null and i.ptCode != ''">
+                    #{i.ptCode},
+                </if>
+                <if test="i.ptName != null and i.ptName != ''">
+                    #{i.ptName},
+                </if>
+                <if test="i.divideType != null and i.divideType != ''">
+                    #{i.divideType},
+                </if>
+                <if test="i.divideRatio != null">
+                    #{i.divideRatio},
+                </if>
+                <if test="i.divideCash != null">
+                    #{i.divideCash},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.level !=null and i.level!=''">
+                    #{i.level},
+                </if>
+                <if test="i.cusProp!=null and i.cusProp !='' ">
+                    #{i.cusProp},
+                </if>
+                <if test="i.contractStartTime !=null">
+                    #{i.contractStartTime},
+                </if>
+                <if test="i.contractEndTime !=null">
+                    #{i.contractEndTime},
+                </if>
+                <if test="i.needNearbyFacilities !=null and i.needNearbyFacilities!=''">
+                    #{i.needNearbyFacilities},
+                </if>
+                <if test="i.category !=null and i.category !=''">
+                    #{i.category},
+                </if>
+                <if test="i.gainType !=null and i.gainType!=''">
+                    #{i.gainType},
+                </if>
+                <if test="i.lastUpshelfTime !=null">
+                    #{i.lastUpshelfTime},
+                </if>
+                <!--<if test="i.noticeSameDept!=null">
+                    #{noticeSameDept},
+                </if>-->
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_crm_customer
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code=#{i.cusCode},
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code=#{i.empCode},
+                </if>
+                <if test="i.cusStatus != null and i.cusStatus != ''">
+                    cus_status=#{i.cusStatus},
+                </if>
+                <if test="i.url != null and i.url != ''">
+                    url=#{i.url},
+                </if>
+                <if test="i.cusType != null">
+                    cus_type=#{i.cusType},
+                </if>
+                <if test="i.cusFrom != null and i.cusFrom != ''">
+                    cus_from=#{i.cusFrom},
+                </if>
+                <if test="i.cusName != null and i.cusName != ''">
+                    cus_name=#{i.cusName},
+                </if>
+                <if test="i.cusPhone != null and i.cusPhone != ''">
+                    cus_phone=#{i.cusPhone},
+                </if>
+                <if test="i.cusSex != null and i.cusSex != ''">
+                    cus_sex=#{i.cusSex},
+                </if>
+                <if test="i.companyName != null and i.companyName != ''">
+                    company_name=#{i.companyName},
+                </if>
+                <if test="i.industry != null and i.industry != ''">
+                    industry=#{i.industry},
+                </if>
+                <if test="i.products != null and i.products != ''">
+                    products=#{i.products},
+                </if>
+                <if test="i.needAcreage != null">
+                    need_acreage=#{i.needAcreage},
+                </if>
+                <if test="i.needPrice != null">
+                    need_price=#{i.needPrice},
+                </if>
+                <if test="i.priceUnit != null and i.priceUnit != ''">
+                    price_unit=#{i.priceUnit},
+                </if>
+                <if test="i.layerNum != null">
+                    layer_num=#{i.layerNum},
+                </if>
+                <if test="i.needVoltage != null">
+                    need_voltage=#{i.needVoltage},
+                </if>
+                <if test="i.enterTime != null">
+                    enter_time=#{i.enterTime},
+                </if>
+                <if test="i.expectTerm != null and i.expectTerm != ''">
+                    expect_term=#{i.expectTerm},
+                </if>
+                <if test="i.fireLevel != null and i.fireLevel != ''">
+                    fire_level=#{i.fireLevel},
+                </if>
+                <if test="i.needEia != null">
+                    need_eia=#{i.needEia},
+                </if>
+                <if test="i.needRegister != null">
+                    need_register=#{i.needRegister},
+                </if>
+                <if test="i.needCertificate != null">
+                    need_certificate=#{i.needCertificate},
+                </if>
+                <if test="i.needSingleBuilding != null">
+                    need_single_building=#{i.needSingleBuilding},
+                </if>
+                <if test="i.hasOfficeArea != null">
+                    has_office_area=#{i.hasOfficeArea},
+                </if>
+                <if test="i.openFlag != null">
+                    open_flag=#{i.openFlag},
+                </if>
+                <if test="i.houseType != null and i.houseType != ''">
+                    house_type=#{i.houseType},
+                </if>
+                <if test="i.description != null and i.description != ''">
+                    description=#{i.description},
+                </if>
+
+                <if test="i.lastFollowupTime != null">
+                    last_followup_time = #{i.lastFollowupTime},
+                </if>
+
+                <if test="i.ptCode != null and i.ptCode != ''">
+                    pt_code = #{i.ptCode},
+                </if>
+                <if test="i.ptName != null and i.ptName != ''">
+                    pt_name = #{i.ptName},
+                </if>
+                <if test="i.divideType != null and i.divideType != ''">
+                    divide_type = #{i.divideType},
+                </if>
+                <if test="i.divideRatio != null">
+                    divide_ratio = #{i.divideRatio},
+                </if>
+                <if test="i.divideCash != null">
+                    divide_cash = #{i.divideCash},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted},
+                </if>
+                <if test="i.layerHeight!=null">
+                    layer_height = #{i.layerHeight},
+                </if>
+                <if test="i.contractStartTime !=null">
+                    contract_start_time = #{i.contractStartTime},
+                </if>
+                <if test="i.contractEndTime !=null">
+                    contract_end_time = #{i.contractEndTime},
+                </if>
+               <!-- <if test="i.noticeSameDept!=null">
+                    notice_same_dept = #{i.noticeSameDept},
+                </if>-->
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and cus_code = #{i.cusCode}
+            </trim>
+        </foreach>
+    </update>
+
+
+    <update id="batchUpdateCusType" parameterType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_crm_customer
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code=#{i.empCode},
+                </if>
+                <if test="i.cusType != null">
+                    cus_type=#{i.cusType},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and cus_code = #{i.cusCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <update id="batchUpdateCusOpenFlag"
+            parameterType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_crm_customer
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code=#{i.empCode},
+                </if>
+                <if test="i.openFlag != null">
+                    open_flag=#{i.openFlag},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and cus_code = #{i.cusCode}
+            </trim>
+        </foreach>
+    </update>
+
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_crm_customer WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="cusCode != null and cusCode != ''">
+                AND cus_code = #{cusCode}
+            </if>
+            <if test="cusName != null and cusName != ''">
+                AND cus_name like '%'||#{cusName}||'%'
+            </if>
+            <if test="cusType != null">
+                <choose>
+                    <when test="cusType == 4 ">
+                        AND cus_type in (2,3)
+                    </when>
+                    <otherwise>
+                        AND cus_type = #{cusType}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND emp_code = #{empCode}
+            </if>
+            <if test="empCodes != null">
+                <choose>
+                    <when test="_empCodes">
+                        AND emp_code IN (${_empCodes})
+                    </when>
+                    <otherwise>
+                        AND emp_code IN
+                        <foreach collection="empCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empName != null and empName != ''">
+                AND emp_name like '%'||#{empName}||'%'
+            </if>
+            <if test="cusPhone != null and cusPhone != ''">
+                AND cus_phone = #{cusPhone}
+            </if>
+            <if test="cusSex != null and cusSex != ''">
+                AND cus_sex = #{cusSex}
+            </if>
+            <if test="priceUnit != null and cusSex != ''">
+                AND price_unit = #{priceUnit}
+            </if>
+            <if test="companyName != null and companyName != ''">
+                AND company_name like '%' || #{companyName} || '%'
+            </if>
+            <if test="needAcreageStart != null">
+                AND need_acreage <![CDATA[ >= ]]> #{needAcreageStart}
+            </if>
+            <if test="needAcreageEnd != null">
+                AND need_acreage <![CDATA[ <= ]]> #{needAcreageEnd}
+            </if>
+            <if test="needVoltageStart != null">
+                AND need_voltage <![CDATA[ >= ]]> #{needVoltageStart}
+            </if>
+            <if test="needVoltageEnd != null">
+                AND need_voltage <![CDATA[ <= ]]> #{needVoltageEnd}
+            </if>
+            <if test="needPriceStart != null">
+                AND need_price <![CDATA[ >= ]]> #{needPriceStart}
+            </if>
+            <if test="needPriceEnd != null">
+                AND need_price <![CDATA[ <= ]]> #{needPriceEnd}
+            </if>
+            <if test="cusStatus != null">
+                AND cus_status = #{cusStatus}
+            </if>
+            <if test="openFlag != null">
+                AND open_flag = #{openFlag}
+            </if>
+            <if test="houseTypes != null">
+                <choose>
+                    <when test="isTypesString">
+                        AND house_type IN (${houseTypes})
+                    </when>
+                </choose>
+            </if>
+            <if test="enterTimeStart != null">
+                AND enter_time <![CDATA[ >= ]]> #{enterTimeStart}
+            </if>
+            <if test="enterTimeEnd != null">
+                AND enter_time <![CDATA[ <= ]]> #{enterTimeEnd}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="lastFollowupTime != null">
+                AND last_followup_time <![CDATA[ <= ]]> #{lastFollowupTime}
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND
+                (
+                cus_name like '%' || #{keyword} ||'%' or
+                cus_phone like '%' || #{keyword} ||'%' or
+                industry like '%' || #{keyword} ||'%' or
+                products like '%' || #{keyword} ||'%' or
+                description like '%' || #{keyword} ||'%'
+                )
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createDeptCode != null">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="lastUpshelfTime !=null">
+                AND last_upshelf_time=#{lastUpshelfTime}
+            </if>
+            <if test="cusFrom!=null and cusFrom!=''">
+                AND cus_from=#{cusFrom}
+            </if>
+            <if test="cusNotFolStart !=null">
+                AND last_followup_time <![CDATA[ <= ]]> #{cusNotFolStart}
+            </if>
+            <if test="cusNotFolEnd!=null">
+                AND last_followup_time <![CDATA[ >= ]]> #{cusNotFolEnd}
+            </if>
+            <if test="industry!=null and industry!=''">
+                AND industry like '%' || #{industry} ||'%'
+            </if>
+            <if test="layerHeight!=null">
+                AND layer_height <![CDATA[ >= ]]> #{layerHeight}
+            </if>
+
+            <if test="layerNum!=null and layerNum!=''">
+                <choose>
+                    <when test="layerNum == 1">
+                        AND layer_num = #{layerNum}
+                    </when>
+                    <otherwise>
+                        AND layer_num >=#{layerNum}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="contractEndTimeEnd != null">
+                AND contract_end_time <![CDATA[ <= ]]> #{contractEndTimeEnd} AND contract_end_time
+                IS NOT NULL
+            </if>
+            <if test="ownerDeptCodes != null">
+                <choose>
+                    <when test="_ownerDeptCodes">
+                        AND owner_dept_code IN (${_ownerDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND owner_dept_code IN
+                        <foreach collection="ownerDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+
+            </if>
+            <if test="ownerDeptCode !=null">
+                AND owner_dept_code = #{ownerDeptCode}
+            </if>
+            <if test="exclude!=null">
+                AND cus_type != #{exclude}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_crm_customer
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        select * from t_hkp_crm_customer
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询客户的详情-->
+    <select id="detail" parameterType="string" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        SELECT
+            C.*,
+            e.user_name      AS emp_name,
+            e.user_phone     AS emp_phone,
+            e.user_img       AS emp_img,
+            us.user_name    AS create_name,
+            A.province       AS a_province,
+            A.city           AS a_city,
+            A.region         AS a_region,
+            A.street         AS a_street,
+            A.community      AS a_community,
+            A.province_name  AS a_province_name,
+            A.city_name      AS a_city_name,
+            A.region_name    AS a_region_name,
+            A.street_name    AS a_street_name,
+            A.community_name AS a_community_name
+        FROM
+            t_hkp_crm_customer C
+            LEFT JOIN t_hkp_sys_user_user e ON C.emp_code = e.user_code
+            left join t_hkp_sys_user_user us ON us.user_code = C.create_code
+            LEFT JOIN t_hkp_crm_customer_area A ON C.cus_code = A.cus_code
+        WHERE
+            C.cus_code = #{ cusCode }
+    </select>
+
+    <!-- 查询客户的详情-->
+    <select id="detailCut" parameterType="string" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        SELECT
+            C.*,
+            e.user_name      AS emp_name,
+            e.user_phone     AS emp_phone,
+            e.user_img       AS emp_img,
+            A.province       AS a_province,
+            A.city           AS a_city,
+            A.region         AS a_region,
+            A.street         AS a_street,
+            A.community      AS a_community,
+            A.province_name  AS a_province_name,
+            A.city_name      AS a_city_name,
+            A.region_name    AS a_region_name,
+            A.street_name    AS a_street_name,
+            A.community_name AS a_community_name
+        FROM
+            t_hkp_crm_customer C
+            LEFT JOIN t_hkp_crm_customer_area A ON C.cus_code = A.cus_code
+            LEFT JOIN t_hkp_sys_user_user e ON C.emp_code = e.user_code
+        WHERE
+            C.cus_code = #{ cusCode }
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        SELECT
+        DISTINCT thcc.cus_code,
+        thcc.products,
+        thcc.last_followup_time,
+        thcc.create_time,
+        thcc.cus_type,
+        thcc.emp_code,
+        thcc.cus_name,
+        thcc.cus_phone,
+        thcc.cus_status,
+        thcc.open_flag,
+        thcc.cus_sex,
+        thcc.need_acreage,
+        thcc.house_type,
+        thcc.enter_time,
+        thcc.need_voltage,
+        thcc.industry,
+        thcc.description,
+        thcc.last_upshelf_time,
+        a.province as a_province,
+        a.city as a_city,
+        a.region as a_region,
+        a.street as a_street,
+        a.province_name as a_province_name,
+        a.city_name as a_city_name,
+        a.region_name as a_region_name,
+        a.street_name as a_street_name,
+        a.community_name as a_community_name,
+        <if test="null!=userCode and userCode!=''">
+            case when cf.cus_code is null then false else true end as has_favorite,
+        </if>
+        thcc.emp_name,
+        thcc.owner_dept_code,
+        thcc.emp_phone
+        FROM (
+        SELECT * FROM (
+        select c.*, e.user_name as emp_name ,e.owner_dept_code,e.user_phone as emp_phone
+        <if test="hasCollect">
+            , f.emp_code f_emp_code
+        </if>
+        from
+        <choose>
+            <when test="community!=null or street != null or region != null or regions!=null or city != null or province != null">
+                (SELECT * from t_hkp_crm_customer cs
+                where
+                exists (SELECT * from t_hkp_crm_customer_area a where a.cus_code = cs.cus_code
+                <include refid="area"/>
+                ))c
+            </when>
+            <otherwise>
+                t_hkp_crm_customer c
+            </otherwise>
+        </choose>
+        <if test="hasCollect">
+            INNER JOIN t_hkp_crm_customer_favorite f on c.cus_code = f.cus_code AND f.emp_code =
+            #{fEmpCode}
+        </if>
+        <if test="fcEmpCode != null">
+            INNER JOIN t_hkp_crm_focus_cus fc on fc.cus_code = c.cus_code AND fc.user_code =
+            #{fcEmpCode}
+        </if>
+        LEFT JOIN t_hkp_sys_user_user e on e.user_code = c.emp_code
+        ) ct
+        <include refid="selectSql"/>
+
+        <if test="queryOwnDeptCode != null">
+            AND owner_dept_code = #{queryOwnDeptCode}
+        </if>
+        <if test="createDeptCodes != null">
+            <choose>
+                <when test="_createDeptCodes">
+                    AND owner_dept_code IN (${_createDeptCodes})
+                </when>
+                <otherwise>
+                    AND owner_dept_code IN
+                    <foreach collection="createDeptCodes" item="i" open="(" separator="," close=")">
+                        #{i}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+        <if test="offset != null">
+            offset #{offset}
+        </if>
+        ) thcc LEFT JOIN t_hkp_crm_customer_area a on thcc.cus_code = a.cus_code
+        <if test="community!=null or street != null or region != null or regions!=null or city != null or province != null">
+            <include refid="area"/>
+            <if test="regions !=null">
+            <choose>
+                <when test="_regions">
+                    AND a.region IN (${_regions})
+                </when>
+                <otherwise>
+                    AND a.region IN
+                    <foreach collection="regions" item="i" open="(" separator="," close=")">
+                        #{i}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+            <if test="citys !=null">
+                <choose>
+                    <when test="citys">
+                        AND a.city IN (${_citys})
+                    </when>
+                    <otherwise>
+                        AND a.city IN
+                        <foreach collection="citys" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="streets !=null">
+                <choose>
+                    <when test="streets">
+                        AND a.street IN (${_streets})
+                    </when>
+                    <otherwise>
+                        AND a.street IN
+                        <foreach collection="streets" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+        </if>
+        <if test="null!=userCode and userCode!=''">
+            left join t_hkp_crm_customer_favorite cf on cf.cus_code = thcc.cus_code AND cf.emp_code
+            = #{userCode}
+        </if>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(id) from
+        (
+        SELECT * FROM (
+        select c.*, e.user_name as emp_name ,e.owner_dept_code,e.user_phone as emp_phone
+        <if test="hasCollect">
+            , f.emp_code f_emp_code
+        </if>
+        from
+        <choose>
+            <when test="community!=null or street != null or region != null or citys!=null or streets!=null  or regions!=null or city != null or province != null">
+                (SELECT * from t_hkp_crm_customer cs
+                where exists (SELECT * from t_hkp_crm_customer_area a where a.cus_code = cs.cus_code
+                <include refid="area"/>
+                <if test="regions !=null">
+                    <choose>
+                        <when test="_regions">
+                            AND a.region IN (${_regions})
+                        </when>
+                        <otherwise>
+                            AND a.region IN
+                            <foreach collection="regions" item="i" open="(" separator="," close=")">
+                                #{i}
+                            </foreach>
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="citys !=null">
+                    <choose>
+                        <when test="citys">
+                            AND a.city IN (${_citys})
+                        </when>
+                        <otherwise>
+                            AND a.city IN
+                            <foreach collection="citys" item="i" open="(" separator="," close=")">
+                                #{i}
+                            </foreach>
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="streets !=null">
+                    <choose>
+                        <when test="streets">
+                            AND a.street IN (${_streets})
+                        </when>
+                        <otherwise>
+                            AND a.street IN
+                            <foreach collection="streets" item="i" open="(" separator="," close=")">
+                                #{i}
+                            </foreach>
+                        </otherwise>
+                    </choose>
+                </if>) )c
+            </when>
+            <otherwise>
+                t_hkp_crm_customer c
+            </otherwise>
+        </choose>
+        <if test="hasCollect">
+            INNER JOIN t_hkp_crm_customer_favorite f on c.cus_code = f.cus_code AND f.emp_code =
+            #{fEmpCode}
+        </if>
+        LEFT JOIN t_hkp_sys_user_user e on e.user_code = c.emp_code
+        ) ct
+        <include refid="selectSql"/>
+
+        <if test="queryOwnDeptCode != null">
+            AND owner_dept_code = #{queryOwnDeptCode}
+        </if>
+        <if test="createDeptCodes != null">
+            <choose>
+                <when test="_createDeptCodes">
+                    AND owner_dept_code IN (${_createDeptCodes})
+                </when>
+                <otherwise>
+                    AND owner_dept_code IN
+                    <foreach collection="createDeptCodes" item="i" open="(" separator="," close=")">
+                        #{i}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+
+        ) thcc
+
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectCountByMap" parameterType="map" resultType="int">
+        select count(1) from t_hkp_crm_customer
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createDeptCode != null">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="industry != null">
+                AND industry = #{industry}
+            </if>
+            <if test="needAcreageStart != null">
+                AND need_acreage <![CDATA[ >= ]]> #{needAcreageStart}
+            </if>
+            <if test="needAcreageEnd != null">
+                AND need_acreage <![CDATA[ < ]]> #{needAcreageEnd}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </select>
+
+    <!--查询客户集合-->
+    <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        select cus_code,cus_from from t_hkp_crm_customer
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 查询有效客户 -->
+    <select id="selectValidCusByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        SELECT
+        c.cus_code,c.cus_from
+        FROM
+        t_hkp_crm_customer C
+        INNER JOIN (
+        SELECT
+        cus_code
+        FROM
+        t_hkp_crm_customer_followup
+        <trim prefix="where" prefixOverrides="AND|OR">
+            ID IN (
+            SELECT
+            MIN (ID)
+            FROM
+            t_hkp_crm_customer_followup
+            WHERE
+            followup_type = '1'
+            AND IS_DELETED = FALSE
+            GROUP BY
+            cus_code
+            HAVING
+            MIN (create_time) <![CDATA[ >= ]]> #{createTimeStart}
+            AND MIN (create_time) <![CDATA[ <= ]]> #{createTimeEnd}
+            )
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createDeptCode != null">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+        </trim>
+        ) tp ON tp.cus_code = C .cus_code
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 查询下单客户 -->
+    <select id="selectOrderCusByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        SELECT * FROM(
+        select
+        c.cus_code,c.cus_from,c.is_deleted
+        from t_hkp_crm_customer c
+        join(
+        select
+        cus_code
+        from
+        t_hkp_trade_order
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="noOrderStatuses != null">
+                <choose>
+                    <when test="_noOrderStatuses">
+                        AND order_status NOT IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND order_status NOT IN
+                        <foreach collection="noOrderStatuses" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empCodes != null">
+                <choose>
+                    <when test="_empCodes != null">
+                        AND emp_code IN (${_empCodes})
+                    </when>
+                    <otherwise>
+                        AND emp_code IN
+                        <foreach collection="empCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="orderTimeStart != null">
+                AND order_time <![CDATA[>=]]> #{orderTimeStart}
+            </if>
+            <if test="orderTimeEnd != null">
+                AND order_time <![CDATA[<=]]> #{orderTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+        </trim>
+        ) o on o.cus_code = c.cus_code
+        )TP
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+        </trim>
+    </select>
+
+    <!--区域筛选-->
+    <sql id="area">
+        <choose>
+            <when test="community !=null">
+                AND a.community = #{community}
+            </when>
+            <when test="street !=null">
+                AND a.street=#{street}
+            </when>
+            <when test="region != null">
+                AND a.region = #{region}
+            </when>
+            <when test="city != null">
+                AND a.city = #{city}
+            </when>
+            <when test="province != null">
+                AND a.province =#{province}
+            </when>
+            <when test="regions !=null">
+                <choose>
+                    <when test="_regions">
+                        AND a.region IN (${_regions})
+                    </when>
+                    <otherwise>
+                        AND a.region IN
+                        <foreach collection="regions" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </when>
+
+        </choose>
+    </sql>
+
+    <!-- 查询申请查看实体对象个数 -->
+    <select id="queryApplyCount" parameterType="map" resultType="int">
+        select count(id) from t_hkp_crm_apply
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="cusCode != null and cusCode != ''">
+                AND cus_code = #{cusCode}
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND emp_code = #{empCode}
+            </if>
+        </trim>
+    </select>
+
+    <resultMap id="EmployeeResultMap" type="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="emp_img" property="empImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 查询申请查看实体 -->
+    <select id="queryApplyList" parameterType="string" resultMap="EmployeeResultMap"
+            resultType="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+        SELECT a.emp_code
+        FROM t_hkp_crm_apply a
+
+        WHERE a.cus_code = #{cusCode}
+    </select>
+
+    <!-- 查询合作对象个数 -->
+    <select id="queryCooperateCount" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM t_hkp_union_cooperate
+        WHERE cus_code = #{cusCode}
+              AND (apply_code = #{empCode} OR receive_code = #{empCode})
+              AND coo_status > '2'
+    </select>
+
+    <!-- 查询一定时间内未跟进的客户 -->
+    <select id="queryCustomerListByUnfollow" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        SELECT *
+        FROM (
+        SELECT
+        c.*,
+        COALESCE((SELECT cf.create_time
+        FROM t_hkp_crm_customer_followup cf
+        WHERE cf.cus_code = c.cus_code
+        ORDER BY ID DESC
+        LIMIT 1), c.create_time) AS follow_time
+        FROM t_hkp_crm_customer c
+        ) ct
+        WHERE follow_time <![CDATA[ < ]]> #{followTime}
+        <if test="cusType!=null and cusType!=''">
+            AND cus_type = #{cusType}
+        </if>
+        <if test="openFlag!=null">
+            AND open_flag = #{openFlag}
+        </if>
+    </select>
+
+    <!-- 客户上下架更新记录 -->
+    <update id="upDownShelf" parameterType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+
+        update t_hkp_crm_customer
+        <trim prefix="set" suffixOverrides=",">
+            <if test="lastUpshelfTime !=null">
+              last_upshelf_time = #{lastUpshelfTime},
+            </if>
+            last_downshelf_time = #{lastDownshelfTime},
+            cus_code=#{cusCode},
+            <if test="empCode !=null and empCode!=''">
+                emp_code = #{empCode},
+            </if>
+            <if test="cusStatus != null and cusStatus != ''">
+                cus_status=#{cusStatus},
+            </if>
+            <if test="downShelfReason !=null and downShelfReason!=''">
+                down_shelf_reason=#{downShelfReason},
+            </if>
+            <if test="cusType !=null and cusType!=''">
+                cus_type = #{cusType},
+            </if>
+
+            <if test="cusUpUser !=null and cusUpUser!=''">
+                cus_up_user = #{cusUpUser},
+            </if>
+            <if test="cusDownUser !=null and cusDownUser!=''">
+                cus_down_user = #{cusDownUser},
+            </if>
+
+            <if test="cusUpUserName !=null and cusUpUserName!=''">
+                cus_up_user_name = #{cusUpUserName},
+            </if>
+            <if test="cusDownUserName !=null and cusDownUserName!=''">
+                cus_down_user_name = #{cusDownUserName},
+            </if>
+            <if test="remark !=null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="contractEndTime !=null">
+                contract_end_time = #{contractEndTime},
+            </if>
+
+            <if test="isDeleted != null">
+                is_deleted=#{isDeleted},
+            </if>
+        </trim>
+        where cus_code = #{cusCode}
+
+    </update>
+
+    <!-- 客户公开或隐藏记录 -->
+    <update id="onAndOffOpenFlag" parameterType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+
+        update t_hkp_crm_customer
+        <trim prefix="set" suffixOverrides=",">
+
+            <if test="openFlag != null">
+                open_flag=#{openFlag},
+            </if>
+
+            <if test="isDeleted != null">
+                is_deleted=#{isDeleted}
+            </if>
+        </trim>
+        where cus_code = #{cusCode}
+
+    </update>
+    <select id="takeLookByCustomer" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        SELECT
+        cu.*,
+        a.province_name as a_province_name,
+        a.city_name as a_city_name,
+        a.region_name as a_region_name,
+        a.street_name as a_street_name,
+        a.community_name as a_community_name
+        FROM
+        (
+        SELECT
+        cus.*,
+        e.user_name,
+        e.owner_dept_code,
+        e.user_phone
+        FROM
+        t_hkp_crm_customer cus
+        LEFT JOIN t_hkp_sys_user_user e ON cus.emp_code = e.user_code
+        WHERE
+        cus_code IN (
+        SELECT
+        cuf.cus_code
+        FROM
+        t_hkp_crm_followup_house fh
+        JOIN t_hkp_crm_customer_followup cuf ON fh.followup_code = cuf.followup_code
+        WHERE
+        fh.house_code = #{houseCode}
+        AND fh.is_deleted = FALSE
+        AND cuf.is_deleted = FALSE
+        )
+        and cus.is_deleted=false
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+        <if test="offset != null">
+            offset #{offset}
+        </if>
+        ) AS cu
+        LEFT JOIN t_hkp_crm_customer_area a ON a.cus_code = cu.cus_code
+        where a.is_deleted=false
+
+
+    </select>
+
+    <select id="takeLookByCustomerCount" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM (
+                 SELECT
+                     cus.*,
+                     e.user_name,
+                     e.owner_dept_code,
+                     e.user_phone
+                 FROM
+                     t_hkp_crm_customer cus
+                     LEFT JOIN t_hkp_sys_user_user e ON cus.emp_code = e.user_code
+                 WHERE
+                     cus_code IN (
+                         SELECT cuf.cus_code
+                         FROM
+                             t_hkp_crm_followup_house fh
+                             JOIN t_hkp_crm_customer_followup cuf
+                                 ON fh.followup_code = cuf.followup_code
+                         WHERE
+                             fh.house_code = #{houseCode}
+                             AND fh.is_deleted = FALSE
+                             AND cuf.is_deleted = FALSE
+                     )
+                     AND cus.is_deleted = FALSE
+             ) T
+    </select>
+
+    <update id="releasePrivate" parameterType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        UPDATE t_hkp_crm_customer
+        SET cus_type = #{cusType}, open_flag=#{openFlag}, last_update_time = #{lastUpdateTime}, emp_code = #{empCode}
+        WHERE cus_code = #{cusCode}
+    </update>
+    <update id="pullPrivate" parameterType="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        UPDATE t_hkp_crm_customer
+        SET cus_type = #{cusType}, open_flag = #{openFlag}, emp_code = #{empCode}, last_update_time = #{lastUpdateTime}
+        WHERE cus_code = #{cusCode}
+    </update>
+
+    <!--客户拉私自动释放提醒  在释放前提醒-->
+    <select id="remindRelease" resultMap="BaseResultMap">
+        SELECT cc.*
+        FROM
+            t_hkp_crm_customer cc,
+            t_hkp_crm_customer_followup cf
+        WHERE
+            cc.cus_code = cf.cus_code
+            AND
+            cc.cus_type = 3
+            AND
+            cf.create_time >= current_date - 2
+    </select>
+
+    <select id="selectContractCensus" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        cus.*,
+        u.user_code as emp_code,
+        u.user_name as emp_name,
+        u.user_phone as emp_phone,
+        l.user_name create_name,
+        d.dept_code as owner_dept_code,
+        d.dept_name as owner_dept_name
+        FROM
+        t_hkp_crm_customer cus
+        INNER JOIN t_hkp_sys_user_user u ON u.user_code = cus.emp_code
+        INNER JOIN t_hkp_sys_user_user l ON l.user_code = cus.create_code
+        INNER JOIN t_hkp_hrm_org_dept d ON d.dept_code = u.owner_dept_code
+        ) TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <select id="selectContractCensusCount" parameterType="map" resultType="int">
+        SELECT
+        count(*)
+        FROM
+        (
+        SELECT
+        cus.*,
+        u.user_code as emp_code,
+        u.user_name as emp_name,
+        u.user_phone as emp_phone,
+        l.user_name create_name,
+        d.dept_code as owner_dept_code,
+        d.dept_name as owner_dept_name
+        FROM
+        t_hkp_crm_customer cus
+        INNER JOIN t_hkp_sys_user_user u ON u.user_code = cus.emp_code
+        INNER JOIN t_hkp_sys_user_user l ON l.user_code = cus.create_code
+        INNER JOIN t_hkp_hrm_org_dept d ON d.dept_code = u.owner_dept_code
+        ) TP
+        <include refid="selectSql"/>
+
+    </select>
+
+    <!--房源智能匹配客户-->
+    <select id="selectHouseMatchingCus" parameterType="map" resultMap="BaseResultMap">
+        select *
+        from (
+        select c.*,
+        a.province as a_province,
+        a.city as a_city,
+        a.region as a_region,
+        a.street as a_street,
+        a.province_name as a_province_name,
+        a.city_name as a_city_name,
+        a.region_name as a_region_name,
+        a.street_name as a_street_name,
+        a.community_name as a_community_name
+        from t_hkp_crm_customer c LEFT JOIN t_hkp_crm_customer_area a on c.cus_code = a.cus_code
+        ) ta
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="cusStatus != null">
+                AND cus_status = #{cusStatus}
+            </if>
+            <if test="needAcreageStart != null">
+                AND need_acreage <![CDATA[ >= ]]> #{needAcreageStart}
+            </if>
+            <if test="needAcreageEnd != null">
+                AND need_acreage <![CDATA[ <= ]]> #{needAcreageEnd}
+            </if>
+            <if test="houseTypes != null">
+                <choose>
+                    <when test="isTypesString">
+                        AND house_type IN (${houseTypes})
+                    </when>
+                </choose>
+            </if>
+            <if test="city == null and region == null and street !=null">
+                AND a_street=#{street}
+            </if>
+            <if test="city == null and region != null">
+                AND a_region = #{region}
+                AND a_street != #{street}
+            </if>
+            <if test="city != null">
+                AND a_city = #{city}
+                AND a_region != #{region}
+                AND a_street != #{street}
+            </if>
+            <if test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </if>
+            <if test="order != null and order != ''">
+                ${order}
+            </if>
+        </trim>
+    </select>
+    <select id="selectHouseMatchingCusCount" parameterType="map" resultType="int">
+        select count(1)
+        from (
+        select c.*,
+        a.province as a_province,
+        a.city as a_city,
+        a.region as a_region,
+        a.street as a_street,
+        a.province_name as a_province_name,
+        a.city_name as a_city_name,
+        a.region_name as a_region_name,
+        a.street_name as a_street_name,
+        a.community_name as a_community_name
+        from t_hkp_crm_customer c LEFT JOIN t_hkp_crm_customer_area a on c.cus_code = a.cus_code
+        ) ta
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="cusStatus != null">
+                AND cus_status = #{cusStatus}
+            </if>
+            <if test="needAcreageStart != null">
+                AND need_acreage <![CDATA[ >= ]]> #{needAcreageStart}
+            </if>
+            <if test="needAcreageEnd != null">
+                AND need_acreage <![CDATA[ <= ]]> #{needAcreageEnd}
+            </if>
+            <if test="houseTypes != null">
+                <choose>
+                    <when test="isTypesString">
+                        AND house_type IN (${houseTypes})
+                    </when>
+                </choose>
+            </if>
+            <if test="city == null and region == null and street !=null">
+                AND a_street=#{street}
+            </if>
+            <if test="city == null and region != null">
+                AND a_region = #{region}
+                AND a_street != #{street}
+            </if>
+            <if test="city != null">
+                AND a_city = #{city}
+                AND a_region != #{region}
+                AND a_street != #{street}
+            </if>
+        </trim>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.quit.entity.SpecialEntity">
+
+    <!--工具箱 转移房源-->
+    <update id="transferFromHouse" parameterType="com.kfwy.hkp.quit.entity.SpecialEntity">
+        UPDATE t_hkp_hos_house
+        <trim prefix="set" suffixOverrides=",">
+            emp_code = #{newEmpCode},
+            <if test="updateCode != null">
+                last_update_code = #{updateCode},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime},
+            </if>
+        </trim>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                emp_code = #{hisEmpCode}
+                <if test="street != null">
+                    and street = #{street}
+                </if>
+                <if test="region != null">
+                    and region = #{region}
+                </if>
+                <if test="city != null">
+                    and city = #{city}
+                </if>
+                <if test="province != null">
+                    and province =#{province}
+                </if>
+            </if>
+            <if test="hosCodes != null and hosCodes.size > 0">
+                AND house_code IN
+                <foreach collection="hosCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </update>
+    <!--工具箱 转移客户-->
+    <update id="transferFromCustomer" parameterType="com.kfwy.hkp.quit.entity.SpecialEntity">
+        UPDATE t_hkp_crm_customer
+        <trim prefix="set" suffixOverrides=",">
+            emp_code = #{newEmpCode}
+        </trim>
+        <choose>
+            <when test="cusCodes !=null">
+                WHERE cus_code IN
+                <foreach collection="cusCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </when>
+            <otherwise>
+                WHERE cus_code IN (
+                SELECT
+                ARE .cus_code
+                FROM
+                t_hkp_crm_customer CUS
+                LEFT JOIN t_hkp_crm_customer_area ARE ON (CUS.cus_code = ARE .cus_code)
+                <trim prefix="where" prefixOverrides="AND|OR">
+                    <if test="hisEmpCode != null and hisEmpCode != ''">
+                        CUS.emp_code = #{hisEmpCode}
+                        <if test="street != null">
+                            and ARE.street = #{street}
+                        </if>
+                        <if test="region != null">
+                            and ARE.region = #{region}
+                        </if>
+                        <if test="city != null">
+                            and ARE.city = #{city}
+                        </if>
+                        <if test="province != null">
+                            and ARE.province =#{province}
+                        </if>
+                    </if>
+                </trim>
+                GROUP BY
+                ARE .cus_code
+                )
+            </otherwise>
+        </choose>
+    </update>
+    <!--工具箱 转移业主-->
+    <update id="transferFromOwner" parameterType="com.kfwy.hkp.quit.entity.SpecialEntity">
+        UPDATE t_hkp_hos_houseowner
+        <trim prefix="set" suffixOverrides=",">
+            emp_code = #{newEmpCode}
+        </trim>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                emp_code = #{hisEmpCode}
+            </if>
+            <if test="ownCodes != null and ownCodes.size > 0">
+                AND houseowner_code IN
+                <foreach collection="ownCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </update>
+    <!--工具箱 转移兼职-->
+    <update id="transferFromPartTime" parameterType="com.kfwy.hkp.quit.entity.SpecialEntity">
+        UPDATE t_hkp_pt_parttimer
+        <trim prefix="set" suffixOverrides=",">
+            owner_code = #{newEmpCode},
+            owner_name = #{newEmpName},
+            owner_phone = (select user_phone
+                            from t_hkp_sys_user_user
+                            where user_code = #{newEmpCode}),
+            last_update_time=#{lastUpdateTime},
+        </trim>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                owner_code = #{hisEmpCode}
+            </if>
+            <if test="userCodes != null and userCodes.size > 0">
+                AND pt_code IN
+                <foreach collection="userCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </update>
+
+    <!--工具箱 获取需要转移的房源-->
+    <select id="getTransferFromHouse" resultType="java.lang.String" parameterType="com.kfwy.hkp.quit.entity.SpecialEntity">
+        select house_code
+        from t_hkp_hos_house
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                emp_code = #{hisEmpCode}
+                <if test="street != null">
+                    and street = #{street}
+                </if>
+                <if test="region != null">
+                    and region = #{region}
+                </if>
+                <if test="city != null">
+                    and city = #{city}
+                </if>
+                <if test="province != null">
+                    and province =#{province}
+                </if>
+            </if>
+            <if test="hosCodes != null and hosCodes.size > 0">
+                AND house_code IN
+                <foreach collection="hosCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </select>
+    <!--工具箱 获取需要转移的客户-->
+    <select id="getTransferFromCustomer" resultType="java.lang.String" parameterType="com.kfwy.hkp.quit.entity.SpecialEntity">
+        select cus_code
+        from t_hkp_crm_customer
+        <choose>
+            <when test="cusCodes !=null">
+                WHERE cus_code IN
+                <foreach collection="cusCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </when>
+            <otherwise>
+                WHERE cus_code IN (
+                SELECT
+                ARE .cus_code
+                FROM
+                t_hkp_crm_customer CUS
+                LEFT JOIN t_hkp_crm_customer_area ARE ON (CUS.cus_code = ARE .cus_code)
+                <trim prefix="where" prefixOverrides="AND|OR">
+                    <if test="hisEmpCode != null and hisEmpCode != ''">
+                        CUS.emp_code = #{hisEmpCode}
+                        <if test="street != null">
+                            and ARE.street = #{street}
+                        </if>
+                        <if test="region != null">
+                            and ARE.region = #{region}
+                        </if>
+                        <if test="city != null">
+                            and ARE.city = #{city}
+                        </if>
+                        <if test="province != null">
+                            and ARE.province =#{province}
+                        </if>
+                    </if>
+                </trim>
+                GROUP BY
+                ARE .cus_code
+                )
+            </otherwise>
+        </choose>
+    </select>
+    <!--工具箱 获取需要转移的业主-->
+    <select id="getTransferFromOwner" resultType="java.lang.String" parameterType="com.kfwy.hkp.quit.entity.SpecialEntity">
+        select houseowner_code
+        from t_hkp_hos_houseowner
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                emp_code = #{hisEmpCode}
+            </if>
+            <if test="ownCodes != null and ownCodes.size > 0">
+                AND houseowner_code IN
+                <foreach collection="ownCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </select>
+    <!--工具箱 获取需要转移的兼职-->
+    <select id="getTransferFromPartTime" resultType="java.lang.String" parameterType="com.kfwy.hkp.quit.entity.SpecialEntity">
+        select pt_code
+        from t_hkp_pt_parttimer
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                owner_code = #{hisEmpCode}
+            </if>
+            <if test="userCodes != null and userCodes.size > 0">
+                AND pt_code IN
+                <foreach collection="userCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </select>
+</mapper>

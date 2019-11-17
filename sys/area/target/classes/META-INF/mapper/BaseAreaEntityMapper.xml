@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.area.entity.BaseAreaEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.sys.area.entity.BaseAreaEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="area_code"  property="areaCode"  jdbcType="VARCHAR"/>
+        <result column="parent_code"  property="parentCode"  jdbcType="VARCHAR"/>
+        <result column="name"  property="name"  jdbcType="VARCHAR"/>
+        <result column="short_name"  property="shortName"  jdbcType="VARCHAR"/>
+
+        <result column="longitude" property="longitude" jdbcType="NUMERIC" />
+        <result column="latitude" property="latitude" jdbcType="NUMERIC" />
+
+        <result column="level" property="level" jdbcType="NUMERIC" javaType="int"/>
+        <result column="sort" property="sort" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="level" property="level" jdbcType="NUMERIC" javaType="int"/>
+        <result column="sort" property="sort" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="status" property="status" jdbcType="VARCHAR" />
+
+
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_sys_area_area
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.areaCode != null and i.areaCode != ''">
+                    area_code,
+                </if>
+                <if test="i.parentCode != null and i.parentCode != ''">
+                    parent_code,
+                </if>
+                <if test="i.name != null and i.name !=''">
+                    name,
+                </if>
+                <if test="i.shortName != null and i.shortName !=''">
+                    short_name,
+                </if>
+                <if test="i.longitude != null">
+                    longitude,
+                </if>
+                <if test="i.latitude != null">
+                    latitude,
+                </if>
+                <if test="i.level != null">
+                    level,
+                </if>
+                <if test="i.sort != null">
+                    sort,
+                </if>
+
+                <if test="i.status != null and i.status!=''">
+                    status,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.areaCode != null and i.areaCode != ''">
+                    #{i.areaCode},
+                </if>
+                <if test="i.parentCode != null and i.parentCode != ''">
+                    #{i.parentCode},
+                </if>
+                <if test="i.name != null and i.name !=''">
+                    #{i.name},
+                </if>
+                <if test="i.shortName != null and i.shortName !=''">
+                    #{i.shortName},
+                </if>
+                <if test="i.longitude != null">
+                    #{i.longitude},
+                </if>
+                <if test="i.latitude != null">
+                    #{i.latitude},
+                </if>
+                <if test="i.level != null">
+                    #{i.level},
+                </if>
+                <if test="i.sort != null">
+                    #{i.sort},
+                </if>
+
+                <if test="i.status != null and i.status!=''">
+                    #{i.status},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新数据信息 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.area.entity.BaseAreaEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_sys_area_area
+            <trim prefix="set" suffixOverrides=",">
+
+                <if test="i.areaCode != null and i.areaCode != ''">
+                    area_code = #{i.areaCode},
+                </if>
+                <if test="i.parentCode != null and i.parentCode != ''">
+                    parent_code = #{i.parentCode},
+                </if>
+                <if test="i.shortName != null and i.shortName !=''">
+                    short_name = #{i.shortName},
+                </if>
+                <if test="i.name != null and i.name !=''">
+                    name = #{i.name},
+                </if>
+                <if test="i.longitude != null">
+                    longitude=#{i.longitude},
+                </if>
+                <if test="i.latitude != null">
+                    latitude=#{i.latitude},
+                </if>
+                <if test="i.level != null">
+                    level = #{i.level},
+                </if>
+                <if test="i.sort != null">
+                    sort = #{i.sort},
+                </if>
+
+                <if test="i.status != null and i.status!=''">
+                    status = #{i.status},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                area_code = #{i.areaCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_sys_area_area WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="areaCode != null">
+                AND area_code = #{areaCode}
+            </if>
+            <!-- codes 和 _codes 二选一条件-->
+            <if test="areaCodes != null">
+                AND area_code IN
+                <foreach collection="areaCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+            <if test="_areaCodes != null">
+                AND area_code IN (${_areaCodes})
+            </if>
+            <if test="parentCode != null">
+                AND parent_code = #{parentCode}
+            </if>
+            <if test="name != null">
+                AND name = #{name}
+            </if>
+            <if test="level != null">
+                AND level = #{level}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.area.entity.BaseAreaEntity">
+        SELECT * FROM t_hkp_sys_area_area
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_sys_area_area
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.area.entity.BaseAreaEntity">
+        SELECT * FROM t_hkp_sys_area_area
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_sys_area_area
+        <include refid="selectSql"/>
+    </select>
+
+</mapper>

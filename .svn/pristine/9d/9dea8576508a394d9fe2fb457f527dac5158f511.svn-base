@@ -1,0 +1,45 @@
+userApi-list=http://mo.kufangwuyou.com/kfwy-office/rs/userApi/list
+userApi-update=http://mo.kufangwuyou.com/kfwy-office/rs/userApi/update
+userApi-queryUserByDept=http://mo.kufangwuyou.com/kfwy-office/rs/userApi/queryUserByDept
+userApi-findUsersAll=http://mo.kufangwuyou.com/kfwy-office/rs/userApi/findUsersAll
+userApi-initUsersAll=http://mo.kufangwuyou.com/kfwy-office/rs/userApi/initUsersAll
+
+deptApi-deptTree=http://mo.kufangwuyou.com/kfwy-office/rs/deptApi/deptTree
+deptApi-deptAllTree=http://mo.kufangwuyou.com/kfwy-office/rs/deptApi/deptAllTree
+deptApi-queryAll=http://mo.kufangwuyou.com/kfwy-office/rs/deptApi/queryAll
+deptApi-detail=http://mo.kufangwuyou.com/kfwy-office/rs/deptApi/detail
+deptApi-query=http://mo.kufangwuyou.com/kfwy-office/rs/deptApi/query
+deptApi-sync=http://mo.kufangwuyou.com/kfwy-office/rs/deptApi/sync
+#deptApi-sync=http://localhost:8082/kfwy-office/rs/deptApi/sync
+noticeApi-query=http://e.test.kufangwuyou.com/kfwy-backend/rs/noticeApi/query
+noticeApi-detail=http://e.test.kufangwuyou.com/kfwy-backend/rs/noticeApi/detail
+
+employeeApi-query=http://mo.kufangwuyou.com/kfwy-office/rs/employeeApi/query
+employeeApi-queryAll=http://mo.kufangwuyou.com/kfwy-office/rs/employeeApi/queryAll
+employeeApi-queryByMap=http://mo.kufangwuyou.com/kfwy-office/rs/employeeApi/queryByMap
+
+
+
+bespeakApi-query=http://mo.kufangwuyou.com/kfwy-office/rs/bespeakApi/query
+#bespeakApi-query=http://192.168.0.73:8083/kfwy-office/rs/bespeakApi/query
+bespeakApi-update=http://mo.kufangwuyou.com/kfwy-office/rs/bespeakApi/update
+#bespeakApi-update=http://192.168.0.73:8083/kfwy-office/rs/bespeakApi/update
+bespeakApi-findSelectBespeakPower=http://mo.kufangwuyou.com/kfwy-office/rs/bespeakApi/findSelectBespeakPower
+#bespeakApi-findSelectBespeakPower=http://192.168.0.73:8083/kfwy-office/rs/bespeakApi/findSelectBespeakPower
+
+entrustApi-query=http://mo.kufangwuyou.com/kfwy-office/rs/entrustApi/query
+#entrustApi-query=http://192.168.0.73:8083/kfwy-office/rs/entrustApi/query
+entrustApi-update=http://mo.kufangwuyou.com/kfwy-office/rs/entrustApi/update
+#entrustApi-update=http://192.168.0.73:8083/kfwy-office/rs/entrustApi/update
+
+
+recommendApi-query=http://mo.kufangwuyou.com/kfwy-office/rs/entrustApi/query
+#recommendApi-query=http://192.168.0.73:8083/kfwy-office/rs/recommendApi/query
+recommendApi-update=http://mo.kufangwuyou.com/kfwy-office/rs/entrustApi/update
+#recommendApi-update=http://192.168.0.73:8083/kfwy-office/rs/recommendApi/update
+
+sso-auth=http://192.168.0.55:8081/kfwy-backend/rs/sso/auth
+
+qiChaCha-url = http://api.qichacha.com/ECICreditCode/GetCreditCodeNew
+qiChaCha-key = 51924295b98c44c19b8f7a60abb0aa0c
+qiChaCha-secretKey = C6A8A8B621C6C5EEBA0B981D03246D3E

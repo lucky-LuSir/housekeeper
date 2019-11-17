@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.hos.house.entity.HouseMapEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.hos.house.entity.HouseMapEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cpy_emp_code" property="cpyEmpCode" jdbcType="VARCHAR"/>
+        <result column="bd_code" property="hosCode"/>
+        <result column="bd_name" property="hosName"/>
+        <result column="ws_code" property="hosCode"/>
+        <result column="ws_name" property="hosName"/>
+        <result column="wh_code" property="hosCode"/>
+        <result column="wh_name" property="hosName"/>
+        <result column="of_code" property="hosCode"/>
+        <result column="of_name" property="hosName"/>
+        <result column="address" property="address"/>
+        <result column="province" property="province"/>
+        <result column="province_name" property="provinceName"/>
+        <result column="city" property="city"/>
+        <result column="city_name" property="cityName"/>
+        <result column="region" property="region"/>
+        <result column="region_name" property="regionName"/>
+        <result column="street" property="street"/>
+        <result column="street_name" property="streetName"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+
+        <result column="count" property="count"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="level" property="level"/>
+
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="update_code" property="updateCode" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="monthPriceResultMap" type="com.kfwy.hkp.hos.house.dto.HousePriceDto">
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="maxPrice" property="maxPrice" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="averagePrice" property="averagePrice" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="minPrice" property="minPrice" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="warehouse_type" property="warehouseType" jdbcType="NUMERIC" javaType="int"/>
+        <result column="workshop_type" property="workshopType" jdbcType="NUMERIC" javaType="int"/>
+        <result column="yearMonth" property="yearMonth" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="avgPriceResultMap" type="com.kfwy.hkp.hos.house.entity.HousePriceEntity">
+        <result column="averagePrice" property="averagePrice" jdbcType="NUMERIC" javaType="decimal"/>
+    </resultMap>
+
+    <select id="selectHouseCount" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.hos.house.entity.HouseMapEntity">
+        SELECT r.count,r.code,r.name,a.longitude,a.latitude,a.level from t_hkp_sys_area_area a JOIN
+        (SELECT count(*) as count,
+        <choose>
+            <when test="region != null or level == 4">
+                street as code,street_name as name
+            </when>
+            <otherwise>
+                region as code,region_name as name
+            </otherwise>
+        </choose>
+        FROM
+        <if test="houseType == 1 or houseType ==2 or houseType ==3">
+            t_hkp_hos_house
+        </if>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="city != null">
+                and city=#{city}
+            </if>
+            <if test="region != null">
+                and region=#{region}
+            </if>
+            <if test="warehouseType != null and houseType!=5">
+                and house_style = #{warehouseType}
+            </if>
+
+
+            <if test="priceStart != null ">
+                  AND price <![CDATA[>=]]> #{priceStart}
+            </if>
+            <if test="priceEnd != null ">
+                  AND price <![CDATA[<=]]> #{priceEnd}
+            </if>
+
+            <if test="acreageStart != null">
+                  AND area <![CDATA[>=]]> #{acreageStart}
+            </if>
+            <if test="acreageEnd != null">
+                  AND area <![CDATA[<=]]> #{acreageEnd}
+            </if>
+
+            <if test="layerHeightStart != null and houseType!=5">
+                AND layer_height <![CDATA[>=]]> #{longitudeStart}
+            </if>
+            <if test="layerHeightEnd !=null and houseType!=5">
+                AND layer_height <![CDATA[<=]]> #{longitudeEnd}
+            </if>
+
+            <if test="longitudeStart != null">
+                AND longitude <![CDATA[>=]]> #{longitudeStart}
+            </if>
+            <if test="longitudeEnd !=null">
+                AND longitude <![CDATA[<=]]> #{longitudeEnd}
+            </if>
+
+            <if test="latitudeStart !=null">
+                AND latitude <![CDATA[>=]]> #{latitudeStart}
+            </if>
+            <if test="latitudeEnd != null">
+                AND latitude <![CDATA[<=]]> #{latitudeEnd}
+            </if>
+
+            <if test="hasShortLease != null">
+                AND has_short_lease =#{hasShortLease}
+            </if>
+            <if test="status != null">
+                AND house_status = #{status}
+            </if>
+            <if test="statusList != null">
+                AND house_status IN (${statusList})
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+
+            <if test="houseType ==1 or houseType ==2 or houseType ==3">
+                AND house_purpose IN (#{houseType}, '3')
+            </if>
+        </trim>
+        GROUP BY
+        <choose>
+            <when test="region != null or level == 4">
+                street,street_name
+            </when>
+            <otherwise>
+                region,region_name
+            </otherwise>
+        </choose>
+        ) r
+        on a.area_code||'' = r.code
+        ORDER BY a.sort
+    </select>
+
+    <select id="selectHouseCountByMapPoint" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.hos.house.entity.HouseMapEntity">
+        SELECT k.*,b.longitude,b.latitude,b.level FROM
+        (
+        SELECT count(*) as count,
+        <choose>
+            <when test="level == 4">
+                street as code,street_name as name
+            </when>
+            <otherwise>
+                region as code,region_name as name
+            </otherwise>
+        </choose>
+        from t_hkp_hos_house w
+
+        left join t_hkp_sys_area_area A on
+
+        <choose>
+            <when test="level == 4">
+                w.street = A.area_code
+            </when>
+            <otherwise>
+                w.region = A.area_code
+            </otherwise>
+        </choose>
+
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="acreageStart != null">
+                AND w.area <![CDATA[>=]]> #{acreageStart}
+            </if>
+            <if test="acreageEnd != null">
+                AND w.area <![CDATA[<=]]> #{acreageEnd}
+            </if>
+            <if test="priceStart != null ">
+                AND w.price <![CDATA[>=]]> #{priceStart}
+            </if>
+            <if test="priceEnd != null ">
+                AND w.price <![CDATA[<=]]> #{priceEnd}
+            </if>
+            <if test="isHot != null">
+                AND w.is_hot = #{isHot}
+            </if>
+            <if test="isRecommend != null">
+                AND w.is_recommend = #{isRecommend}
+            </if>
+            <if test="hasShortLease != null">
+                AND w.has_short_Lease = #{hasShortLease}
+            </if>
+            <if test="province != null and province!=''">
+                AND w.province = #{province}
+            </if>
+            <if test="warehouseType != null and houseType!=5">
+                and house_style=#{warehouseType}
+            </if>
+            <if test="city != null and city != ''">
+                AND w.city = #{city}
+            </if>
+            <if test="region != null and region != ''">
+                AND w.region = #{region}
+            </if>
+            <if test="street != null and street != ''">
+                AND w.street = #{street}
+            </if>
+            <if test="status != null">
+                AND w.house_status = #{status}
+            </if>
+            <if test="statusList != null">
+                AND w.house_status IN (${statusList})
+            </if>
+            <if test="isDeleted != null">
+                AND w.is_deleted = #{isDeleted}
+            </if>
+
+            <if test="houseType ==1 or houseType ==2 or houseType ==3">
+               AND w.house_purpose IN (#{houseType}, '3')
+
+            </if>
+
+            <if test="keyWord != null and keyWord!=''">
+                AND (w.street_name like '%'|| #{keyWord} || '%' or w.region_name
+                like '%'|| #{keyWord} || '%' or  w.house_name like '%' || #{keyWord} || '%')
+            </if>
+
+            <if test="longitudeStart != null">
+                AND a.longitude <![CDATA[>=]]> #{longitudeStart}
+            </if>
+            <if test="longitudeEnd !=null">
+                AND a.longitude <![CDATA[<=]]> #{longitudeEnd}
+            </if>
+
+            <if test="latitudeStart !=null">
+                AND a.latitude <![CDATA[>=]]> #{latitudeStart}
+            </if>
+            <if test="latitudeEnd != null">
+                AND a.latitude <![CDATA[<=]]> #{latitudeEnd}
+            </if>
+            <if test="level != null">
+                AND a.level=#{level}
+            </if>
+
+        </trim>
+        GROUP BY
+        <choose>
+            <when test="level == 4">
+                w.street,w.street_name
+            </when>
+            <otherwise>
+                w.region,w.region_name
+            </otherwise>
+        </choose>
+        ) as k
+        JOIN t_hkp_sys_area_area b on k.code = b.area_code
+    </select>
+
+    <select id="selectTogetherCount" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.hos.house.entity.HouseMapEntity">
+        SELECT k.*,b.longitude,b.latitude,b.level FROM
+        (
+        SELECT count(*) as count,
+        <choose>
+            <when test="level == 4">
+                street as code,street_name as name
+            </when>
+            <otherwise>
+                region as code,region_name as name
+            </otherwise>
+        </choose>
+        from (SELECT * FROM(
+        SELECT
+        h.*,
+        l.location_alias,
+        l.province as l_province,
+        l.city as l_city,
+        l.region as l_region,
+        l.street as l_street,
+        l.province_name as l_province_name,
+        l.city_name as l_city_name,
+        l.region_name as l_region_name,
+        l.street_name as l_street_name,
+        l.community_name as l_community_name,
+        l.detail_address,
+        l.longitude,
+        l.latitude,
+        e.user_name as emp_name,
+        e.user_phone as emp_phone,
+        o.houseowner_phone as owner_phone,
+        <if test="null!=userCode and userCode!=''">
+            case when hf.house_code is null then false  else true end as has_favorite,
+        </if>
+        o.houseowner_name as owner_name,
+        o.houseowner_type as houseowner_type,
+        o.company_name as company_name
+        FROM t_hkp_hos_house h
+        <if test="hasFavorite == true">
+            INNER join t_hkp_hos_favorite f on f.house_code = h.house_code AND f.emp_code = #{favEmpCode}
+        </if>
+        <if test="hasCoo == true">
+            INNER join t_hkp_union_cooperate c on c.house_code = h.house_code AND(c.apply_code = #{cooEmpCode} or c.receive_code = #{cooEmpCode})
+        </if>
+        <if test="null!=userCode and userCode!=''">
+            left join t_hkp_hos_favorite hf  on hf.house_code = h.house_code AND hf.emp_code = #{userCode}
+        </if>
+
+        LEFT JOIN t_hkp_hos_location l on l.location_code = h.location_code
+        LEFT JOIN t_hkp_sys_user_user e on e.user_code = h.emp_code
+        LEFT JOIN t_hkp_hos_houseowner o on o.houseowner_code = h.owner_code
+
+        ) TP
+
+        <include refid="selectHouseSql"/>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>) w
+
+        left join t_hkp_sys_area_area A on
+
+        <choose>
+            <when test="level == 4">
+                w.street = A.area_code
+            </when>
+            <otherwise>
+                w.region = A.area_code
+            </otherwise>
+        </choose>
+        GROUP BY
+        <choose>
+            <when test="level == 4">
+                w.street,w.street_name
+            </when>
+            <otherwise>
+                w.region,w.region_name
+            </otherwise>
+        </choose>
+        ) as k
+        JOIN t_hkp_sys_area_area b on k.code = b.area_code
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="level != null">
+                AND level = #{level}
+            </if>
+        </trim>
+    </select>
+
+    <sql id="selectHouseSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="houseCode != null and houseCode != ''">
+                AND house_code = #{houseCode}
+            </if>
+            <if test="houseName != null and houseName != ''">
+                AND house_name like '%'||#{houseName}||'%'
+            </if>
+            <if test="locationCode != null and locationCode != ''">
+                AND location_code = #{locationCode}
+            </if>
+            <if test="rightUpLng != null">
+                AND longitude <![CDATA[ < ]]> #{rightUpLng}
+            </if>
+            <if test="leftDownLng != null">
+                AND longitude <![CDATA[ > ]]> #{leftDownLng}
+            </if>
+
+            <if test="rightUpLat != null">
+                AND latitude <![CDATA[ < ]]> #{rightUpLat}
+            </if>
+            <if test="leftDownLat != null">
+                AND latitude <![CDATA[ > ]]> #{leftDownLat}
+            </if>
+
+
+
+
+            <if test="openFlag != null">
+                AND open_flag = #{openFlag}
+            </if>
+            <if test="keyword != null and keyword!=''">
+                AND (
+                house_name like '%' || #{keyword} ||'%'
+                or emp_phone like '%' || #{keyword} ||'%'
+                or province_name like '%' || #{keyword} ||'%'
+                or city_name like '%' || #{keyword} ||'%'
+                or region_name like '%' || #{keyword} ||'%'
+                or street_name like '%' || #{keyword} ||'%'
+                or community_name like '%' || #{keyword} ||'%'
+                or for_insdustry like '%' || #{keyword} ||'%'
+                or detail_address like '%' || #{keyword} ||'%'
+                or owner_phone like '%' || #{keyword} ||'%'
+                or owner_name like  '%' || #{keyword} ||'%'
+                or emp_name like '%' || #{keyword} ||'%'
+                )
+            </if>
+            <if test="keywordNumber != null">
+                AND
+                (
+                area BETWEEN #{keywordNumber}-100 AND #{keywordNumber}+100
+                <if test="keywordNumber lt 5">
+                    or  price BETWEEN #{keywordNumber}-0.5 AND #{keywordNumber}+0.5
+                </if>
+                <if test="keywordNumber gte 5">
+                    or  price BETWEEN #{keywordNumber}-2 AND #{keywordNumber}+2
+                </if>
+                )
+            </if>
+            <if test="ownerCode != null and ownerCode != ''">
+                AND owner_code = #{ownerCode}
+            </if>
+            <if test="ownerPhone != null and ownerPhone != ''">
+                AND owner_phone = #{ownerPhone}
+            </if>
+            <if test="houseType != null and houseType != ''">
+                AND house_type = #{houseType}
+            </if>
+            <if test="houseStatus != null and houseStatus != ''">
+                AND house_status = #{houseStatus}
+            </if>
+            <if test="housePurpose != null and housePurpose != ''">
+                AND house_purpose = #{housePurpose}
+            </if>
+            <if test="housePurposes != null">
+                <choose>
+                    <when test="isPurposeString">
+                        AND house_purpose IN (${housePurposes})
+                    </when>
+                    <otherwise>
+                        AND house_purpose IN
+                        <foreach collection="housePurposes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND emp_code = #{empCode}
+            </if>
+            <if test="empCodes != null">
+                <choose>
+                    <when test="_empCodes">
+                        AND emp_code IN (${_empCodes})
+                    </when>
+                    <otherwise>
+                        AND emp_code IN
+                        <foreach collection="empCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empName != null and empName != ''">
+                AND emp_name like '%'||#{empName}||'%'
+            </if>
+            <if test="community != null or street != null or region != null or city != null or province != null ">
+                <choose>
+                    <when test="community !=null">
+                        AND community=#{community}
+                    </when>
+                    <when test="street !=null">
+                        AND street=#{street}
+                    </when>
+                    <when test="region != null">
+                        AND region = #{region}
+                    </when>
+                    <when test="city != null">
+                        AND city = #{city}
+                    </when>
+                    <when test="province != null">
+                        AND province =#{province}
+                    </when>
+                </choose>
+            </if>
+            <if test="cusProvince != null or cusCity != null or cusRegion != null or cusStreet != null or cusCommunity!=null">
+                <choose>
+                    <when test="cusCommunity != null">
+                        and l_community in (${cusCommunity})
+                    </when>
+                    <when test="cusStreet != null">
+                        and l_street in (${cusStreet})
+                    </when>
+                    <when test="cusRegion != null">
+                        AND l_region in (${cusRegion})
+                    </when>
+                    <when test="cusCity != null">
+                        AND l_city in (${cusCity})
+                    </when>
+                    <when test="cusProvince != null">
+                        AND l_province in (${cusProvince})
+                    </when>
+                </choose>
+            </if>
+            <if test="regions != null">
+                <choose>
+                    <when test="_regions">
+                        AND region  IN (${_regions})
+                    </when>
+                    <otherwise>
+                        AND region  IN
+                        <foreach collection="regions" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="matchEmpCode != null and matchEmpCode!=''">
+                AND (emp_code = #{matchEmpCode} or house_type = '1')
+            </if>
+            <if test="detailAddress != null and detailAddress!=''">
+                AND l_detail_Address like '%'||#{detailAddress}||'%'
+            </if>
+            <if test="fireLevel != null and fireLevel!=''">
+                AND fire_level = #{fireLevel}
+            </if>
+            <if test="hasEia != null">
+                AND has_eia=#{hasEia}
+            </if>
+            <if test="hasCut != null">
+                AND has_cut=#{hasCut}
+            </if>
+            <if test="hasCertificate != null">
+                AND has_certificate=#{hasCertificate}
+            </if>
+            <if test="hasRegistry != null">
+                AND has_registry=#{hasRegistry}
+            </if>
+            <if test="hasShortLease != null">
+                AND has_short_lease=#{hasShortLease}
+            </if>
+            <if test="hasParking != null">
+                AND has_parking=#{hasParking}
+            </if>
+            <if test="minArea != null">
+                AND area  <![CDATA[ >= ]]> #{minArea}
+            </if>
+            <if test="maxArea != null">
+                AND area  <![CDATA[ <= ]]> #{maxArea}
+            </if>
+            <if test="minPrice != null">
+                AND price  <![CDATA[ >= ]]> #{minPrice}
+            </if>
+            <if test="maxPrice != null">
+                AND price  <![CDATA[ <= ]]> #{maxPrice}
+            </if>
+            <if test="minElectric != null">
+                AND max_electric  <![CDATA[ >= ]]> #{minElectric}
+            </if>
+            <if test="maxElectric != null">
+                AND max_electric  <![CDATA[ <= ]]> #{maxElectric}
+            </if>
+
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="lastFollowupTime != null">
+                AND last_followup_time <![CDATA[ <= ]]> #{lastFollowupTime}
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createDeptCode != null">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="isHot != null">
+                AND is_hot=#{isHot},
+            </if>
+            <if test="decorationType != null and decorationType != ''">
+                AND decoration_type=#{decorationType},
+            </if>
+            <if test="authDeptCode != null and authDeptCode != ''">
+                AND auth_dept_code=#{authDeptCode},
+            </if>
+            <if test="authCode != null and authCode != ''">
+                AND auth_code=#{authCode},
+            </if>
+            <if test="hasCrane != null">
+                AND has_crane=#{hasCrane},
+            </if>
+            <if test="propertyCompany != null and propertyCompany != ''">
+                AND property_company=#{propertyCompany},
+            </if>
+            <if test="maxPassCar != null and maxPassCar != ''">
+                AND max_pass_car=#{maxPassCar},
+            </if>
+            <if test="elevatorStandard != null and ielevatorStandard != ''">
+                AND elevator_standard=#{elevatorStandard},
+            </if>
+            <if test="minAcreage != null and minAcreage != ''">
+                AND min_acreage=#{minAcreage},
+            </if>
+            <if test="elevatorDoor != null and elevatorDoor != ''">
+                AND elevator_door=#{elevatorDoor},
+            </if>
+            <if test="houseownerType!=null and houseownerType!=''">
+                --业主类型
+                and houseowner_type=#{houseownerType}
+            </if>
+            <if test="houseOwnerName!=null and houseOwnerName !='' ">
+                --业主姓名
+                and owner_name = #{houseOwnerName}
+            </if>
+            <if test=" layerHeight!=null ">
+                --层高
+                and layer_height = #{layerHeight}
+            </if>
+            <if test="whereLayer!=null  ">
+                --楼层
+                and where_layer=#{whereLayer}
+            </if>
+            <if test="notUnderlayer!=null  ">
+                --楼层
+                and where_layer <![CDATA[ > ]]> '1'
+            </if>
+            <if test="underlayer!=null  ">
+                --楼层
+                and where_layer = '1'
+            </if>
+            <if test="startEnterTime != null ">
+                --最早入住时间
+                AND enter_time <![CDATA[ >= ]]> #{startEnterTime}
+            </if>
+            <if test="endEnterTime !=null">
+                --最晚入住时间
+                AND enter_time <![CDATA[ <= ]]> #{endEnterTime}
+            </if>
+            <if test="companyName!= null and companyName!=''">
+                --所属公司
+                and company_name=#{companyName}
+            </if>
+            <if test="forInsdustry!= null and forInsdustry!='' ">
+                --行业性质
+                and for_insdustry like '%'||#{forInsdustry}||'%'
+            </if>
+            <if test="startLastFollowupTime!=null">
+                AND last_followup_time <![CDATA[ >= ]]> #{startLastFollowupTime}
+            </if>
+            <if test="endLastFollowupTime">
+                AND last_followup_time <![CDATA[ <= ]]> #{endLastFollowupTime}
+            </if>
+            <if test="bearing!=null">
+                AND bearing=#{bearing},
+            </if>
+            <if test="leaseNegotiable !=null">
+                AND lease_negotiable=#{leaseNegotiable},
+            </if>
+            <if test="ofTheArea !=null">
+                AND of_the_area=#{ofTheArea},
+            </if>
+            <if test="hasInstallCrane!=null">
+                AND has_install_crane = #{hasInstallCrane}
+            </if>
+            <if test="houseStyle!=null">
+                AND house_style = #{houseStyle}
+            </if>
+        </trim>
+    </sql>
+    <select id="monthPrice"  parameterType="map" resultMap="monthPriceResultMap">
+        SELECT
+          to_char(ps.create_time, 'yyyy-mm') AS yearMonth,
+          round(SUM(ps.price) / COUNT(*), 2) AS averagePrice,
+          MAX (ps.price) AS maxPrice,
+          MIN (ps.price) AS minPrice
+        FROM(
+          SELECT(
+            CASE unit
+              WHEN '元/㎡/年' THEN
+                price / 365
+              WHEN '元/㎡/月' THEN
+                price / 30
+              ELSE
+                price
+            END
+          ) AS price,
+            create_time
+          FROM
+            t_hkp_hos_house
+          WHERE
+              CURRENT_DATE - create_time <![CDATA[<=]]> INTERVAL '12 month'
+            <if test="city != null">
+                AND city = #{city}
+            </if>
+            <if test="region!=null">
+                AND region=#{region}
+            </if>
+            <if test="acreageStart != null">
+                AND area <![CDATA[>=]]> #{acreageStart}
+            </if>
+            <if test="acreageEnd != null">
+                AND area <![CDATA[<=]]> #{acreageEnd}
+            </if>
+            <if test="isBottom != null and isBottom == true">
+                AND where_layer = '1'
+            </if>
+            <if test="isBottom != null and isBottom == false">
+                AND where_layer > '1'
+            </if>
+            <if test="houseTypes != null">
+                <choose>
+                    <when test="_houseTypes != null">
+                        AND house_purpose IN (${_houseTypes})
+                    </when>
+                    <otherwise>
+                        AND house_purpose IN
+                        <foreach collection="houseTypes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+        ) ps
+        GROUP BY to_char( ps.create_time,'yyyy-mm')
+        ORDER BY yearMonth
+        LIMIT 12
+    </select>
+
+    <select id="avgPriceByMonth"  parameterType="map" resultMap="avgPriceResultMap">
+        SELECT
+            round(SUM(ps.price) / COUNT(*), 2) AS averagePrice
+        FROM(
+            SELECT(
+                CASE unit
+                WHEN '元/㎡/年' THEN
+                price / 365
+                WHEN '元/㎡/月' THEN
+                price / 30
+                ELSE
+                price
+                END
+            ) AS price,
+              create_time
+            FROM
+              t_hkp_hos_house
+            WHERE
+                CURRENT_date-create_time<![CDATA[<=]]>  ${month}
+            <if test="city != null">
+                AND city = #{city}
+            </if>
+            <if test="region!=null">
+                AND region=#{region}
+            </if>
+            <if test="houseTypes != null">
+                <choose>
+                    <when test="_houseTypes != null">
+                        AND house_purpose IN (${_houseTypes})
+                    </when>
+                    <otherwise>
+                        AND house_purpose IN
+                        <foreach collection="houseTypes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+        ) ps
+    </select>
+
+</mapper>

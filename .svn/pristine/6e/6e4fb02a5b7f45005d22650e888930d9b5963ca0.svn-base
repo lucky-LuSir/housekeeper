@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is just example. please change for your real system. -->
+<exceptionHandler>
+	<handlers>
+		<!-- 
+		<handler id="generalLoggingHandler" class="com.kb5173.framework.exception.handler.GeneralLoggingHandler" /> 
+		-->
+	</handlers>
+
+	<exceptions>
+		<!-- 
+		<exception class="java.lang.NullPointerException" postHandlingAction="ThrowNewException">
+			<refHandler ref="generalLoggingHandler" />
+		</exception> 
+		-->
+	</exceptions>
+
+</exceptionHandler>

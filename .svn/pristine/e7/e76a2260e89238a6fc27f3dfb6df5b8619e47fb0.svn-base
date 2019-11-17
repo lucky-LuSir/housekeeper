@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.kfwy.hkp</groupId>
+		<artifactId>hkp</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>hkp-crm</artifactId>
+	<packaging>pom</packaging>
+	<properties>
+	</properties>
+	<modules>
+		<!--公共访问接口-->
+        <module>srv</module>
+		<!--客户模块-->
+		<module>customer</module>
+		<!--业主模块-->
+		<module>houseowner</module>
+    </modules>
+
+</project>

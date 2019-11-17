@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.quit.entity.QuitEntity">
+
+
+    <!--获取业主编码集合-->
+    <select id="getHouseOwnerList" parameterType="com.kfwy.hkp.quit.entity.QuitEntity" resultType="java.lang.String">
+        select houseowner_code
+        from t_hkp_hos_houseowner
+        where emp_code = #{createCode}
+        <if test="inDeptTeamTime != null">
+            AND create_time <![CDATA[ >= ]]> #{inDeptTeamTime}
+        </if>
+    </select>
+    <!--业主数据转移-->
+    <update id="updateHouseOwner" parameterType="com.kfwy.hkp.quit.entity.QuitEntity">
+        update t_hkp_hos_houseowner
+        set emp_code = #{wareHouseDataTransferCode},
+            last_update_time=#{lastUpdateTime},
+            last_update_code=#{headerCode}
+        where emp_code = #{createCode}
+        <if test="inDeptTeamTime != null">
+            AND create_time <![CDATA[ >= ]]> #{inDeptTeamTime}
+        </if>
+    </update>
+    <!--获取房源编码集合-->
+    <select id="getHouseList" parameterType="com.kfwy.hkp.quit.entity.QuitEntity" resultType="java.lang.String">
+        select house_code
+        from t_hkp_hos_house
+        where emp_code = #{createCode}
+        <if test="inDeptTeamTime != null">
+            AND create_time <![CDATA[ >= ]]> #{inDeptTeamTime}
+        </if>
+    </select>
+    <!--房源数据转移-->
+    <update id="updateHouse" parameterType="com.kfwy.hkp.quit.entity.QuitEntity">
+        update t_hkp_hos_house
+        set emp_code = #{wareHouseDataTransferCode},
+            last_update_time=#{lastUpdateTime},
+            last_update_code=#{headerCode}
+        where emp_code = #{createCode}
+        <if test="inDeptTeamTime != null">
+            AND create_time <![CDATA[ >= ]]> #{inDeptTeamTime}
+        </if>
+    </update>
+
+    <!--获取客户编码集合-->
+    <select id="getCustomerList" parameterType="com.kfwy.hkp.quit.entity.QuitEntity" resultType="java.lang.String">
+        select cus_code
+        from t_hkp_crm_customer
+        where emp_code = #{createCode}
+        <if test="inDeptTeamTime != null">
+            AND create_time <![CDATA[ >= ]]> #{inDeptTeamTime}
+        </if>
+    </select>
+    <!--客户数据转移 -->
+    <update id="updateCustomer" parameterType="com.kfwy.hkp.quit.entity.QuitEntity">
+        update t_hkp_crm_customer
+         set    emp_code=#{cusDataTransferCode},
+                last_update_time=#{lastUpdateTime},
+                cus_type = 1,
+                last_update_code=#{headerCode}
+        where  emp_code = #{createCode}
+        <if test="inDeptTeamTime != null">
+            AND create_time <![CDATA[ >= ]]> #{inDeptTeamTime}
+        </if>
+    </update>
+    <!--兼职编码集合获取-->
+    <select id="getPartTimerList" parameterType="com.kfwy.hkp.quit.entity.QuitEntity" resultType="java.lang.String">
+        select pt_code
+        from t_hkp_pt_parttimer
+        where owner_code = #{createCode}
+        <if test="inDeptTeamTime != null">
+            AND create_time <![CDATA[ >= ]]> #{inDeptTeamTime}
+        </if>
+    </select>
+    <!--兼职数据转移 -->
+    <update id="updatePartTimer" parameterType="map">
+        update t_hkp_pt_parttimer
+        set owner_code = #{partTimeDataTransferCode},
+            owner_name = #{partTimeDataTransfer},
+            owner_phone = #{partTimeDataTransferPhone},
+            last_update_time=#{lastUpdateTime},
+            last_update_code=#{headerCode}
+        where owner_code = #{createCode}
+        <if test="inDeptTeamTime != null">
+            AND create_time <![CDATA[ >= ]]> #{inDeptTeamTime}
+        </if>
+    </update>
+    <!--获取兼职人转移人 的手机号-->
+    <select id="getUserPhoneByCode" resultType="java.lang.String" parameterType="java.lang.String">
+        select user_phone
+        from t_hkp_sys_user_user
+        where user_code = #{partTimeDataTransferCode}
+    </select>
+
+    <!--业主数据撤回-->
+    <update id="withdrawHouseOwner" parameterType="com.kfwy.hkp.quit.entity.QuitEntity">
+        update t_hkp_hos_houseowner
+        set emp_code = #{newEmpCode},
+            last_update_time=#{lastUpdateTime},
+        last_update_code=#{headerCode}
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                AND emp_code = #{hisEmpCode}
+            </if>
+            <if test="ownCodes != null and ownCodes.size > 0">
+                AND houseowner_code IN
+                <foreach collection="ownCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </update>
+    <!--房源数据撤回-->
+    <update id="withdrawHouse" parameterType="com.kfwy.hkp.quit.entity.QuitEntity">
+        update t_hkp_hos_house
+        set emp_code = #{newEmpCode},
+            last_update_time=#{lastUpdateTime},
+            last_update_code=#{headerCode}
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                AND emp_code = #{hisEmpCode}
+            </if>
+            <if test="hosCodes != null and hosCodes.size > 0">
+                AND house_code IN
+                <foreach collection="hosCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </update>
+    <!--客户 数据撤回 E201901220001bdc7  是平台code-->
+    <update id="withdrawCustomer" parameterType="com.kfwy.hkp.quit.entity.QuitEntity">
+        update t_hkp_crm_customer
+        <trim prefix="set" suffixOverrides=",">
+            <choose>
+                <when test="hisEmpCode != 'E201901220001bdc7'">
+                    cus_type=1,
+                    last_update_time=#{lastUpdateTime},
+                    emp_code = #{newEmpCode},
+                    last_update_code=#{headerCode}
+                </when>
+                <otherwise>
+                    cus_type=2,
+                    last_update_time=#{lastUpdateTime},
+                    emp_code = #{newEmpCode},
+                    last_update_code=#{headerCode}
+                </otherwise>
+            </choose>
+        </trim>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="cusCodes != null and cusCodes.size > 0">
+                AND cus_code IN
+                <foreach collection="cusCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </update>
+    <!--兼职数据撤回 -->
+    <update id="withdrawPartTimer" parameterType="map">
+        update t_hkp_pt_parttimer
+        set owner_code = #{partTimeDataTransferCode},
+            owner_name = #{partTimeDataTransfer},
+            owner_phone = #{partTimeDataTransferPhone},
+            last_update_time=#{lastUpdateTime},
+            last_update_code=#{headerCode}
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                AND owner_code = #{hisEmpCode}
+            </if>
+            <if test="userCodes != null and userCodes.size > 0">
+                AND pt_code IN
+                <foreach collection="userCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </update>
+
+    <!--erp账号关闭 库房管家也关闭-->
+    <update id="deleteEmp" parameterType="map">
+        update t_hkp_sys_user_user
+        set is_deleted = #{isDeleted},
+            quit_time = #{lastUpdateTime},
+            last_update_time= #{lastUpdateTime}
+        where user_code = #{userCode}
+    </update>
+    <update id="deleteEmpDeptCusService"  parameterType="map">
+        UPDATE t_hkp_org_dept_cusservice
+        SET is_deleted = #{isDeleted},
+            last_update_time= #{lastUpdateTime}
+        where user_code = #{userCode}
+    </update>
+</mapper>

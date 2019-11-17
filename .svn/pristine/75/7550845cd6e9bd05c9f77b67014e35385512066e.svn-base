@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.trade.order.entity.OrderPercentageEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.trade.order.entity.OrderPercentageEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="percentage_code" property="percentageCode" jdbcType="VARCHAR"/>
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+        <result column="pe_emp_code" property="peEmpCode" jdbcType="VARCHAR"/>
+        <result column="pe_dept_code" property="peDeptCode" jdbcType="VARCHAR"/>
+        <result column="percentage_name" property="percentageName" jdbcType="VARCHAR"/>
+        <result column="percentage_type" property="percentageType" jdbcType="VARCHAR"/>
+
+        <result column="money_percent_type" property="moneyPercentType" jdbcType="VARCHAR"/>
+        <result column="percentage" property="percentage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="profit" property="profit" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="pe_emp_name" property="peEmpName" jdbcType="VARCHAR"/>
+        <result column="pe_dept_name" property="peDeptName" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_trade_order_percentage
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.percentageCode != null and i.percentageCode != ''">
+                    percentage_code,
+                </if>
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    order_code,
+                </if>
+                <if test="i.orderTime != null">
+                    order_time,
+                </if>
+                <if test="i.peEmpCode != null and i.peEmpCode != ''">
+                    pe_emp_code,
+                </if>
+                <if test="i.peDeptCode != null and i.peDeptCode != ''">
+                    pe_dept_code,
+                </if>
+                <if test="i.percentageName != null and i.percentageName != ''">
+                    percentage_name,
+                </if>
+                <if test="i.percentageType != null and i.percentageType != ''">
+                    percentage_type,
+                </if>
+                <if test="i.moneyPercentType != null and i.moneyPercentType != ''">
+                    money_percent_type,
+                </if>
+                <if test="i.percentage != null">
+                    percentage,
+                </if>
+                <if test="i.profit != null">
+                    profit,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.percentageCode != null and i.percentageCode != ''">
+                    #{i.percentageCode},
+                </if>
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    #{i.orderCode},
+                </if>
+                <if test="i.orderTime != null">
+                    #{i.orderTime},
+                </if>
+                <if test="i.peEmpCode != null and i.peEmpCode != ''">
+                    #{i.peEmpCode},
+                </if>
+                <if test="i.peDeptCode != null and i.peDeptCode != ''">
+                    #{i.peDeptCode},
+                </if>
+                <if test="i.percentageName != null and i.percentageName != ''">
+                    #{i.percentageName},
+                </if>
+                <if test="i.percentageType != null and i.percentageType != ''">
+                    #{i.percentageType},
+                </if>
+                <if test="i.moneyPercentType != null and i.moneyPercentType != ''">
+                    #{i.moneyPercentType},
+                </if>
+                <if test="i.percentage != null">
+                    #{i.percentage},
+                </if>
+                <if test="i.profit != null">
+                    #{i.profit},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.trade.order.entity.OrderPercentageEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_trade_order_percentage
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    order_code=#{i.orderCode},
+                </if>
+                <if test="i.orderTime != null">
+                    order_time=#{i.orderTime},
+                </if>
+                <if test="i.peEmpCode != null and i.peEmpCode != ''">
+                    pe_emp_code=#{i.peEmpCode},
+                </if>
+                <if test="i.peDeptCode != null and i.peDeptCode != ''">
+                    pe_dept_code=#{i.peDeptCode},
+                </if>
+                <if test="i.percentageName != null and i.percentageName != ''">
+                    percentage_name=#{i.percentageName},
+                </if>
+                <if test="i.percentageType != null and i.percentageType != ''">
+                    percentage_type=#{i.percentageType},
+                </if>
+                <if test="i.moneyPercentType != null and i.moneyPercentType != ''">
+                    money_percent_type=#{i.moneyPercentType},
+                </if>
+                <if test="i.percentage != null">
+                    percentage=#{i.percentage},
+                </if>
+                <if test="i.profit != null">
+                    profit=#{i.profit},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and percentage_code = #{i.percentageCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!--执行更新删除字段,逻辑删除 -->
+    <update id="updateIsDeleteByOrderCode" parameterType="map">
+        update t_hkp_trade_order_percentage SET is_deleted = true WHERE order_code = #{orderCode}
+    </update>
+
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="orderCode != null and orderCode != ''">
+                AND order_code = #{orderCode}
+            </if>
+            <if test="peEmpCode != null and peEmpCode != ''">
+                AND pe_emp_code = #{peEmpCode}
+            </if>
+            <if test="peDeptCode != null and peDeptCode != ''">
+                AND pe_dept_code = #{peDeptCode}
+            </if>
+            <if test="peDeptCodes != null">
+                <choose>
+                    <when test="_peDeptCodes != null">
+                        AND pe_dept_code IN (${_peDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND pe_dept_code IN
+                        <foreach collection="peDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="peEmpCodes != null">
+                <choose>
+                    <when test="_peEmpCodes != null">
+                        AND pe_emp_code IN (${_peEmpCodes})
+                    </when>
+                    <otherwise>
+                        AND pe_emp_code IN
+                        <foreach collection="peEmpCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="percentageName != null and percentageName != ''">
+                AND percentage_name = #{percentageName}
+            </if>
+            <if test="percentageType != null and percentageType != ''">
+                AND percentage_type = #{percentageType}
+            </if>
+            <if test="moneyPercentType != null and moneyPercentType != ''">
+                AND money_percent_type = #{moneyPercentType}
+            </if>
+
+            <if test="noOrderStatuses != null">
+                <choose>
+                    <when test="_noOrderStatuses">
+                        AND order_status NOT IN (${_noOrderStatuses})
+                    </when>
+                    <otherwise>
+                        AND order_status NOT IN
+                        <foreach collection="noOrderStatuses" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="orderTimeStart != null">
+                AND order_time <![CDATA[ >= ]]> #{orderTimeStart}
+            </if>
+            <if test="orderTimeEnd != null">
+                AND order_time <![CDATA[ <= ]]> #{orderTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="simpleCountByMap" parameterType="map" resultType="int">
+        select count(1) from(
+            select count(1) from (
+                select p.*,o.order_status from t_hkp_trade_order_percentage p
+                INNER JOIN t_hkp_trade_order o ON o.order_code = P.order_code
+            )T
+            <include refid="selectSql"/>
+            <if test="groupBy !=null and groupBy != ''">
+                GROUP BY (${groupBy})
+            </if>
+        )TP
+    </select>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_trade_order_percentage
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderPercentageEntity">
+        select * from t_hkp_trade_order_percentage
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderPercentageEntity">
+        SELECT * from (
+            SELECT
+              p.*,
+              e.user_name as pe_emp_name,
+              e.owner_dept_name as pe_dept_name
+            FROM
+              t_hkp_trade_order_percentage p
+            LEFT JOIN t_hkp_sys_user_user e on e.user_code = p.pe_emp_code
+        )TP
+        <include refid="selectSql"></include>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*)  FROM(
+          SELECT
+            p.*
+          from
+            t_hkp_trade_order_percentage p
+        )TP
+        <include refid="selectSql"></include>
+    </select>
+
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMapAndStatus" parameterType="map"
+            resultType="java.math.BigDecimal">
+        SELECT sum(tp.profit) from (
+            SELECT
+              p.profit,p.pe_dept_code,p.pe_emp_code,p.order_time,p.is_deleted,o.order_status
+            FROM
+              t_hkp_trade_order_percentage p
+            INNER JOIN t_hkp_trade_order o on o.order_code = p.order_code
+        )TP
+        <include refid="selectSql"></include>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过code批量删除记录 -->
+    <delete id="deletePercentageByOrderCode" parameterType="map">
+        DELETE FROM t_hkp_trade_order_percentage WHERE order_code = #{orderCode}
+        <if test="notIds != null">
+            <choose>
+                <when test="isPage != null">
+                    AND id NOT IN (${notInIds})
+                </when>
+                <otherwise>
+                    AND id NOT IN
+                    <foreach collection="notIds" item="i" open="(" separator="," close=")">
+                        #{i}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+    </delete>
+</mapper>

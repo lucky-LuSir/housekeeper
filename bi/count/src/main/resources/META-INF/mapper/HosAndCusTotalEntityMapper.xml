@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.HosAndCusTotalEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.bi.count.entity.HosAndCusTotalEntity">
+        <result column="year_month" property="yearMonth" jdbcType="VARCHAR"/>
+        <result column="cus_count" property="cusCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="hos_count" property="hosCount" jdbcType="NUMERIC" javaType="int"/>
+    </resultMap>
+
+    <select id="selectCusByMap" resultMap="baseResultMap" parameterType="map">
+        SELECT
+            to_char( cc.create_time, 'yyyy-mm' ) AS year_month,
+            COUNT ( * ) AS cus_count
+        FROM(
+            SELECT create_time FROM t_hkp_crm_customer
+            <include refid="selectSql"/>
+            ) cc
+        GROUP BY
+            year_month
+        ORDER BY year_month ASC
+        LIMIT 12
+    </select>
+
+    <select id="selectHosByMap" resultMap="baseResultMap" parameterType="map">
+        SELECT
+            to_char( cc.create_time, 'yyyy-mm' ) AS year_month,
+            COUNT ( * ) AS hos_count
+        FROM(
+            SELECT create_time FROM t_hkp_hos_house
+            <include refid="selectSql"/>
+            ) cc
+        GROUP BY
+            year_month
+        ORDER BY year_month ASC
+        LIMIT 12
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="yearMonthStart != null">
+                AND to_char(create_time,'yyyy-mm') <![CDATA[ >= ]]> #{yearMonthStart}
+            </if>
+            <if test="yearMonthEnd != null">
+                AND to_char(create_time,'yyyy-mm') <![CDATA[ <= ]]> #{yearMonthEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+</mapper>

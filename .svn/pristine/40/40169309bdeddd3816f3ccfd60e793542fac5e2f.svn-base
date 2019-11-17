@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.FocusWageReportEntity">
+    <resultMap id="BaseResultInvoiceMap" type="com.kfwy.hkp.bi.count.entity.FocusWageReportEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <!--订单号-->
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <!--订单状态-->
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR"/>
+        <!--成交日期-->
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+        <!--客户合同佣金-->
+
+        <result column="receivable_hos" property="receivableHos" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="receivable_cus" property="receivableCus" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="receivable_cost" property="receivableCost" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--f-->
+        <!--<result column="payment" property="payment" jdbcType="NUMERIC" javaType="decimal"/>-->
+        <result column="sum_tax" property="sumTax" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--<result column="back_money" property="backMoney" jdbcType="NUMERIC" javaType="decimal"/>-->
+        <result column="cus_rebate" property="cusRebate" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="owner_rebate" property="ownerRebate" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="act_commission" property="actCommission" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="cus_parttime_money" property="cusPartTimeMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="owner_parttime_money" property="ownerPartTimeMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="come_commission" property="comeCommission" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="percentage" property="percentage" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="parent_dept_code" property="parentDeptCode" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="parent_dept_name" property="parentDeptName" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+        <result column="pe_parent_dept_code" property="peParentDeptCode" jdbcType="VARCHAR"/>
+        <result column="pe_dept_code" property="peDeptCode" jdbcType="VARCHAR"/>
+        <result column="pe_parent_dept_name" property="peParentDeptName" jdbcType="VARCHAR"/>
+        <result column="pe_dept_name" property="peDeptName" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <!-- 人事版工资报表 -->
+   <select id="selectFocusWageReportByMap" resultMap="BaseResultInvoiceMap" parameterType="map">
+            SELECT
+                f.order_code,
+                f.pe_dept_code,
+                f.s_percentage AS percentage,
+                ord.order_status,
+                ord.order_time,
+                case  when ord.receivable_cus is null then 0 else ord.receivable_cus end,
+                case when ord.receivable_hos is null then 0 else  ord.receivable_hos end,
+                case when ord.cus_rebate is null then 0 else  ord.cus_rebate end ,
+                case when ord.owner_rebate is null then 0 else  owner_rebate end,
+                case when ord.cus_parttime_money is null then 0 else ord.cus_parttime_money end,
+                case when ord.owner_parttime_money is null then 0 else  ord.owner_parttime_money end,
+                ordin.sum_tax,
+                ord.actual_commision,
+                ord.commission,
+                pedept.dept_name as pe_dept_name,
+                pepdept.dept_name as pe_parent_dept_name,
+                dept.dept_name as dept_name,
+                pdept.dept_name as parent_dept_name
+            FROM
+                (
+                    SELECT
+                        order_code,
+                        pe_dept_code,
+                        "sum" (percentage) AS s_percentage
+                    FROM
+                        t_hkp_trade_order_percentage
+                    WHERE
+                        order_code IN (
+                            SELECT
+                                order_code
+                            FROM
+                                t_hkp_trade_order_percentage
+                            WHERE
+                                percentage_type = '10'
+                            AND money_percent_type = '1'
+                            AND is_deleted = FALSE
+                        )
+                    AND is_deleted = FALSE
+                    AND money_percent_type = '2'
+                    GROUP BY
+                        order_code,
+                        pe_dept_code
+                ) f
+            LEFT JOIN t_hkp_trade_order ord ON f.order_code = ord.order_code
+            LEFT JOIN (
+                SELECT
+                    order_code,
+                    SUM (
+                        to_number(invoice_tax, '9999999D99')
+                    ) AS sum_tax
+                FROM
+                    t_hkp_trade_ord_invoice
+                WHERE
+                    is_deleted = FALSE
+                GROUP BY
+                    order_code
+            ) AS ordin ON f.order_code = ordin.order_code
+            LEFT JOIN t_hkp_hrm_org_dept pedept ON f.pe_dept_code = pedept.dept_code
+            LEFT JOIN t_hkp_hrm_org_dept pepdept ON pedept.parent_code = pepdept.dept_code
+            LEFT JOIN t_hkp_hrm_org_dept dept ON ord.dept_code = dept.dept_code
+            LEFT JOIN t_hkp_hrm_org_dept pdept ON dept.parent_code = pdept.dept_code
+            WHERE
+                ord.is_deleted = FALSE
+            ORDER BY
+                ord.order_time desc,
+                order_code
+   </select>
+</mapper>

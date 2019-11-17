@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		 http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd
+		http://www.springframework.org/schema/cache
+		http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+    <description>FRONTEND FACADE 公共配置文件</description>
+
+    <!-- 设置基于注解的IOC支持 -->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.kfwy,com.gniuu">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+    </context:component-scan>
+
+    <!-- 设置@AspectJ支持 -->
+    <aop:aspectj-autoproxy expose-proxy="true" proxy-target-class="true"/>
+
+    <!-- 设置AOP自动代理 -->
+   <!-- <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>-->
+   <!-- <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"/>-->
+    <!-- 配置文件的处理-->
+    <context:property-placeholder
+            ignore-resource-not-found="true"
+            location="classpath:application.properties"/>
+
+    <bean id="smsTemplate" class="com.kfwy.hkp.common.sms.send.impl.XiuXiuSmsTemplateImpl" init-method="init"/>
+
+
+    <!-- 默认Mongo类型映射类 -->
+    <bean name="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+        <!-- 去除默认生成“_class”字段的关键，即：将该类带有typeKey参数的构造函数的参数值设置为null即可 -->
+        <constructor-arg name="typeKey"><null/></constructor-arg>
+    </bean>
+    <!-- MongoDB类型转换器，可自定义扩展类型之间的转换，注意“type-mapper-ref”属性 -->
+    <mongo:mapping-converter id="mongoConverter" type-mapper-ref="defaultMongoTypeMapper">
+        <mongo:custom-converters>
+            <mongo:converter>
+                <bean class="com.kfwy.hkp.common.utils.TimestampConverter" />
+            </mongo:converter>
+            <!-- allow more... -->
+        </mongo:custom-converters>
+    </mongo:mapping-converter>
+</beans>

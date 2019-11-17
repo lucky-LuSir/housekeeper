@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.quit.entity.BackupEntity">
+
+
+    <!--备份数据-->
+    <insert id="resourceBackup" parameterType="com.kfwy.hkp.quit.entity.BackupEntity">
+        insert INTO t_hkp_resource_transfer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                his_emp_code,
+            </if>
+            <if test="hisEmpName != null and hisEmpName != ''">
+                his_emp_name,
+            </if>
+            <if test="newEmpCode != null and newEmpCode != ''">
+                new_emp_code,
+            </if>
+            <if test="newEmpName != null and newEmpName != ''">
+                new_emp_name,
+            </if>
+
+            <if test="shiftCustomerCount != null and shiftCustomerCount != ''">
+                shift_customer_count,
+            </if>
+            <if test="shiftCustomerData != null and shiftCustomerData != ''">
+                shift_customer_data,
+            </if>
+            <if test="shiftHouseCount != null and shiftHouseCount != ''">
+                shift_house_count,
+            </if>
+            <if test="shiftHouseData != null and shiftHouseData != ''">
+                shift_house_data,
+            </if>
+            <if test="shiftUserCount != null and shiftUserCount != ''">
+                shift_user_count,
+            </if>
+            <if test="shiftUserData != null and shiftUserData != ''">
+                shift_user_data,
+            </if>
+            <if test="shiftOwnerCount != null and shiftOwnerCount != ''">
+                shift_owner_count,
+            </if>
+            <if test="shiftOwnerData != null and shiftOwnerData != ''">
+                shift_owner_data,
+            </if>
+
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                cpy_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="createCode != null and createCode != ''">
+                create_code,
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                create_dept_code,
+            </if>
+            <if test="lastUpdateCode != null and lastUpdateCode != ''">
+                last_update_code,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                #{hisEmpCode},
+            </if>
+            <if test="hisEmpName != null and hisEmpName != ''">
+                #{hisEmpName},
+            </if>
+            <if test="newEmpCode != null and newEmpCode != ''">
+                #{newEmpCode},
+            </if>
+            <if test="newEmpName != null and newEmpName != ''">
+                #{newEmpName},
+            </if>
+            <if test="shiftCustomerCount != null and shiftCustomerCount != ''">
+                #{shiftCustomerCount},
+            </if>
+            <if test="shiftCustomerData != null and shiftCustomerData != ''">
+                #{shiftCustomerData},
+            </if>
+            <if test="shiftHouseCount != null and shiftHouseCount != ''">
+                #{shiftHouseCount},
+            </if>
+            <if test="shiftHouseData != null and shiftHouseData != ''">
+                #{shiftHouseData},
+            </if>
+            <if test="shiftUserCount != null and shiftUserCount != ''">
+                #{shiftUserCount},
+            </if>
+            <if test="shiftUserData != null and shiftUserData != ''">
+                #{shiftUserData},
+            </if>
+            <if test="shiftOwnerCount != null and shiftOwnerCount != ''">
+                #{shiftOwnerCount},
+            </if>
+            <if test="shiftOwnerData != null and shiftOwnerData != ''">
+                #{shiftOwnerData},
+            </if>
+
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                #{cpyCode},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime},
+            </if>
+            <if test="createCode != null and createCode != ''">
+                #{createCode},
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                #{createDeptCode},
+            </if>
+            <if test="lastUpdateCode != null and lastUpdateCode != ''">
+                #{lastUpdateCode},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted}
+            </if>
+        </trim>
+    </insert>
+
+    <!--查出需要转移的房源-->
+    <select id="getTransferFromHouse" resultType="java.lang.String" parameterType="map">
+        select house_number
+        from t_hkp_hos_house h
+        <if test="hosNumbers != null and hosNumbers.size > 0">
+            ,t_hkp_sys_user_user u,t_hkp_hrm_org_dept d
+        </if>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                h.emp_code = #{hisEmpCode}
+                <if test="street != null">
+                    and h.street = #{street}
+                </if>
+                <if test="region != null">
+                    and h.region = #{region}
+                </if>
+                <if test="city != null">
+                    and h.city = #{city}
+                </if>
+                <if test="province != null">
+                    and h.province =#{province}
+                </if>
+            </if>
+            <if test="hosNumbers != null and hosNumbers.size > 0">
+                AND d.dept_code = u.owner_dept_code
+                AND u.user_code = h.emp_code
+                AND u.owner_dept_code = #{ownerDeptCode}
+                AND h.house_number IN
+                <foreach collection="hosNumbers" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </select>
+
+    <!--转移房源-->
+    <update id="transferFromHouse" parameterType="map">
+        UPDATE t_hkp_hos_house
+        <trim prefix="set" suffixOverrides=",">
+            emp_code = #{newEmpCode},
+            <if test="lastUpdateCode != null">
+                last_update_code = #{lastUpdateCode},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime},
+            </if>
+        </trim>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="hisEmpCode != null and hisEmpCode != ''">
+                emp_code = #{hisEmpCode}
+                <if test="street != null">
+                    and street = #{street}
+                </if>
+                <if test="region != null">
+                    and region = #{region}
+                </if>
+                <if test="city != null">
+                    and city = #{city}
+                </if>
+                <if test="province != null">
+                    and province =#{province}
+                </if>
+            </if>
+            <if test="hosNumbers != null and hosNumbers.size > 0">
+                AND house_number IN
+                <foreach collection="hosNumbers" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+        </trim>
+    </update>
+
+</mapper>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.CustomerWaitAddEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerWaitAddEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cus_status" property="cusStatus" jdbcType="VARCHAR"/>
+        <result column="cus_type" property="cusType" jdbcType="INTEGER"/>
+        <result column="cus_from" property="cusFrom" jdbcType="VARCHAR"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="cus_phone" property="cusPhone" jdbcType="VARCHAR"/>
+        <result column="cus_sex" property="cusSex" jdbcType="VARCHAR"/>
+        <result column="company_name" property="companyName" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="products" property="products" jdbcType="VARCHAR"/>
+        <result column="need_acreage" property="needAcreage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="need_price" property="needPrice" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="price_unit" property="priceUnit" jdbcType="VARCHAR"/>
+        <result column="layer_num" property="layerNum" jdbcType="INTEGER"/>
+        <result column="layer_height" property="layerHeight" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="need_voltage" property="needVoltage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP"/>
+        <result column="expect_term" property="expectTerm" jdbcType="VARCHAR"/>
+        <result column="fire_level" property="fireLevel" jdbcType="VARCHAR"/>
+        <result column="need_eia" property="needEia" jdbcType="BOOLEAN"/>
+        <result column="need_register" property="needRegister" jdbcType="BOOLEAN"/>
+        <result column="need_certificate" property="needCertificate" jdbcType="BOOLEAN"/>
+        <result column="need_single_building" property="needSingleBuilding" jdbcType="BOOLEAN"/>
+        <result column="has_office_area" property="hasOfficeArea" jdbcType="BOOLEAN"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+
+        <result column="pt_code" property="ptCode" jdbcType="VARCHAR"/>
+        <result column="pt_name" property="ptName" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="level" property="level" jdbcType="SMALLINT"/>
+        <result column="need_nearby_facilities" property="needNearbyFacilities" jdbcType="VARCHAR"/>
+        <result column="has_favorite" property="hasFavorite" jdbcType="BOOLEAN"/>
+
+
+        <collection property="customerAreaEntityList" columnPrefix="a_"
+                    javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.CustomerWaitAddAreaEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="cus_phone" property="cusPhone"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="region" property="region" jdbcType="VARCHAR"/>
+            <result column="street" property="street" jdbcType="VARCHAR"/>
+            <result column="community" property="community" jdbcType="VARCHAR"/>
+            <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+            <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+            <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+            <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+            <result column="community_name" property="communityName" jdbcType="VARCHAR"/>
+        </collection>
+
+
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_crm_customer_wait_add
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.cusStatus != null and i.cusStatus != ''">
+                    cus_status,
+                </if>
+                <if test="i.cusType != null">
+                    cus_type,
+                </if>
+                <if test="i.cusFrom != null and i.cusFrom != ''">
+                    cus_from,
+                </if>
+                <if test="i.cusName != null and i.cusName != ''">
+                    cus_name,
+                </if>
+                <if test="i.cusPhone != null and i.cusPhone != ''">
+                    cus_phone,
+                </if>
+                <if test="i.cusSex != null and i.cusSex != ''">
+                    cus_sex,
+                </if>
+                <if test="i.companyName != null and i.companyName != ''">
+                    company_name,
+                </if>
+                <if test="i.industry != null and i.industry != ''">
+                    industry,
+                </if>
+                <if test="i.products != null and i.products != ''">
+                    products,
+                </if>
+                <if test="i.needAcreage != null">
+                    need_acreage,
+                </if>
+                <if test="i.needPrice != null">
+                    need_price,
+                </if>
+                <if test="i.priceUnit != null and i.priceUnit != ''">
+                    price_unit,
+                </if>
+                <if test="i.layerNum != null">
+                    layer_num,
+                </if>
+                <if test="i.layerHeight != null">
+                    layer_height,
+                </if>
+                <if test="i.needVoltage != null">
+                    need_voltage,
+                </if>
+                <if test="i.enterTime != null">
+                    enter_time,
+                </if>
+                <if test="i.expectTerm != null and i.expectTerm != ''">
+                    expect_term,
+                </if>
+                <if test="i.fireLevel != null and i.fireLevel != ''">
+                    fire_level,
+                </if>
+                <if test="i.needEia != null">
+                    need_eia,
+                </if>
+                <if test="i.needRegister != null">
+                    need_register,
+                </if>
+                <if test="i.needCertificate != null">
+                    need_certificate,
+                </if>
+                <if test="i.needSingleBuilding != null">
+                    need_single_building,
+                </if>
+                <if test="i.hasOfficeArea != null">
+                    has_office_area,
+                </if>
+                <if test="i.houseType != null and i.houseType != ''">
+                    house_type,
+                </if>
+                <if test="i.description != null and i.description != ''">
+                    description,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.ptCode != null and i.ptCode != ''">
+                    pt_code,
+                </if>
+                <if test="i.ptName != null and i.ptName != ''">
+                    pt_name,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.needNearbyFacilities !=null and i.needNearbyFacilities!=''">
+                    need_nearby_facilities,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.cusStatus != null and i.cusStatus != ''">
+                    #{i.cusStatus},
+                </if>
+                <if test="i.cusType != null">
+                    #{i.cusType},
+                </if>
+                <if test="i.cusFrom != null and i.cusFrom != ''">
+                    #{i.cusFrom},
+                </if>
+                <if test="i.cusName != null and i.cusName != ''">
+                    #{i.cusName},
+                </if>
+                <if test="i.cusPhone != null and i.cusPhone != ''">
+                    #{i.cusPhone},
+                </if>
+                <if test="i.cusSex != null and i.cusSex != ''">
+                    #{i.cusSex},
+                </if>
+                <if test="i.companyName != null and i.companyName != ''">
+                    #{i.companyName},
+                </if>
+                <if test="i.industry != null and i.industry != ''">
+                    #{i.industry},
+                </if>
+                <if test="i.products != null and i.products != ''">
+                    #{i.products},
+                </if>
+                <if test="i.needAcreage != null">
+                    #{i.needAcreage},
+                </if>
+                <if test="i.needPrice != null">
+                    #{i.needPrice},
+                </if>
+                <if test="i.priceUnit != null and i.priceUnit != ''">
+                    #{i.priceUnit},
+                </if>
+                <if test="i.layerNum != null">
+                    #{i.layerNum},
+                </if>
+                <if test="i.layerHeight != null">
+                    #{i.layerHeight},
+                </if>
+                <if test="i.needVoltage != null">
+                    #{i.needVoltage},
+                </if>
+                <if test="i.enterTime != null">
+                    #{i.enterTime},
+                </if>
+                <if test="i.expectTerm != null and i.expectTerm != ''">
+                    #{i.expectTerm},
+                </if>
+                <if test="i.fireLevel != null and i.fireLevel != ''">
+                    #{i.fireLevel},
+                </if>
+                <if test="i.needEia != null">
+                    #{i.needEia},
+                </if>
+                <if test="i.needRegister != null">
+                    #{i.needRegister},
+                </if>
+                <if test="i.needCertificate != null">
+                    #{i.needCertificate},
+                </if>
+                <if test="i.needSingleBuilding != null">
+                    #{i.needSingleBuilding},
+                </if>
+                <if test="i.hasOfficeArea != null">
+                    #{i.hasOfficeArea},
+                </if>
+                <if test="i.houseType != null and i.houseType != ''">
+                    #{i.houseType},
+                </if>
+                <if test="i.description != null and i.description != ''">
+                    #{i.description},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+
+                <if test="i.ptCode != null and i.ptCode != ''">
+                    #{i.ptCode},
+                </if>
+                <if test="i.ptName != null and i.ptName != ''">
+                    #{i.ptName},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.needNearbyFacilities !=null and i.needNearbyFacilities!=''">
+                    #{i.needNearbyFacilities},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <!-- 查询客户的详情-->
+    <select id="detail" parameterType="string" resultMap="BaseResultMap">
+        SELECT C.*,
+               A.province       AS a_province,
+               A.city           AS a_city,
+               A.region         AS a_region,
+               A.street         AS a_street,
+               A.community      AS a_community,
+               A.province_name  AS a_province_name,
+               A.city_name      AS a_city_name,
+               A.region_name    AS a_region_name,
+               A.street_name    AS a_street_name,
+               A.community_name AS a_community_name
+        FROM t_hkp_crm_customer_wait_add C
+                 LEFT JOIN t_hkp_crm_customer_wait_add_area A ON C.cus_phone = A.cus_phone
+        WHERE C.cus_phone = #{ cusPhone }
+    </select>
+
+
+    <delete id="deleteCusWaitAdd" parameterType="string">
+        delete
+        from t_hkp_crm_customer_wait_add
+        where cus_phone = #{cusPhone}
+    </delete>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap">
+        select *
+        from t_hkp_crm_customer_wait_add
+        where  create_code=#{createCode}
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*)
+        from t_hkp_crm_customer_wait_add
+        where  create_code=#{createCode}
+    </select>
+</mapper>

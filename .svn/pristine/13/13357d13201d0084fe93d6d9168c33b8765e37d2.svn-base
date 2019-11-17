@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.file.entity.FileRelationEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.sys.file.entity.FileRelationEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="file_code" property="fileCode" jdbcType="VARCHAR"/>
+        <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+        <result column="file_type" property="fileType" jdbcType="VARCHAR"/>
+        <result column="file_use" property="fileUse" jdbcType="VARCHAR"/>
+        <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_sys_file_relation
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                <if test="i.fileCode != null and i.fileCode != ''">
+                    file_code,
+                </if>
+                <if test="i.fileName != null and i.fileName != ''">
+                    file_name,
+                </if>
+                <if test="i.fileType != null and i.fileType != ''">
+                    file_type,
+                </if>
+                <if test="i.fileUse != null and i.fileUse != ''">
+                    file_use,
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    owner_code,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.fileCode != null and i.fileCode != ''">
+                    #{i.fileCode},
+                </if>
+                <if test="i.fileName != null and i.fileName != ''">
+                    #{i.fileName},
+                </if>
+                <if test="i.fileType != null and i.fileType != ''">
+                    #{i.fileType},
+                </if>
+                <if test="i.fileUse != null and i.fileUse != ''">
+                    #{i.fileUse},
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    #{i.ownerCode},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="com.kfwy.hkp.sys.file.entity.FileRelationEntity" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO t_hkp_sys_file_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileCode != null and fileCode != ''">
+                file_code,
+            </if>
+            <if test="fileName != null and fileName != ''">
+                file_name,
+            </if>
+            <if test="fileType != null and fileType != ''">
+                file_type,
+            </if>
+            <if test="fileUse != null and fileUse != ''">
+                file_use,
+            </if>
+            <if test="ownerCode != null and ownerCode != ''">
+                owner_code,
+            </if>
+
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                cpy_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+
+            <if test="createCode != null and createCode != ''">
+                create_code,
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                create_dept_code,
+            </if>
+            <if test="lastUpdateCode != null and lastUpdateCode != ''">
+                last_update_code,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileCode != null and fileCode != ''">
+                #{fileCode},
+            </if>
+            <if test="fileName != null and fileName != ''">
+                #{fileName},
+            </if>
+            <if test="fileType != null and fileType != ''">
+                #{fileType},
+            </if>
+            <if test="fileUse != null and fileUse != ''">
+                #{fileUse},
+            </if>
+            <if test="ownerCode != null and ownerCode != ''">
+                #{ownerCode},
+            </if>
+
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                #{cpyCode},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime},
+            </if>
+
+            <if test="createCode != null and createCode != ''">
+                #{createCode},
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                #{createDeptCode},
+            </if>
+            <if test="lastUpdateCode != null and lastUpdateCode != ''">
+                #{lastUpdateCode},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.file.entity.FileRelationEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_sys_file_relation
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.fileCode != null and i.fileCode != ''">
+                    file_code=#{i.fileCode},
+                </if>
+                <if test="i.fileName != null and i.fileName != ''">
+                    file_name=#{i.fileName},
+                </if>
+                <if test="i.fileType != null and i.fileType != ''">
+                    file_type=#{i.fileType},
+                </if>
+                <if test="i.fileUse != null and i.fileUse != ''">
+                    file_use=#{i.fileUse},
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    owner_code=#{i.ownerCode},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and file_code = #{i.fileCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_sys_file_relation WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="deleteNotIds" parameterType="map">
+        DELETE FROM t_hkp_sys_file_relation WHERE
+        owner_code = #{ownerCode}
+        <if test="notIds != null">
+            AND ID NOT IN
+            <foreach collection="notIds" item="i" open="(" close=")" separator=",">
+                #{i}
+            </foreach>
+        </if>
+    </delete>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="cpyCode != null and cpyCode != ''">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="fileCode != null">
+                AND file_code = #{fileCode}
+            </if>
+            <if test="fileName != null">
+                AND file_name = #{fileName}
+            </if>
+            <if test="fileType != null">
+                AND file_type = #{fileType}
+            </if>
+            <if test="fileUse != null">
+                AND file_use = #{fileUse}
+            </if>
+            <if test="fileUses != null">
+                <choose>
+                    <when test="_fileUses">
+                        AND file_use IN (${_fileUses})
+                    </when>
+                    <otherwise>
+                        AND file_use IN
+                        <foreach collection="fileUses" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="ownerCode != null">
+                AND owner_code = #{ownerCode}
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_sys_file_relation
+        <include refid="selectSql"/>
+    </select>
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.file.entity.FileRelationEntity">
+        select * from t_hkp_sys_file_relation
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.file.entity.FileRelationEntity">
+        select * from t_hkp_sys_file_relation
+
+        <include refid="selectSql"/>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(id) from t_hkp_sys_file_relation
+        <include refid="selectSql"/>
+    </select>
+
+</mapper>

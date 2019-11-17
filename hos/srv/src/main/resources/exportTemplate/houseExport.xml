@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exportFile>
+    <fileName>test</fileName>
+    <!--导出模板-->
+    <exportType>0</exportType>
+    <cell>
+        <title>房源编码</title>
+        <alias>houseCode</alias>
+    </cell>
+    <!--<cell>-->
+        <!--<title>房源名称</title>-->
+        <!--<alias>houseName</alias>-->
+    <!--</cell>-->
+    <cell>
+        <title>房源编号</title>
+        <alias>houseNumber</alias>
+    </cell>
+    <cell>
+        <title>房源面积</title>
+        <alias>layerArea</alias>
+    </cell>
+    <!--<cell>-->
+        <!--<title>创建时间</title>-->
+        <!--<alias>createTime</alias>-->
+    <!--</cell>-->
+    <cell>
+        <title>楼层</title>
+        <alias>whereLayer</alias>
+    </cell>
+
+    <!--<cell>-->
+        <!--<title>最小分割面积</title>-->
+        <!--<alias>minAcreage</alias>-->
+    <!--</cell>-->
+    <!--<cell>-->
+        <!--<title>在租面积</title>-->
+        <!--<alias>area</alias>-->
+    <!--</cell>-->
+    <cell>
+        <title>价格</title>
+        <alias>priceStr</alias>
+    </cell>
+    <cell>
+        <title>所属业务员</title>
+        <alias>empName</alias>
+    </cell>
+    <cell>
+        <title>业主姓名</title>
+        <alias>houseOwnerName</alias>
+    </cell>
+    <cell>
+        <title>业主电话</title>
+        <alias>ownerPhone</alias>
+    </cell>
+    <!--<cell>-->
+        <!--<title>服务费</title>-->
+        <!--<alias>commission</alias>-->
+    <!--</cell>-->
+    <cell>
+        <title>地址</title>
+        <alias>ldetailAddress</alias>
+    </cell>
+</exportFile>
+

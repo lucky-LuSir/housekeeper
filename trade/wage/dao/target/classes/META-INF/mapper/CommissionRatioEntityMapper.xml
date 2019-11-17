@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.trade.wage.entity.CommissionRatioEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.trade.wage.entity.CommissionRatioEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="commission_ratio_code" property="commissionRatioCode" jdbcType="VARCHAR"/>
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="pe_order_code" property="peOrderCode" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="percentage" property="percentage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="commission_ratio" property="commissionRatio" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="salary_type" property="salaryType" jdbcType="VARCHAR"/>
+
+        <result column="group_user_code" property="groupUserCode" jdbcType="VARCHAR"/>
+        <result column="group_percentage" property="groupPercentage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="leader_code" property="leaderCode" jdbcType="VARCHAR"/>
+        <result column="leader_percentage" property="leaderPercentage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="manager_user_code" property="managerUserCode" jdbcType="VARCHAR"/>
+        <result column="manager_percentage" property="managerPercentage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="recommend_code" property="recommendCode" jdbcType="VARCHAR"/>
+        <result column="recommend_percentage" property="recommendPercentage" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="has_changed" property="hasChanged" jdbcType="BOOLEAN"/>
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_trade_order_commission_ratio
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.commissionRatioCode != null and i.commissionRatioCode != ''">
+                    commission_ratio_code,
+                </if>
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    order_code,
+                </if>
+                <if test="i.peOrderCode != null and i.peOrderCode != ''">
+                    pe_order_code,
+                </if>
+                <if test="i.percentage != null">
+                    percentage,
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code,
+                </if>
+                <if test="i.userCode != null and i.userCode != ''">
+                    user_code,
+                </if>
+                <if test="i.commissionRatio != null">
+                    commission_ratio,
+                </if>
+                <if test="i.salaryType != null and i.salaryType != ''">
+                    salary_type,
+                </if>
+                <if test="i.groupUserCode != null and i.groupUserCode != ''">
+                    group_user_code,
+                </if>
+                <if test="i.groupPercentage != null">
+                    group_percentage,
+                </if>
+
+                <if test="i.leaderCode != null and i.leaderCode != ''">
+                    leader_code,
+                </if>
+                <if test="i.leaderPercentage != null">
+                    leader_percentage,
+                </if>
+
+                <if test="i.managerUserCode != null and i.managerUserCode != ''">
+                    manager_user_code,
+                </if>
+                <if test="i.managerPercentage != null">
+                    manager_percentage,
+                </if>
+
+                <if test="i.recommendCode != null and i.recommendCode != ''">
+                    recommend_code,
+                </if>
+                <if test="i.recommendPercentage != null">
+                    recommend_percentage,
+                </if>
+                <if test="i.hasChanged != null">
+                    has_changed,
+                </if>
+                <if test="i.orderTime != null">
+                    order_time,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.commissionRatioCode != null and i.commissionRatioCode != ''">
+                    #{i.commissionRatioCode},
+                </if>
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    #{i.orderCode},
+                </if>
+                <if test="i.peOrderCode != null and i.peOrderCode != ''">
+                    #{i.peOrderCode},
+                </if>
+                <if test="i.percentage != null">
+                    #{i.percentage},
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    #{i.deptCode},
+                </if>
+                <if test="i.userCode != null and i.userCode != ''">
+                    #{i.userCode},
+                </if>
+                <if test="i.commissionRatio != null">
+                    #{i.commissionRatio},
+                </if>
+                <if test="i.salaryType != null and i.salaryType != ''">
+                    #{i.salaryType},
+                </if>
+
+                <if test="i.groupUserCode != null and i.groupUserCode != ''">
+                    #{i.groupUserCode},
+                </if>
+                <if test="i.groupPercentage != null">
+                    #{i.groupPercentage},
+                </if>
+                <if test="i.leaderCode != null and i.leaderCode != ''">
+                    #{i.leaderCode},
+                </if>
+                <if test="i.leaderPercentage != null">
+                    #{i.leaderPercentage},
+                </if>
+                <if test="i.managerUserCode != null and i.managerUserCode != ''">
+                    #{i.managerUserCode},
+                </if>
+                <if test="i.managerPercentage != null">
+                    #{i.managerPercentage},
+                </if>
+                <if test="i.recommendCode != null and i.recommendCode != ''">
+                    #{i.recommendCode},
+                </if>
+                <if test="i.recommendPercentage != null">
+                    #{i.recommendPercentage},
+                </if>
+                <if test="i.hasChanged != null">
+                    #{i.hasChanged},
+                </if>
+                <if test="i.orderTime != null">
+                    #{i.orderTime},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.trade.wage.entity.CommissionRatioEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_trade_order_commission_ratio
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and commission_ratio_code = #{i.commissionRatioCode}
+            </trim>
+        </foreach>
+    </update>
+    <update id="updateIsDeleteByOrderCode" parameterType="map">
+        update t_hkp_trade_order_commission_ratio SET is_deleted = true WHERE order_code = #{orderCode}
+    </update>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="commissionRatioCode != null and commissionRatioCode != ''">
+                AND commission_ratio_code = #{commissionRatioCode}
+            </if>
+            <if test="orderCode != null and orderCode != ''">
+                AND order_code = #{orderCode}
+            </if>
+            <if test="peOrderCode != null and peOrderCode != ''">
+                AND pe_order_code = #{peOrderCode}
+            </if>
+            <if test="userCode != null and userCode != ''">
+                AND user_code = #{userCode}
+            </if>
+            <if test="commissionType != null and commissionType != ''">
+                AND commission_type = #{commissionType}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.wage.entity.CommissionRatioEntity">
+          select * from  t_hkp_trade_order_commission_ratio
+        <include refid="selectSql"></include>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.wage.entity.CommissionRatioEntity">
+        select * from t_hkp_trade_order_commission_ratio
+        where pe_order_code=#{peOrderCode}
+        and order_code=#{orderCode}
+        and is_deleted=false
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*) from (
+        select * from  t_hkp_trade_order_commission_ratio
+        ) TP
+        <include refid="selectSql"></include>
+    </select>
+    <update id="updateGroup" parameterType="map">
+        update t_hkp_trade_order_commission_ratio
+        set group_user_code=null and group_percentage=null
+        where group_user_code=#{groupCode}
+        and order_time <![CDATA[<=]]> #{orderTime}
+        and is_deleted=false
+    </update>
+
+    <update id="updateLeader" parameterType="map">
+        update t_hkp_trade_order_commission_ratio
+        set leader_code=#{userCode}, leader_percentage=12
+        where dept_code=#{deptCode}
+        and order_time <![CDATA[<=]]> #{endTime}
+        and order_time <![CDATA[>=]]> #{beginTime}
+        and user_code <![CDATA[ <> ]]>#{userCode}
+        and is_deleted=false
+    </update>
+
+
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+</mapper>

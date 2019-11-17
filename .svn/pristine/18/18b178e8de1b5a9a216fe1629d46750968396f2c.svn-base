@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="work_number" property="workNumber" jdbcType="VARCHAR"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="emp_img" property="empImg" jdbcType="VARCHAR"/>
+
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="emp_phone" property="empPhone" jdbcType="VARCHAR"/>
+        <result column="card" property="card" jdbcType="VARCHAR"/>
+        <result column="birth_date" property="birthDate" jdbcType="TIMESTAMP"/>
+        <result column="household_location" property="householdLocation" jdbcType="VARCHAR"/>
+        <result column="household_type" property="householdType" jdbcType="VARCHAR"/>
+        <result column="graduate" property="graduate" jdbcType="VARCHAR"/>
+        <result column="education" property="education" jdbcType="VARCHAR"/>
+        <result column="has_marry" property="hasMarry" jdbcType="BOOLEAN"/>
+        <result column="has_manager" property="hasManager" jdbcType="BOOLEAN"/>
+
+        <result column="urg_name" property="urgName" jdbcType="VARCHAR"/>
+        <result column="urg_phone" property="urgPhone" jdbcType="VARCHAR"/>
+        <result column="urg_relation" property="urgRelation" jdbcType="VARCHAR"/>
+
+        <result column="enter_cus_type" property="enterCusType" jdbcType="VARCHAR"/>
+
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+        <result column="post_code" property="postCode" jdbcType="VARCHAR"/>
+        <result column="post_name" property="postName" jdbcType="VARCHAR"/>
+
+        <result column="contract_start_date" property="contractStartDate" jdbcType="TIMESTAMP"/>
+        <result column="contract_end_date" property="contractEndDate" jdbcType="TIMESTAMP"/>
+        <result column="social_security_city" property="socialSecurityCity" jdbcType="VARCHAR"/>
+        <result column="open_bank" property="openBank" jdbcType="VARCHAR"/>
+        <result column="bank_card" property="bankCard" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_hrm_org_employee
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code,
+                </if>
+                <if test="i.workNumber != null and i.workNumber != ''">
+                    work_number,
+                </if>
+                <if test="i.empName != null and i.empName != ''">
+                    emp_name,
+                </if>
+                <if test="i.empImg != null and i.empImg != ''">
+                    emp_img,
+                </if>
+                <if test="i.sex != null and i.sex != ''">
+                    sex,
+                </if>
+                <if test="i.empPhone != null and i.empPhone != ''">
+                    emp_phone,
+                </if>
+                <if test="i.card != null and i.card != ''">
+                    card,
+                </if>
+                <if test="i.birthDate != null">
+                    birth_date,
+                </if>
+                <if test="i.householdLocation != null and i.householdLocation != ''">
+                    household_location,
+                </if>
+                <if test="i.householdType != null and i.householdType != ''">
+                    household_type,
+                </if>
+                <if test="i.graduate != null and i.graduate != ''">
+                    graduate,
+                </if>
+                <if test="i.education != null and i.education != ''">
+                    education,
+                </if>
+                <if test="i.hasMarry != null ">
+                    has_marry,
+                </if>
+                <if test="i.hasManager != null ">
+                    has_manager,
+                </if>
+
+
+                <if test="i.urgName != null and i.urgName != ''">
+                    urg_name,
+                </if>
+                <if test="i.urgPhone != null and i.urgPhone != ''">
+                    urg_phone,
+                </if>
+                <if test="i.urgRelation != null and i.urgRelation != ''">
+                    urg_relation,
+                </if>
+
+                <if test="i.enterCusType != null and i.enterCusType != ''">
+                    enter_cus_type,
+                </if>
+
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code,
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name,
+                </if>
+                <if test="i.postCode != null and i.postCode != ''">
+                    post_code,
+                </if>
+                <if test="i.postName != null and i.postName != ''">
+                    post_name,
+                </if>
+
+                <if test="i.contractStartDate != null ">
+                    contract_start_date,
+                </if>
+                <if test="i.contractEndDate != null ">
+                    contract_end_date,
+                </if>
+                <if test="i.socialSecurityCity != null and i.socialSecurityCity != ''">
+                    social_security_city,
+                </if>
+                <if test="i.openBank != null and i.openBank != ''">
+                    open_bank,
+                </if>
+                <if test="i.bankCard != null and i.bankCard != ''">
+                    bank_card,
+                </if>
+
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.empCode != null and i.empCode != ''">
+                    #{i.empCode},
+                </if>
+                <if test="i.workNumber != null and i.workNumber != ''">
+                    #{i.workNumber},
+                </if>
+                <if test="i.empName != null and i.empName != ''">
+                    #{i.empName},
+                </if>
+                <if test="i.empImg != null and i.empImg != ''">
+                    #{i.empImg},
+                </if>
+                <if test="i.sex != null and i.sex != ''">
+                    #{i.sex},
+                </if>
+                <if test="i.empPhone != null and i.empPhone != ''">
+                    #{i.empPhone},
+                </if>
+                <if test="i.card != null and i.card != ''">
+                    #{i.card},
+                </if>
+                <if test="i.birthDate != null">
+                    #{i.birthDate},
+                </if>
+                <if test="i.householdLocation != null and i.householdLocation != ''">
+                    #{i.householdLocation},
+                </if>
+                <if test="i.householdType != null and i.householdType != ''">
+                    #{i.householdType},
+                </if>
+                <if test="i.graduate != null and i.graduate != ''">
+                    #{i.graduate},
+                </if>
+                <if test="i.education != null and i.education != ''">
+                    #{i.education},
+                </if>
+                <if test="i.hasMarry != null">
+                    #{i.hasMarry},
+                </if>
+                <if test="i.hasManager != null">
+                    #{i.hasManager},
+                </if>
+
+                <if test="i.urgName != null and i.urgName != ''">
+                    #{i.urgName},
+                </if>
+                <if test="i.urgPhone != null and i.urgPhone != ''">
+                    #{i.urgPhone},
+                </if>
+                <if test="i.urgRelation != null and i.urgRelation != ''">
+                    #{i.urgRelation},
+                </if>
+
+                <if test="i.enterCusType != null and i.enterCusType != ''">
+                    #{i.enterCusType},
+                </if>
+
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    #{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    #{i.deptName},
+                </if>
+                <if test="i.postCode != null and i.postCode != ''">
+                    #{i.postCode},
+                </if>
+                <if test="i.postName != null and i.postName != ''">
+                    #{i.postName},
+                </if>
+
+
+                <if test="i.contractStartDate != null ">
+                    #{i.contractStartDate},
+                </if>
+                <if test="i.contractEndDate != null ">
+                    #{i.contractEndDate},
+                </if>
+                <if test="i.socialSecurityCity != null and i.socialSecurityCity != ''">
+                    #{i.socialSecurityCity},
+                </if>
+                <if test="i.openBank != null and i.openBank != ''">
+                    #{i.openBank},
+                </if>
+                <if test="i.bankCard != null and i.bankCard != ''">
+                    #{i.bankCard},
+                </if>
+
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_hrm_org_employee
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code=#{i.empCode},
+                </if>
+                <if test="i.workNumber != null and i.workNumber != ''">
+                    work_number=#{i.workNumber},
+                </if>
+                <if test="i.empName != null and i.empName != ''">
+                    emp_name=#{i.empName},
+                </if>
+                <if test="i.empImg != null">
+                    emp_img=#{i.empImg},
+                </if>
+                <if test="i.sex != null and i.sex != ''">
+                    sex=#{i.sex},
+                </if>
+                <if test="i.empPhone != null and i.empPhone != ''">
+                    emp_phone=#{i.empPhone},
+                </if>
+                <if test="i.card != null and i.card != ''">
+                    card=#{i.card},
+                </if>
+                <if test="i.birthDate != null">
+                    birth_date=#{i.birthDate},
+                </if>
+                <if test="i.householdLocation != null and i.householdLocation != ''">
+                    household_location=#{i.householdLocation},
+                </if>
+                <if test="i.householdType != null and i.householdType != ''">
+                    household_type=#{i.householdType},
+                </if>
+                <if test="i.graduate != null and i.graduate != ''">
+                    graduate=#{i.graduate},
+                </if>
+                <if test="i.education != null and i.education != ''">
+                    education=#{i.education},
+                </if>
+                <if test="i.hasMarry != null">
+                    has_marry=#{i.hasMarry},
+                </if>
+                <if test="i.hasManager != null">
+                    has_manager=#{i.hasManager},
+                </if>
+
+
+                <if test="i.urgName != null and i.urgName != ''">
+                    urg_name=#{i.urgName},
+                </if>
+                <if test="i.urgPhone != null and i.urgPhone != ''">
+                    urg_phone=#{i.urgPhone},
+                </if>
+                <if test="i.urgRelation != null and i.urgRelation != ''">
+                    urg_relation=#{i.urgRelation},
+                </if>
+
+                <if test="i.enterCusType != null and i.enterCusType != ''">
+                    enter_cus_type=#{i.enterCusType},
+                </if>
+
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code=#{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name=#{i.deptName},
+                </if>
+                <if test="i.postCode != null and i.postCode != ''">
+                    post_code=#{i.postCode},
+                </if>
+                <if test="i.postName != null and i.postName != ''">
+                    post_name=#{i.postName},
+                </if>
+
+
+                <if test="i.contractStartDate != null ">
+                    contract_start_date=#{i.contractStartDate},
+                </if>
+                <if test="i.contractEndDate != null ">
+                    contract_end_date=#{i.contractEndDate},
+                </if>
+                <if test="i.socialSecurityCity != null and i.socialSecurityCity != ''">
+                    social_security_city=#{i.socialSecurityCity},
+                </if>
+                <if test="i.openBank != null and i.openBank != ''">
+                    open_bank=#{i.openBank},
+                </if>
+                <if test="i.bankCard != null and i.bankCard != ''">
+                    bank_card=#{i.bankCard},
+                </if>
+
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and emp_code = #{i.empCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_hrm_org_employee WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="cpyCode != null">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="empCode != null">
+                AND emp_code = #{empCode}
+            </if>
+            <if test="workNumber != null">
+                AND work_number = #{workNumber}
+            </if>
+            <if test="deptCode != null">
+                AND dept_code = #{deptCode}
+            </if>
+
+            <if test="enterCusType != null">
+                AND enter_cus_type = #{enterCusType}
+            </if>
+            <if test="empPhone != null">
+                AND emp_phone = #{empPhone}
+            </if>
+            <if test="status != null">
+                AND status=#{status}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+
+
+
+            <if test="empName != null">
+                and emp_name like '%'||#{empName}||'%'
+            </if>
+            <if test="deptName != null">
+                and dept_name like '%'||#{deptName}||'%'
+            </if>
+
+            <if test="keyword != null and keyword != ''">
+                AND
+                (
+                emp_phone = #{keyword} or
+                emp_name like '%' || #{keyword} ||'%' or
+                dept_name like '%' || #{keyword} ||'%'
+                )
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(*) from t_hkp_hrm_org_employee
+        <include refid="selectSql"/>
+    </select>
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+        select * from t_hkp_hrm_org_employee
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="queryRegionEmployee" parameterType="string" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+        select
+            e.emp_code,
+            e.emp_name,
+            e.dept_code
+        from t_hkp_hrm_org_employee e
+        left join t_hkp_hrm_org_dept d on d.dept_code = e.dept_code
+        where d.region_code = #{regionCode} and e.is_deleted = false
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+        select * from t_hkp_hrm_org_employee
+
+        <include refid="selectSql"/>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*) from t_hkp_hrm_org_employee
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 根据deptCode更新deptName(同步冗余字段deptName) -->
+    <update id="updateBydeptCode" parameterType="com.kfwy.hkp.hrm.org.employee.entity.EmployeeEntity">
+        UPDATE t_hkp_hrm_org_employee
+        <trim prefix="set" suffixOverrides=",">
+            <if test="deptName != null and deptName != ''">
+                dept_name = #{deptName}
+            </if>
+        </trim>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="deptCode != null">
+                AND dept_code = #{deptCode}
+            </if>
+        </trim>
+    </update>
+
+</mapper>

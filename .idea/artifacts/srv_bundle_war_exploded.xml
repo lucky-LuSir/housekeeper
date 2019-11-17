@@ -1,0 +1,390 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="srv-bundle:war exploded">
+    <output-path>$PROJECT_DIR$/service/bundle/target/hkp-app-service</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="srv-bundle" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="hkp-common-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="hkp-common" />
+          </element>
+          <element id="file-copy" path="D:/app/repository/com/gniuu/framework/gniuu-framework/1.0-SNAPSHOT/gniuu-framework-1.0-20190408.061851-84.jar" output-file-name="gniuu-framework-1.0-SNAPSHOT.jar" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.4.4" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.3.1" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aspects:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.8.9" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-orm:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.11" />
+          <element id="library" level="project" name="Maven: org.apache.cxf:cxf-core:3.1.11" />
+          <element id="library" level="project" name="Maven: org.codehaus.woodstox:woodstox-core-asl:4.4.1" />
+          <element id="library" level="project" name="Maven: org.codehaus.woodstox:stax2-api:3.1.4" />
+          <element id="library" level="project" name="Maven: org.apache.ws.xmlschema:xmlschema-core:2.2.1" />
+          <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0.1" />
+          <element id="library" level="project" name="Maven: javax.annotation:javax.annotation-api:1.2" />
+          <element id="library" level="project" name="Maven: org.apache.cxf:cxf-rt-transports-http:3.1.11" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.8" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.8.8" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.8" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.8" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.8" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.5" />
+          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.3" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-collections4:4.1" />
+          <element id="library" level="project" name="Maven: org.hibernate.validator:hibernate-validator:6.0.13.Final" />
+          <element id="library" level="project" name="Maven: javax.validation:validation-api:2.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.3.2.Final" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.10" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.2.3" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.2.3" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi:3.16" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml:3.16" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml-schemas:3.16" />
+          <element id="library" level="project" name="Maven: org.apache.xmlbeans:xmlbeans:2.6.0" />
+          <element id="library" level="project" name="Maven: stax:stax-api:1.0.1" />
+          <element id="library" level="project" name="Maven: com.github.virtuald:curvesapi:1.04" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.6" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpmime:4.5.3" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpasyncclient:4.1.3" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore-nio:4.4.6" />
+          <element id="library" level="project" name="Maven: cn.hutool:hutool-all:4.5.3" />
+          <element id="library" level="project" name="Maven: ldl:com.clztech.ldl.ccp:2.6" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.54" />
+          <element id="library" level="project" name="Maven: org.json:json:20171018" />
+          <element id="archive" name="history-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="history-entity" />
+          </element>
+          <element id="library" level="project" name="Maven: jdom:jdom:1.0" />
+          <element id="library" level="project" name="Maven: com.squareup.retrofit2:retrofit:2.6.0" />
+          <element id="library" level="project" name="Maven: com.squareup.okhttp3:okhttp:3.12.0" />
+          <element id="library" level="project" name="Maven: com.squareup.retrofit2:converter-moshi:2.6.0" />
+          <element id="library" level="project" name="Maven: com.squareup.retrofit2:converter-jackson:2.6.0" />
+          <element id="library" level="project" name="Maven: com.squareup.moshi:moshi:1.8.0" />
+          <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.16.0" />
+          <element id="archive" name="base-sync-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="base-sync" />
+          </element>
+          <element id="archive" name="user-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="user-manager" />
+          </element>
+          <element id="archive" name="user-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="user-dao" />
+          </element>
+          <element id="archive" name="dept-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="dept-manager" />
+          </element>
+          <element id="archive" name="auth-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="auth-dao" />
+          </element>
+          <element id="archive" name="srv-hrm-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-hrm" />
+          </element>
+          <element id="archive" name="employee-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="employee-manager" />
+          </element>
+          <element id="archive" name="employee-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="employee-dao" />
+          </element>
+          <element id="archive" name="post-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="post-entity" />
+          </element>
+          <element id="archive" name="post-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="post-manager" />
+          </element>
+          <element id="archive" name="house-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="house-manager" />
+          </element>
+          <element id="archive" name="house-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="house-dao" />
+          </element>
+          <element id="archive" name="file-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="file-manager" />
+          </element>
+          <element id="archive" name="file-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="file-dao" />
+          </element>
+          <element id="archive" name="notice-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="notice-manager" />
+          </element>
+          <element id="archive" name="notice-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="notice-dao" />
+          </element>
+          <element id="archive" name="notice-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="notice-entity" />
+          </element>
+          <element id="archive" name="order-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="order-dao" />
+          </element>
+          <element id="archive" name="permission-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="permission-dao" />
+          </element>
+          <element id="archive" name="permission-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="permission-entity" />
+          </element>
+          <element id="archive" name="srv-bi-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-bi" />
+          </element>
+          <element id="archive" name="bi-count-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="bi-count" />
+          </element>
+          <element id="archive" name="houseowner-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="houseowner-dao" />
+          </element>
+          <element id="archive" name="houseowner-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="houseowner-entity" />
+          </element>
+          <element id="archive" name="parttime-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="parttime-dao" />
+          </element>
+          <element id="archive" name="parttime-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="parttime-entity" />
+          </element>
+          <element id="archive" name="wage-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="wage-manager" />
+          </element>
+          <element id="archive" name="order-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="order-entity" />
+          </element>
+          <element id="archive" name="wage-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="wage-entity" />
+          </element>
+          <element id="archive" name="wage-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="wage-dao" />
+          </element>
+          <element id="archive" name="srv-sys-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-sys" />
+          </element>
+          <element id="archive" name="auth-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="auth-manager" />
+          </element>
+          <element id="archive" name="sys-cpy-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="sys-cpy" />
+          </element>
+          <element id="archive" name="sys-area-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="sys-area" />
+          </element>
+          <element id="archive" name="notice-service-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="notice-service" />
+          </element>
+          <element id="archive" name="file-service-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="file-service" />
+          </element>
+          <element id="library" level="project" name="Maven: net.coobird:thumbnailator:0.4.8" />
+          <element id="archive" name="version-service-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="version-service" />
+          </element>
+          <element id="archive" name="version-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="version-manager" />
+          </element>
+          <element id="archive" name="version-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="version-dao" />
+          </element>
+          <element id="archive" name="version-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="version-entity" />
+          </element>
+          <element id="archive" name="parttime-service-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="parttime-service" />
+          </element>
+          <element id="archive" name="parttime-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="parttime-manager" />
+          </element>
+          <element id="archive" name="quota-service-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="quota-service" />
+          </element>
+          <element id="archive" name="quota-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="quota-manager" />
+          </element>
+          <element id="archive" name="remind-service-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="remind-service" />
+          </element>
+          <element id="archive" name="remind-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="remind-manager" />
+          </element>
+          <element id="archive" name="remind-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="remind-dao" />
+          </element>
+          <element id="archive" name="remind-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="remind-entity" />
+          </element>
+          <element id="library" level="project" name="Maven: io.swagger:swagger-annotations:1.5.20" />
+          <element id="archive" name="sys-announcement-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="sys-announcement" />
+          </element>
+          <element id="archive" name="quota-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="quota-dao" />
+          </element>
+          <element id="archive" name="quota-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="quota-entity" />
+          </element>
+          <element id="archive" name="manager-quit-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="manager-quit" />
+          </element>
+          <element id="archive" name="dao-quit-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="dao-quit" />
+          </element>
+          <element id="archive" name="srv-hos-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-hos" />
+          </element>
+          <element id="archive" name="dept-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="dept-dao" />
+          </element>
+          <element id="archive" name="dept-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="dept-entity" />
+          </element>
+          <element id="archive" name="log-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="log-entity" />
+          </element>
+          <element id="archive" name="permission-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="permission-manager" />
+          </element>
+          <element id="archive" name="systemconfig-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="systemconfig-manager" />
+          </element>
+          <element id="archive" name="systemconfig-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="systemconfig-entity" />
+          </element>
+          <element id="archive" name="systemconfig-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="systemconfig-dao" />
+          </element>
+          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
+          <element id="archive" name="srv-crm-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-crm" />
+          </element>
+          <element id="archive" name="customer-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="customer-manager" />
+          </element>
+          <element id="archive" name="cooperate-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="cooperate-dao" />
+          </element>
+          <element id="archive" name="cooperate-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="cooperate-entity" />
+          </element>
+          <element id="archive" name="houseowner-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="houseowner-manager" />
+          </element>
+          <element id="archive" name="srv-union-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-union" />
+          </element>
+          <element id="archive" name="cooperate-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="cooperate-manager" />
+          </element>
+          <element id="archive" name="srv-trade-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-trade" />
+          </element>
+          <element id="archive" name="order-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="order-manager" />
+          </element>
+          <element id="archive" name="srv-payment-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-payment" />
+          </element>
+          <element id="archive" name="payment-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="payment-manager" />
+          </element>
+          <element id="archive" name="payment-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="payment-dao" />
+          </element>
+          <element id="archive" name="payment-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="payment-entity" />
+          </element>
+          <element id="archive" name="file-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="file-entity" />
+          </element>
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.5" />
+          <element id="archive" name="srv-base-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-base" />
+          </element>
+          <element id="archive" name="history-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="history-manager" />
+          </element>
+          <element id="archive" name="history-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="history-dao" />
+          </element>
+          <element id="archive" name="srv-quit-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="srv-quit" />
+          </element>
+          <element id="archive" name="entity-quit-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="entity-quit" />
+          </element>
+          <element id="archive" name="log-manager-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="log-manager" />
+          </element>
+          <element id="archive" name="log-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="log-dao" />
+          </element>
+          <element id="archive" name="customer-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="customer-entity" />
+          </element>
+          <element id="archive" name="employee-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="employee-entity" />
+          </element>
+          <element id="archive" name="house-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="house-entity" />
+          </element>
+          <element id="archive" name="user-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="user-entity" />
+          </element>
+          <element id="archive" name="auth-entity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="auth-entity" />
+          </element>
+          <element id="archive" name="customer-dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="customer-dao" />
+          </element>
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.28" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.1.8" />
+          <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.1.1" />
+          <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:3.4.2" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-mongodb:1.8.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:1.11.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
+          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.25" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-redis:1.8.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-keyvalue:1.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-oxm:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: redis.clients:jedis:2.9.0" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.4.2" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.3.3" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.6" />
+          <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache:2.10.6" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-swagger2:2.7.0" />
+          <element id="library" level="project" name="Maven: io.swagger:swagger-models:1.5.13" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-spi:2.7.0" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-core:2.7.0" />
+          <element id="library" level="project" name="Maven: net.bytebuddy:byte-buddy:1.6.14" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-schema:2.7.0" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-swagger-common:2.7.0" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-spring-web:2.7.0" />
+          <element id="library" level="project" name="Maven: org.reflections:reflections:0.9.11" />
+          <element id="library" level="project" name="Maven: org.javassist:javassist:3.21.0-GA" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:18.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.3.3" />
+          <element id="library" level="project" name="Maven: org.springframework.plugin:spring-plugin-core:1.2.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.plugin:spring-plugin-metadata:1.2.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.mapstruct:mapstruct:1.1.0.Final" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-swagger-ui:2.7.0" />
+          <element id="library" level="project" name="Maven: com.mangofactory:swagger-springmvc:1.0.2" />
+          <element id="library" level="project" name="Maven: com.wordnik:swagger-annotations:1.3.11" />
+          <element id="library" level="project" name="Maven: joda-time:joda-time:2.5" />
+          <element id="library" level="project" name="Maven: com.mangofactory:swagger-models:1.0.2" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/service/bundle/target/hkp-app-service/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="srv-bundle/web/Web" />
+    </root>
+  </artifact>
+</component>

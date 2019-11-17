@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.remind.entity.RemindDownEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.sys.remind.entity.RemindDownEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="remind_code" property="remindCode" jdbcType="VARCHAR"/>
+        <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+        <result column="down_type" property="downType" jdbcType="VARCHAR"/>
+        <result column="down_cause" property="downCause" jdbcType="VARCHAR"/>
+
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="user_cause" property="userCause" jdbcType="VARCHAR"/>
+        <result column="has_operate" property="hasOperate" jdbcType="BOOLEAN"/>
+        <result column="lease_expiration" property="leaseExpiration" jdbcType="TIMESTAMP"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_sys_remind_down_rack
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.remindCode != null and i.remindCode != ''">
+                    remind_code,
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    owner_code,
+                </if>
+                <if test="i.ownerName != null and i.ownerName != ''">
+                    owner_name,
+                </if>
+                <if test="i.downType != null and i.downType != ''">
+                    down_type,
+                </if>
+                <if test="i.downCause != null and i.downCause !=''">
+                    down_cause,
+                </if>
+
+                <if test="i.userCode != null and i.userCode !=''">
+                    user_code,
+                </if>
+                <if test="i.userCause != null and i.userCause !=''">
+                    user_cause,
+                </if>
+                <if test="i.hasOperate != null and i.hasOperate !=''">
+                    has_operate,
+                </if>
+                <if test="i.leaseExpiration != null">
+                    lease_expiration,
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name,
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.remindCode != null and i.remindCode != ''">
+                    #{i.remindCode},
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    #{i.ownerCode},
+                </if>
+                <if test="i.ownerName != null and i.ownerName != ''">
+                    #{i.ownerName},
+                </if>
+                <if test="i.downType != null and i.downType != ''">
+                    #{i.downType},
+                </if>
+                <if test="i.downCause != null and i.downCause !=''">
+                    #{i.downCause},
+                </if>
+
+                <if test="i.userCode != null and i.userCode !=''">
+                    #{i.userCode},
+                </if>
+                <if test="i.userCause != null and i.userCause !=''">
+                    #{i.userCause},
+                </if>
+                <if test="i.hasOperate != null and i.hasOperate !=''">
+                    #{i.hasOperate},
+                </if>
+                <if test="i.leaseExpiration != null">
+                    #{i.leaseExpiration},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新数据信息 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.remind.entity.RemindDownEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_sys_remind_down_rack
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.remindCode != null and i.remindCode != ''">
+                    remind_code = #{i.remindCode},
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    owner_code = #{i.ownerCode},
+                </if>
+                <if test="i.ownerName != null and i.ownerName != ''">
+                    owner_name = #{i.ownerName},
+                </if>
+                <if test="i.downType != null and i.downType != ''">
+                    down_type = #{i.downType},
+                </if>
+                <if test="i.downCause != null and i.downCause !=''">
+                    down_cause = #{i.downCause},
+                </if>
+
+                <if test="i.userCode != null and i.userCode !=''">
+                    user_code = #{i.userCode},
+                </if>
+                <if test="i.userCause != null and i.userCause !=''">
+                    user_cause = #{i.userCause},
+                </if>
+                <if test="i.hasOperate != null and i.hasOperate !=''">
+                    has_operate = #{i.hasOperate},
+                </if>
+                <if test="i.leaseExpiration != null">
+                    lease_expiration = #{i.leaseExpiration},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name = #{i.createName},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name = #{i.createDeptName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code = #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                and owner_code = #{i.ownerCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_sys_remind_down_rack WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="remindCode != null">
+                AND remind_code = #{remindCode}
+            </if>
+            <if test="ownerCode != null">
+                AND owner_code = #{ownerCode}
+            </if>
+            <if test="_ownerCodes != null">
+                AND owner_code IN (${_ownerCodes})
+            </if>
+            <if test="downType != null">
+                AND down_type = #{downType}
+            </if>
+            <if test="hasOperate != null">
+                AND has_operate = #{hasOperate}
+            </if>
+            <if test="cause != null">
+                AND cause = #{cause}
+            </if>
+
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.remind.entity.RemindDownEntity">
+        SELECT * FROM t_hkp_sys_remind_down_rack
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) FROM t_hkp_sys_remind_down_rack
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.remind.entity.RemindDownEntity">
+        SELECT * FROM t_hkp_sys_remind_down_rack
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) FROM t_hkp_sys_remind_down_rack
+        <include refid="selectSql"/>
+    </select>
+
+</mapper>

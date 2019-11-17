@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="srv-bundle:war">
+    <output-path>$PROJECT_DIR$/service/bundle/target</output-path>
+    <root id="archive" name="hkp-app-service.war">
+      <element id="artifact" artifact-name="srv-bundle:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.hos.house.entity.SharePoolDeptEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.hos.house.entity.SharePoolDeptEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="share_code" property="shareCode" jdbcType="VARCHAR"/>
+        <result column="share_type" property="shareType" jdbcType="VARCHAR"/>
+        <result column="share_dept_code" property="shareDeptCode" jdbcType="VARCHAR"/>
+        <result column="share_dept_name" property="shareDeptName" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.kfwy.hkp.hos.house.entity.SharePoolDeptEntity">
+        INSERT INTO t_hkp_share_pool_dept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shareCode != null and shareCode != ''">
+                share_code,
+            </if>
+            <if test="shareType != null and shareType != ''">
+                share_type,
+            </if>
+            <if test="shareDeptCode != null and shareDeptCode != ''">
+                share_dept_code,
+            </if>
+            <if test="shareDeptName != null and shareDeptName != ''">
+                share_dept_name,
+            </if>
+            <if test="createCode != null and createCode != ''">
+                create_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                create_dept_code,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shareCode != null and shareCode != ''">
+                #{shareCode},
+            </if>
+            <if test="shareType != null and shareType != ''">
+                #{shareType},
+            </if>
+            <if test="shareDeptCode != null and shareDeptCode != ''">
+                #{shareDeptCode},
+            </if>
+            <if test="shareDeptName != null and shareDeptName != ''">
+                #{shareDeptName},
+            </if>
+            <if test="createCode != null and createCode != ''">
+                #{createCode},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                #{createDeptCode},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.hos.house.entity.SharePoolDeptEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_share_pool_dept
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.shareCode != null and i.shareCode != ''">
+                    share_code=#{i.shareCode},
+                </if>
+                <if test="i.shareType != null and i.shareType != ''">
+                    share_type=#{i.shareType},
+                </if>
+                <if test="i.shareDeptCode != null and i.shareDeptCode != ''">
+                    share_dept_code=#{i.shareDeptCode},
+                </if>
+                <if test="i.shareDeptName != null and i.shareDeptName != ''">
+                    share_dept_name=#{i.shareDeptName},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and share_code = #{i.shareCode}
+            </trim>
+        </foreach>
+    </update>
+    
+
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="keyword != null and keyword != ''">
+                AND
+                (
+                share_code      LIKE '%' || #{keyword} ||'%' OR
+                share_dept_name LIKE '%' || #{keyword} ||'%'
+                )
+            </if>
+            <if test="isDeleted !=null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="shareDeptCode !=null">
+                AND share_dept_code=#{shareDeptCode}
+            </if>
+
+            <if test="shareCode !=null">
+                AND share_code=#{shareCode}
+            </if>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+        </trim>
+    </sql>
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_share_pool_dept
+        <include refid="selectSql"/>
+    </select>
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap">
+        select * from t_hkp_share_pool_dept
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 根据shareCode查询符合条件的实体对象 -->
+    <select id="selectByShareCodeMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.hos.house.entity.SharePoolDeptEntity">
+    SELECT * FROM t_hkp_share_pool_dept
+    <include refid="selectSql"/>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select COUNT(*) FROM t_hkp_share_pool_dept
+        <include refid="selectSql"/>
+    </select>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_share_pool_dept WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_share_pool_dept
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.shareCode != null and i.shareCode != ''">
+                    share_code,
+                </if>
+                <if test="i.shareType != null and i.shareType != ''">
+                    share_type,
+                </if>
+                <if test="i.shareDeptCode != null and i.shareDeptCode != ''">
+                    share_dept_code,
+                </if>
+                <if test="i.shareDeptName != null and i.shareDeptName != ''">
+                    share_dept_name,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.shareCode != null and i.shareCode != ''">
+                    #{i.shareCode},
+                </if>
+                <if test="i.shareType != null and i.shareType != ''">
+                    #{i.shareType},
+                </if>
+                <if test="i.shareDeptCode != null and i.shareDeptCode != ''">
+                    #{i.shareDeptCode},
+                </if>
+                <if test="i.shareDeptName != null and i.shareDeptName != ''">
+                    #{i.shareDeptName},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+</mapper>

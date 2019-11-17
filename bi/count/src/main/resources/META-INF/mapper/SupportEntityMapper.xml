@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.SupportEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.SupportEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="support_code" property="supportCode" jdbcType="VARCHAR"/>
+        <result column="in_time" property="inTime" jdbcType="TIMESTAMP"/>
+        <result column="last_order_time" property="lastOrderTime" jdbcType="TIMESTAMP"/>
+        <result column="support_time" property="supportTime" jdbcType="TIMESTAMP"/>
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="support_user_code" property="supportUserCode" jdbcType="VARCHAR"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+        <result column="strategy" property="strategy" jdbcType="VARCHAR"/>
+        <result column="leader_plan" property="leaderPlan" jdbcType="VARCHAR"/>
+        <result column="need_resources" property="needResources" jdbcType="VARCHAR"/>
+        <result column="support_status" property="supportStatus" jdbcType="NUMERIC" javaType="int"/>
+        <result column="support_type" property="supportType" jdbcType="NUMERIC" javaType="int"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_ky_emp_support
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.supportCode != null and i.supportCode!=''">
+                    support_code,
+                </if>
+                <if test="i.inTime != null">
+                    in_time,
+                </if>
+                <if test="i.lastOrderTime != null">
+                    last_order_time,
+                </if>
+                <if test="i.supportTime != null">
+                    support_time,
+                </if>
+                <if test="i.userCode != null and i.userCode!=''">
+                    user_code,
+                </if>
+                <if test="i.supportUserCode != null and i.supportUserCode!=''">
+                    support_user_code,
+                </if>
+                <if test="i.reason != null and i.reason!=''">
+                    reason,
+                </if>
+                <if test="i.strategy != null and i.strategy!=''">
+                    strategy,
+                </if>
+                <if test="i.leaderPlan != null and i.leaderPlan!=''">
+                    leader_plan,
+                </if>
+                <if test="i.needResources != null and i.needResources!=''">
+                    need_resources,
+                </if>
+                <if test="i.supportStatus != null">
+                    support_status,
+                </if>
+                <if test="i.supportType != null">
+                    support_type,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.supportCode != null and i.supportCode!=''">
+                    #{i.supportCode},
+                </if>
+                <if test="i.inTime != null">
+                    #{i.inTime},
+                </if>
+                <if test="i.lastOrderTime != null">
+                    #{i.lastOrderTime},
+                </if>
+                <if test="i.supportTime != null">
+                    #{i.supportTime},
+                </if>
+                <if test="i.userCode != null and i.userCode!=''">
+                    #{i.userCode},
+                </if>
+                <if test="i.supportUserCode != null and i.supportUserCode!=''">
+                    #{i.supportUserCode},
+                </if>
+                <if test="i.reason != null and i.reason!=''">
+                    #{i.reason},
+                </if>
+                <if test="i.strategy != null and i.strategy!=''">
+                    #{i.strategy},
+                </if>
+                <if test="i.leaderPlan != null and i.leaderPlan!=''">
+                    #{i.leaderPlan},
+                </if>
+                <if test="i.needResources != null and i.needResources!=''">
+                    #{i.needResources},
+                </if>
+                <if test="i.supportStatus != null">
+                    #{i.supportStatus},
+                </if>
+                <if test="i.supportType != null">
+                    #{i.supportType},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <select id="selectSupport" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.SupportEntity">
+        SELECT
+            tal.*
+        FROM
+            (
+                SELECT
+                    u.user_code,
+                    CASE
+                WHEN ord.max_order_time IS NULL THEN
+                    u.entry_time
+                ELSE
+                    ord.max_order_time
+                END AS last_order_time
+                FROM
+                    t_hkp_sys_user_user u
+                LEFT JOIN (
+                    SELECT
+                        emp_code,
+                        "max" (order_time) AS max_order_time
+                    FROM
+                        t_hkp_trade_order
+                    WHERE
+                        is_deleted = FALSE
+                    GROUP BY
+                        emp_code
+                ) ord ON u.user_code = ord.emp_code
+                WHERE
+                    u.is_deleted = FALSE
+                AND u.emp_post_code IN (
+                    'PT201805030001be8b',
+                    'PT201712210004d713',
+                    'PT20190315000194c5'
+                )
+            ) AS tal
+        where tal.last_order_time <![CDATA[ < ]]> #{endTime}
+    </select>
+</mapper>

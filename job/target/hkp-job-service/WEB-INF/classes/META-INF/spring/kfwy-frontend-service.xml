@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+  http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+  http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+	<task:annotation-driven/>
+	<task:scheduled-tasks>
+		<task:scheduled ref="customerTransformJob" method="start" cron="30 57 23 * * ?"/><!-- 每天23点57分执行 -->
+		<task:scheduled ref="remindDownJob" method="start" cron="59 57 23 * * ?"/><!-- 每天23点57分执行 -->
+		<task:scheduled ref="houseCollectNoticeAop" method="afterCollectNotice" cron="0 01 2  * * ?"/>
+		<task:scheduled ref="customerAutoReleaseNoticeAop" method="autoReleaseNotice" cron="0 11 2 * * ?"/>
+		<task:scheduled ref="customerCollectNoticeAop" method="afterCollectNotice" cron="0 21 2  * * ?"/>
+		<task:scheduled ref="wageInvoiceJob" method="start" cron="0 55 23  4 * ?"/><!-- 每月4号23点55分执行 -->
+		<task:scheduled ref="customerStatusOpenJob" method="start" cron="0 58 23 * * ?"/>
+		<task:scheduled ref="qiChaChaReset" method="reset" cron="1 1 1  1 * ?"/><!-- 每月1号1点1分1秒执行 -->
+		<task:scheduled ref="empSupportJob" method="start" cron="1 10 1  1 * ?"/><!-- 每月1号1点10分1秒执行 -->
+		<task:scheduled ref="lastDayReportJob" method="start" cron="1 15 1  * * ?"/><!-- 每天1点15分1秒执行 -->
+		<task:scheduled ref="hrWageReportJob" method="start" cron="0 10 12  2 * ?"/><!-- 每月2号12点10分执行 -->
+		<task:scheduled ref="hrWageReportSecondJob" method="start" cron="0 20 1  6 * ?"/><!-- 每月6号1点20分执行 -->
+
+	</task:scheduled-tasks>
+
+</beans>

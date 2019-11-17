@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.FocusReportEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.bi.count.entity.FocusReportEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+
+        <result column="report_time" property="reportTime" jdbcType="VARCHAR"/>
+
+        <result column="cus_sum" property="cusSum" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="platform_new_cus" property="platformNewCus" jdbcType="NUMERIC" javaType="int"/>
+        <result column="private_new_cus" property="privateNewCus" jdbcType="NUMERIC" javaType="int"/>
+        <result column="new_cus_depute" property="newCusDepute" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="platform_up_cus" property="platformUpCus" jdbcType="NUMERIC" javaType="int"/>
+        <result column="private_up_cus" property="privateUpCus" jdbcType="NUMERIC" javaType="int"/>
+        <result column="up_cus_depute" property="upCusDepute" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_cus_sum" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_new_cus" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_report_focus
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                <if test="i.reportTime != null">
+                    report_time,
+                </if>
+
+                <if test="i.cusSum != null">
+                    cus_sum,
+                </if>
+
+                <if test="i.platformNewCus != null">
+                    platform_new_cus,
+                </if>
+                <if test="i.privateNewCus != null">
+                    private_new_cus,
+                </if>
+                <if test="i.newCusDepute != null">
+                    new_cus_depute,
+                </if>
+
+                <if test="i.platformUpCus != null">
+                    platform_up_cus,
+                </if>
+                <if test="i.privateUpCus != null">
+                    private_up_cus,
+                </if>
+                <if test="i.upCusDepute != null">
+                    up_cus_depute,
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_cus_sum,
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name,
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_new_cus,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+                <if test="i.reportTime != null">
+                    #{i.reportTime},
+                </if>
+
+                <if test="i.cusSum != null">
+                    #{i.cusSum},
+                </if>
+
+                <if test="i.platformNewCus != null">
+                    #{i.newCus},
+                </if>
+                <if test="i.privateNewCus != null">
+                    #{i.privateNewCus},
+                </if>
+                <if test="i.newCusDepute != null">
+                    #{i.newCusDepute},
+                </if>
+
+                <if test="i.platformUpCus != null">
+                    #{i.platformUpCus},
+                </if>
+                <if test="i.privateUpCus != null">
+                    #{i.privateUpCus},
+                </if>
+                <if test="i.upCusDepute != null">
+                    #{i.upCusDepute},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新数据信息 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.bi.count.entity.FocusReportEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_report_focus
+            <trim prefix="set" suffixOverrides=",">
+
+                <if test="i.reportTime != null">
+                    report_time = #{i.reportTime},
+                </if>
+
+                <if test="i.cusSum != null">
+                    cus_sum = #{i.cusSum},
+                </if>
+
+                <if test="i.platformNewCus != null">
+                    platform_new_cus = #{i.platformNewCus},
+                </if>
+                <if test="i.privateNewCus != null">
+                    private_new_cus = #{i.privateNewCus},
+                </if>
+                <if test="i.newCusDepute != null">
+                    new_cus_depute = #{i.newCusDepute},
+                </if>
+
+                <if test="i.platformUpCus != null">
+                    platform_up_cus = #{i.platformUpCus},
+                </if>
+                <if test="i.privateUpCus != null">
+                    private_up_cus = #{i.privateUpCus},
+                </if>
+                <if test="i.upCusDepute != null">
+                    up_cus_depute = #{i.upCusDepute},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name = #{i.createName},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_new_cus = #{i.createDeptName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_cus_sum = #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                and cus_sum = #{i.cusSum}
+            </trim>
+        </foreach>
+    </update>
+
+
+    <select id="selectByMapFocusCount" parameterType="map" resultType="int">
+        SELECT
+            count(tp.*)
+        FROM(
+            SELECT
+                DISTINCT cus_code
+            FROM
+                t_hkp_crm_focus_cus
+            <include refid="selectSql"/>
+        ) tp
+        <if test="cusFrom != null  and cusFrom!=''">
+            LEFT JOIN t_hkp_crm_customer C ON C.cus_code = tp.cus_code
+            where cus_from = #{cusFrom}
+        </if>
+    </select>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="focusType != null  and focusType!=''">
+                AND focus_type = #{focusType}
+            </if>
+            <if test="userCode != null  and userCode!=''">
+                AND user_code = #{userCode}
+            </if>
+            <if test="userCodes != null">
+                <choose>
+                    <when test="_userCodes!= null">
+                        AND user_code IN (${_userCodes})
+                    </when>
+                    <otherwise>
+                        AND user_code IN
+                        <foreach collection="userCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="userDeptCode != null  and userDeptCode!=''">
+                AND user_dept_code = #{userDeptCode}
+            </if>
+            <if test="userDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes!= null">
+                        AND user_dept_code IN (${_userDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND user_dept_code IN
+                        <foreach collection="userDeptCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectJoinSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="cusFrom != null  and cusFrom!=''">
+                AND cus_from = #{cusFrom}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="selectCusCountByMap" parameterType="map" resultType="int">
+        select count(tp.*) from (
+            select
+                create_code
+            from
+                t_hkp_crm_customer
+        <include refid="cusSelectSql"/>
+        )tp
+        <if test="notEmpPost != null">
+            LEFT JOIN t_hkp_sys_user_user u ON u.user_code = tp.create_code
+                WHERE
+            u.emp_post_code != #{notEmpPost}
+        </if>
+
+    </select>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="cusSelectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createDeptCode != null">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="cusStatus != null">
+                AND to_char( create_time, 'yyyy-MM-dd HH24:MI:ss' ) != to_char( last_upshelf_time, 'yyyy-MM-dd HH24:MI:ss' )
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+
+</mapper>

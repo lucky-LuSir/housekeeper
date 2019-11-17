@@ -1,0 +1,1172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.trade.order.entity.OrderEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="house_code" property="houseCode" jdbcType="VARCHAR"/>
+        <result column="houseowner_phone" property="houseownerPhone" jdbcType="VARCHAR"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="cus_phone" property="cusPhone" jdbcType="VARCHAR"/>
+        <result column="acreage" property="acreage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="price" property="price" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="contract_start" property="contractStart" jdbcType="TIMESTAMP"/>
+        <result column="contract_end" property="contractEnd" jdbcType="TIMESTAMP"/>
+        <result column="month_count" property="monthCount" jdbcType="INTEGER"/>
+        <result column="deposit" property="deposit" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="receivable_hos" property="receivableHos" jdbcType="NUMERIC"
+                javaType="decimal"/>
+        <result column="receivable_cus" property="receivableCus" jdbcType="NUMERIC"
+                javaType="decimal"/>
+        <result column="commission" property="commission" jdbcType="VARCHAR"/>
+
+        <result column="cus_rebate" property="cusRebate" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="owner_rebate" property="ownerRebate" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="cus_parttime_money" property="cusParttimeMoney" jdbcType="NUMERIC"
+                javaType="decimal"/>
+        <result column="owner_parttime_money" property="ownerParttimeMoney" jdbcType="NUMERIC"
+                javaType="decimal"/>
+        <result column="actual_commision" property="actualCommision" jdbcType="NUMERIC"
+                javaType="decimal"/>
+
+        <result column="actual_branch_commision" property="actualBranchCommision" jdbcType="NUMERIC"
+                javaType="decimal"/>
+        <result column="month_rent" property="monthRent" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="cus_image_name" property="cusImageName" jdbcType="VARCHAR"/>
+        <result column="cus_commission_num" property="cusCommissionNum" jdbcType="VARCHAR"/>
+        <result column="owner_image_name" property="ownerImageName" jdbcType="VARCHAR"/>
+        <result column="owner_commission_num" property="ownerCommissionNum" jdbcType="VARCHAR"/>
+        <result column="expect_payment_time" property="expectPaymentTime" jdbcType="TIMESTAMP"/>
+
+
+        <result column="emp_percentage_total" property="empPercentageTotal" jdbcType="NUMERIC"
+                javaType="decimal"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="cus_sex" property="cusSex" jdbcType="VARCHAR"/>
+        <result column="cus_emp_name" property="cusEmpName" jdbcType="VARCHAR"/>
+        <result column="house_name" property="houseName" jdbcType="VARCHAR"/>
+        <result column="hos_emp_name" property="hosEmpName" jdbcType="VARCHAR"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+        <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+        <result column="community_name" property="communityName" jdbcType="VARCHAR"/>
+        <result column="detail_address" property="detailAddress" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+
+        <result column="create_dept_name" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="par_dept_name" property="parDeptName" jdbcType="VARCHAR"/>
+        <result column="leader_name" property="leaderName" jdbcType="VARCHAR"/>
+        <result column="payback_sum" property="paybackSum" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="iv_invoice_tax" property="ivInvoiceTax" jdbcType="NUMERIC"
+                javaType="decimal"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="regio_name" property="regioName" jdbcType="VARCHAR"/>
+        <result column="houseowner_type" property="houseownerType" jdbcType="VARCHAR"/>
+        <result column="houseowner_name" property="houseownerName" jdbcType="VARCHAR"/>
+        <result column="houseowner_company" property="houseownerCompany" jdbcType="VARCHAR"/>
+        <result column="cus_company" property="cusCompany" jdbcType="VARCHAR"/>
+
+        <result column="per_emp_name" property="perEmpName" jdbcType="VARCHAR"/>
+        <result column="per_dept_name" property="perDeptName" jdbcType="VARCHAR"/>
+        <result column="per_work_number" property="perWorkNumner" jdbcType="VARCHAR"/>
+
+        <result column="per_percentage" property="perPercentage" jdbcType="NUMERIC"
+                javaType="decimal"/>
+        <result column="per_profit" property="perProfit" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="has_commission_confirm" property="hasCommissionConfirm" jdbcType="BOOLEAN"/>
+
+        <result column="update_type" property="updateType" jdbcType="VARCHAR"/>
+        <result column="old_value" property="oldValue" jdbcType="VARCHAR"/>
+        <result column="banlance" property="banlance" jdbcType="VARCHAR"/>
+        <result column="new_value" property="newValue" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+
+
+        <collection property="orderPercentageEntityList" columnPrefix="p_" javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.trade.order.entity.OrderPercentageEntity">
+            <!--参与分成员工编码-->
+            <result column="pe_emp_name" property="peEmpName" jdbcType="VARCHAR"/>
+            <!--参与分成部门编码-->
+            <result column="pe_dept_Name" property="peDeptName" jdbcType="VARCHAR"/>
+            <!--员工工号-->
+            <result column="work_number" property="workNumber" jdbcType="VARCHAR"/>
+
+            <result column="pe_emp_code" property="peEmpCode" jdbcType="VARCHAR"/>
+            <!--分成比例-->
+            <result column="percentage" property="percentage" jdbcType="NUMERIC" javaType="decimal"/>
+            <!--分成金额-->
+            <result column="profit" property="profit" jdbcType="NUMERIC" javaType="decimal"/>
+        </collection>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_trade_order
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    order_code,
+                </if>
+                <if test="i.orderTime != null">
+                    order_time,
+                </if>
+                <if test="i.orderStatus != null and i.orderStatus != ''">
+                    order_status,
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code,
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code,
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    house_code,
+                </if>
+                <if test="i.houseownerPhone != null and i.houseownerPhone != ''">
+                    houseowner_phone,
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.cusPhone != null and i.cusPhone != ''">
+                    cus_phone,
+                </if>
+                <if test="i.acreage != null">
+                    acreage,
+                </if>
+                <if test="i.price != null">
+                    price,
+                </if>
+                <if test="i.unit != null and i.unit != ''">
+                    unit,
+                </if>
+                <if test="i.contractStart != null">
+                    contract_start,
+                </if>
+                <if test="i.contractEnd != null">
+                    contract_end,
+                </if>
+                <if test="i.monthCount != null">
+                    month_count,
+                </if>
+                <if test="i.deposit != null">
+                    deposit,
+                </if>
+                <if test="i.receivableHos != null">
+                    receivable_hos,
+                </if>
+                <if test="i.receivableCus != null">
+                    receivable_cus,
+                </if>
+
+                /*0928add*/
+                <if test="i.cusRebate != null">
+                    cus_rebate,
+                </if>
+
+                <if test="i.ownerRebate != null">
+                    owner_rebate,
+                </if>
+                <if test="i.cusParttimeMoney != null">
+                    cus_parttime_money,
+                </if>
+                <if test="i.ownerParttimeMoney != null">
+                    owner_parttime_money,
+                </if>
+                <if test="i.actualCommision != null">
+                    actual_commision,
+                </if>
+                <if test="i.actualBranchCommision != null">
+                    actual_branch_commision,
+                </if>
+                <if test="i.monthRent != null">
+                    month_rent,
+                </if>
+
+                <if test="i.cusImageName != null and i.cusImageName != ''">
+                    cus_image_name,
+                </if>
+                <if test="i.cusCommissionNum != null and i.cusCommissionNum != ''">
+                    cus_commission_num,
+                </if>
+                <if test="i.ownerImageName != null and i.ownerImageName != ''">
+                    owner_image_name,
+                </if>
+                <if test="i.ownerCommissionNum != null and i.ownerCommissionNum != ''">
+                    owner_commission_num,
+                </if>
+                <if test="i.expectPaymentTime != null">
+                    expect_payment_time,
+                </if>
+
+                <if test="i.commission != null and i.commission != ''">
+                    commission,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    #{i.orderCode},
+                </if>
+                <if test="i.orderTime != null">
+                    #{i.orderTime},
+                </if>
+                <if test="i.orderStatus != null and i.orderStatus != ''">
+                    #{i.orderStatus},
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    #{i.empCode},
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    #{i.deptCode},
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    #{i.houseCode},
+                </if>
+                <if test="i.houseownerPhone != null and i.houseownerPhone != ''">
+                    #{i.houseownerPhone},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.cusPhone != null and i.cusPhone != ''">
+                    #{i.cusPhone},
+                </if>
+                <if test="i.acreage != null">
+                    #{i.acreage},
+                </if>
+                <if test="i.price != null">
+                    #{i.price},
+                </if>
+                <if test="i.unit != null and i.unit != ''">
+                    #{i.unit},
+                </if>
+                <if test="i.contractStart != null">
+                    #{i.contractStart},
+                </if>
+                <if test="i.contractEnd != null">
+                    #{i.contractEnd},
+                </if>
+                <if test="i.monthCount != null">
+                    #{i.monthCount},
+                </if>
+                <if test="i.deposit != null">
+                    #{i.deposit},
+                </if>
+                <if test="i.receivableHos != null">
+                    #{i.receivableHos},
+                </if>
+                <if test="i.receivableCus != null">
+                    #{i.receivableCus},
+                </if>
+
+                /*0928add*/
+                <if test="i.cusRebate != null">
+                    #{i.cusRebate},
+                </if>
+                <if test="i.ownerRebate != null">
+                    #{i.ownerRebate},
+                </if>
+                <if test="i.cusParttimeMoney != null">
+                    #{i.cusParttimeMoney},
+                </if>
+                <if test="i.ownerParttimeMoney != null">
+                    #{i.ownerParttimeMoney},
+                </if>
+                <if test="i.actualCommision != null">
+                    #{i.actualCommision},
+                </if>
+                <if test="i.actualBranchCommision != null">
+                    #{i.actualBranchCommision},
+                </if>
+                <if test="i.monthRent != null">
+                    #{i.monthRent},
+                </if>
+
+                <if test="i.cusImageName != null and i.cusImageName != ''">
+                    #{i.cusImageName},
+                </if>
+                <if test="i.cusCommissionNum != null and i.cusCommissionNum != ''">
+                    #{i.cusCommissionNum},
+                </if>
+                <if test="i.ownerImageName != null and i.ownerImageName != ''">
+                    #{i.ownerImageName},
+                </if>
+                <if test="i.ownerCommissionNum != null and i.ownerCommissionNum != ''">
+                    #{i.ownerCommissionNum},
+                </if>
+                <if test="i.expectPaymentTime != null">
+                    #{i.expectPaymentTime},
+                </if>
+
+
+                <if test="i.commission != null and i.commission != ''">
+                    #{i.commission},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_trade_order
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    order_code=#{i.orderCode},
+                </if>
+                <if test="i.orderTime != null">
+                    order_time=#{i.orderTime},
+                </if>
+                <if test="i.orderStatus != null and i.orderStatus != ''">
+                    order_status=#{i.orderStatus},
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code=#{i.empCode},
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code=#{i.deptCode},
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    house_code=#{i.houseCode},
+                </if>
+                <if test="i.houseownerPhone != null and i.houseownerPhone != ''">
+                    houseowner_phone=#{i.houseownerPhone},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code=#{i.cusCode},
+                </if>
+                <if test="i.cusPhone != null and i.cusPhone != ''">
+                    cus_phone=#{i.cusPhone},
+                </if>
+                <if test="i.acreage != null">
+                    acreage=#{i.acreage},
+                </if>
+                <if test="i.price != null">
+                    price=#{i.price},
+                </if>
+                <if test="i.unit != null and i.unit != ''">
+                    unit=#{i.unit},
+                </if>
+                <if test="i.contractStart != null">
+                    contract_start=#{i.contractStart},
+                </if>
+                <if test="i.contractEnd != null">
+                    contract_end=#{i.contractEnd},
+                </if>
+                <if test="i.monthCount != null">
+                    month_count=#{i.monthCount},
+                </if>
+                <if test="i.deposit != null">
+                    deposit=#{i.deposit},
+                </if>
+                <if test="i.receivableHos != null">
+                    receivable_hos=#{i.receivableHos},
+                </if>
+                <if test="i.receivableCus != null">
+                    receivable_cus=#{i.receivableCus},
+                </if>
+
+                /*0928add*/
+                <if test="i.cusRebate != null">
+                    cus_rebate=#{i.cusRebate},
+                </if>
+
+                <if test="i.ownerRebate != null">
+                    owner_rebate=#{i.ownerRebate},
+                </if>
+                <if test="i.cusParttimeMoney != null">
+                    cus_parttime_money=#{i.cusParttimeMoney},
+                </if>
+                <if test="i.ownerParttimeMoney != null">
+                    owner_parttime_money=#{i.ownerParttimeMoney},
+                </if>
+                <if test="i.actualCommision != null">
+                    actual_commision=#{i.actualCommision},
+                </if>
+                <if test="i.actualBranchCommision != null">
+                    actual_branch_commision=#{i.actualBranchCommision},
+                </if>
+                <if test="i.monthRent != null">
+                    month_rent=#{i.monthRent},
+                </if>
+
+                <if test="i.cusImageName != null and i.cusImageName != ''">
+                    cus_image_name=#{i.cusImageName},
+                </if>
+                <if test="i.cusCommissionNum != null and i.cusCommissionNum != ''">
+                    cus_commission_num=#{i.cusCommissionNum},
+                </if>
+                <if test="i.ownerImageName != null and i.ownerImageName != ''">
+                    owner_image_name=#{i.ownerImageName},
+                </if>
+                <if test="i.ownerCommissionNum != null and i.ownerCommissionNum != ''">
+                    owner_commission_num=#{i.ownerCommissionNum},
+                </if>
+                <if test="i.expectPaymentTime != null">
+                    expect_payment_time=#{i.expectPaymentTime},
+                </if>
+
+
+                <if test="i.commission != null and i.commission != ''">
+                    commission=#{i.commission},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted},
+                </if>
+                <if test="i.hasCommissionConfirm != null and i.hasCommissionConfirm != ''">
+                    has_commission_confirm =#{i.hasCommissionConfirm}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and order_code = #{i.orderCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="orderCode != null and orderCode != ''">
+                AND order_code = #{orderCode}
+            </if>
+            <if test="orderStatus != null and orderStatus != ''">
+                AND order_status = #{orderStatus}
+            </if>
+            <if test="noOrderStatuses != null">
+                <choose>
+                    <when test="_noOrderStatuses">
+                        AND order_status NOT IN (${_noOrderStatuses})
+                    </when>
+                    <otherwise>
+                        AND order_status NOT IN
+                        <foreach collection="noOrderStatuses" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND emp_code = #{empCode}
+            </if>
+            <if test="houseCode != null and houseCode != ''">
+                AND house_code = #{houseCode}
+            </if>
+            <if test="cusCode != null and cusCode != ''">
+                AND cus_code = #{cusCode}
+            </if>
+            <if test="cusPhone != null and cusPhone != ''">
+                AND cus_phone = #{cusPhone}
+            </if>
+            <if test="houseownerPhone != null and houseownerPhone != ''">
+                AND houseowner_phone = #{houseownerPhone}
+            </if>
+            <choose>
+                <when test="community !=null and community!=''">
+                    AND community=#{community}
+                </when>
+                <when test="street !=null and street!=''">
+                    AND street=#{street}
+                </when>
+                <when test="region != null and region!=''">
+                    AND region = #{region}
+                </when>
+                <when test="city != null and city!=''">
+                    AND city = #{city}
+                </when>
+                <when test="province != null and province!=''">
+                    AND province =#{province}
+                </when>
+            </choose>
+            <if test="address != null and address != ''">
+                AND (location_alias like '%' || #{address} || '%' or detail_address like '%' ||
+                #{address} || '%')
+            </if>
+            <if test="houseName != null and houseName != ''">
+                AND house_name like '%' || #{houseName} || '%'
+            </if>
+            <if test="acreageStart != null and acreageStart != ''">
+                AND acreage <![CDATA[ >= ]]> #{acreageStart}
+            </if>
+            <if test="acreageEnd != null and acreageEnd != ''">
+                AND acreage <![CDATA[ <= ]]> #{acreageEnd}
+            </if>
+
+            <if test="cpyCode != null and cpyCode != ''">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="createCode != null and createCode!=''">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createDeptCode != null and createDeptCode!=''">
+                AND dept_code = #{createDeptCode}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empCodes != null">
+                <choose>
+                    <when test="_empCodes != null">
+                        AND emp_code IN (${_empCodes})
+                    </when>
+                    <otherwise>
+                        AND emp_code IN
+                        <foreach collection="empCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="orderTimeStart != null">
+                AND order_time <![CDATA[ >= ]]> #{orderTimeStart}
+            </if>
+            <if test="orderTimeEnd != null">
+                AND order_time <![CDATA[ <= ]]> #{orderTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="deptCodes != null">
+                <choose>
+                    <when test="_deptCodes != null and _deptCodes != ''">
+                        AND dept_code IN (${_deptCodes})
+                    </when>
+                    <otherwise>
+                        AND dept_code IN
+                        <foreach collection="deptCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="keyword != null and keyword!=''">
+                AND (
+                order_code like '%' || #{keyword} ||'%'
+                or house_code like '%' || #{keyword} ||'%'
+                or cus_code like '%' || #{keyword} ||'%'
+                or cus_phone like '%' || #{keyword} ||'%'
+                )
+            </if>
+            <if test="empName !=null and empName!=''">
+                AND emp_name=#{empName}
+            </if>
+            <if test="createDeptName !=null and createDeptName!=''">
+                AND create_dept_name like '%' || #{createDeptName} ||'%'
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderStatisticsSelectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="orderTimeStart != null">
+                AND order_time <![CDATA[ >= ]]> #{orderTimeStart}
+            </if>
+            <if test="orderTimeEnd != null">
+                AND order_time <![CDATA[ <= ]]> #{orderTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="simpleCountByMap" parameterType="map" resultType="int">
+        select count(1) from (
+            select count(id) from t_hkp_trade_order
+            <include refid="selectSql"/>
+            <if test="groupBy !=null and groupBy != ''">
+                GROUP BY (${groupBy})
+            </if>
+        )TP
+    </select>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_trade_order
+        <include refid="selectSql"/>
+    </select>
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        select * from t_hkp_trade_order
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询订单的详情-->
+    <select id="detail" parameterType="string" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        SELECT
+            o.*,
+            c.cus_name,
+            c.cus_sex,
+            c.cus_phone,
+            h.house_name,
+            e.user_name  AS emp_name,
+            e1.user_name AS cus_emp_name,
+            e2.user_name AS hos_emp_name
+        FROM t_hkp_trade_order o
+            LEFT JOIN t_hkp_crm_customer c ON o.cus_code = c.cus_code
+            LEFT JOIN t_hkp_hos_house h ON o.house_code = h.house_code
+            LEFT JOIN t_hkp_sys_user_user e ON e.user_code = o.emp_code
+            LEFT JOIN t_hkp_sys_user_user e1 ON e1.user_code = c.emp_code
+            LEFT JOIN t_hkp_sys_user_user e2 ON e2.user_code = h.emp_code
+        WHERE o.order_code = #{orderCode}
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        select TP.*,
+        (SELECT sum(percentage) FROM t_hkp_trade_order_percentage
+        where order_code = TP.order_code and pe_emp_code = #{empPercentageCode})
+        emp_percentage_total
+        from
+        (
+        SELECT
+        o.*,
+        u.user_name as emp_name,
+        u.owner_dept_name as create_dept_name,
+        dept.dept_name as dept_name,
+        h.house_name,h.province,h.city,h.region,h.street,h.community,
+        h.province_name,h.city_name,h.region_name,h.street_name,h.community_name,
+        l.location_alias,l.detail_address
+        FROM
+        <choose>
+            <when test="peEmpCode != null">
+                (SELECT * from t_hkp_trade_order cs
+                where order_code IN (
+                SELECT a.order_code from t_hkp_trade_order_percentage a
+                where a.order_code = cs.order_code and pe_emp_code = #{peEmpCode}) ) o
+            </when>
+            <otherwise>
+                t_hkp_trade_order o
+            </otherwise>
+        </choose>
+        LEFT JOIN t_hkp_hos_house h on o.house_code = h.house_code
+        LEFT JOIN t_hkp_hos_location l on l.location_code = h.location_code
+        LEFT JOIN t_hkp_sys_user_user u ON u.user_code=o.emp_code
+        left join t_hkp_hrm_org_dept dept on dept.dept_code=o.dept_code
+        ) TP
+        <include refid="selectSql"></include>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*) from (
+        SELECT
+        o.*,
+        u.user_name as emp_name,
+        u.owner_dept_name as create_dept_name,
+        dept.dept_name as dept_name,
+        h.house_name,h.province,h.city,h.region,h.street,h.community,
+        h.province_name,h.city_name,h.region_name,h.street_name,h.community_name,
+        l.location_alias,l.detail_address
+        FROM
+        <choose>
+            <when test="peEmpCode != null">
+                (SELECT * from t_hkp_trade_order cs
+                where order_code IN (
+                SELECT a.order_code from t_hkp_trade_order_percentage a
+                where a.order_code = cs.order_code and pe_emp_code = #{peEmpCode}) ) o
+            </when>
+            <otherwise>
+                t_hkp_trade_order o
+            </otherwise>
+        </choose>
+        LEFT JOIN t_hkp_hos_house h on o.house_code = h.house_code
+        LEFT JOIN t_hkp_hos_location l on l.location_code = h.location_code
+        LEFT JOIN t_hkp_sys_user_user u ON u.user_code=o.emp_code
+        left join t_hkp_hrm_org_dept dept on dept.dept_code=o.dept_code
+
+        ) TP
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询返回总佣金 -->
+    <select id="selectMoneyReturn" parameterType="map" resultType="long">
+        SELECT SUM(
+                commission + cus_parttime_money + owner_parttime_money
+        )
+        FROM
+            t_hkp_trade_order
+        WHERE
+            is_deleted = FALSE
+    </select>
+
+    <!-- 订单统计导出 -->
+    <select id="orderStatistics" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        select * from (
+        select o.order_code, --订单编号
+        o.cus_commission_num, --佣金确认书编号
+        o.owner_commission_num,--佣金确认书编号
+        o.has_commission_confirm,
+        d.dept_name as dept_name,--订单所属部门
+        dp.dept_name as par_dept_name,--订所属大区
+        de.user_name as leader_name,--部门经理
+        ud.user_name as emp_name, --开单人
+        o.order_time, --开单日期
+        o.expect_payment_time, --预计收款日期
+        o.commission,--总佣金
+        o.receivable_hos, --业主佣金
+        o.receivable_cus, --客户佣金
+        o.cus_rebate, --客户返佣
+        o.owner_rebate, --业主返佣
+        o.cus_parttime_money, --客户兼职分钱
+        o.owner_parttime_money,--业主兼职分钱
+        o.is_deleted,
+        pb.payback as payback_sum,--回款金额
+        iv.invoiceTax as iv_invoice_tax, --税金
+        case w.house_type when '1' then '仓储' when '2' then '生产' else '仓储生产' end as house_type,--房源类型
+        ( case when lon.city_name is null then '' else lon.city_name end ||
+        case when lon.region_name is null then '' else lon.region_name end ||
+        case when lon.street_name is null then '' else lon.street_name end ||
+        case when lon.detail_address is null then '' else lon.detail_address end ) as regio_name,
+        case hw.houseowner_type when '1' then '大房东' when '2' then '二房东' end as
+        houseowner_type,--业主类型
+        o.acreage,--成交面积
+        hw.houseowner_name as houseowner_name, --房源联系人姓名
+        hw.houseowner_phone as houseowner_phone, --房源联系人电话
+        hw.company_name as houseowner_company, --业主公司
+        c.cus_code as cus_code, --客户编码
+        c.cus_name as cus_name, --客户名称
+        c.cus_phone as cus_phone, --客户电话
+        c.company_name as cus_company, --客户公司
+        case o.order_status when '1' then '未签租赁合同' when '2' then '已签租赁合同' when '3' then '已毁单' when
+        '5' then '已回款' when '8' then '回款中' end as order_status,
+        o.create_time,
+        o.last_update_time
+        from t_hkp_trade_order o
+        left join t_hkp_hrm_org_dept d on d.dept_code = o.dept_code
+        LEFT JOIN t_hkp_hrm_org_dept dp on d.parent_code=dp.dept_code
+        left join t_hkp_sys_user_user de on de.user_code = d.leader_code
+        LEFT JOIN t_hkp_sys_user_user ud on o.emp_code=ud.user_code
+        left join t_hkp_hos_house w on w.house_code = o.house_code
+        left join t_hkp_hos_location lon on lon.location_code=w.location_code
+        left join t_hkp_hos_houseowner hw on hw.houseowner_code = w.owner_code
+        left join (
+        select order_code, sum(payment) "payback" from t_hkp_trade_ord_payback GROUP BY order_code
+        )pb on pb.order_code = o.order_code
+        LEFT JOIN (
+        SELECT
+        order_code,
+        SUM (
+        to_number(invoice_tax, '9999999D99')
+        ) AS invoiceTax
+        FROM
+        t_hkp_trade_ord_invoice
+        GROUP BY
+        order_code
+        ) AS iv ON iv.order_code = o.order_code
+        LEFT JOIN t_hkp_crm_customer C ON C.CUS_CODE = O.cus_code
+        ) mm
+        <include refid="orderStatisticsSelectSql"></include>
+    </select>
+
+    <!--订单分成导出-->
+    <select id="orderDivideInto" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        select * from (
+        select
+        o.order_code,--订单编号
+        o.commission,--合同佣金
+        o.receivable_hos, --业主佣金
+        o.receivable_cus, --客户佣金
+        o.cus_rebate, --客户返佣
+        o.owner_rebate, --业主返佣
+        o.cus_parttime_money, --客户兼职分钱
+        o.owner_parttime_money,--业主兼职分钱
+        o.order_time as order_time, --开单日期
+        o.expect_payment_time as expect_payment_time, --预计收款日期
+        o.acreage as acreage,--成交面积
+        o.is_deleted,
+        ed.dept_name as dept_name,--订单所属部门
+        de.user_name as leader_name,--部门经理
+        e.user_name as per_emp_name,--分成人姓名
+        e.work_number as per_work_number,
+        d1.dept_name as per_dept_name,--分成人所属部门
+        p.percentage AS per_percentage,--分成比列
+        p.profit AS per_profit,--分成金额
+        pb.payback AS payback_sum,--回款金额
+        iv.invoiceTax AS iv_invoice_tax,--税金
+        case w.house_type
+        when '1' then '仓储'
+        when '2' then '生产'
+        else '仓储生产'
+        end as house_type,--房源类型
+        --w.city_name || w.region_name || w.street_name || w.address as w_regio_name,--房源地址
+        case hw.houseowner_type
+        when '1' then '大房东'
+        when '2' then '二房东'
+        end as houseowner_type,--业主类型
+        hw.houseowner_name as houseowner_name,--房源联系人姓名
+        hw.houseowner_phone as houseowner_phone,--房源联系人电话
+        hw.company_name as houseowner_company,--房源联系人公司
+        c.cus_code AS cus_code,--客户编码
+        c.cus_name AS cus_name,--客户名称
+        c.cus_phone as cus_phone,--客户电话
+        c.company_name as cus_company,--客户所属公司
+        case o.order_status
+        when '1' then '未签租赁合同'
+        when '2' then '已签租赁合同'
+        when '3' then '已毁单'
+        when '5' then '已回款'
+        when '8' then '回款中' end as order_status,
+        o.create_time as create_time --创建时间
+        from t_hkp_trade_order o
+        left join t_hkp_sys_user_user ee on ee.emp_code = o.emp_code
+        left join t_hkp_hrm_org_dept ed on o.dept_code = ed.dept_code
+        left join t_hkp_sys_user_user de on ed.leader_code = de.user_code
+        left join (
+        select order_code, pe_dept_code, pe_emp_code, sum(percentage) as percentage, sum(profit) as
+        profit
+        from t_hkp_trade_order_percentage where is_deleted=false GROUP BY order_code, pe_dept_code,
+        pe_emp_code
+        ) p on p.order_code = o.order_code
+        left join t_hkp_sys_user_user e on e.user_code = p.pe_emp_code
+        left join t_hkp_hrm_org_dept d1 on d1.dept_code = p.pe_dept_code
+        left join t_hkp_hrm_org_dept d on d.dept_code = o.dept_code
+        left join t_hkp_hos_house w on w.house_code = o.house_code
+        left join t_hkp_hos_houseowner hw on hw.houseowner_code = w.owner_code
+        left join (
+        select order_code, sum(payment) "payback" from t_hkp_trade_ord_payback GROUP BY order_code
+        )pb on pb.order_code = o.order_code
+        LEFT JOIN (
+        SELECT
+        order_code,
+        SUM (
+        to_number(invoice_tax, '9999999D99')
+        ) AS invoiceTax
+        FROM
+        t_hkp_trade_ord_invoice
+        GROUP BY
+        order_code
+        ) AS iv ON iv.order_code = o.order_code
+        LEFT JOIN t_hkp_crm_customer C ON C.CUS_CODE = O.cus_code
+        ) quanbu
+        <include refid="orderStatisticsSelectSql"></include>
+    </select>
+
+    <!--跨部门订单导出-->
+    <select id="orderTransDept" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        SELECT *
+        FROM (
+                 SELECT
+                     o.order_code,
+                     --订单编号
+                     o.commission,
+                     --合同佣金
+                     o.receivable_hos,
+                     --业主佣金
+                     o.receivable_cus,
+                     --客户佣金
+                     o.cus_rebate,
+                     --客户返佣
+                     o.owner_rebate,
+                     --业主返佣
+                     o.cus_parttime_money,
+                     --客户兼职分钱
+                     o.owner_parttime_money,
+                     --业主兼职分钱
+                     o.order_time          AS order_time,
+                     --开单日期
+                     o.expect_payment_time AS expect_payment_time,
+                     --预计收款日期
+                     o.acreage             AS acreage,
+                     --成交面积
+                     CASE o.order_status
+                     WHEN '1'
+                         THEN '未签租赁合同'
+                     WHEN '2'
+                         THEN '已签租赁合同'
+                     WHEN '3'
+                         THEN '已毁单'
+                     WHEN '5'
+                         THEN '已回款'
+                     WHEN '8'
+                         THEN '回款中' END    AS order_status,
+                     o.create_time         AS create_time,
+                     --创建时间
+                     d.dept_name           AS dept_name,
+                     --订单所属部门
+                     de.user_name          AS leader_name,
+                     --部门经理
+                     u.user_name           AS emp_name,
+                     --开单人
+                     pb.payback            AS payback_sum,
+                     --回款金额
+                     iv.invoiceTax         AS iv_invoiceTa,
+                     --税金
+                     CASE w.house_type
+                     WHEN '1'
+                         THEN '仓储'
+                     WHEN '2'
+                         THEN '生产'
+                     ELSE '仓储生产' END       AS house_type,
+                     --房源类型
+                     --w.city_name || w.region_name || w.street_name || w.address as w_regio_name,--房源地址
+                     CASE hw.houseowner_type
+                     WHEN '1'
+                         THEN '大房东'
+                     WHEN '2'
+                         THEN '二房东' END    AS houseowner_type,
+                     --业主类型
+                     hw.houseowner_name    AS houseowner_name,
+                     --房源联系人姓名
+                     hw.houseowner_phone   AS houseowner_phone,
+                     --房源联系人电话
+                     hw.company_name       AS houseowner_company,
+                     --房源联系人公司
+                     c.cus_code            AS cus_code,
+                     --客户编码
+                     c.cus_name            AS cus_name,
+                     --客户名称
+                     c.cus_phone           AS cus_phone,
+                     --客户电话
+                     c.company_name        AS cus_company --客户所属公司
+                 FROM t_hkp_trade_order o
+                     LEFT JOIN t_hkp_hrm_org_dept d ON d.dept_code = o.dept_code
+                     LEFT JOIN t_hkp_sys_user_user de ON de.user_code = d.leader_code
+                     LEFT JOIN t_hkp_sys_user_user u ON o.emp_code = u.user_code
+                     LEFT JOIN t_hkp_hos_house w ON w.house_code = o.house_code
+                     LEFT JOIN t_hkp_hos_houseowner hw ON hw.houseowner_code = w.owner_code
+                     LEFT JOIN (
+                                   SELECT
+                                       order_code,
+                                       sum(payment) "payback"
+                                   FROM t_hkp_trade_ord_payback
+                                   GROUP BY order_code
+                               ) pb ON pb.order_code = o.order_code
+                     LEFT JOIN (
+                                   SELECT
+                                       order_code,
+                                       SUM(to_number(invoice_tax, '9999999D99')) AS invoiceTax
+                                   FROM t_hkp_trade_ord_invoice
+                                   GROUP BY order_code) AS iv ON iv.order_code = o.order_code
+                     LEFT JOIN t_hkp_crm_customer C ON C.CUS_CODE = O.cus_code
+                 WHERE order_time <![CDATA[>=]]> #{orderTimeStart}
+                       AND order_time <![CDATA[<=]]> #{orderTimeEnd}
+                       AND o.is_deleted = #{isDeleted}
+                       AND o.order_code IN (
+                     SELECT order_code
+                     FROM t_hkp_trade_order_percentage
+                     WHERE order_time <![CDATA[>=]]> #{orderTimeStart}
+                           AND order_time <![CDATA[<=]]> #{orderTimeEnd}
+                           AND o.is_deleted = #{isDeleted}
+                           AND create_dept_code != pe_dept_code
+                     GROUP BY order_code
+                 )
+             ) MM
+        ORDER BY order_time DESC;
+
+    </select>
+
+
+    <select id="selectOrderHistory" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        select * from (
+        select p.*,
+            uer.user_name as p_pe_emp_name,
+            uer.work_number as p_work_number,
+            uer.user_code as p_pe_emp_code,
+            dt.dept_name as p_pe_dept_Name,
+            pet.percentage as p_percentage,
+            pet.profit as p_profit from (
+                                SELECT
+                                    opt_data_code as order_code,
+                                    case field when 'receivableCus' then '客户佣金修改' when 'receivableHos' then '业主佣金修改' when 'cusRebate' then '客户返佣修改' when 'ownerRebate' then '业主返佣修改' when 'cusParttimeMoney' then '客户兼职修改' when 'ownerParttimeMoney' then '业主兼职修改' else '客户状态修改' end as update_type,
+                                    case old_value when '1' then '未签租赁合同' when '2' then '已签租赁合同' when '3' then '已毁单' when '5' then '已回款' when '8' then '回款中' else old_value end as old_value,
+                                    case new_value when '1' then '未签租赁合同' when '2' then '已签租赁合同' when '3' then '已毁单' when '5' then '已回款' when '8' then '回款中' else new_value end as new_value,
+                                    to_char(his.create_time,'yyyy-mm-dd') AS create_time,
+                                    create_name,
+                                    case field when 'orderStatus' then null else cast(new_value as decimal(10,3))-cast(old_value as decimal(10,3)) end as banlance,
+                                    ord.commission,
+                                    ord.emp_code
+                                FROM
+                                    t_hkp_base_his_history his
+                                    left join
+                                    t_hkp_trade_order ord
+                                        on his.opt_data_code=ord.order_code
+                                WHERE
+                                    class_name LIKE '%order%'
+                                    AND field IN (
+                                        'receivableCus',
+                                        'receivableHos',
+                                        'ownerRebate',
+                                        'cusRebate',
+                                        'cusParttimeMoney',
+                                        'ownerParttimeMoney',
+                                        'orderStatus'
+                                    )
+                            )p LEFT JOIN t_hkp_trade_order_percentage pet on p.order_code=pet.order_code
+            LEFT JOIN t_hkp_sys_user_user uer on pet.pe_emp_code=user_code
+            LEFT JOIN t_hkp_hrm_org_dept dt on dt.dept_code=pet.pe_dept_code
+        )d
+            <include refid="selectOrderHistorySql"></include>
+    </select>
+
+    <sql id="selectOrderHistorySql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="orderTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{orderTimeStart}
+            </if>
+            <if test="orderTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{orderTimeEnd}
+            </if>
+
+        </trim>
+    </sql>
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectOrderByPayBack" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderEntity">
+        SELECT
+        order_code
+        FROM
+        t_hkp_trade_ord_payback
+        where is_deleted=FALSE
+        and back_time <![CDATA[ >= ]]> #{startTime}
+        and back_time <![CDATA[ < ]]> #{endTime}
+        GROUP BY order_code
+    </select>
+</mapper>

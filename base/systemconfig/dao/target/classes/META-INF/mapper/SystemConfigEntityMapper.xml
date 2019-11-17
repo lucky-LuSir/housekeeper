@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.base.SystemConfigEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.base.SystemConfigEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="key" property="key" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="describe" property="describe" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="NUMERIC" javaType="int"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 新增记录 -->
+    <insert id="insert" parameterType="com.kfwy.hkp.base.SystemConfigEntity" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO t_ky_base_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="key != null and key != ''">
+                key,
+            </if>
+            <if test="value != null and value != ''">
+                value,
+            </if>
+            <if test="describe != null and describe != ''">
+                describe,
+            </if>
+            <if test="status != null and status !=''">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cpyEmpCode != null and cpyEmpCode != ''">
+                #{cpyEmpCode},
+            </if>
+            <if test="key != null and key != ''">
+                #{key},
+            </if>
+            <if test="value != null and value != ''">
+                #{value},
+            </if>
+            <if test="describe != null and describe != ''">
+                #{describe},
+            </if>
+            <if test="status != null and status !=''">
+                #{status},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_ky_base_config
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.key != null and i.key != ''">
+                    key,
+                </if>
+                <if test="i.value != null and i.value != ''">
+                    value,
+                </if>
+                <if test="i.describe != null and i.describe != ''">
+                    describe,
+                </if>
+                <if test="i.status != null and i.status !=''">
+                    status,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.cpyEmpCode != null and i.cpyEmpCode != ''">
+                    #{i.cpyEmpCode},
+                </if>
+                <if test="i.key != null and i.key != ''">
+                    #{i.key},
+                </if>
+                <if test="i.value != null and i.value != ''">
+                    #{i.value},
+                </if>
+                <if test="i.describe != null and i.describe != ''">
+                    #{i.describe},
+                </if>
+                <if test="i.status != null and i.status !=''">
+                    #{i.status},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_ky_base_config WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.base.SystemConfigEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_ky_base_config
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.key != null and i.key != ''">
+                    key = #{i.key},
+                </if>
+                <if test="i.value != null and i.value != ''">
+                    value = #{i.value},
+                </if>
+                <if test="i.describe != null and i.describe != ''">
+                    describe = #{i.describe},
+                </if>
+                <if test="i.status != null and i.status !=''">
+                    status = #{i.status},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="key != null and key != ''">
+                AND key = #{key}
+            </if>
+            <if test="value != null and value != ''">
+                AND value = #{value}
+            </if>
+            <if test="describe != null and describe != ''">
+                AND describe = #{describe}
+            </if>
+            <if test="status != null and status !=''">
+                AND status = #{status}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 通过主键列表查找记录 -->
+    <select id="selectByIds" parameterType="list" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.base.SystemConfigEntity">
+        SELECT * FROM t_ky_base_config WHERE ID IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.base.SystemConfigEntity">
+        SELECT * FROM t_ky_base_config
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="long">
+        SELECT COUNT(*) FROM t_ky_base_config
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.base.SystemConfigEntity">
+        SELECT * FROM t_ky_base_config
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.base.SystemConfigEntity">
+        ${value}
+    </select>
+
+</mapper>

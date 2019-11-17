@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.parttime.entity.PartTimerFollowupEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.sys.parttime.entity.PartTimerFollowupEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="pt_code" property="ptCode" jdbcType="VARCHAR"/>
+        <result column="followup_type" property="followupType" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_emp_code" property="createEmpCode" jdbcType="VARCHAR"/>
+        <result column="update_emp_code" property="updateEmpCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_pt_parttimer_followup
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.ptCode != null and i.ptCode!=''">
+                    pt_code,
+                </if>
+                <if test="i.followupType != null and i.followupType!=''">
+                    followup_type,
+                </if>
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.createEmpCode != null and i.createEmpCode!=''">
+                    create_emp_code,
+                </if>
+                <if test="i.updateEmpCode != null and i.updateEmpCode!=''">
+                    update_emp_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode!=''">
+                    create_dept_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.ptCode != null and i.ptCode!=''">
+                    #{i.ptCode},
+                </if>
+                <if test="i.followupType != null and i.followupType!=''">
+                    #{i.followupType},
+                </if>
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+                <if test="i.createEmpCode != null and i.createEmpCode!=''">
+                    #{i.createEmpCode},
+                </if>
+                <if test="i.updateEmpCode != null and i.updateEmpCode!=''">
+                    #{i.updateEmpCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode!=''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+
+
+            </trim>
+        </foreach>
+    </insert>
+
+</mapper>

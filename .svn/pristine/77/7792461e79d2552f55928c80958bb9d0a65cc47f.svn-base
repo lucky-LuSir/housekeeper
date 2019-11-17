@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>com.gniuu</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.kfwy.hkp</groupId>
+    <artifactId>hkp</artifactId>
+    <packaging>pom</packaging>
+    <name>hkp</name>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>common</module>
+        <!-- Human Resource Manage人力资源管理-->
+        <module>hrm</module>
+        <!-- System Manager 系统管理-->
+        <module>sys</module>
+        <!-- customer 客户模块-->
+        <module>crm</module>
+        <!-- house 房源模块-->
+        <module>hos</module>
+        <!-- Business Intelligence 商业智能(报表)-->
+        <module>bi</module>
+        <!-- war包服务-->
+        <module>service</module>
+        <!--合作模块-->
+        <module>union</module>
+        <!-- 交易模块，包括订单等-->
+        <module>trade</module>
+        <!-- 定时任务-->
+        <module>job</module>
+        <module>base</module>
+        <module>payment</module>
+        <!--离职数据转移-->
+        <module>quit</module>
+    </modules>
+    <properties>
+        <kupatframework_version>1.0-SNAPSHOT</kupatframework_version>
+
+        <!--<nexus_content_public_url>http://www.wzitech.com/nexus/content/groups/public/</nexus_content_public_url>-->
+        <nexus_kupat_public_url>http://nexus.gniuu.com/nexus/content/groups/gniuu-nexus/
+        </nexus_kupat_public_url>
+
+        <!--<nexus.content.public.url>http://nexus.kupat.cn/nexus/content/groups/public/</nexus.content.public.url>-->
+        <nexus.deploy.snapshot.url>http://nexus.gniuu.com/nexus/content/repositories/snapshots/
+        </nexus.deploy.snapshot.url>
+        <nexus.deploy.release.url>http://nexus.gniuu.com/nexus/content/repositories/releases/
+        </nexus.deploy.release.url>
+    </properties>
+
+    <repositories>
+        <!--<repository>
+            <id>wzitech_nexus</id>
+            <name>Team Nexus Repository</name>
+            <url>${nexus_content_public_url}</url>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>-->
+        <repository>
+            <id>kupat_nexus</id>
+            <name>Team Nexus Repository</name>
+            <url>${nexus_kupat_public_url}</url>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>Maven Official Repository</name>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.gniuu.framework</groupId>
+                <artifactId>gniuu-framework</artifactId>
+                <version>${kupatframework_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>4.5.3</version>
+            </dependency>
+            <dependency>
+                <groupId>ldl</groupId>
+                <artifactId>com.clztech.ldl.ccp</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.54</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20171018</version>
+            </dependency>
+            <!--      <dependency>
+                      <groupId>com.pay</groupId>
+                      <artifactId>alipay-sdk-java</artifactId>
+                      <version>1.0.0</version>
+                  </dependency>
+                  <dependency>
+                      <groupId>com.pay</groupId>
+                      <artifactId>alipay-sdk-java-source</artifactId>
+                      <version>1.0.0</version>
+                  </dependency>
+                  <dependency>
+                      <groupId>com.pay</groupId>
+                      <artifactId>alipay-commons-logging</artifactId>
+                      <version>1.0.0</version>
+                  </dependency>
+                  <dependency>
+                      <groupId>com.pay</groupId>
+                      <artifactId>alipay-commons-logging-source</artifactId>
+                      <version>1.0.0</version>
+                  </dependency>-->
+            <dependency>
+                <groupId>jdom</groupId>
+                <artifactId>jdom</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.8.5</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.3</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+            <!-- spring整合MongoDB -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb</artifactId>
+                <version>1.8.0.RELEASE</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>2.10.6</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- test start -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- test start -->
+    </dependencies>
+
+</project>

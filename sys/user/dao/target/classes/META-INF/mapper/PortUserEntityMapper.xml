@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.user.entity.PortUserEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.sys.user.entity.PortUserEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="show_phone" property="showPhone"/>
+        <result column="port_dept_name" property="portDeptName"/>
+        <result column="regional_name" property="regionalName"/>
+        <result column="port_user_name" property="portUserName"/>
+        <result column="port_dept_code" property="portDeptCode"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="port_user_code" property="portUserCode"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_sys_port_user
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.showPhone != null and i.showPhone != ''">
+                    show_phone,
+                </if>
+                <if test="i.portDeptName != null and i.portDeptName != ''">
+                    port_dept_name,
+                </if>
+                <if test="i.regionalName != null and i.regionalName != ''">
+                    regional_name,
+                </if>
+                <if test="i.portUserName != null and i.portUserName!=''">
+                    port_user_name,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.showPhone != null and i.showPhone != ''">
+                    #{i.showPhone},
+                </if>
+                <if test="i.portDeptName != null and i.portDeptName != ''">
+                    #{i.portDeptName},
+                </if>
+                <if test="i.regionalName != null and i.regionalName != ''">
+                    #{i.regionalName},
+                </if>
+                <if test="i.portUserName != null and i.portUserName!=''">
+                    #{i.portUserName},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="keyword != null and keyword != ''">
+                AND
+                (
+                port_user_name LIKE '%' || #{keyword} ||'%' OR
+
+                show_phone LIKE '%' || #{keyword} ||'%'
+                )
+
+            </if>
+            <if test="portUserName != null and portUserName != ''">
+                AND port_user_name like '%'||#{portUserName}||'%'
+            </if>
+            <if test="showPhone!=null and showPhone!=''">
+                AND show_Phone LIKE '%'||#{showPhone}||'%'
+            </if>
+        </trim>
+    </sql>
+
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap">
+        select *
+        from t_hkp_sys_port_user
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*)
+        from t_hkp_sys_port_user
+        <include refid="selectSql"/>
+    </select>
+
+    <delete id="deleteAll">
+        delete from t_hkp_sys_port_user;
+    </delete>
+
+    <select id="findPortUserByLittlePhone" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+            e.owner_dept_code as port_dept_code,
+            e.user_code as port_user_code,
+            u.show_phone,
+            u.port_user_name,
+            u.port_dept_name
+        FROM
+            t_hkp_ronglian_little_phone_note note
+                INNER JOIN t_hkp_sys_port_user u ON note.called_show = u.show_phone
+                INNER JOIN t_hkp_sys_user_user e ON e.user_name = u.port_user_name and e.owner_dept_name = u.port_dept_name
+        WHERE
+            note.caller = #{caller}
+        limit 1
+    </select>
+</mapper>

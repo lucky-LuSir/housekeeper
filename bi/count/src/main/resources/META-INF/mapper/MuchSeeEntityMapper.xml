@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.MuchSeeEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.MuchSeeEntity">
+
+    </resultMap>
+
+    <!-- 多次带看 -->
+    <select id="manyTimesFollowup" parameterType="map" resultType="int">
+        SELECT COUNT (1) FROM(
+            SELECT
+                COUNT (1) AS followup_count
+            FROM
+                t_hkp_crm_customer_followup
+            <trim prefix="where" prefixOverrides="AND|OR">
+                followup_type = '1'
+                <if test="createCode != null">
+                    AND create_code = #{createCode}
+                </if>
+                <if test="createDeptCode != null">
+                    AND create_dept_code = #{createDeptCode}
+                </if>
+                <if test="createDeptCodes != null">
+                    <choose>
+                        <when test="_createDeptCodes != null">
+                            AND create_dept_code IN (${_createDeptCodes})
+                        </when>
+                        <otherwise>
+                            AND create_dept_code IN
+                            <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                     close=")">
+                                #{i}
+                            </foreach>
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="createCodes != null">
+                    <choose>
+                        <when test="_createCodes != null">
+                            AND create_code IN (${_createCodes})
+                        </when>
+                        <otherwise>
+                            AND create_code IN
+                            <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                                #{i}
+                            </foreach>
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="createTimeStart != null">
+                    AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+                </if>
+                <if test="createTimeEnd != null">
+                    AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+                </if>
+                <if test="isDeleted != null">
+                    AND is_deleted=#{isDeleted}
+                </if>
+            </trim>
+            GROUP BY ${groupBy}
+        ) tp
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="followupCount != null and followupCount != 5">
+                AND followup_count = #{followupCount}
+            </if>
+            <if test="followupCount != null and followupCount == 5">
+                AND followup_count <![CDATA[ >= ]]> #{followupCount}
+            </if>
+        </trim>
+    </select>
+
+</mapper>

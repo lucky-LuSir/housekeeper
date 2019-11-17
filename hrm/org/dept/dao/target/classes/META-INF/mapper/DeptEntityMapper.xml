@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.hrm.org.dept.entity.DeptEntity">
+
+    <!--  column对应数据库,property对应Bean-->
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.hrm.org.dept.entity.DeptEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+        <result column="parent_code" property="parentCode" jdbcType="VARCHAR"/>
+        <result column="parent_name" property="parentName" jdbcType="VARCHAR"/>
+        <result column="dept_type" property="deptType" jdbcType="VARCHAR"/>
+        <result column="dept_level" property="deptLevel" jdbcType="NUMERIC" javaType="int"/>
+        <result column="leader_code" property="leaderCode" jdbcType="VARCHAR"/>
+        <result column="leader_name" property="leaderName" jdbcType="VARCHAR"/>
+        <result column="leader_img" property="leaderImg" jdbcType="VARCHAR"/>
+        <result column="dept_address" property="deptAddress" jdbcType="VARCHAR"/>
+        <result column="manager_code" property="managerCode" jdbcType="VARCHAR"/>
+        <result column="manager_name" property="managerName" jdbcType="VARCHAR"/>
+
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="last_update_name" property="lastUpdateName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="has_share_cus" property="hasShareCus"/>
+        <result column="has_share_hos" property="hasShareHos"/>
+        <result column="pay_status" property="payStatus"/>
+        <result column="has_limit_hiden" property="hasLimitHiden"/>
+        <result column="inviter_code" property="inviterCode"/>
+        <result column="inviter" property="inviter"/>
+        <result column="look_area" property="lookArea" jdbcType="VARCHAR"/>
+        <result column="focus_cus_see_time_limit" property="focusCusSeeTimeLimit"/>
+        <result column="agent_cus_see_time_limit" property="agentCusSeeTimeLimit"/>
+        <collection property="deptAreas" ofType="com.kfwy.hkp.hrm.org.dept.entity.DeptAreaEntity"
+                    columnPrefix="a_" resultMap="detpAreaResultMap"/>
+    </resultMap>
+
+    <resultMap id="detpAreaResultMap" type="com.kfwy.hkp.hrm.org.dept.entity.DeptAreaEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="province_code" property="provinceCode" jdbcType="VARCHAR"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="city_code" property="cityCode" jdbcType="VARCHAR"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="region_code" property="regionCode" jdbcType="VARCHAR"/>
+        <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+
+        <result column="street_code" property="streetCode" jdbcType="VARCHAR"/>
+        <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="IS_DELETED" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 新增记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_hrm_org_dept
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code,
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name,
+                </if>
+                <if test="i.deptType != null">
+                    dept_type,
+                </if>
+                <if test="i.deptLevel != null">
+                    dept_level,
+                </if>
+                <if test="i.parentCode != null and i.parentCode != ''">
+                    parent_code,
+                </if>
+                <if test="i.parentName != null and i.parentName != ''">
+                    parent_name,
+                </if>
+                <if test="i.leaderCode != null and i.leaderCode != ''">
+                    leader_code,
+                </if>
+                <if test="i.leaderName != null and i.leaderName != ''">
+                    leader_name,
+                </if>
+                <if test="i.deptAddress != null and i.deptAddress != ''">
+                    dept_address,
+                </if>
+                <if test="i.managerCode!=null and i.managerCode!=''">
+                    manager_code,
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.lastUpdateName != null and i.lastUpdateName != ''">
+                    last_update_name,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.hasRegister != null">
+                    has_register,
+                </if>
+                <if test="i.cpyShowName != null">
+                    cpy_show_name,
+                </if>
+                <if test="i.hasFinanceProxy != null">
+                    has_finance_proxy,
+                </if>
+                <if test="i.teamFlag != null">
+                    team_flag,
+                </if>
+                <if test="i.payStatus != null">
+                    pay_status,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.inviterCode!=null">
+                    inviter_code,
+                </if>
+                <if test="i.inviter!=null">
+                    inviter,
+                </if>
+                <if test="i.deleteTime!=null">
+                    delete_time,
+                </if>
+                <if test="i.lookArea!=null">
+                    look_area,
+                </if>
+                <if test="i.focusCusSeeTimeLimit!=null">
+                    focus_cus_see_time_limit,
+                </if>
+                <if test="i.agentCusSeeTimeLimit!=null">
+                    agent_cus_see_time_limit,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    #{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    #{i.deptName},
+                </if>
+                <if test="i.deptType != null">
+                    #{i.deptType},
+                </if>
+                <if test="i.deptLevel != null">
+                    #{i.deptLevel},
+                </if>
+                <if test="i.parentCode != null and i.parentCode != ''">
+                    #{i.parentCode},
+                </if>
+                <if test="i.parentName != null and i.parentName != ''">
+                    #{i.parentName},
+                </if>
+                <if test="i.leaderCode != null and i.leaderCode != ''">
+                    #{i.leaderCode},
+                </if>
+                <if test="i.leaderName != null and i.leaderName != ''">
+                    #{i.leaderName},
+                </if>
+                <if test="i.deptAddress != null and i.deptAddress != ''">
+                    #{i.deptAddress},
+                </if>
+                <if test="i.managerCode != null and i.managerCode != ''">
+                    #{i.managerCode},
+                </if>
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    #{i.createName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.lastUpdateName != null and i.lastUpdateName != ''">
+                    #{i.lastUpdateName},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.hasRegister != null">
+                    #{i.hasRegister},
+                </if>
+                <if test="i.cpyShowName != null">
+                    #{i.cpyShowName},
+                </if>
+                <if test="i.hasFinanceProxy != null">
+                    #{i.hasFinanceProxy},
+                </if>
+                <if test="i.teamFlag != null">
+                    #{i.teamFlag},
+                </if>
+                <if test="i.payStatus != null">
+                    #{i.payStatus},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.inviterCode!=null">
+                    #{i.inviterCode},
+                </if>
+                <if test="i.inviter!=null">
+                    #{i.inviter},
+                </if>
+                <if test="i.deleteTime!=null">
+                    #{i.deleteTime},
+                </if>
+                <if test="i.lookArea!=null">
+                    #{i.lookArea},
+                </if>
+                <if test="i.focusCusSeeTimeLimit!=null">
+                    #{i.focusCusSeeTimeLimit},
+                </if>
+                <if test="i.agentCusSeeTimeLimit!=null">
+                    #{i.agentCusSeeTimeLimit},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新数据信息 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.hrm.org.dept.entity.DeptEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_hrm_org_dept
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code = #{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name = #{i.deptName},
+                </if>
+                <if test="i.parentCode != null and i.parentCode != ''">
+                    parent_code = #{i.parentCode},
+                </if>
+                <if test="i.parentName != null and i.parentName != ''">
+                    parent_name = #{i.parentName},
+                </if>
+                <if test="i.deptType != null">
+                    dept_type = #{i.deptType},
+                </if>
+                <if test="i.deptLevel != null">
+                    dept_level = #{i.deptLevel},
+                </if>
+                <if test="i.leaderCode != null and i.leaderCode != ''">
+                    leader_code = #{i.leaderCode},
+                </if>
+                <if test="i.leaderName != null and i.leaderName != ''">
+                    leader_name = #{i.leaderName},
+                </if>
+                <if test="i.deptAddress != null and i.deptAddress != ''">
+                    dept_address = #{i.deptAddress},
+                </if>
+                <if test="i.managerCode != null and i.managerCode != ''">
+                    manager_code = #{i.managerCode},
+                </if>
+                <if test="i.managerCode == null or i.managerCode == ''">
+                    manager_code = null,
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name = #{i.createName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.lastUpdateName != null and i.lastUpdateName != ''">
+                    last_update_name = #{i.lastUpdateName},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted},
+                </if>
+                <if test="i.hasShareCus!=null">
+                    has_share_cus = #{i.hasShareCus},
+                </if>
+                <if test="i.hasShareHos!=null">
+                    has_share_hos = #{i.hasShareHos},
+                </if>
+                <if test="i.hasLimitHiden!=null">
+                    has_limit_hiden = #{i.hasLimitHiden},
+                </if>
+                <if test="i.payStatus != null">
+                    pay_status=#{i.payStatus},
+                </if>
+                <if test="i.inviterCode!=null">
+                    inviter_code=#{i.inviterCode},
+                </if>
+                <if test="i.inviter!=null">
+                    inviter=#{i.inviter},
+                </if>
+                <if test="i.deleteTime!=null">
+                    delete_time=#{i.deleteTime},
+                </if>
+                <if test="i.lookArea!=null">
+                    look_area=#{i.lookArea},
+                </if>
+                <if test="i.focusCusSeeTimeLimit!=null">
+                    focus_cus_see_limit=#{i.focusCusSeeTimeLimit},
+                </if>
+                <if test="i.agentCusSeeTimeLimit!=null">
+                    agent_cus_see_time_limit=#{i.agentCusSeeTimeLimit},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                dept_code = #{i.deptCode}
+            </trim>
+        </foreach>
+    </update>
+
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_hrm_org_dept WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="baseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="baseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="deptCode != null">
+                AND dept_code = #{deptCode}
+            </if>
+            <if test="deptCodes != null">
+                <choose>
+                    <when test="_deptCodes">
+                        AND dept_code IN (${_deptCodes})
+                    </when>
+                    <otherwise>
+                        AND dept_code IN
+                        <foreach collection="deptCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="parentCode != null">
+                AND parent_code = #{parentCode}
+            </if>
+            <if test="leaderCode != null">
+                AND leader_code = #{leaderCode}
+            </if>
+            <if test="deptName != null">
+                AND dept_name like '%' || #{deptName} || '%'
+            </if>
+            <if test="parentName != null">
+                AND parent_name = #{parentName}
+            </if>
+            <if test="deptType != null">
+                AND dept_type = #{deptType}
+            </if>
+            <if test="deptLevel != null">
+                AND dept_level = #{deptLevel}
+            </if>
+            <if test="leaderName != null">
+                AND leader_name = #{leaderName}
+            </if>
+            <if test="deptAddress != null">
+                AND dept_address like '%' || #{deptAddress} || '%'
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+
+            <if test="keyword != null">
+                AND ( dept_name like '%' || #{keyword} || '%'
+                or dept_address like '%' || #{keyword} || '%'
+                )
+            </if>
+
+            <if test="createName != null">
+                AND create_name = #{createName}
+            </if>
+            <if test="lastUpdateCode != null">
+                AND last_update_code = #{lastUpdateCode}
+            </if>
+            <if test="lastUpdateName != null">
+                AND last_update_name = #{lastUpdateName}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="lastUpdateTimeStart != null">
+                AND last_update_time <![CDATA[ >= ]]> #{lastUpdateTimeStart}
+            </if>
+            <if test="lastUpdateTimeEnd != null">
+                AND last_update_time  <![CDATA[ <= ]]> #{lastUpdateTimeEnd}
+            </if>
+            <if test="deleteTimeStart != null">
+                AND (delete_time <![CDATA[ >= ]]> #{deleteTimeStart} or delete_time is null)
+            </if>
+            <if test="deleteTimeEnd != null">
+                AND (delete_time <![CDATA[ <= ]]> #{deleteTimeEnd} or delete_time is null)
+            </if>
+            <if test="teamFlag != null">
+                AND team_flag = #{teamFlag}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+            <if test="inviterCode!=null">
+                AND inviter_code = #{inviterCode}
+            </if>
+            <if test="inviter!=null">
+                AND inviter=#{inviter}
+            </if>
+            <if test="payStatus!=null">
+                AND pay_status=#{payStatus}
+            </if>
+            <if test="lookArea!=null">
+                AND look_area=#{lookArea}
+            </if>
+            <if test="focusCusSeeTimeLimit!=null">
+                AND focus_cus_see_time_limit=#{focusCusSeeTimeLimit}
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="area">
+        <choose>
+            <when test="street !=null">
+                AND a.street_code=#{street}
+            </when>
+            <when test="region != null">
+                AND a.region_code = #{region}
+            </when>
+            <when test="city != null">
+                AND a.city_code = #{city}
+            </when>
+            <when test="province != null">
+                AND a.province_code =#{province}
+            </when>
+        </choose>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.DeptEntity">
+        select * from (
+        SELECT d.*,
+        a.province_code as a_province_code,a.city_code as a_city_code,a.region_code as a_region_code,a.street_code as
+        a_street_code,
+        a.province_name as a_province_name,a.city_name as a_city_name,a.region_name as a_region_name,a.street_name as
+        a_street_name,
+        a.dept_code as a_dept_code
+
+        from t_hkp_hrm_org_dept d
+        left join t_hkp_hrm_org_dept_area a on a.dept_code = d.dept_code
+        ) da
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectDeptCodeByMap" resultType="java.lang.String">
+        SELECT dept_code FROM t_hkp_hrm_org_dept
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="selectSimpleList" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.DeptEntity">
+        SELECT
+        dept_code,
+        dept_name,
+        dept_level,
+        dept_type,
+        leader_code,
+        parent_code
+        FROM t_hkp_hrm_org_dept
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_hrm_org_dept
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="selectSelfPage" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.DeptEntity">
+        SELECT d.*,
+        a.province_code as a_province_code,a.city_code as a_city_code,a.region_code as a_region_code,a.street_code as
+        a_street_code,
+        a.province_name as a_province_name,a.city_name as a_city_name,a.region_name as a_region_name,a.street_name as
+        a_street_name,
+        a.dept_code as a_dept_code
+        FROM
+        ( select *
+        from
+        (
+        <choose>
+            <when test="province != null or city != null or region != null or street != null or areaName != null">
+                (SELECT * from t_hkp_hrm_org_dept d
+                where exists (SELECT * from t_hkp_hrm_org_dept_area a where a.dept_code = d.dept_code<include
+                    refid="area"/>)
+                ) d
+            </when>
+            <otherwise>
+                t_hkp_hrm_org_dept d
+            </otherwise>
+        </choose>
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+        <if test="offset != null">
+            offset #{offset}
+        </if>
+        ) d
+        ) d
+
+        left join t_hkp_hrm_org_dept_area a on a.dept_code = d.dept_code
+
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <select id="selectSelfPageCount" parameterType="java.util.Map" resultType="int">
+        select count(*)
+        from
+        (
+        <choose>
+            <when test="province != null or city != null or region != null or street != null">
+                (SELECT * from t_hkp_hrm_org_dept d
+                where exists (SELECT * from t_hkp_hrm_org_dept_area a where a.dept_code = d.dept_code<include
+                    refid="area"/>)
+                ) d
+            </when>
+            <otherwise>
+                t_hkp_hrm_org_dept d
+            </otherwise>
+        </choose>
+        <include refid="selectSql"/>
+        ) d
+    </select>
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.DeptEntity">
+        SELECT * from(
+        SELECT * FROM t_hkp_hrm_org_dept
+        ) TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) from(
+        SELECT * FROM t_hkp_hrm_org_dept
+        ) TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 查询附近的团队部门 -->
+    <select id="selectNearby" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.DeptEntity">
+        SELECT
+        distinct on (id)
+        * from (
+        SELECT d.*,
+        c.user_img as leader_img,
+        a.province_code as yy_province_code,a.city_code as yy_city_code,a.region_code as yy_region_code,a.street_code as
+        yy_street_code,
+        a.province_name as yy_province_name,a.city_name as yy_city_name,a.region_name as yy_region_name,a.street_name as
+        yy_street_name,
+        a.dept_code as yy_dept_code
+
+        from t_hkp_hrm_org_dept d
+        left join t_hkp_hrm_org_dept_area a on a.dept_code = d.dept_code
+        left join t_hkp_sys_user_user c on c.user_code = d.leader_code
+        ) da
+        <include refid="selectdeptByAreaSql"/>
+    </select>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectdeptByAreaSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+
+            <if test="cityCode != null">
+                AND yy_city_code = #{cityCode}
+            </if>
+            <if test="regionCode != null">
+                AND yy_region_code = #{regionCode}
+            </if>
+            <if test="streetCode != null">
+                AND yy_street_code = #{streetCode}
+            </if>
+
+
+            <if test="teamFlag != null">
+                AND team_flag = #{teamFlag}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+        </trim>
+    </sql>
+    <select id="findOneDept" parameterType="map" resultMap="baseResultMap">
+        select * from (
+        SELECT d.*,
+        a.province_code as a_province_code,a.city_code as a_city_code,a.region_code as a_region_code,a.street_code as
+        a_street_code,
+        a.province_name as a_province_name,a.city_name as a_city_name,a.region_name as a_region_name,a.street_name as
+        a_street_name,
+        a.dept_code as a_dept_code
+
+        from t_hkp_hrm_org_dept d
+        left join t_hkp_hrm_org_dept_area a on a.dept_code = d.dept_code
+        ) da
+        <include refid="selectSql"/>
+        LIMIT 1
+    </select>
+
+    <select id="findDeptByUserCode" parameterType="string" resultMap="baseResultMap">
+        SELECT *
+        FROM t_hkp_hrm_org_dept
+        WHERE dept_code = (
+            SELECT owner_dept_code
+            FROM t_hkp_sys_user_user
+            WHERE user_code = #{ userCode }
+        )
+    </select>
+</mapper>

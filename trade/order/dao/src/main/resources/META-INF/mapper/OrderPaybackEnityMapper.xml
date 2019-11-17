@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <!-- 订单编码 -->
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="pay_back_code" property="payBackOrderCode" jdbcType="VARCHAR"/>
+
+        <!--回款金额-->
+        <result column="payment" property="payment" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="commission_deductions" property="commissionDeductions" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="tax_deductions" property="taxDeductions" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--订单时间-->
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+        <!--回款时间-->
+        <result column="back_time" property="backTime" jdbcType="TIMESTAMP"/>
+        <!--部门-->
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <!--部门名称-->
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+        <!--描述-->
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <!--说明-->
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <!--付款渠道支付宝、银行、微信-->
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+
+        <!--创建人编码-->
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <!--创建人姓名-->
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <!--最后修改人编码-->
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <!--最后修改人姓名-->
+        <result column="last_update_name" property="lastUpdateName" jdbcType="VARCHAR"/>
+
+        <!--创建时间-->
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <!--最后修改时间-->
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <!--是否删除-->
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 新增记录 -->
+    <insert id="insert" parameterType="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO t_hkp_trade_ord_payback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">
+                order_code,
+            </if>
+            <if test="payBackOrderCode != null and payBackOrderCode != ''">
+                pay_back_code,
+            </if>
+            <if test="payment != null">
+                payment,
+            </if>
+            <if test="backTime != null">
+                back_time,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="channel != null">
+                channel,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+
+            <if test="createCode != null">
+                create_code,
+            </if>
+
+            <if test="createName != null">
+                create_name,
+            </if>
+
+            <if test="lastUpdateCode != null">
+                last_update_code,
+            </if>
+
+            <if test="lastUpdateName != null">
+                last_update_name,
+            </if>
+
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">
+                #{orderCode},
+            </if>
+            <if test="payBackOrderCode != null and payBackOrderCode != ''">
+                #{payBackOrderCode},
+            </if>
+            <if test="payment != null">
+                #{payment},
+            </if>
+            <if test="backTime != null">
+                #{backTime},
+            </if>
+            <if test="description != null">
+                #{description},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="channel != null">
+                #{channel},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime},
+            </if>
+
+            <if test="createCode != null">
+                #{createCode},
+            </if>
+
+            <if test="createName != null">
+                #{createName},
+            </if>
+
+            <if test="lastUpdateCode != null">
+                #{lastUpdateCode},
+            </if>
+
+            <if test="lastUpdateName != null">
+                #{lastUpdateName},
+            </if>
+
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+        </trim>
+    </insert>
+
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_trade_ord_payback
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    order_code,
+                </if>
+                <if test="i.payBackOrderCode != null and i.payBackOrderCode != ''">
+                    pay_back_code,
+                </if>
+                <if test="i.payment != null">
+                    payment,
+                </if>
+                <if test="i.backTime != null">
+                    back_time,
+                </if>
+                <if test="i.description != null">
+                    description,
+                </if>
+                <if test="i.remark != null">
+                    remark,
+                </if>
+                <if test="i.channel != null">
+                    channel,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+
+                <if test="i.createCode != null">
+                    create_code,
+                </if>
+
+                <if test="i.createName != null">
+                    create_name,
+                </if>
+
+                <if test="i.lastUpdateCode != null">
+                    last_update_code,
+                </if>
+
+                <if test="i.lastUpdateName != null">
+                    last_update_name,
+                </if>
+
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    #{i.orderCode},
+                </if>
+                <if test="i.payBackOrderCode != null and i.payBackOrderCode != ''">
+                    #{i.payBackOrderCode},
+                </if>
+                <if test="i.payment != null">
+                    #{i.payment},
+                </if>
+                <if test="i.backTime != null">
+                    #{i.backTime},
+                </if>
+                <if test="i.description != null">
+                    #{i.description},
+                </if>
+                <if test="i.remark != null">
+                    #{i.remark},
+                </if>
+                <if test="i.channel != null">
+                    #{i.channel},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null">
+                    #{i.createCode},
+                </if>
+
+                <if test="i.createName != null">
+                    #{i.createName},
+                </if>
+
+                <if test="i.lastUpdateCode != null">
+                    #{i.lastUpdateCode},
+                </if>
+
+                <if test="i.lastUpdateName != null">
+                    #{i.lastUpdateName},
+                </if>
+
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="update" parameterType="map" >
+            UPDATE t_hkp_trade_ord_payback
+          <trim prefix="set" suffixOverrides=",">
+                <if test="payment != null">
+                    payment = #{payment},
+                </if>
+                <if test="backTime != null">
+                    back_time = #{backTime},
+                </if>
+                <if test="description != null">
+                    description = #{description},
+                </if>
+              <if test="remark != null">
+                  remark = #{remark},
+              </if>
+                <if test="channel != null">
+                    channel = #{channel},
+                </if>
+                <if test="lastUpdateTime != null">
+                    last_update_time = #{lastUpdateTime},
+                </if>
+
+              <if test="lastUpdateCode != null">
+                  last_update_code = #{lastUpdateCode},
+              </if>
+
+              <if test="lastUpdateName != null">
+                  last_update_name = #{lastUpdateName},
+              </if>
+
+                <if test="isDeleted != null">
+                    is_deleted = #{isDeleted},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="id != null">
+                    AND ID = #{id}
+                </if>
+            </trim>
+    </update>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_trade_ord_payback
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.payment != null">
+                    payment = #{i.payment},
+                </if>
+                <if test="i.backTime != null">
+                    back_time = #{i.backTime},
+                </if>
+                <if test="i.description != null">
+                    description = #{i.description},
+                </if>
+                <if test="i.remark != null">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.channel != null">
+                    channel = #{i.channel},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+
+                <if test="i.lastUpdateCode != null">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+
+                <if test="i.lastUpdateName != null">
+                    last_update_name = #{i.lastUpdateName},
+                </if>
+
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND ID = #{i.id}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <!--<if test="cpyEmpCode != null">-->
+                <!--AND cpy_emp_code = #{cpyEmpCode}-->
+            <!--</if>-->
+            <if test="orderCode != null and orderCode!=''">
+                AND order_code = #{orderCode}
+            </if>
+            <if test="payment != null">
+                AND payment = #{payment}
+            </if>
+            <if test="expend != null">
+                AND expend = #{expend}
+            </if>
+            <if test="hasFinish != null">
+                AND has_finish = #{hasFinish}
+            </if>
+            <if test="invoiceCode != null">
+                AND invoice_code = #{invoiceCode}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[>=]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[<=]]> #{createTimeEnd}
+            </if>
+            <if test="backTimeStart != null">
+                AND back_time <![CDATA[>=]]> #{backTimeStart}
+            </if>
+            <if test="backTimeEnd != null">
+                AND back_time <![CDATA[<=]]> #{backTimeEnd}
+            </if>
+            <if test="partialPayment != null">
+                AND partial_payment = #{partialPayment}
+            </if>
+            <if test="status!=null">
+                AND status=#{status}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity">
+        SELECT * FROM (select p.*,o.order_time,o.order_status from t_hkp_trade_ord_payback p
+        left join t_hkp_trade_order o on p.order_code = o.order_code) m
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM (select p.*,o.order_time from t_hkp_trade_ord_payback p
+        left join t_hkp_trade_order o on p.order_code = o.order_code) m
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectOne" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity">
+        SELECT * FROM t_hkp_trade_ord_payback
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 根据订单查询该订单的所有回款信息 -->
+    <select id="getPayment" parameterType="map" resultMap="BaseResultMap">
+        SELECT order_code,sum(payment) payment,sum(expend) expend FROM t_hkp_trade_ord_payback where order_code = #{orderCode} group by order_code
+    </select>
+    <!-- 查询所在月回款总额 -->
+    <select id="selectPayBackPayment" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity">
+                SELECT
+                    "sum" (payment) AS payment
+                FROM
+                    t_hkp_trade_ord_payback
+                WHERE
+                    is_deleted = FALSE
+                    <if test="orderCode != null and orderCode!=''">
+                        AND order_code = #{orderCode}
+                    </if>
+                    AND back_time <![CDATA[>=]]> #{backTimeStart}
+                    AND back_time <![CDATA[<]]> #{backTimeEnd}
+    </select>
+    <select id="selectPayBack" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity">
+        SELECT
+          *
+        FROM
+        t_hkp_trade_ord_payback
+        WHERE
+        is_deleted = FALSE
+        AND order_code = #{orderCode}
+        AND back_time <![CDATA[>=]]> #{startTime}
+        AND back_time <![CDATA[<]]> #{endTime}
+        order by pay_back_code desc
+    </select>
+
+    <select id="selectDeductionsForInvoice" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity">
+        SELECT
+          *
+        FROM
+        t_hkp_trade_ord_payback
+        WHERE
+        is_deleted = FALSE
+        AND order_code = #{orderCode}
+        and tax_deductions!=0
+        AND back_time <![CDATA[>=]]> #{startTime}
+        order by back_time
+        limit 1
+    </select>
+
+    <update id="updateDeductions" parameterType="map">
+            UPDATE t_hkp_trade_ord_payback
+                <trim prefix="set" suffixOverrides=",">
+                    <if test="taxDeductions != null">
+                        tax_deductions =#{taxDeductions},
+                    </if>
+                    <if test="commissionDeductions != null">
+                        commission_deductions =#{commissionDeductions},
+                    </if>
+                </trim>
+            WHERE
+                pay_back_code =#{payBackCode}
+    </update>
+    <update id="updateDeductionsSecond" parameterType="map">
+        UPDATE t_hkp_trade_ord_payback set
+                commission_deductions =0
+        WHERE
+         back_time <![CDATA[>=]]> #{startTime}
+        AND back_time <![CDATA[<]]> #{endTime}
+    </update>
+</mapper>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.SelectAddressEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.crm.customer.entity.SelectAddressEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="select_address_code" property="selectAddressCode" jdbcType="VARCHAR"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+
+        <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+        <result column="owner_user_phone" property="ownerUserPhone" jdbcType="VARCHAR"/>
+        <result column="address_url" property="addressUrl" jdbcType="VARCHAR"/>
+        <result column="user_img" property="userImg" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="last_update_name" property="lastUpdateName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+
+    </resultMap>
+
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_crm_select_address
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.selectAddressCode != null and i.selectAddressCode != ''">
+                    select_address_code,
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.cusName != null and i.cusName != ''">
+                    cus_name,
+                </if>
+
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    owner_code,
+                </if>
+                <if test="i.ownerName != null and i.ownerName != ''">
+                    owner_name,
+                </if>
+                <if test="i.ownerUserPhone != null and i.ownerUserPhone != ''">
+                    owner_user_phone,
+                </if>
+                <if test="i.addressUrl != null and i.addressUrl != ''">
+                    address_url,
+                </if>
+                <if test="i.userImg != null and i.userImg != ''">
+                    user_img,
+                </if>
+
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.selectAddressCode != null and i.selectAddressCode != ''">
+                    #{i.selectAddressCode},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.cusName != null and i.cusName != ''">
+                    #{i.cusName},
+                </if>
+
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    #{i.ownerCode},
+                </if>
+                <if test="i.ownerName != null and i.ownerName != ''">
+                    #{i.ownerName},
+                </if>
+                <if test="i.ownerUserPhone != null and i.ownerUserPhone != ''">
+                    #{i.ownerUserPhone},
+                </if>
+                <if test="i.addressUrl != null and i.addressUrl != ''">
+                    #{i.addressUrl},
+                </if>
+                <if test="i.userImg != null and i.userImg != ''">
+                    #{i.userImg},
+                </if>
+
+
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+
+    <!-- 批量更新数据信息 选址报告暂不需要修改11month27-->
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_crm_select_address WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="selectAddressCode != null and selectAddressCode !=''">
+                AND select_address_code = #{selectAddressCode}
+            </if>
+            <if test="cusCode != null and cusCode !=''">
+                AND cus_code = #{cusCode}
+            </if>
+
+            <if test="cusName != null and cusName !=''">
+                AND cus_name like '%'||#{cusName}||'%'
+            </if>
+            <if test="ownerUserPhone != null and ownerUserPhone !=''">
+                AND owner_user_phone = #{ownerUserPhone}
+            </if>
+            <if test="addressUrl != null and addressUrl !=''">
+                AND address_url = #{addressUrl}
+            </if>
+
+
+            <if test="remark != null and remark !=''">
+                AND remark = #{remark}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.SelectAddressEntity">
+        SELECT * FROM t_hkp_crm_select_address
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <!--<select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_crm_select_address
+        <include refid="selectSql"/>
+    </select>-->
+
+    <!-- 通过指定条件查询信息 -->
+    <!--<select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.SelectAddressEntity">
+        SELECT * FROM t_hkp_crm_select_address
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>-->
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <!--<select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_crm_select_address
+        <include refid="selectSql"/>
+    </select>-->
+
+    <select id="query" resultMap="baseResultMap" resultType="string">
+        select * from t_hkp_crm_select_address where cus_code=#{cusCode};
+    </select>
+
+</mapper>

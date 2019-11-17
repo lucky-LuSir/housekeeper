@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.CustomerHouseEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerHouseEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="house_code" property="houseCode" jdbcType="VARCHAR"/>
+        <result column="followup_type" property="followupType" jdbcType="NUMERIC" javaType="integer"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="followup_code" property="followupCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="acreage" property="acreage" jdbcType="NUMERIC" javaType="float"/>
+        <result column="price" property="price" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="area_size" property="areaSize" jdbcType="NUMERIC" javaType="integer"/>
+  <!--      <result column="house_name" property="houseName" jdbcType="VARCHAR"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>-->
+        <result column="is_location_appropriate" property="isLocationAppropriate" jdbcType="BOOLEAN" />
+        <result column="is_floor_appropriate" property="isFloorAppropriate" jdbcType="BOOLEAN" />
+        <result column="is_power_appropriate" property="isPowerAppropriate" jdbcType="BOOLEAN" />
+        <result column="is_eia" property="isEia" jdbcType="BOOLEAN" />
+        <result column="is_tax" property="isTax" jdbcType="BOOLEAN" />
+        <result column="is_accommodation" property="isAccommodation" jdbcType="BOOLEAN" />
+        <result column="is_traffic" property="isTraffic" jdbcType="BOOLEAN" />
+        <result column="is_rent" property="isRent" jdbcType="BOOLEAN" />
+        <result column="is_period" property="isPeriod" jdbcType="BOOLEAN" />
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_crm_cus_house
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.followupCode != null">
+                    followup_code,
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    house_code,
+                </if>
+                <if test="i.followupType != null">
+                    followup_type,
+                </if>
+                <if test="i.acreage != null">
+                    acreage,
+                </if>
+                <if test="i.price != null">
+                    price,
+                </if>
+                <if test="i.unit != null">
+                    unit,
+                </if>
+                <if test="i.areaSize != null and i.areaSize != ''">
+                    area_size,
+                </if>
+                <if test="i.isLocationAppropriate != null ">
+                    is_location_appropriate,
+                </if>
+                <if test="i.isFloorAppropriate != null ">
+                    is_floor_appropriate,
+                </if>
+                <if test="i.isPowerAppropriate != null ">
+                    is_power_appropriate,
+                </if>
+                <if test="i.isEia != null ">
+                    is_eia,
+                </if>
+                <if test="i.isTax != null ">
+                    is_tax,
+                </if>
+                <if test="i.isAccommodation != null ">
+                    is_accommodation,
+                </if>
+                <if test="i.isTraffic != null ">
+                    is_traffic,
+                </if>
+                <if test="i.isRent != null ">
+                    is_rent,
+                </if>
+                <if test="i.isPeriod != null ">
+                    is_period,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.followupCode != null">
+                    #{i.followupCode},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    #{i.houseCode},
+                </if>
+                <if test="i.followupType != null">
+                    #{i.followupType},
+                </if>
+                <if test="i.acreage != null">
+                    #{i.acreage},
+                </if>
+                <if test="i.price != null">
+                    #{i.price},
+                </if>
+                <if test="i.unit != null">
+                    #{i.unit},
+                </if>
+                <if test="i.areaSize != null and i.areaSize != ''">
+                    #{i.areaSize},
+                </if>
+                <if test="i.isLocationAppropriate != null ">
+                    #{i.isLocationAppropriate},
+                </if>
+                <if test="i.isFloorAppropriate != null ">
+                    #{i.isFloorAppropriate},
+                </if>
+                <if test="i.isPowerAppropriate != null ">
+                    #{i.isPowerAppropriate},
+                </if>
+                <if test="i.isEia != null ">
+                    #{i.isEia},
+                </if>
+                <if test="i.isTax != null ">
+                    #{i.isTax},
+                </if>
+                <if test="i.isAccommodation != null ">
+                    #{i.isAccommodation},
+                </if>
+                <if test="i.isTraffic != null ">
+                    #{i.isTraffic},
+                </if>
+                <if test="i.isRent != null ">
+                    #{i.isRent},
+                </if>
+                <if test="i.isPeriod != null ">
+                    #{i.isPeriod},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_crm_cus_house WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!--执行本地更新 -->
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_crm_cus_house
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerHouseEntity">
+        select * from t_hkp_crm_cus_house
+    </select>
+
+</mapper>

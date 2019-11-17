@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.FocusPayBackWageReportEntity">
+    <resultMap id="BaseResultInvoiceMap" type="com.kfwy.hkp.bi.count.entity.FocusPayBackWageReportEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <!--订单号-->
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <!--订单状态-->
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR"/>
+        <!--成交日期-->
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+        <!--客户合同佣金-->
+
+        <result column="receivable_hos" property="receivableHos" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="receivable_cus" property="receivableCus" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="receivable_cost" property="receivableCost" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--f-->
+        <result column="payment" property="payPayment" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="back_time" property="payBackTime" jdbcType="TIMESTAMP"/>
+
+        <!--<result column="sum_tax" property="sumTax" jdbcType="NUMERIC" javaType="decimal"/>-->
+        <!--<result column="back_money" property="backMoney" jdbcType="NUMERIC" javaType="decimal"/>-->
+        <result column="cus_rebate" property="cusRebate" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="owner_rebate" property="ownerRebate" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="act_commission" property="actCommission" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="cus_parttime_money" property="cusPartTimeMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="owner_parttime_money" property="ownerPartTimeMoney" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="come_commission" property="comeCommission" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="commission_deductions" property="commissionDeductions" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="tax_deductions" property="taxDeductions" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="percentage" property="percentage" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="parent_dept_code" property="parentDeptCode" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="parent_dept_name" property="parentDeptName" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+        <result column="pe_parent_dept_code" property="peParentDeptCode" jdbcType="VARCHAR"/>
+        <result column="pe_dept_code" property="peDeptCode" jdbcType="VARCHAR"/>
+        <result column="pe_parent_dept_name" property="peParentDeptName" jdbcType="VARCHAR"/>
+        <result column="pe_dept_name" property="peDeptName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 人事版工资报表 -->
+    <select id="selectFocusPayBackWageReportByMap" resultMap="BaseResultInvoiceMap" parameterType="map">
+            SELECT
+                f.order_code,
+                f.pe_dept_code,
+                f.s_percentage AS percentage,
+                ord.order_status,
+                ord.order_time,
+                case  when ord.receivable_cus is null then 0 else ord.receivable_cus end,
+                case when ord.receivable_hos is null then 0 else  ord.receivable_hos end,
+                case when ord.cus_rebate is null then 0 else  ord.cus_rebate end ,
+                case when ord.owner_rebate is null then 0 else  owner_rebate end,
+                case when ord.cus_parttime_money is null then 0 else ord.cus_parttime_money end,
+                case when ord.owner_parttime_money is null then 0 else  ord.owner_parttime_money end,
+                ord.actual_commision,
+                ord.commission,
+                op.back_time,
+                case when  op.payment is null then 0 else op.payment end,
+                case when op.commission_deductions is null then 0 else op.commission_deductions end,
+                case when op.tax_deductions is null then 0 else op.tax_deductions end,
+                pedept.dept_name AS pe_dept_name,
+                pepdept.dept_name AS pe_parent_dept_name,
+                dept.dept_name AS dept_name,
+                pdept.dept_name AS parent_dept_name
+            FROM
+                t_hkp_trade_order ord
+            LEFT JOIN (
+                SELECT
+                    order_code,
+                    pe_dept_code,
+                    "sum" (percentage) AS s_percentage
+                FROM
+                    t_hkp_trade_order_percentage
+                WHERE
+                    order_code IN (
+                        SELECT
+                            order_code
+                        FROM
+                            t_hkp_trade_order_percentage
+                        WHERE
+                            percentage_type = '10'
+                        AND money_percent_type = '1'
+                        AND is_deleted = FALSE
+                    )
+                AND is_deleted = FALSE
+                AND money_percent_type = '2'
+                GROUP BY
+                    order_code,
+                    pe_dept_code
+            ) f ON ord.order_code = f.order_code
+            LEFT JOIN (
+            select * from t_hkp_trade_ord_payback where order_code in (
+                SELECT
+                    order_code
+                FROM
+                    t_hkp_trade_order_percentage
+                WHERE
+                    percentage_type = '10'
+                AND money_percent_type = '1'
+                AND is_deleted = FALSE
+            ) and is_deleted=FALSE
+
+            ) op on ord.order_code=op.order_code
+            LEFT JOIN t_hkp_hrm_org_dept pedept ON f.pe_dept_code = pedept.dept_code
+            LEFT JOIN t_hkp_hrm_org_dept pepdept ON pedept.parent_code = pepdept.dept_code
+            LEFT JOIN t_hkp_hrm_org_dept dept ON ord.dept_code = dept.dept_code
+            LEFT JOIN t_hkp_hrm_org_dept pdept ON dept.parent_code = pdept.dept_code
+            WHERE
+                ord.is_deleted = FALSE
+            AND ord.order_code IN (
+                SELECT
+                    order_code
+                FROM
+                    t_hkp_trade_order_percentage
+                WHERE
+                    percentage_type = '10'
+                AND money_percent_type = '1'
+                AND is_deleted = FALSE
+            )
+            ORDER BY
+                ord.order_time desc ,
+                order_code
+   </select>
+
+</mapper>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.trade.order.entity.OrderFollowupEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.trade.order.entity.OrderFollowupEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="followup_time" property="followupTime" jdbcType="TIMESTAMP"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+    <!-- 批量新增 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_trade_order_followup
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    order_code,
+                </if>
+                <if test="i.followupTime != null">
+                    followup_time,
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code,
+                </if>
+                <if test="i.empName != null and i.empName != ''">
+                    emp_name,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name,
+                </if>
+                <if test="i.createDeptCode != null">
+                    create_dept_code,
+                </if>
+                <if test="i.createDeptName != null">
+                    create_dept_name,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    #{i.orderCode},
+                </if>
+                <if test="i.followupTime != null">
+                    #{i.followupTime},
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    #{i.empCode},
+                </if>
+                <if test="i.empName != null and i.empName != ''">
+                    #{i.empName},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptCode != null">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createDeptName != null">
+                    #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+
+            </trim>
+        </foreach>
+    </insert>
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderFollowupEntity">
+        SELECT * FROM t_hkp_trade_order_followup
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+    <select id="countByMap" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM t_hkp_trade_order_followup
+        <include refid="selectSql"/>
+    </select>
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="orderCode != null and orderCode!=''">
+                AND order_code  like '%'||#{orderCode}||'%'
+            </if>
+            <if test="empCode != null and empCode!=''">
+                AND emp_code  like '%'||#{empCode}||'%'
+            </if>
+            <if test="empName != null and empName!=''">
+                AND emp_name  like '%'||#{empName}||'%'
+            </if>
+            <if test="createDeptCode != null and createDeptCode!=''">
+                AND create_dept_code  like '%'||#{createDeptCode}||'%'
+            </if>
+            <if test="createDeptName != null and createDeptName!=''">
+                AND create_dept_name  like '%'||#{createDeptName}||'%'
+            </if>
+            <if test="followupTimeStart != null">
+                AND followup_time <![CDATA[>=]]> #{followupTimeStart}
+            </if>
+            <if test="followupTimeEnd != null">
+                AND followup_time <![CDATA[<=]]> #{followupTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 分页用:统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*) from t_hkp_trade_order_followup
+        <include refid="selectSql"/>
+    </select>
+</mapper>

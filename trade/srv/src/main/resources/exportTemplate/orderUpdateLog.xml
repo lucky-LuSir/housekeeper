@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exportFile>
+    <fileName>orderUpdateLog</fileName>
+    <!--导出模板-->
+    <exportType>0</exportType>
+    <cell>
+        <title>订单编号</title>
+        <alias>orderCode</alias>
+    </cell>
+
+    <cell>
+        <title>修改类型</title>
+        <alias>updateType</alias>
+    </cell>
+
+    <cell>
+        <title>修改前记录</title>
+        <alias>oldValue</alias>
+    </cell>
+
+    <cell>
+        <title>修改后记录</title>
+        <alias>newValue</alias>
+    </cell>
+
+    <cell>
+        <title>修改差额</title>
+        <alias>banlance</alias>
+    </cell>
+
+    <cell>
+        <title>修改时间</title>
+        <alias>createTime</alias>
+    </cell>
+
+    <cell>
+        <title>修改人</title>
+        <alias>createName</alias>
+    </cell>
+
+    <!---->
+
+    <cell>
+        <title>分成人员姓名</title>
+        <alias>perEmpName</alias>
+    </cell>
+
+    <cell>
+        <title>分成人员工号</title>
+        <alias>perWorkNumner</alias>
+    </cell>
+
+    <cell>
+        <title>业绩</title>
+        <alias>perProfit</alias>
+    </cell>
+
+
+    <cell>
+        <title>业绩比例</title>
+        <alias>perPercentage</alias>
+    </cell>
+
+
+    <cell>
+        <title>分成人所属部门</title>
+        <alias>perDeptName</alias>
+    </cell>
+
+    <!---->
+
+    <cell>
+        <title>分成人员姓名</title>
+        <alias>perEmpName1</alias>
+    </cell>
+
+    <cell>
+        <title>分成人员工号</title>
+        <alias>perWorkNumner1</alias>
+    </cell>
+
+    <cell>
+        <title>业绩</title>
+        <alias>perProfit1</alias>
+    </cell>
+
+
+    <cell>
+        <title>业绩比例</title>
+        <alias>perPercentage1</alias>
+    </cell>
+
+
+    <cell>
+        <title>分成人所属部门</title>
+        <alias>perDeptName1</alias>
+    </cell>
+
+    <!---->
+
+    <cell>
+        <title>分成人员姓名</title>
+        <alias>perEmpName2</alias>
+    </cell>
+
+    <cell>
+        <title>分成人员工号</title>
+        <alias>perWorkNumner2</alias>
+    </cell>
+
+    <cell>
+        <title>业绩</title>
+        <alias>perProfit2</alias>
+    </cell>
+
+
+    <cell>
+        <title>业绩比例</title>
+        <alias>perPercentage2</alias>
+    </cell>
+
+
+    <cell>
+        <title>分成人所属部门</title>
+        <alias>perDeptName2</alias>
+    </cell>
+
+    <!---->
+
+    <cell>
+        <title>分成人员姓名</title>
+        <alias>perEmpName3</alias>
+    </cell>
+
+    <cell>
+        <title>分成人员工号</title>
+        <alias>perWorkNumner3</alias>
+    </cell>
+
+    <cell>
+        <title>业绩</title>
+        <alias>perProfit3</alias>
+    </cell>
+
+
+    <cell>
+        <title>业绩比例</title>
+        <alias>perPercentage3</alias>
+    </cell>
+
+
+    <cell>
+        <title>分成人所属部门</title>
+        <alias>perDeptName3</alias>
+    </cell>
+
+    <!---->
+
+    <cell>
+        <title>分成人员姓名</title>
+        <alias>perEmpName4</alias>
+    </cell>
+
+    <cell>
+        <title>分成人员工号</title>
+        <alias>perWorkNumner4</alias>
+    </cell>
+
+    <cell>
+        <title>业绩</title>
+        <alias>perProfit4</alias>
+    </cell>
+
+
+    <cell>
+        <title>业绩比例</title>
+        <alias>perPercentage4</alias>
+    </cell>
+
+
+    <cell>
+        <title>分成人所属部门</title>
+        <alias>perDeptName4</alias>
+    </cell>
+    <!---->
+
+    <cell>
+        <title>分成人员姓名</title>
+        <alias>perEmpName5</alias>
+    </cell>
+
+    <cell>
+        <title>分成人员工号</title>
+        <alias>perWorkNumner5</alias>
+    </cell>
+
+    <cell>
+        <title>业绩</title>
+        <alias>perProfit5</alias>
+    </cell>
+
+
+    <cell>
+        <title>业绩比例</title>
+        <alias>perPercentage5</alias>
+    </cell>
+
+
+    <cell>
+        <title>分成人所属部门</title>
+        <alias>perDeptName5</alias>
+    </cell>
+
+</exportFile>
+

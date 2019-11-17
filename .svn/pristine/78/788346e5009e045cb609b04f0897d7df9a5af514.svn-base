@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.HouseDictionaryEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.HouseDictionaryEntity">
+
+    </resultMap>
+
+    <select id="selectLocationCount" parameterType="map" resultType="long">
+        SELECT
+          count(1)
+        FROM
+          t_hkp_hos_location
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="selectHouseCount" parameterType="map" resultType="long">
+        SELECT
+          count(1)
+        FROM
+          t_hkp_hos_house
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="selectHouseAreaSum" parameterType="map" resultType="float">
+        SELECT
+          CASE
+            WHEN area IS NULL
+            THEN 0
+            ELSE area
+          END
+        FROM (
+            SELECT
+              SUM(layer_area) AS area
+            FROM
+              t_hkp_hos_house
+            <include refid="selectSql"/>
+        )TP
+    </select>
+
+    <sql id="selectSql">
+      <trim prefix="where" prefixOverrides="AND|OR">
+          <if test="level != null and level == 2">
+              <if test="areaCode != null and areaCode!=''">
+                  AND city = #{areaCode}
+              </if>
+          </if>
+          <if test="level != null and level == 3">
+              <if test="areaCode != null and areaCode!=''">
+                  AND region = #{areaCode}
+              </if>
+          </if>
+          <if test="level != null and level == 4">
+              <if test="areaCode != null and areaCode!=''">
+                  AND street = #{areaCode}
+              </if>
+          </if>
+          <if test="houseStatus != null and houseStatus != ''">
+              AND house_status = #{houseStatus}
+          </if>
+          <if test="isDeleted != null ">
+              AND is_deleted = #{isDeleted}
+          </if>
+          <if test="hotLocationCode != null">
+              AND location_code IN (
+                  SELECT
+                    location_code
+                  FROM
+                      t_hkp_hos_house
+                  WHERE
+                    house_status = '1'
+                  GROUP BY
+                    location_code
+              )
+          </if>
+      </trim>
+    </sql>
+
+</mapper>

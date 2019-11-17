@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.base.history.entity.HistoryEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.base.history.entity.HistoryEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="history_code" property="historyCode" jdbcType="VARCHAR"/>
+        <result column="class_name" property="className" jdbcType="VARCHAR"/>
+        <result column="field" property="field" jdbcType="VARCHAR"/>
+        <result column="old_value" property="oldValue" jdbcType="VARCHAR"/>
+        <result column="new_value" property="newValue" jdbcType="VARCHAR"/>
+        <result column="opt_code" property="optCode" jdbcType="VARCHAR"/>
+        <result column="opt_name" property="optName" jdbcType="VARCHAR"/>
+        <result column="opt_data_code" property="optDataCode" jdbcType="VARCHAR"/>
+
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+        <result column="owner_dept_code" property="ownerDeptCode" jdbcType="VARCHAR"/>
+        <result column="owner_dept_name" property="ownerDeptName" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="last_update_name" property="lastUpdateName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_base_his_history
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.historyCode != null and i.historyCode != ''">
+                    history_code,
+                </if>
+                <if test="i.className != null and i.className != ''">
+                    class_name,
+                </if>
+                <if test="i.field != null and i.field != ''">
+                    field,
+                </if>
+
+                <if test="i.oldValue != null and i.oldValue != ''">
+                    old_value,
+                </if>
+                <if test="i.newValue != null and i.newValue != ''">
+                    new_value,
+                </if>
+                <if test="i.optCode != null and i.optCode != ''">
+                    opt_code,
+                </if>
+                <if test="i.optName != null and i.optName != ''">
+                    opt_name,
+                </if>
+                <if test="i.optDataCode != null and i.optDataCode != ''">
+                    opt_data_code,
+                </if>
+                <if test="i.batchCode != null and i.batchCode!=''">
+                    batch_code,
+                </if>
+                <if test="i.oldEntity != null and i.oldEntity!=''">
+                    old_entity,
+                </if>
+                <if test="i.newEntity != null and i.newEntity!=''">
+                    new_entity,
+                </if>
+
+
+                <if test="i.cpyCode != null and i.cpyCode!=''">
+                    cpy_code,
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    owner_code,
+                </if>
+                <if test="i.ownerName != null and i.ownerName != ''">
+                    owner_name,
+                </if>
+                <if test="i.ownerDeptCode != null and i.ownerDeptCode != ''">
+                    owner_dept_code,
+                </if>
+                <if test="i.ownerDeptName != null and i.ownerDeptName != ''">
+                    owner_dept_name,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.lastUpdateName != null and i.lastUpdateName != ''">
+                    last_update_name,
+                </if>
+
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.historyCode != null and i.historyCode != ''">
+                    #{i.historyCode},
+                </if>
+                <if test="i.className != null and i.className != ''">
+                    #{i.className},
+                </if>
+                <if test="i.field != null and i.field != ''">
+                    #{i.field},
+                </if>
+
+                <if test="i.oldValue != null and i.oldValue != ''">
+                    #{i.oldValue},
+                </if>
+                <if test="i.newValue != null and i.newValue != ''">
+                    #{i.newValue},
+                </if>
+                <if test="i.optCode != null and i.optCode != ''">
+                    #{i.optCode},
+                </if>
+                <if test="i.optName != null and i.optName != ''">
+                    #{i.optName},
+                </if>
+                <if test="i.optDataCode != null and i.optDataCode != ''">
+                    #{i.optDataCode},
+                </if>
+                <if test="i.batchCode != null and i.batchCode != ''">
+                    #{i.batchCode},
+                </if>
+                <if test="i.oldEntity != null and i.oldEntity != ''">
+                    #{i.oldEntity},
+                </if>
+                <if test="i.newEntity != null and i.newEntity != ''">
+                    #{i.newEntity},
+                </if>
+
+
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    #{i.ownerCode},
+                </if>
+                <if test="i.ownerName != null and i.ownerName != ''">
+                    #{i.ownerName},
+                </if>
+                <if test="i.ownerDeptCode != null and i.ownerDeptCode != ''">
+                    #{i.ownerDeptCode},
+                </if>
+                <if test="i.ownerDeptName != null and i.ownerDeptName != ''">
+                    #{i.ownerDeptName},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.lastUpdateName != null and i.lastUpdateName != ''">
+                    #{i.lastUpdateName},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+
+    <!-- 批量更新数据信息 选址报告暂不需要修改11month27-->
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_base_his_history WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+
+
+            <if test="remark != null and remark !=''">
+                AND remark = #{remark}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.base.history.entity.HistoryEntity">
+        SELECT * FROM t_hkp_base_his_history
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <!--<select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_base_his_history
+        <include refid="selectSql"/>
+    </select>-->
+
+    <!-- 通过指定条件查询信息 -->
+    <!--<select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.base.history.entity.HistoryEntity">
+        SELECT * FROM t_hkp_base_his_history
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>-->
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <!--<select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_base_his_history
+        <include refid="selectSql"/>
+    </select>-->
+
+
+</mapper>

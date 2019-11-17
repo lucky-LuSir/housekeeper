@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.hos.house.entity.HouseExportLogEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.hos.house.entity.HouseExportLogEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="dept_codes" property="deptCodes" jdbcType="VARCHAR"/>
+        <result column="result_number" property="resultNumber" jdbcType="NUMERIC" javaType="int"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.kfwy.hkp.hos.house.entity.HouseExportLogEntity">
+        INSERT INTO t_hkp_sys_hos_export_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userCode != null and userCode != ''">
+                user_code,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="deptCodes != null and deptCodes != ''">
+                dept_codes,
+            </if>
+            <if test="resultNumber != null">
+                result_number,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
+            <if test="createCode != null and createCode != ''">
+                create_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userCode != null and userCode != ''">
+                #{userCode},
+            </if>
+            <if test="startTime != null">
+                #{startTime},
+            </if>
+            <if test="endTime != null">
+                #{endTime},
+            </if>
+            <if test="deptCodes != null and deptCodes != ''">
+                #{deptCodes},
+            </if>
+            <if test="resultNumber != null">
+                #{resultNumber},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            <if test="createCode != null and createCode != ''">
+                #{createCode},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_sys_hos_export_log
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.userCode != null and i.userCode != ''">
+                    user_code,
+                </if>
+                <if test="i.startTime != null">
+                    start_time,
+                </if>
+                <if test="i.endTime != null">
+                    end_time,
+                </if>
+                <if test="i.deptCodes != null and i.deptCodes != ''">
+                    dept_codes,
+                </if>
+                <if test="i.resultNumber != null">
+                    result_number,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.userCode != null and i.userCode != ''">
+                    #{i.userCode},
+                </if>
+                <if test="i.startTime != null">
+                    #{i.startTime},
+                </if>
+                <if test="i.endTime != null">
+                    #{i.endTime},
+                </if>
+                <if test="i.deptCodes != null and i.deptCodes != ''">
+                    #{i.deptCodes},
+                </if>
+                <if test="i.resultNumber != null">
+                    #{i.resultNumber},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+</mapper>

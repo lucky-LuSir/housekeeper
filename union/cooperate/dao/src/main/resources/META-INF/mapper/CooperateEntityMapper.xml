@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.cooperate.entity.CooperateEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.cooperate.entity.CooperateEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="coo_code" property="cooCode" jdbcType="VARCHAR"/>
+        <result column="coo_status" property="cooStatus" jdbcType="VARCHAR"/>
+        <result column="house_code" property="houseCode" jdbcType="VARCHAR"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="apply_code" property="applyCode" jdbcType="VARCHAR"/>
+        <result column="apply_type" property="applyType" jdbcType="VARCHAR"/>
+        <result column="receive_code" property="receiveCode" jdbcType="VARCHAR"/>
+        <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+
+        <result column="apply_name" property="applyName" jdbcType="VARCHAR"/>
+        <result column="apply_phone" property="applyPhone" jdbcType="VARCHAR"/>
+        <result column="apply_img" property="applyImg" jdbcType="VARCHAR"/>
+        <result column="receive_name" property="receiveName" jdbcType="VARCHAR"/>
+        <result column="receive_phone" property="receivePhone" jdbcType="VARCHAR"/>
+        <result column="receive_img" property="receiveImg" jdbcType="VARCHAR"/>
+        <result column="hos_emp_name" property="hosEmpName" jdbcType="VARCHAR"/>
+        <result column="hos_emp_phone" property="hosEmpPhone" jdbcType="VARCHAR"/>
+        <result column="hos_emp_img" property="hosEmpImg" jdbcType="VARCHAR"/>
+        <result column="cus_emp_name" property="cusEmpName" jdbcType="VARCHAR"/>
+        <result column="cus_emp_phone" property="cusEmpPhone" jdbcType="VARCHAR"/>
+        <result column="cus_emp_img" property="cusEmpImg" jdbcType="VARCHAR"/>
+
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="cus_phone" property="cusPhone" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP"/>
+        <result column="need_acreage" property="needAcreage" jdbcType="NUMERIC"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+
+        <result column="house_name" property="houseName" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="area" property="area" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="max_electric" property="maxElectric" jdbcType="NUMERIC" javaType="int"/>
+        <result column="layer_height" property="layerHeight" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="has_cut" property="hasCut" jdbcType="BOOLEAN"/>
+        <result column="has_certificate" property="hasCertificate" jdbcType="BOOLEAN"/>
+        <result column="has_registry" property="hasRegistry" jdbcType="BOOLEAN"/>
+        <result column="has_eia" property="hasEia" jdbcType="BOOLEAN"/>
+        <result column="houseowner_name" property="houseownerName" jdbcType="VARCHAR"/>
+        <result column="houseowner_phone" property="houseownerPhone" jdbcType="VARCHAR"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+        <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+        <result column="detail_address" property="detailAddress" jdbcType="VARCHAR"/>
+        <result column="divide_percentage" property="dividePercentage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="coo_open_flag" property="cooOpenFlag" jdbcType="BOOLEAN"/>
+
+        <collection property="customerAreaEntityList" columnPrefix="a_" javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.CustomerAreaEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="region" property="region" jdbcType="VARCHAR"/>
+            <result column="street" property="street" jdbcType="VARCHAR"/>
+            <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+            <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+            <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+            <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_union_cooperate
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.cooCode != null and i.cooCode != ''">
+                    coo_code,
+                </if>
+                <if test="i.cooStatus != null and i.cooStatus != ''">
+                    coo_status,
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    house_code,
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.applyCode != null and i.applyCode != ''">
+                    apply_code,
+                </if>
+                <if test="i.applyType != null and i.applyType != ''">
+                    apply_type,
+                </if>
+                <if test="i.receiveCode != null and i.receiveCode != ''">
+                    receive_code,
+                </if>
+                <if test="i.dividePercentage != null">
+                    divide_percentage,
+                </if>
+                <if test="i.cooOpenFlag != null">
+                    coo_open_flag,
+                </if>
+                <if test="i.rejectReason != null and i.rejectReason != ''">
+                    reject_reason,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.cooCode != null and i.cooCode != ''">
+                    #{i.cooCode},
+                </if>
+                <if test="i.cooStatus != null and i.cooStatus != ''">
+                    #{i.cooStatus},
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    #{i.houseCode},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.applyCode != null and i.applyCode != ''">
+                    #{i.applyCode},
+                </if>
+                <if test="i.applyType != null and i.applyType != ''">
+                    #{i.applyType},
+                </if>
+                <if test="i.receiveCode != null and i.receiveCode != ''">
+                    #{i.receiveCode},
+                </if>
+                <if test="i.dividePercentage != null">
+                    #{i.dividePercentage},
+                </if>
+                <if test="i.cooOpenFlag != null">
+                    #{i.cooOpenFlag},
+                </if>
+                <if test="i.rejectReason != null and i.rejectReason != ''">
+                    #{i.rejectReason},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.cooperate.entity.CooperateEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_union_cooperate
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.cooCode != null and i.cooCode != ''">
+                    coo_code=#{i.cooCode},
+                </if>
+                <if test="i.cooStatus != null and i.cooStatus != ''">
+                    coo_status=#{i.cooStatus},
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    house_code=#{i.houseCode},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code=#{i.cusCode},
+                </if>
+                <if test="i.applyCode != null and i.applyCode != ''">
+                    apply_code=#{i.applyCode},
+                </if>
+                <if test="i.applyType != null and i.applyType != ''">
+                    apply_type=#{i.applyType},
+                </if>
+                <if test="i.receiveCode != null and i.receiveCode != ''">
+                    receive_code=#{i.receiveCode},
+                </if>
+                <if test="i.dividePercentage != null">
+                    divide_percentage=#{i.dividePercentage},
+                </if>
+                <if test="i.cooOpenFlag != null">
+                    coo_open_flag=#{i.cooOpenFlag},
+                </if>
+                <if test="i.rejectReason != null and i.rejectReason != ''">
+                    reject_reason=#{i.rejectReason},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                <if test="i.receiveCode != null">
+                    and receive_code = #{i.receiveCode}
+                </if>
+                and coo_code = #{i.cooCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="cooCode != null and cooCode != ''">
+                AND coo_code = #{cooCode}
+            </if>
+            <if test="cooStatus != null and cooStatus != ''">
+                AND coo_status = #{cooStatus}
+            </if>
+             <if test="_cooStatuses != null">
+                AND coo_status in (${_cooStatuses})
+            </if>
+
+            <if test="houseCode != null and houseCode != ''">
+                AND house_code = #{houseCode}
+            </if>
+            <if test="_houseCodes != null">
+                AND house_code in (${_houseCodes})
+            </if>
+            <if test="cusCode != null and cusCode != ''">
+                AND cus_code = #{cusCode}
+            </if>
+            <if test="cusCodes != null">
+                <choose>
+                    <when test="_cusCodes">
+                        AND cus_code IN (${_cusCodes})
+                    </when>
+                    <otherwise>
+                        AND cus_code IN
+                        <foreach collection="cusCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="applyCode != null and applyCode != ''">
+                AND apply_code = #{applyCode}
+            </if>
+            <if test="applyType != null and applyType != ''">
+                AND apply_type = #{applyType}
+            </if>
+            <if test="receiveCode != null and receiveCode != ''">
+                AND receive_code = #{receiveCode}
+            </if>
+            <if test="allCode != null and allCode != ''">
+                and (apply_code = #{allCode} or receive_code = #{allCode})
+            </if>
+            <if test="cusPhone != null and cusPhone != ''">
+                AND cus_phone = #{cusPhone}
+            </if>
+            <if test="houseownerPhone != null and houseownerPhone != ''">
+                AND houseowner_phone = #{houseownerPhone}
+            </if>
+            <choose>
+                <when test="street !=null">
+                    AND street=#{street}
+                </when>
+                <when test="region != null">
+                    AND region = #{region}
+                </when>
+                <when test="city != null">
+                    AND city = #{city}
+                </when>
+                <when test="province != null">
+                    AND province =#{province}
+                </when>
+            </choose>
+            <if test="detailAddress != null and detailAddress != ''">
+                AND detail_address like '%' || #{detailAddress} || '%'
+            </if>
+            <if test="houseName != null and houseName != ''">
+                AND house_name like '%' || #{houseName} || '%'
+            </if>
+            <if test="unionName != null and unionName != ''">
+                <if test="applyCode != null and applyCode != ''">
+                    AND receive_name = #{unionName}
+                </if>
+                <if test="receiveCode != null and receiveCode != ''">
+                    AND apply_name = #{unionName}
+                </if>
+            </if>
+            <if test="unionPhone != null and unionPhone != ''">
+                <if test="applyCode != null and applyCode != ''">
+                    AND receive_phone = #{unionPhone}
+                </if>
+                <if test="receiveCode != null and receiveCode != ''">
+                    AND apply_phone = #{unionPhone}
+                </if>
+            </if>
+
+            <if test="cpyCode != null and cpyCode != ''">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_union_cooperate
+        <include refid="selectSql"/>
+    </select>
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.cooperate.entity.CooperateEntity">
+        select * from t_hkp_union_cooperate
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询合作的详情-->
+    <select id="detail" parameterType="string" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.cooperate.entity.CooperateEntity">
+        SELECT *
+        FROM t_hkp_union_cooperate
+        WHERE coo_code = #{cooCode}
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.cooperate.entity.CooperateEntity">
+        select * from(
+        SELECT
+        cp.*,
+        c.cus_name,
+        c.cus_phone,
+        c.description,
+        c.need_acreage,
+        c.house_type,
+        h.house_name,
+        ho.houseowner_name,
+        ho.houseowner_phone,
+        l.province,
+        l.city,
+        l.region,
+        l.street,
+        l.detail_address,
+        e1.user_name as apply_name,
+        e1.user_phone as apply_phone,
+        e2.user_name as receive_name,
+        e2.user_phone as receive_phone
+        FROM t_hkp_union_cooperate cp
+        LEFT JOIN t_hkp_crm_customer c on cp.cus_code = c.cus_code
+        LEFT JOIN t_hkp_hos_house h on cp.house_code = h.house_code
+        LEFT JOIN t_hkp_hos_houseowner ho on ho.houseowner_code = h.owner_code
+        LEFT JOIN t_hkp_hos_location l on l.location_code = h.location_code
+        LEFT JOIN t_hkp_sys_user_user e1 on e1.user_code = cp.apply_code
+        LEFT JOIN t_hkp_sys_user_user e2 on e2.user_code = cp.receive_code
+        )TP
+        <include refid="selectSql"></include>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(1) from (
+        SELECT
+        cp.*,
+        c.cus_name,
+        c.cus_phone,
+        c.description,
+        c.need_acreage,
+        c.house_type,
+        h.house_name,
+        ho.houseowner_name,
+        ho.houseowner_phone,
+        l.province,
+        l.city,
+        l.region,
+        l.street,
+        l.detail_address,
+        e1.user_name as apply_name,
+        e1.user_phone as apply_phone,
+        e2.user_name as receive_name,
+        e2.user_phone as receive_phone
+        FROM t_hkp_union_cooperate cp
+        LEFT JOIN t_hkp_crm_customer c on cp.cus_code = c.cus_code
+        LEFT JOIN t_hkp_hos_house h on cp.house_code = h.house_code
+        LEFT JOIN t_hkp_hos_houseowner ho on ho.houseowner_code = h.owner_code
+        LEFT JOIN t_hkp_hos_location l on l.location_code = h.location_code
+        LEFT JOIN t_hkp_sys_user_user e1 on e1.user_code = cp.apply_code
+        LEFT JOIN t_hkp_sys_user_user e2 on e2.user_code = cp.receive_code
+        ) TP
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询符合条件的简单实体对象 -->
+    <select id="querySimpleCooperateListByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.cooperate.entity.CooperateEntity">
+        SELECT *
+        FROM t_hkp_union_cooperate
+        <include refid="selectSql"></include>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+</mapper>

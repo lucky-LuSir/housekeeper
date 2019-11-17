@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.GraphEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.bi.count.entity.GraphEntity">
+        <result column="year_month" property="yearMonth" jdbcType="VARCHAR"/>
+        <result column="time_str" property="timeStr" jdbcType="VARCHAR"/>
+        <result column="year_str" property="yearStr" jdbcType="VARCHAR"/>
+        <result column="month_str" property="monthStr" jdbcType="VARCHAR"/>
+        <result column="num" property="num" jdbcType="NUMERIC" javaType="int"/>
+    </resultMap>
+
+    <select id="selectEntrustByMap" resultMap="baseResultMap" parameterType="map">
+        SELECT
+	      to_char(create_time, #{timeStr}) as time_str,
+	      "count" (*) as num
+        FROM
+	      t_ky_hos_entrust
+        <include refid="selectSql"/>
+        GROUP BY
+          time_str
+        ORDER by time_str
+    </select>
+
+    <select id="selectBespeakByMap" resultMap="baseResultMap" parameterType="map">
+        SELECT
+	      to_char(create_time, #{timeStr}) as time_str,
+	      "count" (*) as num
+        FROM
+	      t_ky_hos_bespeak
+        <include refid="selectSql"/>
+        GROUP BY
+          time_str
+        ORDER by time_str
+    </select>
+
+
+    <select id="selectEntrustAndBespeakCountByMap" resultMap="baseResultMap" parameterType="map">
+        select
+         case   when  be.time_str is null then en.time_str else be.time_str end as time_str,
+        (case when be.num is null then 0 else be.num end )
+        +(case when en.num is null then 0 else en.num end ) as num
+         from (
+            SELECT
+              to_char(create_time, #{timeStr}) as time_str,
+              "count" (*) as num
+            FROM
+              t_ky_hos_bespeak
+            <include refid="selectSql"/>
+            GROUP BY
+                time_str
+              ) be
+            FULL join
+            (
+            SELECT
+              to_char(create_time, #{timeStr}) as time_str,
+              "count" (*) as num
+            FROM
+              t_ky_hos_entrust
+            <include refid="selectSql"/>
+            GROUP BY
+              time_str
+            ) en on be.time_str=en.time_str
+            order by be.time_str
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="startTime != null">
+                AND create_time <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND create_time <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="province != null and province != ''">
+                and province=#{province}
+            </if>
+            <if test="city != null and city != ''">
+                and city=#{city}
+            </if>
+            <if test="region != null and region != ''">
+                and region=#{region}
+            </if>
+        </trim>
+    </sql>
+</mapper>

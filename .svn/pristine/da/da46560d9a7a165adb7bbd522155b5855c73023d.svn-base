@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.hrm.org.dept.entity.CusServiceEntity">
+
+    <!--  column对应数据库,property对应Bean-->
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.hrm.org.dept.entity.CusServiceEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+
+        <result property="cusserviceCode" column="cusservice_code" jdbcType="VARCHAR"/>
+        <result property="deptCode" column="dept_code" jdbcType="VARCHAR"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+        <result property="userCode" column="user_code" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="createName" column="create_name" jdbcType="VARCHAR"/>
+        <result property="ownerDeptName" column="owner_dept_name" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="cpyCode" column="cpy_code" jdbcType="VARCHAR"/>
+        <result property="createCode" column="create_code" jdbcType="VARCHAR"/>
+        <result property="createDeptCode" column="create_dept_code" jdbcType="VARCHAR"/>
+        <result property="lastUpdateCode" column="last_update_code" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+
+    <!-- 新增记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_org_dept_cusservice
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.cusserviceCode != null and i.cusserviceCode != ''">
+                    cusservice_code,
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code,
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name,
+                </if>
+
+                <if test="i.userCode != null and i.userCode != ''">
+                    user_code,
+                </if>
+                <if test="i.userName != null and i.userName != ''">
+                    user_name,
+                </if>
+
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.cusserviceCode != null and i.cusserviceCode != ''">
+                    #{i.cusserviceCode},
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    #{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    #{i.deptName},
+                </if>
+
+                <if test="i.userCode != null and i.userCode != ''">
+                    #{i.userCode},
+                </if>
+                <if test="i.userName != null and i.userName != ''">
+                    #{i.userName},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted}
+                </if>
+
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新数据信息 -->
+    <!--<update id="batchUpdate" parameterType="com.kfwy.hkp.hrm.org.dept.entity.CusServiceEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_org_dept_cusservice
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code = #{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name = #{i.deptName},
+                </if>
+                <if test="i.parentCode != null and i.parentCode != ''">
+                    parent_code = #{i.parentCode},
+                </if>
+                <if test="i.parentName != null and i.parentName != ''">
+                    parent_name = #{i.parentName},
+                </if>
+                <if test="i.deptType != null">
+                    dept_type = #{i.deptType},
+                </if>
+                <if test="i.deptLevel != null">
+                    dept_level = #{i.deptLevel},
+                </if>
+                <if test="i.leaderCode != null and i.leaderCode != ''">
+                    leader_code = #{i.leaderCode},
+                </if>
+                <if test="i.leaderName != null and i.leaderName != ''">
+                    leader_name = #{i.leaderName},
+                </if>
+                <if test="i.deptAddress != null and i.deptAddress != ''">
+                    dept_address = #{i.deptAddress},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name = #{i.createName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.lastUpdateName != null and i.lastUpdateName != ''">
+                    last_update_name = #{i.lastUpdateName},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted}
+                </if>
+
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                dept_code = #{i.deptCode}
+            </trim>
+        </foreach>
+    </update>-->
+
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_org_dept_cusservice WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="baseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="baseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+
+            <if test="cusserviceCode != null and cusserviceCode != ''">
+                and cusservice_code = #{cusserviceCode}
+            </if>
+            <if test="deptCode != null and deptCode != ''">
+                and dept_code = #{deptCode}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                and dept_name = #{deptName}
+            </if>
+            <if test="userCode != null and userCode != ''">
+                and user_code = #{userCode}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+
+            <if test="keyword != null">
+                AND ( dept_name like '%' || #{keyword} || '%'
+                      or dept_address like '%' || #{keyword} || '%'
+                )
+            </if>
+
+            <if test="createName != null">
+                AND create_name = #{createName}
+            </if>
+            <if test="lastUpdateCode != null">
+                AND last_update_code = #{lastUpdateCode}
+            </if>
+            <if test="lastUpdateName != null">
+                AND last_update_name = #{lastUpdateName}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="lastUpdateTimeStart != null">
+                AND last_update_time <![CDATA[ >= ]]> #{lastUpdateTimeStart}
+            </if>
+            <if test="lastUpdateTimeEnd != null">
+                AND last_update_time  <![CDATA[ <= ]]> #{lastUpdateTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+        </trim>
+    </sql>
+
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.CusServiceEntity">
+            SELECT *
+            from t_hkp_org_dept_cusservice
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_org_dept_cusservice
+        <include refid="selectSql"/>
+    </select>
+
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.CusServiceEntity">
+          SELECT * FROM t_hkp_org_dept_cusservice
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <select id="selectCusServiceList" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.CusServiceEntity">
+        SELECT
+	        *
+        FROM(
+		  SELECT
+			cs.cusservice_code,
+			cs.create_time,
+			cu.user_name AS create_name,
+			cs.user_code,
+			cs.dept_code,
+			dept.dept_name,
+			u.user_name,
+			ud.dept_name AS owner_dept_name,
+			cs.remark
+		  FROM
+			t_hkp_org_dept_cusservice cs
+		  LEFT JOIN t_hkp_hrm_org_dept dept ON cs.dept_code = dept.dept_code
+		  LEFT JOIN t_hkp_sys_user_user u ON cs.user_code = u.user_code
+		  LEFT JOIN t_hkp_hrm_org_dept ud ON u.owner_dept_code = ud.dept_code
+		  LEFT JOIN t_hkp_sys_user_user cu ON cs.create_code = cu.user_code
+		  where cs.is_deleted=false
+	    ) R
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="keyword != null">
+                AND ( R.dept_name like '%' || #{keyword} || '%'
+                or R.user_name like '%' || #{keyword} || '%'
+                )
+            </if>
+            <if test="deptCode != null and deptCode != ''">
+                and dept_code = #{deptCode}
+            </if>
+            <if test="userCode != null and userCode != ''">
+                and user_code = #{userCode}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectCusServiceListCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) from(
+            SELECT
+            *
+            FROM(
+            SELECT
+            cs.cusservice_code,
+            cs.create_time,
+            cu.user_name AS create_name,
+            cs.user_code,
+            cs.dept_code,
+            dept.dept_name,
+            u.user_name,
+            ud.dept_name AS cs_dept_name,
+            cs.remark
+            FROM
+            t_hkp_org_dept_cusservice cs
+            LEFT JOIN t_hkp_hrm_org_dept dept ON cs.dept_code = dept.dept_code
+            LEFT JOIN t_hkp_sys_user_user u ON cs.user_code = u.user_code
+            LEFT JOIN t_hkp_hrm_org_dept ud ON u.owner_dept_code = ud.dept_code
+            LEFT JOIN t_hkp_sys_user_user cu ON cs.create_code = cu.user_code
+            where cs.is_deleted=false
+            ) R
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="keyword != null">
+                    AND ( R.dept_name like '%' || #{keyword} || '%'
+                    or R.user_name like '%' || #{keyword} || '%'
+                    )
+                </if>
+                <if test="deptCode != null and deptCode != ''">
+                    and dept_code = #{deptCode}
+                </if>
+                <if test="userCode != null and userCode != ''">
+                    and user_code = #{userCode}
+                </if>
+
+            </trim>
+        ) TP
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) from(
+          SELECT * FROM t_hkp_org_dept_cusservice
+        ) TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.hrm.org.dept.entity.DeptProfitShareEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.hrm.org.dept.entity.DeptProfitShareEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+
+        <result column="profit_share_type" property="profitShareType" jdbcType="VARCHAR"/>
+
+        <result column="acquire_cus" property="acquireCus" jdbcType="NUMERIC" javaType="int"/>
+        <result column="cus_push" property="cusPush" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="followup_see" property="followupSee" jdbcType="NUMERIC" javaType="int"/>
+        <result column="order_deal" property="orderDeal" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="house_develop" property="houseDevelop" jdbcType="NUMERIC" javaType="int"/>
+        <result column="house_entrust" property="houseEntrust" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_hrm_org_dept_profit_share
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code,
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name,
+                </if>
+                <if test="i.profitShareType != null and i.profitShareType != ''">
+                    profit_share_type,
+                </if>
+
+                <if test="i.acquireCus != null">
+                    acquire_cus,
+                </if>
+                <if test="i.cusPush != null">
+                    cus_push,
+                </if>
+
+                <if test="i.followupSee != null">
+                    followup_see,
+                </if>
+                <if test="i.orderDeal != null">
+                    order_deal,
+                </if>
+
+                <if test="i.houseDevelop != null">
+                    house_develop,
+                </if>
+                <if test="i.houseEntrust != null">
+                    house_entrust,
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name,
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    #{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    #{i.deptName},
+                </if>
+                <if test="i.profitShareType != null and i.profitShareType != ''">
+                    #{i.profitShareType},
+                </if>
+
+                <if test="i.acquireCus != null">
+                    #{i.acquireCus},
+                </if>
+                <if test="i.cusPush != null">
+                    #{i.cusPush},
+                </if>
+
+                <if test="i.followupSee != null">
+                    #{i.followupSee},
+                </if>
+                <if test="i.orderDeal != null">
+                    #{i.orderDeal},
+                </if>
+
+                <if test="i.houseDevelop != null">
+                    #{i.houseDevelop},
+                </if>
+                <if test="i.houseEntrust != null">
+                    #{i.houseEntrust},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新数据信息 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.hrm.org.dept.entity.DeptProfitShareEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_hrm_org_dept_profit_share
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code = #{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name = #{i.deptName},
+                </if>
+                <if test="i.profitShareType != null and i.profitShareType != ''">
+                    profit_share_type = #{i.profitShareType},
+                </if>
+
+                <if test="i.acquireCus != null">
+                    acquire_cus = #{i.acquireCus},
+                </if>
+                <if test="i.cusPush != null">
+                    cus_push = #{i.cusPush},
+                </if>
+
+                <if test="i.followupSee != null">
+                    followup_see = #{i.followupSee},
+                </if>
+                <if test="i.orderDeal != null">
+                    order_deal = #{i.orderDeal},
+                </if>
+
+                <if test="i.houseDevelop != null">
+                    house_develop = #{i.houseDevelop},
+                </if>
+                <if test="i.houseEntrust != null">
+                    house_entrust = #{i.houseEntrust},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name = #{i.createName},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name = #{i.createDeptName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code = #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                and dept_code = #{i.deptCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_hrm_org_dept_profit_share WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="deptCode != null">
+                AND dept_code = #{deptCode}
+            </if>
+            <if test="deptCodes != null">
+                <choose>
+                    <when test="_deptCodes!= null">
+                        AND dept_code IN (${_deptCodes})
+                    </when>
+                    <otherwise>
+                        AND dept_code IN
+                        <foreach collection="deptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="deptName != null">
+                AND dept_name = #{deptName}
+            </if>
+            <if test="profitShareType != null">
+                AND profit_share_type = #{profitShareType}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.DeptProfitShareEntity">
+        SELECT * FROM t_hkp_hrm_org_dept_profit_share
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) FROM t_hkp_hrm_org_dept_profit_share
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.hrm.org.dept.entity.DeptProfitShareEntity">
+        SELECT * FROM t_hkp_hrm_org_dept_profit_share
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(*) FROM t_hkp_hrm_org_dept_profit_share
+        <include refid="selectSql"/>
+    </select>
+
+
+</mapper>

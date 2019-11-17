@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>payment</artifactId>
+        <groupId>com.kfwy.hkp</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>payment-manager</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.kfwy.hkp</groupId>
+            <artifactId>payment-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kfwy.hkp</groupId>
+            <artifactId>payment-entity</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+     <!--     <dependency>
+            <groupId>com.pay</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+        </dependency>
+         <dependency>
+             <groupId>com.pay</groupId>
+             <artifactId>alipay-sdk-java-source</artifactId>
+         </dependency>
+         <dependency>
+             <groupId>com.pay</groupId>
+             <artifactId>alipay-commons-logging</artifactId>
+         </dependency>
+         <dependency>
+             <groupId>com.pay</groupId>
+             <artifactId>alipay-commons-logging-source</artifactId>
+         </dependency>-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+
+</project>

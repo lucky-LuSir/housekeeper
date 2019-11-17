@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.trade.order.entity.OrderInvoiceEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.trade.order.entity.OrderInvoiceEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="order_invoice_code" property="orderInvoiceCode" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+        <result column="invoice_code" property="invoiceCode" jdbcType="VARCHAR"/>
+        <result column="invoice_unit_amount" property="invoiceUnitAmount" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="invoice_tax_rate" property="invoiceTaxRate" jdbcType="NUMERIC" javaType="int"/>
+        <result column="invoice_tax" property="invoiceTax" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="invoice_total_price" property="invoiceTotalPrice" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="invoice_upper_case" property="invoiceUpperCase" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="invoice_time" property="invoiceTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="TIMESTAMP"/>
+        <result column="last_update_name" property="lastUpdateName" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="has_deductions" property="hasDeductions" jdbcType="BOOLEAN"/>
+        <result column="sum_invoice_tax" property="sumInvoiceTax"  jdbcType="VARCHAR"/>
+        <result column="apply_code" property="applyCode" jdbcType="VARCHAR"/>
+        <result column="apply_name" property="applyName" jdbcType="VARCHAR"/>
+
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="cpy_name" property="cpyName" jdbcType="VARCHAR"/>
+        <result column="consignee_name" property="consigneeName" jdbcType="VARCHAR"/>
+        <result column="consignee_address" property="consigneeAddress" jdbcType="VARCHAR"/>
+        <result column="consignee_phone" property="consigneePhone" jdbcType="VARCHAR"/>
+        <result column="parent_dept_code" property="parentDeptCode" jdbcType="VARCHAR"/>
+        <result column="parent_dept_Name" property="parentDeptName" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="bank_branch" property="bankBranch" jdbcType="VARCHAR"/>
+        <result column="bank_card" property="bankCard" jdbcType="VARCHAR"/>
+        <result column="credit_code" property="creditCode" jdbcType="VARCHAR"/>
+        <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 新增记录 -->
+    <insert id="insert" parameterType="com.kfwy.hkp.trade.order.entity.OrderInvoiceEntity" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO t_hkp_trade_ord_invoice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">
+                order_code,
+            </if>
+            <if test="orderInvoiceCode != null and orderInvoiceCode != ''">
+                order_invoice_code,
+            </if>
+            <if test="invoiceCode != null">
+                invoice_code,
+            </if>
+            <if test="invoiceUnitAmount != null">
+                invoice_unit_amount,
+            </if>
+            <if test="invoiceTaxRate != null">
+                invoice_tax_rate,
+            </if>
+            <if test="invoiceTax != null">
+                invoice_tax,
+            </if>
+            <if test="invoiceTotalPrice != null">
+                invoice_total_price,
+            </if>
+            <if test="invoiceUpperCase != null">
+                invoice_upper_case,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createCode != null">
+                create_code,
+            </if>
+            <if test="createName != null">
+                create_name,
+            </if>
+            <if test="invoiceTime != null">
+                invoice_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="lastUpdateCode != null">
+                last_update_code,
+            </if>
+            <if test="lastUpdateName != null">
+                last_update_name,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="applyCode != null">
+                apply_code,
+            </if>
+            <if test="applyName != null">
+                apply_name,
+            </if>
+            <if test="cpyCode != null">
+                cpy_code,
+            </if>
+            <if test="cpyName != null">
+                cpy_name,
+            </if>
+            <if test="consigneeName != null">
+                consignee_name,
+            </if>
+            <if test="consigneeAddress != null">
+                consignee_address,
+            </if>
+            <if test="consigneePhone != null">
+                consignee_phone,
+            </if>
+            <if test="parentDeptCode != null">
+                parent_dept_code,
+            </if>
+            <if test="deptCode != null">
+                dept_code,
+            </if>
+            <if test="parentDeptName != null">
+                parent_dept_name,
+            </if>
+            <if test="deptName != null">
+                dept_name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="bankBranch != null">
+                bank_branch,
+            </if>
+            <if test="bankCard != null">
+                bank_card,
+            </if>
+            <if test="creditCode != null">
+                credit_code,
+            </if>
+            <if test="invoiceType != null">
+                invoice_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null and orderCode != ''">
+                #{orderCode},
+            </if>
+            <if test="orderInvoiceCode != null and orderInvoiceCode != ''">
+                #{orderInvoiceCode},
+            </if>
+            <if test="invoiceCode != null">
+                #{invoiceCode},
+            </if>
+            <if test="invoiceUnitAmount != null">
+                #{invoiceUnitAmount},
+            </if>
+            <if test="invoiceTaxRate != null">
+                #{invoiceTaxRate},
+            </if>
+            <if test="invoiceTax != null">
+                #{invoiceTax},
+            </if>
+            <if test="invoiceTotalPrice != null">
+                #{invoiceTotalPrice},
+            </if>
+            <if test="invoiceUpperCase != null">
+                #{invoiceUpperCase},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="createCode != null">
+                #{createCode},
+            </if>
+            <if test="createName != null">
+                #{createName},
+            </if>
+            <if test="invoiceTime != null">
+                #{invoiceTime},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime},
+            </if>
+            <if test="lastUpdateCode != null">
+                #{lastUpdateCode},
+            </if>
+            <if test="lastUpdateName != null">
+                #{lastUpdateName},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+            <if test="applyCode != null">
+                #{applyCode},
+            </if>
+            <if test="applyName != null">
+                #{applyName},
+            </if>
+            <if test="cpyCode != null">
+                #{cpyCode},
+            </if>
+            <if test="cpyName != null">
+                #{cpyName},
+            </if>
+            <if test="consigneeName != null">
+                #{consigneeName},
+            </if>
+            <if test="consigneeAddress != null">
+                #{consigneeAddress},
+            </if>
+            <if test="consigneePhone != null">
+                #{consigneePhone},
+            </if>
+            <if test="parentDeptCode != null">
+                #{parentDeptCode},
+            </if>
+            <if test="deptCode != null">
+                #{deptCode},
+            </if>
+            <if test="parentDeptName != null">
+                #{parentDeptName},
+            </if>
+            <if test="deptName != null">
+                #{deptName},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+            <if test="bankBranch != null">
+                #{bankBranch},
+            </if>
+            <if test="bankCard != null">
+                #{bankCard},
+            </if>
+            <if test="creditCode != null">
+                #{creditCode},
+            </if>
+            <if test="invoiceType != null">
+                #{invoiceType},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_trade_ord_invoice
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    order_code,
+                </if>
+                <if test="i.orderInvoiceCode != null and i.orderInvoiceCode != ''">
+                    order_invoice_code,
+                </if>
+                <if test="i.invoiceCode != null">
+                    invoice_code,
+                </if>
+                <if test="i.invoiceUnitAmount != null">
+                    invoice_unit_amount,
+                </if>
+                <if test="i.invoiceTaxRate != null">
+                    invoice_tax_rate,
+                </if>
+                <if test="i.invoiceTax != null">
+                    invoice_tax,
+                </if>
+                <if test="i.invoiceTotalPrice != null">
+                    invoice_total_price,
+                </if>
+                <if test="i.invoiceUpperCase != null">
+                    invoice_upper_case,
+                </if>
+                <if test="i.remark != null">
+                    remark,
+                </if>
+                <if test="i.createCode != null">
+                    create_code,
+                </if>
+                <if test="i.createName != null">
+                    create_name,
+                </if>
+                <if test="i.invoiceTime != null">
+                    invoice_time,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.lastUpdateCode != null">
+                    last_update_code,
+                </if>
+                <if test="i.lastUpdateName != null">
+                    last_update_name,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.applyCode != null">
+                    apply_code,
+                </if>
+                <if test="i.applyName != null">
+                    apply_name,
+                </if>
+                <if test="i.cpyCode != null">
+                    cpy_code,
+                </if>
+                <if test="i.cpyName != null">
+                    cpy_name,
+                </if>
+                <if test="i.consigneeName != null">
+                    consignee_name,
+                </if>
+                <if test="i.consigneeAddress != null">
+                    consignee_address,
+                </if>
+                <if test="i.consigneePhone != null">
+                    consignee_phone,
+                </if>
+                <if test="i.parentDeptCode != null">
+                    parent_dept_code,
+                </if>
+                <if test="i.deptCode != null">
+                    dept_code,
+                </if>
+                <if test="i.parentDeptName != null">
+                    parent_dept_name,
+                </if>
+                <if test="i.deptName != null">
+                    dept_name,
+                </if>
+                <if test="i.phone != null">
+                    phone,
+                </if>
+                <if test="i.address != null">
+                    address,
+                </if>
+                <if test="i.bankBranch != null">
+                    bank_branch,
+                </if>
+                <if test="i.bankCard != null">
+                    bank_card,
+                </if>
+                <if test="i.creditCode != null">
+                    credit_code,
+                </if>
+                <if test="i.invoiceType != null">
+                    invoice_type,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+                <if test="i.orderCode != null and i.orderCode != ''">
+                    #{i.orderCode},
+                </if>
+                <if test="i.orderInvoiceCode != null and i.orderInvoiceCode != ''">
+                    #{i.orderInvoiceCode},
+                </if>
+                <if test="i.invoiceCode != null">
+                    #{i.invoiceCode},
+                </if>
+                <if test="i.invoiceUnitAmount != null">
+                    #{i.invoiceUnitAmount},
+                </if>
+                <if test="i.invoiceTaxRate != null">
+                    #{i.invoiceTaxRate},
+                </if>
+                <if test="i.invoiceTax != null">
+                    #{i.invoiceTax},
+                </if>
+                <if test="i.invoiceTotalPrice != null">
+                    #{i.invoiceTotalPrice},
+                </if>
+                <if test="i.invoiceUpperCase != null">
+                    #{i.invoiceUpperCase},
+                </if>
+                <if test="i.remark != null">
+                    #{i.remark},
+                </if>
+                <if test="i.createCode != null">
+                    #{i.createCode},
+                </if>
+                <if test="i.createName != null">
+                    #{i.createName},
+                </if>
+                <if test="i.invoiceTime != null">
+                    #{i.invoiceTime},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.lastUpdateCode != null">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.lastUpdateName != null">
+                    #{i.lastUpdateName},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.applyCode != null">
+                    #{i.applyCode},
+                </if>
+                <if test="i.applyName != null">
+                    #{i.applyName},
+                </if>
+                <if test="i.cpyCode != null">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.cpyName != null">
+                    #{i.cpyName},
+                </if>
+                <if test="i.consigneeName != null">
+                    #{i.consigneeName},
+                </if>
+                <if test="i.consigneeAddress != null">
+                    #{i.consigneeAddress},
+                </if>
+                <if test="i.consigneePhone != null">
+                    #{i.consigneePhone},
+                </if>
+                <if test="i.parentDeptCode != null">
+                    #{i.parentDeptCode},
+                </if>
+                <if test="i.deptCode != null">
+                    #{i.deptCode},
+                </if>
+                <if test="i.parentDeptName != null">
+                    #{i.parentDeptName},
+                </if>
+                <if test="i.deptName != null">
+                    #{i.deptName},
+                </if>
+                <if test="i.phone != null">
+                    #{i.phone},
+                </if>
+                <if test="i.address != null">
+                    #{i.address},
+                </if>
+                <if test="i.bankBranch != null">
+                    #{i.bankBranch},
+                </if>
+                <if test="i.bankCard != null">
+                    #{i.bankCard},
+                </if>
+                <if test="i.creditCode != null">
+                    #{i.creditCode},
+                </if>
+                <if test="i.invoiceType != null">
+                    #{i.invoiceType},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_trade_ord_invoice
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.invoiceCode != null">
+                    invoice_code = #{i.invoiceCode},
+                </if>
+                <if test="i.invoiceUnitAmount != null">
+                    invoice_unit_amount = #{i.invoiceUnitAmount},
+                </if>
+                <if test="i.invoiceTaxRate != null">
+                    invoice_tax_rate = #{i.invoiceTaxRate},
+                </if>
+                <if test="i.invoiceTax != null">
+                    invoice_tax = #{i.invoiceTax},
+                </if>
+                <if test="i.invoiceTotalPrice != null">
+                    invoice_total_price = #{i.invoiceTotalPrice},
+                </if>
+                <if test="i.invoiceUpperCase != null">
+                    invoice_upper_case = #{i.invoiceUpperCase},
+                </if>
+                <if test="i.remark != null">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.invoiceTime != null">
+                    invoice_time = #{i.invoiceTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.lastUpdateCode != null">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.lastUpdateName != null">
+                    last_update_Name = #{i.lastUpdateName},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted},
+                </if>
+
+                <if test="i.applyCode != null">
+                    apply_code = #{i.applyCode},
+                </if>
+                <if test="i.applyName != null">
+                    apply_name = #{i.applyName},
+                </if>
+                <if test="i.cpyCode != null">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.cpyName != null">
+                    cpy_name = #{i.cpyName},
+                </if>
+                <if test="i.consigneeName != null">
+                    consignee_name= #{i.consigneeName},
+                </if>
+                <if test="i.consigneeAddress != null">
+                    consignee_address = #{i.consigneeAddress},
+                </if>
+                <if test="i.consigneePhone != null">
+                    consignee_phone = #{i.consigneePhone},
+                </if>
+                <if test="i.parentDeptCode != null">
+                    parent_dept_code = #{i.parentDeptCode},
+                    parent_dept_name = #{i.parentDeptName},
+                </if>
+                <if test="i.deptCode != null">
+                    dept_code = #{i.deptCode},
+                    dept_name = #{i.deptName},
+                </if>
+                <if test="i.phone != null">
+                    phone = #{i.phone},
+                </if>
+                <if test="i.address != null">
+                    address = #{i.address},
+                </if>
+                <if test="i.bankBranch != null">
+                    bank_branch = #{i.bankBranch},
+                </if>
+                <if test="i.bankCard != null">
+                    bank_card = #{i.bankCard},
+                </if>
+                <if test="i.creditCode != null">
+                    credit_code = #{i.creditCode}
+                </if>
+                <if test="i.invoiceType != null">
+                    invoice_type = #{i.invoiceType}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <!--<if test="i.orderCode != null">
+                    AND order_code = #{i.orderCode}
+                </if>-->
+                <if test="i.orderInvoiceCode != null and i.orderInvoiceCode != ''">
+                    AND order_invoice_code = #{i.orderInvoiceCode}
+                </if>
+                <if test="i.id != null">
+                    AND ID = #{i.id}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="orderCode != null">
+                AND order_code = #{orderCode}
+            </if>
+            <if test="orderInvoiceCode != null and orderInvoiceCode != ''">
+                AND order_invoice_code = #{orderInvoiceCode}
+            </if>
+            <if test="invoiceCode != null">
+                AND invoice_code = #{invoiceCode}
+            </if>
+            <if test="buyName != null">
+                AND buy_name = #{buyName}
+            </if>
+            <if test="buyTaxpayerCode != null">
+                AND buy_taxpayer_code = #{buyTaxpayerCode}
+            </if>
+            <if test="buyAddress != null">
+                AND buy_address = #{buyAddress}
+            </if>
+            <if test="buyPhone != null">
+                AND buy_phone = #{buyPhone}
+            </if>
+
+            <if test="invoiceTimeStart != null">
+                AND invoice_time <![CDATA[>=]]> #{invoiceTimeStart}
+            </if>
+            <if test="invoiceTimeEnd != null">
+                AND invoice_time <![CDATA[<=]]> #{invoiceTimeEnd}
+            </if>
+            <if test="cpyCode != null">
+                AND cpy_code = #{cpyCode}
+            </if>
+            <if test="cpyName != null">
+                AND cpy_name = #{cpyName}
+            </if>
+            <if test="consigneeName != null">
+                AND consignee_name= #{consigneeName}
+            </if>
+            <if test="consigneeAddress != null">
+                AND consignee_address = #{consigneeAddress}
+            </if>
+            <if test="consigneePhone != null">
+                AND consignee_phone = #{consigneePhone}
+            </if>
+            <if test="parentDeptCode != null">
+                AND parent_dept_code = #{parentDeptCode}
+            </if>
+            <if test="deptCode != null">
+                AND dept_code = #{deptCode}
+            </if>
+            <if test="parentDeptName != null">
+                AND parent_dept_name = #{parentDeptName}
+            </if>
+            <if test="deptName != null">
+                AND dept_name = #{deptName}
+            </if>
+            <if test="applyCode != null">
+                AND apply_code = #{applyCode}
+            </if>
+            <if test="applyName != null">
+                AND apply_name = #{applyName}
+            </if>
+            <if test="phone != null">
+                AND phone = #{phone}
+            </if>
+            <if test="address != null">
+                AND address = #{address}
+            </if>
+            <if test="bankBranch != null">
+                AND bank_branch = #{bankBranch}
+            </if>
+            <if test="bankCard != null">
+                AND bank_card = #{bankCard}
+            </if>
+            <if test="creditCode != null">
+                and credit_code = #{creditCode}
+            </if>
+            <if test="invoiceType != null">
+                and invoice_type = #{invoiceType}
+            </if>
+
+        </trim>
+    </sql>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderInvoiceEntity">
+        select * from t_hkp_trade_ord_invoice
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM (
+          select * from t_hkp_trade_ord_invoice p
+        ) m
+        <include refid="selectSql"/>
+    </select>
+    <select id="selectOne" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderInvoiceEntity">
+        SELECT * FROM t_hkp_trade_ord_invoice
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询所在月未回款开票 -->
+    <select id="selectInvoiceWithoutPayBack" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderInvoiceEntity">
+        SELECT
+        invo.order_code,
+        invo.invoice_code,
+        ord.create_dept_code as dept_code
+        FROM
+        t_hkp_trade_ord_invoice invo
+        left join t_hkp_trade_order ord on invo.order_code=ord.order_code
+        WHERE
+        invo.is_deleted=false
+        and invo.invoice_time <![CDATA[>=]]> #{startTime}
+        AND invo.invoice_time <![CDATA[<]]> #{endTime}
+        and invo.order_code not in (
+        select order_code  from t_hkp_trade_ord_payback
+        WHERE
+        is_deleted=false
+        and back_time <![CDATA[>=]]> #{startTime}
+        AND back_time <![CDATA[<]]> #{endTime}
+        )
+    </select>
+    <select id="selectInvoiceWithoutDeductions" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderInvoiceEntity">
+        SELECT
+        *
+        FROM
+        t_hkp_trade_ord_invoice
+        WHERE
+        is_deleted=false
+        and has_deductions=false
+        AND invoice_time <![CDATA[<]]> #{endTime}
+        and order_code=#{orderCode}
+    </select>
+    <update id="updateDeductions" parameterType="map">
+        UPDATE t_hkp_trade_ord_invoice
+        set has_deductions=true
+        WHERE
+        invoice_code =#{invoiceCode}
+        and order_code=#{orderCode}
+    </update>
+</mapper>

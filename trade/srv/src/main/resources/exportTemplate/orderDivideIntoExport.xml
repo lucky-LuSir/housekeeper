@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exportFile>
+    <fileName>orderDivideIntoExport</fileName>
+    <!--导出模板-->
+    <exportType>0</exportType>
+    <cell>
+        <title>订单编号</title>
+        <alias>orderCode</alias>
+    </cell>
+
+    <cell>
+        <title>订单所属部门</title>
+        <alias>deptName</alias>
+    </cell>
+
+    <cell>
+        <title>部门经理</title>
+        <alias>leaderName</alias>
+    </cell>
+
+
+    <cell>
+        <title>分成人姓名</title>
+        <alias>perEmpName</alias>
+    </cell>
+    <cell>
+        <title>分成人工号</title>
+        <alias>perWorkNumner</alias>
+    </cell>
+    <cell>
+        <title>分成人所属部门</title>
+        <alias>perDeptName</alias>
+    </cell>
+    <cell>
+        <title>分成比列</title>
+        <alias>perPercentage</alias>
+    </cell>
+    <cell>
+        <title>分成金额</title>
+        <alias>perProfit</alias>
+    </cell>
+
+
+    <cell>
+        <title>开单日期</title>
+        <alias>orderTime</alias>
+    </cell>
+
+    <cell>
+        <title>预计收款日期</title>
+        <alias>expectPaymentTime</alias>
+    </cell>
+
+    <cell>
+        <title>总佣金</title>
+        <alias>commission</alias>
+    </cell>
+
+    <cell>
+        <title>业主佣金</title>
+        <alias>receivableHos</alias>
+    </cell>
+
+    <cell>
+        <title>客户佣金</title>
+        <alias>receivableCus</alias>
+    </cell>
+
+    <cell>
+        <title>客户返佣</title>
+        <alias>cusRebate</alias>
+    </cell>
+
+    <cell>
+        <title>业主返佣</title>
+        <alias>ownerRebate</alias>
+    </cell>
+
+
+    <cell>
+        <title>客户兼职分钱</title>
+        <alias>cusParttimeMoney</alias>
+    </cell>
+
+    <cell>
+        <title>业主兼职分钱</title>
+        <alias>ownerParttimeMoney</alias>
+    </cell>
+
+    <cell>
+        <title>回款</title>
+        <alias>paybackSum</alias>
+    </cell>
+
+    <cell>
+        <title>税金</title>
+        <alias>ivInvoiceTax</alias>
+    </cell>
+
+    <cell>
+        <title>房源类型</title>
+        <alias>houseType</alias>
+    </cell>
+
+    <cell>
+        <title>房源地址</title>
+        <alias>regioName</alias>
+    </cell>
+
+    <cell>
+        <title>业主类型</title>
+        <alias>houseownerType</alias>
+    </cell>
+
+    <cell>
+        <title>成交面积</title>
+        <alias>acreage</alias>
+    </cell>
+
+    <cell>
+        <title>业主姓名</title>
+        <alias>houseownerName</alias>
+    </cell>
+
+    <cell>
+        <title>业主电话</title>
+        <alias>houseownerPhone</alias>
+    </cell>
+
+    <cell>
+        <title>业主公司</title>
+        <alias>houseownerCompany</alias>
+    </cell>
+
+    <cell>
+        <title>客户编码</title>
+        <alias>cusCode</alias>
+    </cell>
+
+    <cell>
+        <title>客户名称</title>
+        <alias>cusName</alias>
+    </cell>
+
+    <cell>
+        <title>客户电话</title>
+        <alias>cusPhone</alias>
+    </cell>
+
+    <cell>
+        <title>客户公司</title>
+        <alias>cusCompany</alias>
+    </cell>
+
+    <cell>
+        <title>订单状态</title>
+        <alias>orderStatus</alias>
+    </cell>
+
+    <cell>
+        <title>订单创建时间</title>
+        <alias>createTime</alias>
+    </cell>
+
+</exportFile>

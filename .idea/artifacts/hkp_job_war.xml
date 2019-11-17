@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="hkp-job:war">
+    <output-path>$PROJECT_DIR$/job/target</output-path>
+    <root id="archive" name="hkp-job-service.war">
+      <element id="artifact" artifact-name="hkp-job:war exploded" />
+    </root>
+  </artifact>
+</component>

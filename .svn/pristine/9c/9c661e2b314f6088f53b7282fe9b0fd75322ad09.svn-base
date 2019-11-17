@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.trade.order.entity.OrderBackDeductionsEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.trade.order.entity.OrderBackDeductionsEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="deduct_money" property="deductMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="history_pay_back_money" property="historyPayBackMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="back_money" property="backMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="history_invoice_money" property="historyInvoiceMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="un_invoice_money" property="unInvoiceMoney" jdbcType="NUMERIC" javaType="decimal"/>
+    </resultMap>
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectOrderDeductions" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.order.entity.OrderBackDeductionsEntity">
+            SELECT
+                order_code,
+                cus_rebate + owner_rebate + cus_parttime_money + owner_parttime_money AS back_money,
+                (
+                    SELECT
+                        "sum" (commission_deductions)
+                    FROM
+                        t_hkp_trade_ord_payback
+                    WHERE
+                        order_code = #{orderCode}
+                    and is_deleted=false
+                    AND back_time <![CDATA[<]]> #{startTime}
+                ) AS deduct_money,
+                (
+                    SELECT
+                        "sum" (
+                            to_number(invoice_tax, '9999999D99')
+                        )
+                    FROM
+                        t_hkp_trade_ord_invoice
+                    WHERE
+                        order_code = #{orderCode}
+                    and is_deleted=false
+                    AND has_deductions = FALSE
+                    AND invoice_time <![CDATA[<]]> #{endTime}
+                ) AS un_invoice_money
+            FROM
+                t_hkp_trade_order
+            WHERE
+                order_code = #{orderCode}
+    </select>
+
+
+</mapper>

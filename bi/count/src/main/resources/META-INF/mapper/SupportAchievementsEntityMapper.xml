@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.SupportAchievementsEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.SupportAchievementsEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="support_code" property="supportCode" jdbcType="VARCHAR"/>
+        <result column="in_month" property="inMonth" jdbcType="VARCHAR"/>
+        <result column="customer_num" property="customerNum" jdbcType="NUMERIC" javaType="int"/>
+        <result column="house_num" property="houseNum" jdbcType="NUMERIC" javaType="int"/>
+        <result column="take_look_num" property="takeLookNum" jdbcType="NUMERIC" javaType="int"/>
+        <result column="deal_num" property="dealNum" jdbcType="NUMERIC" javaType="int"/>
+        <result column="achievements" property="achievements" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_ky_emp_support_achievements
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.supportCode != null and i.supportCode!=''">
+                    support_code,
+                </if>
+                <if test="i.inMonth != null and i.inMonth!=''">
+                    in_month,
+                </if>
+                <if test="i.customerNum != null">
+                    customer_num,
+                </if>
+                <if test="i.houseNum != null">
+                    house_num,
+                </if>
+                <if test="i.takeLookNum != null">
+                    take_look_num,
+                </if>
+                <if test="i.dealNum != null">
+                    deal_num,
+                </if>
+                <if test="i.achievements != null">
+                    achievements,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.supportCode != null and i.supportCode!=''">
+                    #{i.supportCode},
+                </if>
+                <if test="i.inMonth != null and i.inMonth!=''">
+                    #{i.inMonth},
+                </if>
+                <if test="i.customerNum != null">
+                    #{i.customerNum},
+                </if>
+                <if test="i.houseNum != null">
+                    #{i.houseNum},
+                </if>
+                <if test="i.takeLookNum != null">
+                    #{i.takeLookNum},
+                </if>
+                <if test="i.dealNum != null">
+                    #{i.dealNum},
+                </if>
+                <if test="i.achievements != null">
+                    #{i.achievements},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="selectSupportAchievements" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.SupportAchievementsEntity">
+        select
+            (SELECT
+                "count" (*) AS take_look_num
+            FROM
+                (
+                    SELECT
+                        to_char(create_time, 'yyyy-mm-dd') AS inday,
+                        to_char(create_time, 'yyyy-mm') AS inmonth,
+                        cus_code
+                    FROM
+                        t_hkp_crm_customer_followup
+                    WHERE
+                        emp_code = #{userCode}
+                    AND followup_type = '1'
+                    and is_deleted=false
+                    AND create_time <![CDATA[ >= ]]> #{startTime}
+                    AND create_time <![CDATA[ <= ]]> #{endTime}
+                    GROUP BY
+                        to_char(create_time, 'yyyy-mm-dd'),
+                        to_char(create_time, 'yyyy-mm'),
+                        cus_code
+                ) realfoll
+            GROUP BY
+                realfoll.inmonth) as take_look_num,
+            (SELECT
+                "count" (*) AS customer_num
+            FROM
+                t_hkp_crm_customer
+            WHERE
+                emp_code = #{userCode}
+                    and is_deleted=false
+                    AND create_time <![CDATA[ >= ]]> #{startTime}
+                    AND create_time <![CDATA[ <= ]]> #{endTime}
+            GROUP BY
+                to_char(create_time, 'yyyy-mm')) as customer_num,
+            (SELECT
+                "count" (*) AS house_num
+            FROM
+                t_hkp_hos_house
+            WHERE
+                emp_code = #{userCode}
+                    and is_deleted=false
+                    AND create_time <![CDATA[ >= ]]> #{startTime}
+                    AND create_time <![CDATA[ <= ]]> #{endTime}
+            GROUP BY
+                to_char(create_time, 'yyyy-mm')) as house_num,
+            (SELECT
+                "count" (*) AS deal_num
+            FROM
+                t_hkp_trade_order
+            WHERE
+                emp_code = #{userCode}
+                    and is_deleted=false
+                    AND order_time <![CDATA[ >= ]]> #{startTime}
+                    AND order_time <![CDATA[ <= ]]> #{endTime}
+            GROUP BY
+                to_char(order_time, 'yyyy-mm')) as deal_num,
+            (SELECT
+                SUM (profit) AS achievements
+            FROM
+                t_hkp_trade_order_percentage
+            WHERE
+                pe_emp_code = #{userCode}
+                    and is_deleted=false
+                    AND order_time <![CDATA[ >= ]]> #{startTime}
+                    AND order_time <![CDATA[ <= ]]> #{endTime}
+            GROUP BY
+                to_char(order_time, 'yyyy-mm')) as achievements
+    </select>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exportFile>
+    <fileName>focusPayBackWageReportExport</fileName>
+    <!--导出模板-->
+    <exportType>0</exportType>
+    <cell>
+        <title>订单编号</title>
+        <alias>orderCode</alias>
+    </cell>
+
+    <cell>
+        <title>开单时间</title>
+        <alias>orderTime</alias>
+    </cell>
+    <cell>
+        <title>成交支付协议服务费</title>
+        <alias>receivableCost</alias>
+    </cell>
+    <cell>
+        <title>回款金额</title>
+        <alias>payPayment</alias>
+    </cell>
+    <cell>
+        <title>回款时间</title>
+        <alias>payBackTime</alias>
+    </cell>
+    <cell>
+        <title>返佣扣款</title>
+        <alias>commissionDeductions</alias>
+    </cell>
+    <cell>
+        <title>税金扣款</title>
+        <alias>taxDeductions</alias>
+    </cell>
+    <cell>
+        <title>返佣</title>
+        <alias>backMoney</alias>
+    </cell>
+    <cell>
+        <title>客户返佣</title>
+        <alias>cusRebate</alias>
+    </cell>
+    <cell>
+        <title>业主返佣</title>
+        <alias>ownerRebate</alias>
+    </cell>
+    <cell>
+        <title>客户兼职分钱</title>
+        <alias>cusPartTimeMoney</alias>
+    </cell>
+    <cell>
+        <title>业主兼职分钱</title>
+        <alias>ownerPartTimeMoney</alias>
+    </cell>
+    <cell>
+        <title>剔除后实际业绩</title>
+        <alias>comeCommission</alias>
+    </cell>
+    <cell>
+        <title>集中获客分成</title>
+        <alias>focusProfit</alias>
+    </cell>
+
+    <cell>
+        <title>订单状态</title>
+        <alias>orderStatus</alias>
+    </cell>
+
+    <cell>
+        <title>成交所属上级分店</title>
+        <alias>parentDeptName</alias>
+    </cell>
+
+    <cell>
+        <title>所属成交分店</title>
+        <alias>deptName</alias>
+    </cell>
+
+    <cell>
+        <title>分成所属上级分店</title>
+        <alias>peParentDeptName</alias>
+    </cell>
+    <cell>
+        <title>分成所属分店</title>
+        <alias>peDeptName</alias>
+    </cell>
+    <cell>
+        <title>分成比例</title>
+        <alias>percentage</alias>
+    </cell>
+    <cell>
+        <title>分成业绩</title>
+        <alias>profit</alias>
+    </cell>
+</exportFile>
+

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exportFile>
+    <fileName>wagesReportExport</fileName>
+    <!--工资提成报表-->
+    <exportType>0</exportType>
+    <cell>
+        <title>人员姓名</title>
+        <alias>userName</alias>
+    </cell>
+    <cell>
+        <title>人员编码</title>
+        <alias>userCode</alias>
+    </cell>
+
+    <cell>
+        <title>工号</title>
+        <alias>workNumber</alias>
+    </cell>
+    <cell>
+        <title>人员部门</title>
+        <alias>deptName</alias>
+    </cell>
+
+    <cell>
+        <title>人员岗位</title>
+        <alias>postName</alias>
+    </cell>
+    <cell>
+        <title>工资</title>
+        <alias>wage</alias>
+    </cell>
+    <cell>
+        <title>入职时间</title>
+        <alias>entryTime</alias>
+    </cell>
+
+    <cell>
+        <title>离职时间</title>
+        <alias>quitTime</alias>
+    </cell>
+    <cell>
+        <title>在职时间</title>
+        <alias>inserviceTime</alias>
+    </cell>
+    <cell>
+        <title>是否离职</title>
+        <alias>isDeleted</alias>
+    </cell>
+</exportFile>
+

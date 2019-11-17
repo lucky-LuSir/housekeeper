@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.4.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd">
+
+	<description>DAO公共配置文件 </description>
+
+	<tx:annotation-driven transaction-manager="transactionManager"
+						  proxy-target-class="true" />
+
+	<!-- 事务管理器配置, 使用jdbc事务 -->
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- druid 监控配置-->
+	<bean id="statFilter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<!-- 通过日志输出慢SQL，慢SQL指定为5秒-->
+		<property name="slowSqlMillis" value="3000"/>
+		<property name="logSlowSql" value="true"/>
+	</bean>
+	<bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+		<property name="statementExecutableSqlLogEnable" value="false"/>
+	</bean>
+
+	<!-- 数据源配置, 使用应用中的DBCP数据库连接池 -->
+	<bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		  init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="40" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<!-- 用来检测链接是否有用sql配置-->
+		<property name="validationQuery" value="SELECT 'x'" />
+		<!--建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。-->
+		<property name="testWhileIdle" value="true" />
+		<!-- 建议设置为false否则影响性能 -->
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<!-- 监控统计用的filter:stat 日志用的filter:log4j 防御sql注入的filter:wall，配置多个用逗号 -->
+		<!--<property name="filters" value="log4j" />-->
+		<property name="proxyFilters">
+			<list>
+				<ref bean="statFilter" />
+				<ref bean="logFilter"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="slaveDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		  init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${salve.jdbc.url}" />
+		<property name="username" value="${salve.jdbc.username}" />
+		<property name="password" value="${salve.jdbc.password}" />
+
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="40" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<!-- 用来检测链接是否有用sql配置-->
+		<property name="validationQuery" value="SELECT 'x'" />
+		<!--建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。-->
+		<property name="testWhileIdle" value="true" />
+		<!-- 建议设置为false否则影响性能 -->
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<!-- 监控统计用的filter:stat 日志用的filter:log4j 防御sql注入的filter:wall，配置多个用逗号 -->
+		<!--<property name="filters" value="log4j" />-->
+		<property name="proxyFilters">
+			<list>
+				<ref bean="statFilter" />
+				<ref bean="logFilter"/>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- 动态数据源 -->
+	<bean id="dataSource" class="com.kfwy.hkp.common.utils.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<!-- 可配置多个数据源 -->
+				<entry value-ref="masterDataSource" key="masterDataSource"/>
+				<entry value-ref="slaveDataSource" key="slaveDataSource"/>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="masterDataSource"/>
+	</bean>
+
+	<!-- MyBatis配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:META-INF/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:META-INF/mapper/*.xml" />
+	</bean>
+
+	<!--  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+	<!--  <property name="basePackage" value="com.kfwy.hkp.job.crm.customer.mapper"></property>-->
+	<!--  <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>-->
+	<!--  </bean>-->
+
+	<!-- Redis配置 -->
+	<bean id="jedisFactory"
+		  class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<!--p:hostName="${redis.host}" p:port="${redis.port}" p:usePool="true"-->
+		<property name="hostName" value="${redis.host}"/>
+		<property name="port" value="${redis.port}"/>
+		<property name="usePool" value="true"/>
+		<property name="password" value="${redis.password}"/>
+		<property name="database" value="${redis.database}"/>
+	</bean>
+
+	<!-- Redis Template配置 -->
+	<bean id="redisTemplate"
+		  class="org.springframework.data.redis.core.StringRedisTemplate"
+		  p:connectionFactory-ref="jedisFactory" />
+
+	<bean id="jdbcTemplate"
+		  class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<mongo:db-factory id="mongoDbFactory" dbname="${mongo.dbname}" host="${mongo.host}" port="${mongo.port}" />
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+		<constructor-arg name="mongoConverter" ref="mongoConverter" />
+	</bean>
+	<mongo:repositories base-package="com" />
+</beans>

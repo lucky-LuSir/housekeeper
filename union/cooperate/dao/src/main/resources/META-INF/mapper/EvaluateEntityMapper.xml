@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.cooperate.entity.EvaluateEntity">
+
+    <resultMap id="baseMap" type="com.kfwy.hkp.cooperate.entity.EvaluateEntity">
+        <result column="to_user_code" property="toUserCode"/>
+        <result column="to_user_name" property="toUserName"/>
+        <result column="to_user_img" property="toUserImg"/>
+
+        <result column="from_user_code" property="fromUserCode"/>
+        <result column="from_user_name" property="fromUserName"/>
+        <result column="from_user_img" property="fromUserImg"/>
+
+        <result column="content" property="content"/>
+
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode"/>
+        <result column="create_dept_code" property="createDeptCode"/>
+        <result column="last_update_code" property="lastUpdateCode"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <!--用户合作评价新增-->
+    <insert id="evaluvteInsert" parameterType="com.kfwy.hkp.cooperate.entity.EvaluateEntity">
+        INSERT INTO t_hkp_apply_user_evaluate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="toUserCode != null">
+                to_user_code,
+            </if>
+            <if test="fromUserCode != null">
+                from_user_code,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="createCode != null and createCode != ''">
+                create_code,
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                create_dept_code,
+            </if>
+            <if test="lastUpdateCode != null and lastUpdateCode != ''">
+                last_update_code,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="toUserCode != null">
+                #{toUserCode},
+            </if>
+            <if test="fromUserCode != null">
+                #{fromUserCode},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime},
+            </if>
+            <if test="createCode != null and createCode != ''">
+                #{createCode},
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                #{createDeptCode},
+            </if>
+            <if test="lastUpdateCode != null and lastUpdateCode != ''">
+                #{lastUpdateCode},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+        </trim>
+    </insert>
+    <!--用户合作评价查询-->
+    <select id="selectByMap" parameterType="map" resultMap="baseMap">
+        select e.*,
+                tu.user_code to_user_code,
+                tu.user_name to_user_name,
+                tu.user_img to_user_img,
+                fu.user_code from_user_code,
+                fu.user_name from_user_name,
+                fu.user_img from_user_img
+        from t_hkp_apply_user_evaluate e,
+              t_hkp_sys_user_user tu,
+              t_hkp_sys_user_user fu
+        where e.to_user_code = tu.user_code
+        and  e.from_user_code = fu.user_code
+        <include refid="selectSql"></include>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(1)
+        from t_hkp_apply_user_evaluate e,
+        t_hkp_sys_user_user tu,
+        t_hkp_sys_user_user fu
+        where e.to_user_code = tu.user_code
+        and  e.from_user_code = fu.user_code
+        <include refid="selectSql"></include>
+    </select>
+    <sql id="selectSql">
+        <if test="userCode != null and userCode != ''">
+            and  to_user_code = #{userCode}
+        </if>
+        <if test="toUserCode != null">
+            and  to_user_code = #{toUserCode}
+        </if>
+        <if test="fromUserCode != null">
+            and  from_user_code = #{fromUserCode}
+        </if>
+        <if test="isDeleted != null">
+            AND is_deleted=#{isDeleted}
+        </if>
+    </sql>
+</mapper>

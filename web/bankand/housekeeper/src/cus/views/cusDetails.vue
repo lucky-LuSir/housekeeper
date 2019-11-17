@@ -1,0 +1,1808 @@
+<template>
+    <el-dialog :close-on-click-modal="false" :style="{height: fullHeight +140 +'px'}" top="10px"
+               :before-close="closeDialog" append-to-body
+               :visible.sync="visible" width="95%">
+        <div>
+            <div>
+                <cus-insert-or-edit ref="refCusUpdate" v-if="cusUpdateOpenOrClose" @changeCusUpdate="updateCusSuccess"/>
+                <cus-choose-followup-type ref="refChooseFollupType" v-if="chooseFollupTypeOpenOrClose"
+                                          @changeSuccess="successCreateFollowup()"/>
+                <cooperate-percent ref="refCooperatePercent"
+                                   v-if="cooperatePercentOpenOrClose" @getPercent="createCooperate"></cooperate-percent>
+                <cus-push ref="refCusPush" @changeSuccessCusPush="successCusPush()"
+                          v-if="cusPushOpenOrClose"/>
+                <cus-select-address ref="refSelectAddress"
+                                    @changeSelectAddress="successSelectAddress"
+                                    v-if="selectAddressOpenOrClose"/>
+                <cus-show-select-address ref="refCusShowSelectAddress" v-if="cusShowSelectAddressOpenOrClose"
+                                         @changeShowAddress="successShowAddress"/>
+                <cus-service-up-shelf ref="refCusServiceUpShelf" v-if="cusServiceUpShelfOpenOrClose"
+                                      @changeFocusCus="successFocusCus">
+
+                </cus-service-up-shelf>
+                <el-container :style="{height: fullHeight -140 + 'px'}"
+                              style="border: 1px solid #eee" v-loading="loading" element-loading-text="拼命加载中">
+                    <el-aside width="40%" class="el-aside"
+                              style="border-style: ridge;border-left: #0f0f0f;border-top: #0f0f0f;border-bottom: #0f0f0f">
+                        <el-card class="box-border" shadow="hover">
+                            <span style="padding: 5px 5px 10px 5px;font-weight: bold">
+                                客户信息
+                            </span>
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style=" padding: 5px 5px 5px 25px">客户姓名</span>
+                                    </el-col>
+                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                        <span>{{cusEntity.cusName}}</span>
+                                    </el-col>
+
+                                    <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                                        <span>客户号码</span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span v-show="seeCusPhone==false">
+                                            <el-button type="success" size="mini" plain
+                                                       @click="callCusPhone()">拨打电话</el-button>
+                                        </span>
+                                        <span v-show="seeCusPhone">
+                                            {{cusEntity.cusPhone}}
+                                        </span>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style=" padding: 5px 5px 5px 25px">
+                                            客户编码
+                                        </span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span>
+                                            {{cusEntity.cusCode}}
+                                        </span>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style=" padding: 5px 5px 5px 25px">
+                                            客户创建人
+                                        </span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span>
+                                            {{cusEntity.createName}}
+                                        </span>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5" style="visibility: hidden">
+                                        <span>这个span做占位，不用管他</span>
+                                    </el-col>
+
+                                    <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
+                                        <p style="color: #5bc0de;font-size: 12px">客户号码不可见，您可以向经纪人申请合作了解更多；</p>
+                                        <p style="font-size: 12px"> 原因一: 已隐藏，表示客户隐藏了客户号码;</p>
+                                        <p style="font-size: 12px"> 原因二: 已公开，仍不可见，因您与该客户所属经纪人非共享部门同事；</p>
+                                    </el-col>
+                                </el-row>
+                            </div>
+
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">创建时间</span>
+                                    </el-col>
+                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                       <span v-if="cusEntity.createTime" style="font-weight: bold">
+                                            {{ cusEntity.createTime | time}}
+                                         </span>
+                                    </el-col>
+
+                                    <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                                        <span>来自</span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span style="padding: 5px 5px 5px 5px;font-weight: bold">{{cusEntity.cusFrom}}</span>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">客户状态</span>
+                                    </el-col>
+                                    <el-col :xs="19" :sm="19" :md="19" :lg="19" :xl="19">
+                                        <span>
+                                            <el-tag size="mini">{{cusEntity.cusTypeName}}</el-tag>
+                                        </span>
+                                        <span>
+                                            <el-tag size="mini">{{cusEntity.cusStatusName}}</el-tag>
+                                        </span>
+                                        <span>
+                                            <el-tag size="mini">{{cusEntity.daysNotFollowup}}天未跟进</el-tag>
+                                        </span>
+                                        <span>
+                                            <el-tag size="mini">{{cusEntity.openFlag==true?"已公开":"已隐藏"}}</el-tag>
+                                        </span>
+                                    </el-col>
+
+                                </el-row>
+
+
+                            </div>
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">找房用途</span>
+                                    </el-col>
+                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                        <span style="font-weight: bold">{{cusEntity.houseTypeName}}</span>
+                                    </el-col>
+                                    <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                                        <span>产品信息</span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span style="font-weight: bold">{{cusEntity.products}}</span>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                        </el-card>
+
+                        <el-card class="box-border" shadow="hover">
+                            <span style="padding: 5px 5px 10px 5px;font-weight: bold">需求明细</span>
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">上架时间</span>
+                                    </el-col>
+                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                        <span v-if="cusEntity.lastUpshelfTime" style="font-weight: bold">
+                                            {{ cusEntity.lastUpshelfTime | time}}
+                                        </span>
+                                    </el-col>
+                                    <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                                        <span>入住时间</span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span v-if="cusEntity.enterTime" style="font-weight: bold">
+                                            {{ cusEntity.enterTime | time}}
+                                        </span>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">需求区域</span>
+                                    </el-col>
+                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                        <span style="font-weight: bold"
+                                              v-for="(item,index) in cusEntity.customerAreaEntityList" :key="index">
+                                            {{item.regionName}}
+                                        </span>
+                                    </el-col>
+                                    <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                                        <span>期望价格</span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span style="font-weight: bold">{{cusEntity.needPrice+cusEntity.priceUnit}}</span>
+                                    </el-col>
+                                </el-row>
+
+                            </div>
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">找房用途</span>
+                                    </el-col>
+                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                        <span style="font-weight: bold">
+                                            {{cusEntity.houseTypeName}}
+                                        </span>
+                                    </el-col>
+                                    <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                                        <span>需求面积</span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span style="font-weight: bold">{{cusEntity.needAcreage}}㎡左右</span>
+                                    </el-col>
+                                </el-row>
+
+                            </div>
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">楼层及高度</span>
+                                    </el-col>
+                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                        <span style="font-weight: bold">{{cusEntity.layerNumName}},</span>
+                                        <span style="font-weight: bold">{{cusEntity.layerHeight}}米</span>
+                                    </el-col>
+                                    <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                                        <span>期望租期</span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span style="font-weight: bold">{{cusEntity.expectTerm}}月</span>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">消防等级</span>
+                                    </el-col>
+                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                        <span style="font-weight: bold">{{cusEntity.fireLevelName}}</span>
+                                    </el-col>
+                                    <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                                        <span>电量要求</span>
+                                    </el-col>
+                                    <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
+                                        <span style="font-weight: bold">{{cusEntity.needVoltage}}KVA</span>
+                                    </el-col>
+                                </el-row>
+                            </div>
+
+                            <div style="font-size: 12px">
+                                <el-row>
+                                    <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+                                        <span style="padding: 5px 5px 5px 25px">更多描述</span>
+                                    </el-col>
+                                    <el-col :xs="19" :sm="19" :md="19" :lg="19" :xl="19">
+                                        <span style="font-weight: bold">{{cusEntity.description}}</span>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                            <div class="left-tip" style="margin-top: 10px;margin-left: 20px;font-size: 12px">
+                            <span v-if="cusEntity.needEia">
+                                <el-tag size="mini">可环评</el-tag>
+                            </span>
+                                <span v-if="cusEntity.needCertificate">
+                                <el-tag size="mini">有产证</el-tag>
+                            </span>
+                                <span v-if="cusEntity.needRegister">
+                                <el-tag size="mini">可注册</el-tag>
+                            </span>
+                                <span v-if="cusEntity.hasOfficeArea">
+                                <el-tag size="mini">有办公区</el-tag>
+                            </span>
+                            </div>
+                        </el-card>
+                        <el-card class="box-border" shadow="hover">
+                             <span style="padding: 5px 5px 10px 5px;font-weight: bold">
+                                选址报告
+                            </span>
+                            <el-table v-scrollBar
+                                      height="200px"
+                                      border
+                                      highlight-current-row
+                                      :data="SelectAddressList">
+                                <el-table-column
+                                        prop="addressUrl"
+                                        label="选址报告路径"
+                                        align="center"
+                                        border
+                                        width="270"
+                                        show-overflow-tooltip>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="ownerName"
+                                        label="创建专员"
+                                        align="center"
+                                        width="80"
+                                        border
+                                        show-overflow-tooltip>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="createTime"
+                                        align="center"
+                                        sortable
+                                        label="创建时间"
+                                        width="160"
+                                        show-overflow-tooltip>
+                                    <template slot-scope="scope" v-if="scope.row.createTime!=null">
+                                        {{ scope.row.createTime | time}}
+                                    </template>
+                                </el-table-column>
+                                <el-table-column align="center" fixed="right" label="操作" width="140" height="10">
+                                    <template slot-scope="scope">
+                                        <el-button
+                                                type="success"
+                                                size="mini"
+                                                v-clipboard:copy="scope.row.addressUrl"
+                                                v-clipboard:success="copySuccess">
+                                            复制选址报告路径
+                                        </el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </el-card>
+                    </el-aside>
+
+                    <el-aside width="60%">
+                        <div style="margin-top: 5px">
+                            <el-tabs type="border-card" v-model="dislogType" @tab-click="typeCheck()">
+                                <el-tab-pane label="跟进记录" name="1">
+                                    <cus-followup-lists ref="refCusFollowup"/>
+                                </el-tab-pane>
+                                <el-tab-pane label="看房记录" name="2">
+                                    <cus-see-house-list ref="refSeeHos"/>
+                                </el-tab-pane>
+                                <el-tab-pane label="上下架记录" name="3">
+                                    <cus-up-down-list ref="refCusCodeUpDown"/>
+                                </el-tab-pane>
+                                <el-tab-pane label="智能匹配" name="4">
+                                    <cus-match-hos ref="refMatchHos"/>
+                                </el-tab-pane>
+                                <el-tab-pane label="客户推送" name="5">
+                                    <cus-push-list ref="refCusPushList"/>
+                                </el-tab-pane>
+                            </el-tabs>
+                        </div>
+                    </el-aside>
+                </el-container>
+            </div>
+            <div style="margin-top: 5px">
+                <el-row style="padding-top: 0px;text-align: center">
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+
+                        <img v-if="cusEntity.cusType==1" style="padding: 10px 10px 10px 10px;width: 70px;height: 70px"
+                             src="../../../static/hkpImgIcon/kfgj_image.gif">
+                        <img v-if="cusEntity.cusType!=1" style="padding: 10px 10px 10px 10px;width: 60px;height: 70px"
+                             :src="hkpBaseUrl + 'file/read/' + cusEntity.empImg ">
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+                        <el-row style="margin-top: 5px;text-align: left;font-weight: bold">
+                            <span>{{cusEntity.empName}}</span>
+                        </el-row>
+                        <el-row v-if="cusEntity.cusType!=1" style="margin-top: 8px;text-align: left;font-weight: bold">
+                            <span>{{cusEntity.empPhone}}</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2"
+                            v-if="cusEntity.cusType == '1'">
+                        <el-row>
+                            <el-button icon="el-icon-circle-plus-outline"
+                                       @click="checkCusPermissions(checkCode.checkCreatePullPrivate)" type="primary"
+                                       circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>平台拉私申请</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+                        <el-row>
+                            <el-button icon="el-icon-edit"
+                                       @click="checkCusPermissions(checkCode.checkCustomerInfoCanUpdate)"
+                                       circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>修改</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" v-if="!cusEntity.hasCollect">
+                        <el-row>
+                            <el-button icon="el-icon-star-off"
+                                       @click="checkCusPermissions(checkCode.checkCreateFavorite)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>收藏</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" v-if="cusEntity.hasCollect">
+                        <el-row>
+                            <el-button type="warning" icon="el-icon-star-on"
+                                       @click="checkCusPermissions(checkCode.checkCreateFavorite)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>取消收藏</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" v-if="cusEntity.cusStatus=='1'">
+                        <el-row>
+                            <el-button type="primary" icon="el-icon-download"
+                                       @click="checkCusPermissions(checkCode.checkDownCus)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>下架</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" v-if="cusEntity.cusStatus=='2'">
+                        <el-row>
+                            <el-button type="primary" icon="el-icon-upload2"
+                                       @click="checkCusPermissions(checkCode.checkUpShelfCustomer)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>上架</span>
+                        </el-row>
+                    </el-col>
+
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" v-if="cusEntity.openFlag">
+                        <el-row>
+                            <el-button type="info" icon="el-icon-view"
+                                       @click="checkCusPermissions(checkCode.checkOffOpenFlag)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>隐藏</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" v-if="cusEntity.openFlag==false">
+                        <el-row>
+                            <el-button type="success" icon="el-icon-view"
+                                       @click="checkCusPermissions(checkCode.checkOnOpenFlag)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>公开</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+                        <el-row>
+                            <el-button type="info" icon="el-icon-phone"
+                                       @click="checkCusPermissions(checkCode.checkCreateCooperate)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>申请合作</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+                        <el-row>
+                            <el-button type="primary" icon="el-icon-edit-outline"
+                                       @click="checkCusPermissions(checkCode.checkCreateFollowup)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>新增跟进</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+                        <el-row>
+                            <el-button type="primary" icon="el-icon-edit"
+                                       @click="checkCusPermissions(checkCode.checkCreateCusPush)" circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>客户推送</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+                        <el-row>
+                            <el-button type="info" icon="el-icon-message"
+                                       @click="checkCusPermissions(checkCode.checkCreateSelectAddressReport)"
+                                       circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>选址地址</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" v-if="cusEntity.cusType == '3'">
+                        <el-row>
+                            <el-button icon="el-icon-remove-outline" @click="releasePrivate()" type="warning"
+                                       circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>客户释放</span>
+                        </el-row>
+                    </el-col>
+                    <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2"
+                            v-if="cusServiceUpshelfBtn && cusEntity.cusType != '2' && cusEntity.cusType != '5' && cusEntity.cusType !='3' ">
+                        <el-row>
+                            <el-button icon="el-icon-user" @click="upShelfByCusService()" type="warning"
+                                       circle></el-button>
+                        </el-row>
+                        <el-row>
+                            <span>客服集中获客</span>
+                        </el-row>
+                    </el-col>
+                </el-row>
+
+            </div>
+        </div>
+        <el-drawer
+                :before-close="closeDrawer"
+                title="电话沟通结果跟进"
+                :visible.sync="dialog"
+                direction="rtl"
+                custom-class="followup-drawer"
+                size="30%"
+                ref="drawer">
+            <div style="margin-left: 30px;margin-right: 20px">
+                <el-form ref="callPhoneFollowup" :model="callPhoneFollowup" :rules="rules">
+                    <div>
+                        <el-radio v-model="followupResultType" label="1">电话未接通(没有和客户发生交流)</el-radio>
+                    </div>
+                    <div>
+                        <el-radio v-model="followupResultType" label="2">客户号码是空号</el-radio>
+                    </div>
+                    <div>
+                        <el-radio v-model="followupResultType" label="3">客户表示目前没有找房需求</el-radio>
+                    </div>
+                    <div>
+                        <el-radio v-model="followupResultType" label="4">客户有找房需求</el-radio>
+                    </div>
+                    <div v-show="followupResultType==4">
+                        <el-divider>请按照实际情况进行修改</el-divider>
+
+                        <el-form-item label="需求面积" :label-width="formLabelWidth">
+                            <el-input size="mini" style="width: 300px"
+                                      :placeholder="cusEntity.needAcreage"
+                                      v-model="callPhoneFollowup.needAcreage"
+                                      autocomplete="off"></el-input>
+                            ㎡
+                        </el-form-item>
+                        <el-form-item label="目标价格" :label-width="formLabelWidth">
+                            <el-input size="mini" style="width: 300px"
+                                      :placeholder="cusEntity.needPrice"
+                                      v-model="callPhoneFollowup.needPrice">
+                            </el-input>
+                            {{cusEntity.priceUnit}}
+                        </el-form-item>
+                        <el-form-item label="需求区域" :label-width="formLabelWidth">
+                            <el-cascader style="width: 300px"
+                                         size="small"
+                                         expand-trigger="click"
+                                         clearable
+                                         :options="departmentOptions"
+                                         :props="props"
+                                         :placeholder="cusEntity.customerAreaEntityList"
+                                         filterable
+                                         change-on-select
+                                         placeholder="请选择客户需求区域"
+                                         v-model="callPhoneFollowup.customerAreaEntityList"
+                                         @change="handleChange">
+                            </el-cascader>
+                        </el-form-item>
+                        <el-form-item label="需求类型" prop="houseType" :label-width="formLabelWidth">
+                            <el-radio-group size="small" v-model="callPhoneFollowup.houseType">
+                                <el-radio border size="small" :label="1">厂房</el-radio>
+                                <el-radio border size="small" :label="2">仓库</el-radio>
+                                <el-radio border size="small" :label="4">空地</el-radio>
+                                <el-radio border size="small" :label="5">写字楼</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="行业俗称" prop="products" :label-width="formLabelWidth">
+                            <el-input size="small" v-model="callPhoneFollowup.products"
+                                      style="width: 300px"
+                                      :placeholder="cusEntity.products">
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item label="入住时间" prop="enterTime" style="margin-left: 10px">
+                            <el-date-picker
+                                    v-model="callPhoneFollowup.enterTime"
+                                    type="date"
+                                    size="small"
+                                    style="width: 300px"
+                                    :placeholder="cusEntity.enterTime | time">
+                            </el-date-picker>
+                        </el-form-item>
+                        <el-divider></el-divider>
+                        <el-form-item label="是否向他推荐了房源?" prop="recommendedHouse" style="margin-left: 10px">
+                            <el-radio-group size="small" v-model="callPhoneFollowup.recommendedHouse">
+                                <el-radio border size="small" :label=true>是</el-radio>
+                                <el-radio border size="small" :label=false>否</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="是否向他邀约了带看?" prop="invitation" style="margin-left: 10px">
+                            <el-radio-group size="small" v-model="callPhoneFollowup.invitation">
+                                <el-radio border size="small" :label=true>是</el-radio>
+                                <el-radio border size="small" :label=false>否</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </div>
+                    <el-form-item label="其他需求描述:" prop="followupContent">
+                        <el-input type="textarea" style="padding-right: 20px" size="small"
+                                  v-model="callPhoneFollowup.followupContent"/>
+                    </el-form-item>
+                </el-form>
+
+                <div class="drawer-bottom">
+                    <el-button style="width: 120px" size="small" @click="close">取 消</el-button>
+                    <el-button style="width: 120px" size="small" type="primary"
+                               @click="submitFollowup('callPhoneFollowup')"
+                               :loading="loading">{{ loading ? '提交中 ...' : '确 定' }}
+                    </el-button>
+                </div>
+            </div>
+        </el-drawer>
+
+        <el-drawer
+                title="下架原因"
+                :visible.sync="downShelf"
+                direction="rtl"
+                custom-class="downShelf-drawer"
+                size="30%"
+                ref="downShelfs">
+            <div style="margin-left: 30px;margin-right: 20px">
+                <div>
+                    <el-form  :model="cusEntity" :rules="downShelfRules">
+                        <div>
+                            <el-radio v-model="cusEntity.downShelfReason" label="通过别人找好了">通过别人找好了 </el-radio>
+                        </div>
+                        <div>
+                            <el-radio v-model="cusEntity.downShelfReason" label="原址续租了">原址续租了 </el-radio>
+                        </div>
+                        <div>
+                            <el-radio v-model="cusEntity.downShelfReason" label="我已经帮助客户成功选址">我已经帮助客户成功选址 </el-radio>
+                        </div>
+                        <el-form-item label="租赁结束时间：" prop="contractEndTime" style="margin-left: 0px">
+                            <el-date-picker
+                                    v-model="cusEntity.contractEndTime"
+                                    type="date"
+                                    size="mini"
+                                    style="width: 220px">
+                            </el-date-picker>
+                        </el-form-item>
+                        <el-divider></el-divider>
+                        <div>
+                            <el-radio v-model="cusEntity.downShelfReason" label="客户不想找了">客户不想找了 </el-radio>
+                        </div>
+                        <el-form-item label="其他原因:">
+                            <el-input type="textarea" style="padding-right: 20px" size="small"
+                                      v-model="otherReason"/>
+                        </el-form-item>
+                    </el-form>
+                </div>
+
+
+                <div class="drawer-bottom">
+                    <el-button style="width: 120px" size="small" @click="$refs.downShelfs.closeDrawer()">取 消</el-button>
+                    <el-button style="width: 120px" size="small" type="primary"
+                               @click="downShelfCus"
+                               :loading="downShelfLoading">{{ downShelfLoading ? '提交中 ...' : '确 定' }}
+                    </el-button>
+                </div>
+            </div>
+        </el-drawer>
+    </el-dialog>
+</template>
+
+<script>
+    import cusFollowupLists from "./cusFollowupListForCusDetail.vue";
+    import cusUpDownList from "./cusUpDownList.vue";
+    import cusMatchHos from "./cusMatchHos.vue";
+    import cusSeeHouseList from "./cusSeeHouseList.vue";
+    import cusChooseFollowupType from "./cusChooseFollowupType.vue";
+    import cooperatePercent from "../../cooperate/views/cooperatePercent.vue"
+    import cusPush from "./cusPush.vue"
+    import cusSelectAddress from "./cusSelectAddress.vue"
+    import cusAddOrUpdate from "./cusAddOrUpdate.vue"
+    import cusShowSelectAddress from "./cusShowSelectAddress.vue"
+    import CusInsertOrEdit from "./cusInsertOrEdit";
+    import CusServiceUpShelf from "./cusServiceUpshelf"
+    import cusPushList from "./cusPushList"
+
+    export default {
+        components: {
+            CusInsertOrEdit,
+            cusFollowupLists,
+            cusUpDownList,
+            cusMatchHos,
+            cusSeeHouseList,
+            cusChooseFollowupType,
+            cooperatePercent,
+            cusPush,
+            cusSelectAddress,
+            cusAddOrUpdate,
+            cusShowSelectAddress,
+            CusServiceUpShelf,
+            cusPushList
+        },
+        data() {
+            return {
+                focusCusBtn:false,
+                downShelf: false,
+                downShelfReason: "",
+                otherReason: "",
+                rules: {
+                    recommendedHouse: [
+                        {required: true, message: '请选择是否推荐了房源', trigger: 'blur'},
+                    ],
+                    invitation: [
+                        {required: true, message: '请选择是否邀约了带看', trigger: 'blur'},
+                    ],
+                },
+                downShelfRules:{
+
+                },
+                props: {
+                    value: 'areaCode',
+                    label: 'name',
+                    children: 'cities',
+                    multiple: true,
+                    checkStrictly: true
+                },
+                entryType: '',
+                departmentOptions: [],
+                followupResultType: "1",
+                callPhoneFollowup: {
+                    followupType: "2",
+                    cusCode: null,
+                    needAcreage: null,
+                    needPrice: null,
+                    customerAreaEntityList: [],
+                    houseType: null,
+                    products: null,
+                    recommendedHouse: null,
+                    invitation: null,
+                    followupContent: "",
+                },
+                formLabelWidth: '80px',
+                dialog: false,
+                cusServiceUpShelfOpenOrClose: false,
+                SelectAddressList: [
+                    {
+                        selectAddressCode: null,
+                        cusCode: null,
+                        cusName: null,
+                        ownerCode: null,
+                        ownerName: null,
+                        ownerUserPhone: null,
+                        addressUrl: null,
+                        userImg: null,
+                        remark: null,
+                        createCode: null,
+                        createName: null,
+                        createTime: null,
+                    }
+                ],
+                fullHeight: document.documentElement.clientHeight,
+                visible: false,
+                loading: true,
+                downShelfLoading: false,
+                cusCodeDetails: '',
+                pushMessage: '',
+
+                cusCodeDetails: null,
+                cusCodeForFollowup: null,
+                cusUpdateOpenOrClose: false,//客户修改面板
+                chooseFollupTypeOpenOrClose: false,//选择新增跟进类型组件 打开或者关闭
+                cooperatePercentOpenOrClose: false,//合作协议组件
+                cusPushOpenOrClose: false,//客户推送组件
+                selectAddressOpenOrClose: false,//选址报告组件
+                cusShowSelectAddressOpenOrClose: false,//展示选址报告
+
+                dislogType: '',//面板类型
+                cusCodeOrderQuery: '',//传值给面板
+                cusCodeFollowup: '',//传值给面板
+                cusCodeUpDown: '',//传值给面板
+                cusCodeMatchHos: '',//传值给面板
+                cusCodeSeeHos: '',//传值给面板
+
+                cusEntity: {
+                    createName:null,
+                    downShelfReason: null,
+                    contractEndTime: null,
+                    cusCode: '',//客户编码
+                    cusStatusName: '',//客户状态
+                    cusTypeName: '',//客户类型
+                    cusFrom: '',//客户来源
+                    cusName: '',//客户姓名
+                    cusPhone: '',//客户手机号
+                    cusSexName: '',//客户性别
+                    cusProp: '',//客户属性
+                    industry: '',//行业性质
+                    products: '',//产品信息
+                    houseTypeName: '',//库房用途
+                    fireLevelName: '',//消防等级
+                    needVoltage: '',//需求电量
+                    needAcreage: '',//需求面积
+                    layerNumName: '',//需求房源楼层
+                    layerHeight: '',//层高
+                    needEia: '',//是否需要环评
+                    needRegister: '',//是否需要注册
+                    needCertificate: '',//是否需要产证
+                    hasOfficeArea: '',//是否需要办公区域
+                    customerAreaEntityList: [],//客户需求区域
+                    description: null,
+                },
+                checkCode: {//客户模块操作权限类型字典
+                    checkCreateFavorite: 'checkCreateFavorite',//客户收藏
+                    checkCreateShare: 'checkCreateShare',//客户分享
+                    checkCustomerInfoCanUpdate: 'checkCustomerInfoCanUpdate',//客户信息修改
+                    checkSeeCusFollowup: 'checkSeeCusFollowup',//客户跟进查看
+                    checkCreateFollowup: 'checkCreateFollowup',//创建客户跟进
+                    checkDownCus: 'checkDownCus',//下架客户
+                    checkOffOpenFlag: 'checkOffOpenFlag',//隐藏客户
+                    checkOnOpenFlag: 'checkOnOpenFlag',//公开客户
+                    checkUpShelfCustomer: 'checkUpShelfCustomer',//上架客户
+                    checkCreateCusPush: 'checkCreateCusPush',//创建客户推送
+                    checkCreateSelectAddressReport: 'checkCreateSelectAddressReport',//创建选址报告
+                    checkMatchHos: 'checkMatchHos',//智能匹配
+                    checkCreateCooperate: 'checkCreateCooperate',//创建合作
+                    checkCusSawHouses: 'checkCusSawHouses',//客户看房明细
+                    checkApplySeeCusPhone: 'checkApplySeeCusPhone',//申请平台客户电话查看
+                    checkCreatePullPrivate: 'checkCreatePullPrivate',//客户拉私
+                    checkCustomerPhoneCanSee: 'checkCustomerPhoneCanSee',//客户详情查看电话号码
+                },
+                seeCusPhone: false,//客户手机号是否显示
+                cusServiceUpshelfBtn: false
+            }
+        },
+
+        created() {
+            this.cusServiceUpshelfBtn = this.$flagMenuStore.judgeMenu("focus-cus-create");
+        },
+        watch: {
+            fullHeight(val) {
+                if (!this.timer) {
+                    this.fullHeight = val
+                    this.timer = true
+                    let that = this
+                    setTimeout(function () {
+                        that.timer = false
+                    }, 400)
+                }
+            }
+        },
+        mounted() {
+            const that = this
+            window.onresize = () => {
+                return (() => {
+                    window.fullHeight = document.documentElement.clientHeight
+                    that.fullHeight = window.fullHeight
+                })()
+            },
+                this.handleChange();
+        },
+        methods: {
+            close() {
+                var vm = this;
+                vm.$refs.drawer.closeDrawer();
+            },
+            closeDrawer(done) {
+                var vm = this;
+                vm.followupResultType = "1";
+                vm.callPhoneFollowup = {
+                    needAcreage: null,
+                    needPrice: null,
+                    customerAreaEntityList: [],
+                    houseType: null,
+                    products: null,
+                    followupType: "2",
+                    recommendedHouse: null,
+                    invitation: null,
+                    followupContent: "",
+                };
+                done();
+            },
+            submitFollowup(formName) {
+                var vm = this;
+                var canFollowup = false;
+                vm.callPhoneFollowup.followupType = "2";
+                this.$refs[formName].validate((valid) => {
+                        if (vm.followupResultType == "4") {
+                            if (valid) {
+                                vm.setAreaList(vm);
+                                var sendObj = {};
+                                vm.callPhoneFollowup.cusCode = vm.cusCodeDetails;
+                                sendObj.entity = this.callPhoneFollowup;
+                                var option = {
+                                    method: 'POST',
+                                    headers: {'content-type': 'application/json'},
+                                    data: sendObj,
+                                    url: "customer/editCus",
+                                };
+                                this.$ajax(
+                                    option
+                                ).then((response) => {
+                                    let content = "客户要找：";
+                                    if (vm.followupResultType == "4") {
+                                        debugger
+                                        if (vm.callPhoneFollowup.followupType!=null){
+                                            let followupTypeName = null;
+                                            if (vm.callPhoneFollowup.followupType =="1"){
+                                                followupTypeName = "厂房";
+                                            }else if (vm.callPhoneFollowup.followupType=="2"){
+                                                followupTypeName = "仓库";
+                                            }else if(vm.callPhoneFollowup.followupType=="4"){
+                                                followupTypeName ="空地";
+                                            }else if (vm.callPhoneFollowup.followupType=="5"){
+                                                followupTypeName = "写字楼";
+                                            }
+                                            content = content + followupTypeName +",";
+
+                                        }
+
+                                        if (vm.callPhoneFollowup.needAcreage!=null){
+                                            content = content + " 期望面积：" + vm.callPhoneFollowup.needAcreage +"㎡,";
+                                        }
+
+                                        if (vm.callPhoneFollowup.needPrice!=null){
+                                            content = content + " 期望价格：" + vm.callPhoneFollowup.needPrice + " "+ vm.cusEntity.priceUnit +","
+                                        }
+
+                                        if (vm.callPhoneFollowup.enterTime!=null){
+                                            let newDate = new Date(vm.callPhoneFollowup.enterTime);
+                                            content = content + " 计划入住时间："+ newDate.format('yyyy-MM-dd hh:mm:ss') + " "+","
+                                        }
+
+                                        if (vm.callPhoneFollowup.recommendedHouse!=null){
+                                            content = content + (vm.callPhoneFollowup.recommendedHouse==true ? "我向他推荐房源，" : "我没有向他推荐房源，")
+                                        }
+
+                                        if (vm.callPhoneFollowup.invitation!=null){
+                                            content = content + (vm.callPhoneFollowup.invitation == true ? "我向他发起带看邀约;" : "我没有向他发起带看邀约;")
+                                        }
+
+                                        if (vm.callPhoneFollowup.followupContent!=""){
+                                            content = content +" 描述内容: "+vm.callPhoneFollowup.followupContent;
+                                        }
+
+                                        vm.callPhoneFollowup.followupContent = content;
+                                    }
+                                    vm.callPhoneFollowup.cusCode = vm.cusCodeDetails;
+
+                                    var obj = {};
+                                    obj.entity = vm.callPhoneFollowup;
+                                    var option = {
+                                        method: 'POST',
+                                        headers: {'content-type': 'application/json'},
+                                        data: obj,
+                                        url: "customerFollowup/create",
+                                    };
+                                    this.$ajax(
+                                        option
+                                    ).then((response) => {
+                                        vm.$notify.success("新增跟进成功");
+                                        vm.$refs.drawer.closeDrawer();
+                                    }).catch(function (error) {
+                                        vm.$message.error('页面:!customerFollowup/create');
+                                    })
+                                }).catch(function (error) {
+                                    vm.$message.error('页面:!customer/editCus');
+                                })
+
+                            } else {
+                                vm.$notify({
+                                    message: '数据填写不完整',
+                                    type: 'warning'
+                                });
+                            }
+                        } else if (vm.followupResultType=="2" || vm.followupResultType =="3"){
+                            vm.downShelf = true;
+
+                        } else {
+                            canFollowup = true;
+                        }
+                    },
+                )
+
+                if (canFollowup == true) {
+                    var vm = this;
+                    if (vm.followupResultType == "1") {
+                        vm.callPhoneFollowup.followupContent = vm.callPhoneFollowup.followupContent + " 电话未接通(没有和客户发生交流)";
+                    }
+                    var sendObj = {};
+                    vm.callPhoneFollowup.cusCode = vm.cusCodeDetails;
+                    sendObj.entity = vm.callPhoneFollowup;
+
+                    var option = {
+                        method: 'POST',
+                        headers: {'content-type': 'application/json'},
+                        data: sendObj,
+                        async: false,
+                        url: "customerFollowup/create",
+                    };
+                    this.$ajax(
+                        option
+                    ).then(function (response) {
+                        vm.$notify.success("新增跟进成功");
+                        vm.$refs.drawer.closeDrawer();
+                    }).catch(function (error) {
+                        vm.$message.error('页面:!customerFollowup/create');
+                    })
+                }
+
+            },
+            setAreaList(vm) {
+                let areas = [];
+                for (let i = 0; i < vm.callPhoneFollowup.customerAreaEntityList.length; i++) {
+                    areas.push({
+                        province: null,
+                        provinceName: null,
+                        city: null,
+                        cityName: null,
+                        street: null,
+                        streetName: null,
+                        community: null,
+                        communityName: null
+                    })
+                    for (let j = 0; j < vm.callPhoneFollowup.customerAreaEntityList[i].length; j++) {
+                        if (j == 0) {
+                            areas[areas.length - 1].province = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].provinceName = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[1];
+                        } else if (j == 1) {
+                            areas[areas.length - 1].city = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].cityName = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[1];
+                        } else if (j == 2) {
+                            areas[areas.length - 1].region = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].regionName = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[1];
+                        } else if (j == 3) {
+                            areas[areas.length - 1].street = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].streetName = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[1];
+                        } else if (j == 4) {
+                            areas[areas.length - 1].community = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].communityName = vm.callPhoneFollowup.customerAreaEntityList[i][j].split(',')[1];
+                        }
+                    }
+                }
+                vm.callPhoneFollowup.customerAreaEntityList = areas;
+            },
+            //省市区街道
+            handleChange() {
+                var vm = this;
+                var options = {
+                    method: 'POST',
+                    url: "cpyArea/queryAllCascader",
+                    data: {}
+                };
+                this.$ajax(
+                    options
+                ).then(function (response) {
+                    vm.departmentOptions = response.data.result;
+                }).catch(function (error) {
+                    vm.$message.error('页面:获取数据失败! cpyArea/queryAll');
+                });
+            },
+            handleClose(done) {
+                this.$confirm('确定要提交电话跟进结果吗？')
+                    .then(_ => {
+                        this.loading = true;
+                        setTimeout(() => {
+                            this.loading = false;
+                            done();
+                        }, 1000);
+                    })
+                    .catch(_ => {
+                    });
+            },
+            copySelectAddressUrl(rows) {
+
+            },
+            successFocusCus() {
+                var vm = this;
+                vm.cusServiceUpShelfOpenOrClose = false;
+                vm.$refs.refCusServiceUpShelf.visible = false;
+                vm.getCusDetails();
+            },
+            //获取客户详情
+            getCusDetails() {
+                var vm = this;
+                vm.loading = true;
+                var sendObj = {}
+                sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "customer/detail",
+                };
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    vm.cusEntity = response.data.result;
+                    vm.loading = false;
+                    let entryType = vm.$cookieStore.getCookie("entryType");
+                    if ((entryType != null)) {
+                        vm.entryType = entryType;
+                    }
+                    vm.getSelectAddress();
+                }).catch(function (error) {
+                    vm.$message.error('页面:获取数据失败!customer/query');
+                })
+            },
+
+            getSelectAddress() {
+                var vm = this;
+                var sendObj = {}
+                sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "selectaddress/query",
+                };
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    vm.SelectAddressList = response.data.result;
+                }).catch(function (error) {
+                    vm.$message.error('页面:获取数据失败!selectaddress/query');
+                })
+            },
+            //面板类型判断
+            typeCheck() {
+                var vm = this;
+                if (vm.dislogType != null) {
+                    switch (vm.dislogType) {
+                        case "1":
+                            vm.checkCusPermissions(vm.checkCode.checkSeeCusFollowup);//判断权限
+                            break;
+                        case "2":
+                            vm.openCusSeeHos();
+                            break;
+                        case "3":
+                            vm.openCusUpDown();
+                            break;
+                        case "4":
+                            vm.checkCusPermissions(vm.checkCode.checkMatchHos);//判断权限
+                            break;
+                        case "5":
+                            vm.openCusPush();
+                            break;
+                    }
+                }
+            },
+            //打开客户跟进面板
+            openCusFollowup() {
+                var vm = this;
+                vm.$nextTick(() => {
+                    vm.$refs.refCusFollowup.customerQuery.cusCode = vm.cusCodeDetails;//传值给组件
+                    vm.$refs.refCusFollowup.handleSizeChange(50);
+                })
+            },
+            //打开客户上下架记录查询
+            openCusUpDown() {
+                var vm = this;
+                vm.$refs.refCusCodeUpDown.cusCodeUpDown = vm.cusCodeDetails;//传值给组件
+                vm.$nextTick(() => {
+                    vm.$refs.refCusCodeUpDown.handleSizeChange(30);
+                })
+            },
+            //打开客户推送记录查询
+            openCusPush() {
+                var vm = this;
+                vm.$refs.refCusPushList.cusCode = vm.cusEntity.cusCode;//传值给组件
+                vm.$nextTick(() => {
+                    vm.$refs.refCusPushList.handleSizeChange(30);
+                })
+            },
+            //打开客户智能匹配房源面板
+            openCusMatchHos() {
+                var vm = this;
+                vm.$refs.refMatchHos.cusCodeMatchHos = vm.cusCodeDetails;//传值给组件
+                vm.$nextTick(() => {
+                    vm.$refs.refMatchHos.handleSizeChange(30);
+                })
+            },
+            //打开客户看房记录
+            openCusSeeHos() {
+                var vm = this;
+                vm.$refs.refSeeHos.cusCodeSeeHos = vm.cusCodeDetails;//传值给组件
+                vm.$nextTick(() => {
+                    vm.$refs.refSeeHos.handleSizeChange(30);
+                })
+            },
+            //关闭面板
+            closeDialog(done) {
+                var vm = this;
+                vm.dislogType = '';
+                vm.seeCusPhone = false;
+                vm.$refs.refCusFollowup.closeDialog();
+                vm.$refs.refCusCodeUpDown.closeDialog();
+                vm.$refs.refMatchHos.closeDialog();
+                vm.$refs.refSeeHos.closeDialog();
+                vm.$emit("refresh");
+                done()
+            },
+            //修改客户面板
+            updateCus() {
+                this.cusUpdateOpenOrClose = true;
+                this.$nextTick(() => {
+                    this.$refs.refCusUpdate.visible = true
+                    this.$refs.refCusUpdate.type = '1'
+                    this.$refs.refCusUpdate.access(this.cusCodeDetails);
+                })
+            },
+            //修改客户成功，或者取消
+            updateCusSuccess() {
+                this.$refs.refCusUpdate.visible = false
+                this.cusUpdateOpenOrClose = false;
+                this.getCusDetails()
+            },
+            //收藏
+            cusCollect() {
+                this.$confirm('是否收藏', '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    var vm = this;
+                    var sendObj = {};
+                    sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                    var option = {
+                        method: 'POST',
+                        headers: {'content-type': 'application/json'},
+                        data: sendObj,
+                        url: "customerFavorite/create",
+                    };
+
+                    this.$ajax(
+                        option
+                    ).then(function (response) {
+                        vm.getCusDetails();
+                        vm.$notify({
+                            message: response.data.message,
+                            title: '操作提示',
+                        });
+                    }).catch(function (error) {
+                        vm.$message.error('收藏失败');
+                    })
+                })
+            },
+            copySuccess() {
+                this.$notify({
+                    message: "复制成功！",
+                    title: '操作提示',
+                })
+            },
+            //取消收藏
+            cusCancelCollect() {
+                this.$confirm('是否收藏', '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    var vm = this;
+                    var sendObj = {};
+                    sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                    var option = {
+                        method: 'POST',
+                        headers: {'content-type': 'application/json'},
+                        data: sendObj,
+                        url: "customerFavorite/cancel",
+                    };
+
+                    this.$ajax(
+                        option
+                    ).then(function (response) {
+                        vm.getCusDetails();
+                        vm.$notify({
+                            message: response.data.message,
+                            title: '操作提示',
+                        });
+                    }).catch(function (error) {
+                        vm.$message.error('取消收藏失败');
+                    })
+                })
+            },
+            //上架
+            upShefl() {
+                this.$confirm('是否执行上架', '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    var vm = this;
+                    var sendObj = {};
+                    sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                    var option = {
+                        method: 'POST',
+                        headers: {'content-type': 'application/json'},
+                        data: sendObj,
+                        url: "customer/upShelf",
+                    };
+
+                    this.$ajax(
+                        option
+                    ).then(function (response) {
+                        vm.getCusDetails();
+                        vm.dislogType = '3'
+                        vm.openCusUpDown()
+                        vm.$notify({
+                            message: response.data.message,
+                            title: '操作提示',
+                        });
+                    }).catch(function (error) {
+                        vm.$message.error('上架失败');
+                    })
+                })
+            },
+            //客服上架
+            upShelfByCusService() {
+                var vm = this;
+                vm.cusServiceUpShelfOpenOrClose = true;
+                this.$nextTick(() => {
+                    this.$refs.refCusServiceUpShelf.cusForm.cusCode = vm.cusCodeDetails;
+                    this.$refs.refCusServiceUpShelf.visible = true;
+                });
+            },
+            //客户下架
+            downShefl() {
+                this.$confirm('是否执行下架', '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    var vm = this;
+                    vm.downShelf = true;
+                })
+            },
+
+            downShelfCus() {
+                var vm = this;
+                var sendObj = {};
+                sendObj.entity = vm.cusEntity;
+                sendObj.entity.downShelfReason = vm.cusEntity.downShelfReason + vm.otherReason;
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "customer/downShelf",
+                };
+                this.$ajax(
+                    option
+                ).then((response) => {
+                    vm.getCusDetails();
+                    vm.dislogType = '3'
+                    vm.openCusUpDown()
+                    vm.$notify({
+                        message: response.data.message,
+                        title: '操作提示',
+                    });
+
+                    if ((vm.followupResultType=="2" || vm.followupResultType=="3") && vm.dialog==true){
+                     if (vm.followupResultType == "2") {
+                            vm.callPhoneFollowup.followupContent = vm.callPhoneFollowup.followupContent + " 客户号码是空号";
+                        } else if (vm.followupResultType == "3") {
+                            vm.callPhoneFollowup.followupContent = vm.callPhoneFollowup.followupContent + " 客户表示目前没有找房需求";
+                        }
+                        var sendObj = {};
+                        vm.callPhoneFollowup.cusCode = vm.cusCodeDetails;
+                        sendObj.entity = vm.callPhoneFollowup;
+
+                        var option = {
+                            method: 'POST',
+                            headers: {'content-type': 'application/json'},
+                            data: sendObj,
+                            async: false,
+                            url: "customerFollowup/create",
+                        };
+                        this.$ajax(
+                            option
+                        ).then(function (response) {
+                            vm.$notify.success("新增跟进成功");
+                            vm.$refs.drawer.closeDrawer();
+                        }).catch(function (error) {
+                            vm.$message.error('页面:!customerFollowup/create');
+                        })
+                    }
+                    vm.cusEntity.downShelfReason = "";
+                    vm.otherReason="";
+                    vm.cusEntity.contractEndTime =null;
+                    vm.downShelfLoading = false;
+                    vm.$refs.downShelfs.closeDrawer();
+                }).catch(function (error) {
+                    vm.downShelfLoading = false;
+                    vm.$refs.downShelfs.closeDrawer();
+                    vm.$message.error('客户下架失败');
+                })
+            },
+            //公开
+            onFlag() {
+                this.$confirm("是否执行公开", '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    var vm = this;
+                    var sendObj = {};
+                    sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                    var option = {
+                        method: 'POST',
+                        headers: {'content-type': 'application/json'},
+                        data: sendObj,
+                        url: "customer/onOpenFlag",
+                    };
+                    this.$ajax(
+                        option
+                    ).then(function (response) {
+                        vm.getCusDetails();
+                        vm.$notify({
+                            message: response.data.message,
+                            title: '操作提示',
+                        });
+                    }).catch(function (error) {
+                        vm.$notify.error('公开失败');
+                    })
+                })
+            },
+            //隐藏
+            offFlag() {
+                this.$confirm("是否执行隐藏", '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    var vm = this;
+                    var sendObj = {};
+                    sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                    var option = {
+                        method: 'POST',
+                        headers: {'content-type': 'application/json'},
+                        data: sendObj,
+                        url: "customer/offOpenFlag",
+                    };
+                    this.$ajax(
+                        option
+                    ).then(function (response) {
+                        vm.getCusDetails();
+                        vm.$notify({
+                            message: response.data.message,
+                            title: '操作提示',
+                        });
+                    }).catch(function (error) {
+                        vm.$notify.error('隐藏失败');
+                    })
+                })
+            },
+            //合作协议
+            cooperatePercent() {
+                this.$confirm("是否执行合作", '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.cooperatePercentOpenOrClose = true;
+                    this.$nextTick(() => {
+                        this.$refs.refCooperatePercent.visible = true;
+                    })
+                })
+            },
+            //创建合作
+            createCooperate(percent) {
+                var vm = this;
+                vm.cooperatePercentOpenOrClose = false;
+                var sendObj = {};
+                sendObj.entity = {
+                    "cusCode": vm.cusCodeDetails,
+                    "receiveCode": vm.cusEntity.empCode,
+                    "dividePercentage": percent
+                }
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "cooperate/createcus",
+                };
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    console.log(response)
+                    if (response) {
+                        if (response.data.isSuccess) {
+                            vm.$notify.success('合作申请成功')
+                        }
+                    }
+                }).catch(function (error) {
+                    vm.$notify.error('合作申请失败');
+                })
+            },
+            //创建跟进
+            createFollowup() {
+                var vm = this;
+                vm.chooseFollupTypeOpenOrClose = true;
+                vm.$nextTick(() => {
+                    vm.$refs.refChooseFollupType.visible = true;
+                    vm.$refs.refChooseFollupType.cusCodeChooseFollowupType = vm.cusCodeDetails;//传值给组件
+                })
+            },
+            //新增跟进成功 ，关闭面板清空数据
+            successCreateFollowup() {
+                var vm = this;
+                vm.$refs.refChooseFollupType.visible = false
+                vm.chooseFollupTypeOpenOrClose = false;
+                vm.dislogType = '1'
+                vm.openCusFollowup();
+            },
+            //客户推送
+            cusPush() {
+                this.$confirm("是否推送", '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$prompt('请填写推送留言', '操作提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                    }).then(({value}) => {
+                    debugger;
+                        this.cusPushOpenOrClose = true;
+                        if (null != value) {
+                            if (value.trim().length > 100) {
+                                alert("留言字数过多，请少于100字符");
+                                return;
+                            }
+                        }
+                        this.$nextTick(() => {
+                            this.$refs.refCusPush.visible = true;
+                            this.$refs.refCusPush.cusCodeCusPush = this.cusCodeDetails;
+                            this.$refs.refCusPush.pushMessage = value.trim();
+                            this.$refs.refCusPush.handleSizeChange(30);
+                        })
+                    })
+
+                })
+            },
+            //推送成功关闭
+            successCusPush() {
+                this.$refs.refCusPush.visible = false;
+                this.cusPushOpenOrClose = false;
+            },
+            //选址地址
+            selectAddress() {
+                this.$confirm("是否提交选址报告", '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.selectAddressOpenOrClose = true;
+                    this.$nextTick(() => {
+                        this.$refs.refSelectAddress.visible = true;
+                        this.$refs.refSelectAddress.cusCodeSelectAddress = this.cusCodeDetails;
+                        this.$refs.refSelectAddress.cusNameSelectAddress = this.cusEntity.cusName;
+                        this.$refs.refSelectAddress.handleSizeChange(30);
+                    })
+                })
+            },
+            //选址成功
+            successSelectAddress(val) {
+                this.$refs.refSelectAddress.visible = false;
+                this.selectAddressOpenOrClose = false;
+                this.$nextTick(() => {
+                    this.cusShowSelectAddressOpenOrClose = true;
+                    this.$nextTick(() => {
+                        this.$refs.refCusShowSelectAddress.visible = true;
+                        this.$refs.refCusShowSelectAddress.showAddress(val);
+                        this.getCusDetails();
+                    })
+                })
+            },
+            //准备分享选址报告
+            successShowAddress() {
+                this.cusShowSelectAddressOpenOrClose = false;
+                this.$refs.refCusShowSelectAddress.visible = false;
+            },
+            //权限判断
+            // obja为checkCode
+            checkCusPermissions(obja) {
+                var vm = this;
+                var sendObj = {};
+                sendObj.entity = {"cusCode": vm.cusCodeDetails, "checkCode": obja}
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "customer/checkCusPermissions",
+                };
+
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    if (response) {
+                        if (response.data.code == '200' && response.data.isSuccess) {
+                            switch (obja) {
+                                case 'checkUpShelfCustomer':
+                                    vm.upShefl();
+                                    break;
+                                case 'checkDownCus':
+                                    vm.downShefl();
+                                    break;
+                                case 'checkOffOpenFlag':
+                                    vm.offFlag();
+                                    break;
+                                case 'checkOnOpenFlag':
+                                    vm.onFlag();
+                                    break;
+                                case 'checkCreateCooperate':
+                                    vm.cooperatePercent();
+                                    break;
+                                case 'checkCreateFollowup':
+                                    vm.createFollowup();
+                                    break;
+                                case 'checkCreateCusPush':
+                                    vm.cusPush();
+                                    break;
+                                case 'checkCreateSelectAddressReport':
+                                    vm.selectAddress();
+                                    break;
+                                case 'checkCustomerInfoCanUpdate':
+                                    vm.updateCus();
+                                    break;
+                                case 'checkMatchHos':
+                                    vm.openCusMatchHos();
+                                    break;
+                                case 'checkSeeCusFollowup':
+                                    vm.openCusFollowup();
+                                    break;
+                                case 'checkCreateFavorite':
+                                    if (vm.cusEntity.hasCollect) {
+                                        vm.cusCancelCollect()
+                                    } else {
+                                        vm.cusCollect();
+                                    }
+                                    break;
+                                case 'checkApplySeeCusPhone':
+                                    vm.applyCusPhone();
+                                    break;
+                                case 'checkCreatePullPrivate':
+                                    vm.pullPrivate();
+                                    break;
+                            }
+                        }
+                    }
+                }).catch(function (error) {
+                    vm.$message.error('权限判断失败');
+                })
+            },
+            //拨打客户电话
+            callCusPhone() {
+                var vm = this;
+                var sendObj = {};
+                sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "customer/callCusPhone",
+                };
+
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    if (response.data.code == 415) {
+                        vm.cusEntity.cusPhone = null;
+                        vm.cusCodeForFollowup = vm.cusCodeDetails;
+                        vm.$confirm(response.data.message, '操作提示', {
+                            confirmButtonText: '查看并跟进',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        }).then(() => {
+                            vm.cusCodeDetails = response.data.result;
+                            vm.getCusDetails();
+                            vm.dialog = true;
+                        })
+                    } else {
+                        vm.$notify({
+                            message: response.data.message,
+                            title: '操作提示',
+                        });
+                        vm.cusEntity.cusPhone = response.data.result
+                        vm.seeCusPhone = true;
+                    }
+                }).catch(function (error) {
+                    vm.$message.error('号码拨打异常');
+                })
+            },
+            //申请查看号码
+            applyCusPhone() {
+                var vm = this;
+                var sendObj = {};
+                sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "cusApply/create",
+                };
+
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    vm.getCusDetails()
+                    vm.$notify({
+                        message: response.data.message,
+                        title: '操作提示',
+                    });
+                }).catch(function (error) {
+                    vm.$message.error('号码申请查看异常');
+                })
+            },
+            //客户平台拉私
+            pullPrivate() {
+                this.$confirm('是否执行拉私申请', '操作提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$prompt('请填写拉私申请原因', '操作提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                    }).then(({value}) => {
+                        var vm = this;
+                        var sendObj = {};
+                        sendObj.entity = {"cusCode": vm.cusCodeDetails, "reason": value}
+                        var option = {
+                            method: 'POST',
+                            headers: {'content-type': 'application/json'},
+                            data: sendObj,
+                            url: "customer/pullPrivate",
+                        };
+
+                        this.$ajax(
+                            option
+                        ).then(function (response) {
+                            vm.getCusDetails()
+                            vm.$notify({
+                                message: response.data.message,
+                                title: '操作提示',
+                            });
+                        }).catch(function (error) {
+                            vm.$message.error('客户拉私异常');
+                        })
+                    })
+                })
+            },
+            //客户释放
+            releasePrivate() {
+                var vm = this;
+                var sendObj = {};
+                sendObj.entity = {"cusCode": vm.cusCodeDetails}
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "customer/releasePrivate",
+                };
+
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    vm.getCusDetails()
+                    vm.$notify({
+                        message: response.data.message,
+                        title: '操作提示',
+                    });
+                }).catch(function (error) {
+                    vm.$message.error('客户释放异常');
+                })
+            },
+        },
+
+    }
+</script>
+
+<style scoped>
+
+    .el-table .warning-row {
+        background: oldlace;
+    }
+
+
+    .el-table .success-row {
+        background: #f0f9eb;
+    }
+
+    .el-carousel__item h3 {
+        color: #475669;
+        font-size: 14px;
+        opacity: 0.75;
+        line-height: 200px;
+        margin: 0;
+    }
+
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
+
+    .left-tip {
+        text-align: left;
+    }
+
+    .drawer-bottom {
+        height: 40px;
+        position: fixed;
+        bottom: 10px;
+        display: flex;
+        justify-content: space-evenly;
+        width: 25%;
+    }
+
+    .box-border {
+        box-shadow: 0px 1px 8px 0px rgba(63, 63, 64, 0.18);
+        margin: 5px 5px;
+        padding: 5px 5px;
+        border-radius: 10px;
+    }
+</style>

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.auth.entity.MenuEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.sys.auth.entity.MenuEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="menu_code" property="menuCode" jdbcType="VARCHAR"/>
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
+        <result column="menu_type" property="menuType" jdbcType="VARCHAR"/>
+        <result column="item" property="item" jdbcType="VARCHAR"/>
+        <result column="parent_code" property="parentCode" jdbcType="VARCHAR"/>
+        <result column="pack" property="pack" jdbcType="VARCHAR"/>
+        <result column="icon_cls" property="iconCls" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="NUMERIC"/>
+        <result column="sort" property="sort" jdbcType="NUMERIC"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_sys_auth_menu
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.menuCode != null and i.menuCode != ''">
+                    menu_code,
+                </if>
+                <if test="i.menuName != null and i.menuName != ''">
+                    menu_name,
+                </if>
+                <if test="i.item != null and i.item !=''">
+                    item,
+                </if>
+                <if test="i.parentCode != null and i.parentCode !=''">
+                    parent_code,
+                </if>
+                <if test="i.menuType != null and i.menuType !=''">
+                    menu_type,
+                </if>
+                <if test="i.pack != null and i.pack != ''">
+                    pack,
+                </if>
+                <if test="i.iconCls != null and i.iconCls != ''">
+                    icon_cls,
+                </if>
+                <if test="i.level != null">
+                    level,
+                </if>
+                <if test="i.sort != null">
+                    sort,
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.menuCode != null and i.menuCode != ''">
+                    #{i.menuCode},
+                </if>
+                <if test="i.menuName != null and i.menuName != ''">
+                    #{i.menuName},
+                </if>
+                <if test="i.item != null and i.item !=''">
+                    #{i.item},
+                </if>
+                <if test="i.parentCode != null and i.parentCode !=''">
+                    #{i.parentCode},
+                </if>
+                <if test="i.menuType != null and i.menuType !=''">
+                    #{i.menuType},
+                </if>
+                <if test="i.pack != null and i.pack != ''">
+                    #{i.pack},
+                </if>
+                <if test="i.iconCls != null and i.iconCls != ''">
+                    #{i.iconCls},
+                </if>
+                <if test="i.level != null">
+                    #{i.level},
+                </if>
+                <if test="i.sort != null">
+                    #{i.sort},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新数据信息 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.auth.entity.MenuEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_sys_auth_menu
+            <trim prefix="set" suffixOverrides=",">
+
+                <if test="i.menuCode != null and i.menuCode != ''">
+                    menu_code = #{i.menuCode},
+                </if>
+                <if test="i.menuName != null and i.menuName != ''">
+                    menu_name = #{i.menuName},
+                </if>
+                <if test="i.parentCode != null and i.parentCode !=''">
+                    parent_code = #{i.parentCode},
+                </if>
+                <if test="i.menuType != null and i.menuType !=''">
+                    menu_type = #{i.menuType},
+                </if>
+                <if test="i.item != null and i.item !=''">
+                    item = #{i.item},
+                </if>
+                <if test="i.pack != null and i.pack != ''">
+                    pack = #{i.pack},
+                </if>
+                <if test="i.iconCls != null and i.iconCls != ''">
+                    icon_cls = #{i.iconCls},
+                </if>
+
+                <if test="i.level != null">
+                    level = #{i.level},
+                </if>
+                <if test="i.sort != null">
+                    sort = #{i.sort},
+                </if>
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                menu_code = #{i.menuCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_sys_auth_menu WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="menuCode != null">
+                AND menu_code = #{menuCode}
+            </if>
+
+            <!-- codes 和 _codes 二选一条件-->
+            <if test="menuCodes != null">
+                AND menu_code IN
+                <foreach collection="menuCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+            <if test="_menuCodes != null">
+                AND menu_code IN (${_menuCodes})
+            </if>
+            <if test="menuName != null">
+                AND menu_name = #{menuName}
+            </if>
+            <if test="parentCode != null">
+                AND PARENT_CODE = #{parentCode}
+            </if>
+            <if test="item != null">
+                AND ITEM = #{item}
+            </if>
+            <if test="pack != null">
+                AND pack = #{pack}
+            </if>
+            <if test="iconCls != null">
+                AND icon_cls = #{iconCls}
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="menuType !=null">
+                AND menu_type = #{menuType}
+            </if>
+            <if test="level != null">
+                AND level = #{level}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+            <if test="sort != null">
+                AND SORT = #{sort}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.auth.entity.MenuEntity">
+        SELECT * FROM t_hkp_sys_auth_menu
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_sys_auth_menu
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.auth.entity.MenuEntity">
+        SELECT * FROM t_hkp_sys_auth_menu
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_sys_auth_menu
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="findParentCodeByChildCode" parameterType="string" resultType="string">
+        SELECT parent_code
+        FROM t_hkp_sys_auth_menu
+        WHERE menu_code = #{menuCode}
+    </select>
+
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectUserMenuByRoleRelation" parameterType="map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.auth.entity.MenuEntity">
+        SELECT m.* FROM t_hkp_sys_auth_menu m
+        inner join t_hkp_sys_auth_role_menu r on r.menu_code = m.menu_code
+        inner join t_hkp_sys_user_user_role u on u.role_code = r.role_code
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="userCode != null">
+                and u.user_code = #{userCode}
+            </if>
+            <if test="menuType !=null">
+                and m.menu_type = #{menuType}
+            </if>
+        </trim>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 查询用户权限，通过岗位关联的权限-->
+    <select id="selectUserMenuByPostRelation" parameterType="java.util.Map"
+            resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.auth.entity.MenuEntity">
+        SELECT m.* FROM t_hkp_sys_auth_menu m
+        <!--   inner join t_hkp_hrm_org_post_menu p on p.menu_code = m.menu_code
+           <trim prefix="where" prefixOverrides="AND|OR">
+               p.post_code=#{postCode}
+               <if test="id != null">
+                   AND ID = #{id}
+               </if>
+               <if test="isDeleted != null">
+                   and m.is_deleted = #{isDeleted}
+               </if>
+           </trim>
+           <if test="orderBy != null">
+               ORDER BY ${orderBy}
+           </if>
+           <if test="order != null">
+               ${order}
+           </if>-->
+    </select>
+    <!-- 查询菜单列表，通过(角色)关联的菜单-->
+    <select id="selectMenuListByRole" parameterType="java.util.Map" resultMap="baseResultMap">
+        SELECT m.* FROM t_hkp_sys_auth_menu m
+        left join t_hkp_sys_auth_role_menu p on p.menu_code = m.menu_code
+        <trim prefix="where" prefixOverrides="AND|OR">
+            p.role_code = #{roleCode}
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="isDeleted != null">
+                and m.is_deleted = #{isDeleted}
+            </if>
+        </trim>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!--通过岗位编码，找到该用户的所有菜单权限集合-->
+    <select id="findMenuListByPostCode" parameterType="map" resultMap="baseResultMap">
+        SELECT * FROM(
+        SELECT
+        menu.*,role.role_code
+        FROM
+        t_hkp_sys_auth_menu menu
+        LEFT JOIN t_hkp_sys_auth_role_menu role_menu ON role_menu.menu_code = menu.menu_code
+        LEFT JOIN t_hkp_sys_auth_role ROLE ON ROLE .role_code = role_menu.role_code
+        ) m
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="postCode != null">
+                AND role_code in (
+                SELECT
+                role_code
+                FROM
+                t_hkp_sys_auth_role
+                WHERE
+                post_code = #{postCode}
+                )
+            </if>
+            <if test="menuType != null">
+                AND menu_type=#{menuType};
+            </if>
+        </trim>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <select id="queryAllMenuCodeByUserCodeAndPostCode" parameterType="map" resultType="string">
+        SELECT DISTINCT
+        rm.menu_code
+        FROM
+        t_hkp_sys_user_user_role ur
+        INNER JOIN t_hkp_sys_auth_role_menu rm ON ur.role_code = rm.role_code
+        WHERE
+        ur.user_code = #{userCode}
+        <if test="postCode != null">
+            UNION
+            SELECT DISTINCT
+            rm.menu_code
+            FROM
+            t_hkp_sys_auth_role_menu rm
+            INNER JOIN t_hkp_sys_auth_role ar ON ar.role_code = rm.role_code
+            WHERE
+            ar.post_code = #{postCode}
+        </if>
+    </select>
+
+    <select id="queryAllMenuByUserCodeAndPostCode" parameterType="map" resultMap="baseResultMap">
+        SELECT *
+        FROM t_hkp_sys_auth_menu
+        WHERE menu_code IN (
+            SELECT DISTINCT
+            rm.menu_code
+            FROM
+            t_hkp_sys_user_user_role ur
+            INNER JOIN t_hkp_sys_auth_role_menu rm ON ur.role_code = rm.role_code
+            WHERE
+            ur.user_code = #{userCode}
+            <if test="postCode != null">
+                UNION
+                SELECT DISTINCT
+                rm.menu_code
+                FROM
+                t_hkp_sys_auth_role_menu rm
+                INNER JOIN t_hkp_sys_auth_role ar ON ar.role_code = rm.role_code
+                WHERE
+                ar.post_code = #{postCode}
+            </if>
+        )
+        order by sort asc
+    </select>
+
+    <select id="getUserJudgeMenuList" parameterType="map" resultMap="baseResultMap">
+        SELECT DISTINCT
+        am.*
+        FROM
+        t_hkp_sys_user_user_role ur
+        INNER JOIN t_hkp_sys_auth_role_menu rm ON ur.role_code = rm.role_code
+        INNER JOIN t_hkp_sys_auth_menu am ON am.menu_code=rm.menu_code
+        WHERE
+        ur.user_code = #{userCode}
+        and am.menu_type='2'
+        <if test="postCode != null">
+            UNION
+            SELECT DISTINCT
+            am.*
+            FROM
+            t_hkp_sys_auth_role_menu rm
+            INNER JOIN t_hkp_sys_auth_role ar ON ar.role_code = rm.role_code
+            INNER JOIN t_hkp_sys_auth_menu am ON am.menu_code=rm.menu_code
+            WHERE
+            ar.post_code = #{postCode}
+            and am.menu_type='2'
+        </if>
+    </select>
+
+    <select id="queryListByParentCode" parameterType="string" resultMap="baseResultMap">
+        SELECT *
+        FROM t_hkp_sys_auth_menu
+        WHERE parent_code = #{parentCode}
+        ORDER BY sort ASC
+    </select>
+
+    <select id="queryMenuByChildMenuCode" parameterType="string" resultMap="baseResultMap">
+        SELECT *
+        FROM t_hkp_sys_auth_menu
+        WHERE
+            menu_code = (
+                SELECT parent_code
+                FROM t_hkp_sys_auth_menu
+                WHERE menu_code = #{menuCode}
+            )
+    </select>
+
+
+    <select id="selectAllMenu" parameterType="map" resultMap="baseResultMap">
+        SELECT *
+        FROM t_hkp_sys_auth_menu
+        order by sort asc
+    </select>
+
+
+
+
+    <resultMap type="com.kfwy.hkp.sys.auth.entity.MenuEntity" id="recursionMenuMap">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="menu_code" property="menuCode" jdbcType="VARCHAR"/>
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
+        <result column="menu_type" property="menuType" jdbcType="VARCHAR"/>
+        <result column="item" property="item" jdbcType="VARCHAR"/>
+        <result column="parent_code" property="parentCode" jdbcType="VARCHAR"/>
+        <result column="pack" property="pack" jdbcType="VARCHAR"/>
+        <result column="icon_cls" property="iconCls" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="NUMERIC"/>
+        <result column="sort" property="sort" jdbcType="NUMERIC"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <collection property="children" ofType="com.kfwy.hkp.sys.auth.entity.MenuEntity"
+                    column="{menuCode=menu_code}" select="findMenuByParentCode"/>
+    </resultMap>
+
+    <select id="findAllRecursion" resultMap="recursionMenuMap">
+        SELECT *
+        FROM t_hkp_sys_auth_menu
+        WHERE parent_code = '0'
+        ORDER BY sort ASC
+    </select>
+
+    <select id="findMenuByParentCode" resultMap="recursionMenuMap">
+        SELECT *
+        FROM t_hkp_sys_auth_menu
+        WHERE parent_code = #{menuCode} AND menu_type = '1'
+        ORDER BY sort ASC
+    </select>
+
+
+</mapper>

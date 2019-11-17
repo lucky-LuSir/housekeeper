@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.log.entity.OperationEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.log.entity.OperationEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="opt_code" property="optCode" jdbcType="VARCHAR"/>
+        <result column="opt_type" property="optType" jdbcType="VARCHAR"/>
+        <result column="biz_code" property="bizCode" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="last_update_name" property="lastUpdateName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_log_operation
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.optCode != null and i.optCode != ''">
+                    opt_code,
+                </if>
+                <if test="i.optType != null and i.optType != ''">
+                    opt_type,
+                </if>
+                <if test="i.bizCode != null and i.bizCode != ''">
+                    biz_code,
+                </if>
+
+                <if test="i.url != null and i.url != ''">
+                    url,
+                </if>
+                <if test="i.content != null and i.content != ''">
+                    content,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode!=''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode!=''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.optCode != null and i.optCode != ''">
+                    #{i.optCode},
+                </if>
+                <if test="i.optType != null and i.optType != ''">
+                    #{i.optType},
+                </if>
+                <if test="i.bizCode != null and i.bizCode != ''">
+                    #{i.bizCode},
+                </if>
+                <if test="i.url != null and i.url != ''">
+                    #{i.url},
+                </if>
+                <if test="i.content != null and i.content != ''">
+                    #{i.content},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode!=''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode!=''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_log_operation WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="keyword != null and keyword != ''">
+                AND
+                (
+                log.opt_code = #{keyword} or
+                log.opt_type = #{keyword} or
+                log.biz_code = #{keyword} or
+                u.user_name  like '%' || #{keyword} ||'%' or
+                u.owner_dept_code like '%' || #{keyword} ||'%'
+                )
+            </if>
+            <if test="id != null">
+                AND log.ID = #{id}
+            </if>
+            <if test="optCode !=null and optCode !=''">
+                AND log.opt_code =#{optCode}
+            </if>
+            <if test="content!=null and content!=''">
+                AND log.content like '%' || #{content} ||'%'
+            </if>
+            <if test="optType !=null and optType !=''">
+                AND log.opt_type = #{optType}
+            </if>
+            <if test="bizCode !=null and bizCode !=''">
+                AND log.biz_code = #{bizCode}
+            </if>
+            <if test="createName !=null and createName !=''">
+                AND u.user_name = #{createName}
+            </if>
+            <if test="createDeptName !=null and createDeptName !=''">
+                AND u.owner_dept_name = #{createDeptName}
+            </if>
+            <if test="remark != null and remark !=''">
+                AND log.remark = #{remark}
+            </if>
+            <if test="isDeleted != null">
+                AND log.is_deleted = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND log.create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND log.create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.log.entity.OperationEntity">
+        SELECT
+        log.*,u.user_name as create_name,u.owner_dept_name as create_dept_name FROM
+        t_hkp_log_operation log
+        LEFT JOIN t_hkp_sys_user_user u on log.create_code=u.user_code
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        select count(*) FROM (
+        SELECT
+        log.*,u.user_name as create_name,u.owner_dept_name as create_dept_name FROM
+        t_hkp_log_operation log
+        LEFT JOIN t_hkp_sys_user_user u on log.create_code=u.user_code
+        <include refid="selectSql"/>
+        ) log
+    </select>
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.log.entity.OperationEntity">
+        SELECT
+        log.*,u.user_name as create_name,u.owner_dept_name as create_dept_name FROM
+        t_hkp_log_operation log
+        LEFT JOIN t_hkp_sys_user_user u on log.create_code=u.user_code
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        select count(*) FROM (
+        SELECT
+        log.*,u.user_name as create_name,u.owner_dept_name as create_dept_name FROM
+        t_hkp_log_operation log
+        LEFT JOIN t_hkp_sys_user_user u on log.create_code=u.user_code
+        <include refid="selectSql"/>
+        ) log
+    </select>
+
+    <!--得到当前客户今天被多少人拨打了电话-->
+    <select id="getCallPhonePeopleCount" parameterType="map" resultType="string">
+    SELECT
+	    DISTINCT create_code
+    FROM
+        t_hkp_log_operation
+    WHERE
+        opt_type = 'callCusPhone'
+        AND biz_code = #{cusCode}
+        AND create_time BETWEEN #{createTimeStart}
+        AND now()
+    </select>
+
+    <!--找到最新一条除自己以外的对当前客户的电话拨打记录-->
+    <select id="getLastCallCusPhoneLog" parameterType="map" resultMap="baseResultMap">
+        SELECT
+            *
+            FROM
+                t_hkp_log_operation
+            WHERE
+                opt_type = 'callCusPhone'
+            AND biz_code = #{bizCode}
+            AND create_code != #{userCode}
+        ORDER BY
+            create_time DESC
+            LIMIT 1
+    </select>
+
+    <select  id="callPhoneIsHandle" resultType="string" parameterType="map">
+        SELECT
+            biz_code
+        FROM
+            (
+                SELECT
+                    biz_code,
+                    is_handle
+                FROM
+                    t_hkp_log_operation
+                WHERE
+                    create_code = #{userCode}
+                  AND opt_type = 'callCusPhone'
+                ORDER BY
+                    create_time DESC
+                LIMIT 1
+            ) log
+        WHERE
+            is_handle = FALSE
+    </select>
+    <update id="updateCallPhoneHandle" parameterType="map">
+        UPDATE t_hkp_log_operation
+        SET is_handle = TRUE
+        WHERE
+                opt_code = (
+                SELECT
+                    opt_code
+                FROM
+                    t_hkp_log_operation
+                WHERE
+                    create_code = #{ userCode }
+                  AND opt_type = 'callCusPhone'
+                  AND biz_code = #{ cusCode }
+                ORDER BY
+                    create_time DESC
+                LIMIT 1
+            )
+    </update>
+</mapper>

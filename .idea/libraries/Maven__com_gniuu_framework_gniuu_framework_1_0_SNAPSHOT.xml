@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.gniuu.framework:gniuu-framework:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/app/repository/com/gniuu/framework/gniuu-framework/1.0-SNAPSHOT/gniuu-framework-1.0-20190408.061851-84.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/app/repository/com/gniuu/framework/gniuu-framework/1.0-SNAPSHOT/gniuu-framework-1.0-20190408.061851-84-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/app/repository/com/gniuu/framework/gniuu-framework/1.0-SNAPSHOT/gniuu-framework-1.0-20190408.061851-84-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

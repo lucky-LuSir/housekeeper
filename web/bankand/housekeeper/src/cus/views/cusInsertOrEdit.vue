@@ -1,0 +1,1935 @@
+<template>
+    <el-dialog :style="{height: fullHeight +140 +'px'}" style="margin-top: 10px;margin-bottom: 20px;" top="10px;"
+               width="70%"
+               :title="title"
+               :before-close="closeDialog"
+               :visible.sync="visible"
+               append-to-body
+               :close-on-click-modal="false">
+        <!--客户已经录入了， 可以直接到客户详情接口-->
+        <cus-details ref="cusDetailsx" v-if="cusDetailsOpenOrClose"/>
+        <common-part-time-search ref="refPartTime" v-if="partTimeOpenOrClose"
+                                 @setPartTime="setPartTime"/>
+        <cus-insert-match-hos ref="refMatchHos" v-if="matchHosOpenOrClose"/>
+
+
+        <span slot="title">
+                <span v-if="type==2" class="word_title">新增客户</span>
+                <span v-if="type==1" class="word_title">编辑客户</span>
+                <el-button class="btn_title_1h" @click.prevent="custormAnchor('1cus')" type="primary" plain round
+                           size="small">客户私密信息</el-button>
+                <el-button class="btn_title_3h" @click.prevent="custormAnchor('2cus')" type="primary" plain round
+                           size="small">发布找房区域全网推广</el-button>
+           </span>
+        <div :style="{height: fullHeight -180 +'px'}" class="cus-div">
+            <el-form :model="cusForm" ref="cusForm" :rules="rules" label-width="110px" size="mini" label-position="top">
+                <v-collapse v-model="activeNames">
+                    <v-panel id="1cus" header="客户私密信息" index="1" :style="customPanelStyle" class="d_jump">
+                        <el-row>
+                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"
+                                    style="padding-left: 30px">
+                                <el-form-item prop="cusPhone" label=" 客户信息（仅自己人可以见）">
+                                    <el-input v-if="type == '2'" size="mini" style="width: 300px"
+                                              @blur="checkCustomerPhone(cusForm.cusPhone)"
+                                              v-model="cusForm.cusPhone"
+                                              placeholder="客户电话"/>
+                                    <el-input v-if="type == '1'" size="mini" style="width: 300px"
+                                              @blur="checkCustomerPhone(cusForm.cusPhone)"
+                                              readonly
+                                              v-model="cusForm.cusPhone"
+                                              placeholder="客户电话"/>
+                                </el-form-item>
+                                <el-form-item prop="cusName">
+                                    <el-input size="mini" style="width: 300px"
+                                              v-model="cusForm.cusName"
+                                              placeholder="客户姓名">
+
+                                        <el-select v-model="cusForm.cusSex"
+                                                   prop="cusSex"
+                                                   slot="append"
+                                                   style="width: 110px"
+                                                   placeholder="请选择性别">
+                                            <el-option label="先生"
+                                                       value="Sir"></el-option>
+                                            <el-option label="女士"
+                                                       value="Lady"></el-option>
+                                        </el-select>
+                                    </el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                <el-form-item label="客户行业：" prop="industry">
+                                    <el-select style="width: 300px" size="mini"
+                                               v-model="cusForm.industry"
+                                               placeholder="请选择">
+                                        <el-option label="农副食品加工业" value="农副食品加工业"></el-option>
+                                        <el-option label="食品加工业" value="食品加工业"></el-option>
+                                        <el-option label="酒加工" value="酒加工"></el-option>
+                                        <el-option label="烟草制品业" value="烟草制品业"></el-option>
+                                        <el-option label="纺织业" value="纺织业"></el-option>
+                                        <el-option label="纺织服装、鞋、帽制造业"
+                                                   value="纺织服装、鞋、帽制造业"></el-option>
+                                        <el-option label="皮革、毛皮、羽毛、绒制品业"
+                                                   value="皮革、毛皮、羽毛、绒制品业"></el-option>
+                                        <el-option label="木材加工及木、竹、藤、棕、草制品业"
+                                                   value="木材加工及木、竹、藤、棕、草制品业"></el-option>
+                                        <el-option label="家具制造业" value="家具制造业"></el-option>
+                                        <el-option label="造纸及纸制品业" value="造纸及纸制品业"></el-option>
+                                        <el-option label="印刷业和记录媒介的复制"
+                                                   value="印刷业和记录媒介的复制"></el-option>
+                                        <el-option label="文教体育用品制造业" value="文教体育用品制造业"></el-option>
+                                        <el-option label="石油加工、炼焦及核燃料加工业"
+                                                   value="石油加工、炼焦及核燃料加工业"></el-option>
+                                        <el-option label="化学原料及化学制品制造业"
+                                                   value="化学原料及化学制品制造业"></el-option>
+                                        <el-option label="医药制造业" value="医药制造业"></el-option>
+                                        <el-option label="橡胶制品业" value="橡胶制品业"></el-option>
+                                        <el-option label="塑料制品业" value="塑料制品业"></el-option>
+                                        <el-option label="金属制品业" value="金属制品业"></el-option>
+                                        <el-option label="通用设备制造业" value="通用设备制造业"></el-option>
+                                        <el-option label="专用设备制造业" value="专用设备制造业"></el-option>
+                                        <el-option label="交通运输设备制造业" value="交通运输设备制造业"></el-option>
+                                        <el-option label="电气机械及器材制造业"
+                                                   value="电气机械及器材制造业"></el-option>
+                                        <el-option label="通信设备、计算机及其他电子设备制造业"
+                                                   value="通信设备、计算机及其他电子设备制造业"></el-option>
+                                        <el-option label="仪器仪表及文化、办公用机械制造业"
+                                                   value="仪器仪表及文化、办公用机械制造业"></el-option>
+                                        <el-option label="工艺品制造业" value="工艺品制造业"></el-option>
+                                        <el-option label="废弃资源和废旧材料回收加工业"
+                                                   value="废弃资源和废旧材料回收加工业"></el-option>
+                                        <el-option label="电力、热力的生产和供应业"
+                                                   value="电力、热力的生产和供应业"></el-option>
+                                        <el-option label="电商、零售" value="电商、零售"></el-option>
+                                        <el-option label="物流" value="物流"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            <template v-if="focusbtn">
+                                <el-form-item prop="portUser">
+                                    <el-select @visible-change="findPortUser()"
+                                               style="width: 300px"
+                                               filterable
+                                               reserve-keyword
+                                               clearable
+                                               v-model="portUsers"
+                                               placeholder="请输入端口电话小号">
+                                        <el-option
+                                                @click.native="portUserNameChange(item)"
+                                                v-for="(item, index) in portUserList"
+                                                :key="index"
+                                                :label="item.showPhone"
+                                                :value="item.portUserName">
+                                            <span style="float: left">端口使用人：{{ item.portUserName }} </span>
+                                            <span style="float: left;margin-left: 15px;margin-right: 15px;color: #8492a6; font-size: 13px">端口小号：{{ item.showPhone }}</span>
+                                            <span style="float: left;margin-left: 15px;margin-right: 15px; color: #8492a6; font-size: 13px">大区：{{ item.regionalName}}</span>
+                                            <span style="float: right; color: #8492a6; font-size: 13px">部门：{{ item.portDeptName}}</span>
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-input v-model="portUserName" placeholder="端口小号所属人" style="width: 300px">
+                                       <el-button @click="autoFillPortUser" slot="append">自动填充</el-button>
+                                    </el-input>
+                                </el-form-item>
+                            </template>
+                            </el-col>
+                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                <el-form-item label="客户来源:" prop="cusFrom">
+                                    <el-radio-group v-model="cusForm.cusFrom" @change="cusFromSelect">
+                                        <el-row>
+                                            <el-radio border size="mini"
+                                                      label="官网预约"
+                                                      style="width:120px;margin-top: 5px">官网预约
+                                            </el-radio>
+                                            <el-radio border size="mini"
+                                                      label="线下扫街"
+                                                      style="width:90px;margin-top: 5px">线下扫街
+                                            </el-radio>
+                                            <el-radio border size="mini"
+                                                      label="户外广告"
+                                                      style="width:120px;margin-top: 5px">户外广告
+                                            </el-radio>
+                                        </el-row>
+                                        <el-row>
+                                            <el-radio border size="mini"
+                                                      label="赶集付费"
+                                                      style="width:120px;margin-top: 5px">赶集付费
+                                            </el-radio>
+                                            <el-radio border size="mini"
+                                                      label="58付费"
+                                                      style="width:90px;margin-top: 5px">58付费
+                                            </el-radio>
+
+                                            <el-radio border size="mini"
+                                                      label="名单拨打"
+                                                      style="width:120px;margin-top: 5px">名单拨打
+                                            </el-radio>
+                                        </el-row>
+                                        <el-row>
+                                            <el-radio border size="mini"
+                                                      label="网络搜索"
+                                                      style="width:120px;margin-top: 5px">网络搜索
+                                            </el-radio>
+                                            <el-radio border size="mini"
+                                                      label="400客服"
+                                                      style="width:90px;margin-top: 5px">400客服
+                                            </el-radio>
+                                            <el-radio border size="mini"
+                                                      label="兼职推荐"
+                                                      style="width:120px;margin-top: 5px">兼职推荐
+                                            </el-radio>
+                                        </el-row>
+                                    </el-radio-group>
+                                </el-form-item>
+
+                                <el-form-item prop="ptCode" v-if="ptCodeVisible">
+                                    <el-input size="mini" style="width: 300px" disabled
+                                              v-model="cusForm.ptName"
+                                              placeholder="请选择兼职人">
+                                        <el-button style="width: 150px" slot="append"
+                                                   icon="el-icon-search"
+                                                   @click="openPartTime()">点击选择兼职人
+                                        </el-button>
+                                    </el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row v-if="type == '2' && type !='1'">
+                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                <el-form-item style="margin-left: 30px" label="客户类型：" prop="cusType">
+                                    <el-radio-group v-model="cusForm.cusType">
+                                        <el-radio border :label="2" size="small"
+                                                  @click="cusForm.noticeDepts=[],cusForm.noticeUsers=[]">我的
+                                        </el-radio>
+                                        <el-radio border :label="1" size="small">平台</el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+                            </el-col>
+                            <el-col v-if="focusbtn" :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                <el-form-item prop="noticeDepts" style="margin-left: 0px"
+                                              label="选择集中获客指定推送部门" labelWidth="70px">
+                                    <el-select @visible-change="loadDeptList()"
+
+                                               style="width: 300px"
+                                               multiple
+                                               @click="cusForm.cusType=1"
+                                               v-model="cusForm.noticeDepts"
+                                               filterable placeholder="请选择">
+                                        <el-option-group
+                                                v-for="deptList in deptEntityList"
+                                                :key="deptList.label"
+                                                :label="deptList.label"
+                                                :value="deptList.label">
+                                            <el-option
+                                                    @click.native="recordDeptHistory(item)"
+                                                    v-for="item in deptList.deptEntity"
+                                                    :key="item.deptCode"
+                                                    :label="item.deptName"
+                                                    :value="item.deptCode">
+                                                <span style="float: left">{{ item.deptName }}</span>
+                                                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.deptCode
+                                        }}</span>
+                                            </el-option>
+                                        </el-option-group>
+
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col v-if="focusbtn" :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                <el-form-item prop="noticeUsers" style="margin-left: 0px"
+                                              label="选择集中获客指定推送人" labelWidth="70px">
+                                    <el-select @visible-change="loadUserList()"
+                                               style="width: 300px"
+                                               multiple
+                                               @click="cusForm.cusType=1"
+                                               v-model="cusForm.noticeUsers"
+                                               change="changeValue"
+                                               value-key="userCode"
+                                               filterable placeholder="请选择">
+                                        <el-option
+                                                v-for="item in userEntity"
+                                                :key="item.userCode"
+                                                :label="item.userName"
+                                                :value="item.userCode">
+                                            <span style="float: left">{{ item.userName }}</span>
+                                            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.ownerDeptName
+                                        }}</span>
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-form-item style="margin-left: 30px" prop="fileRelationEntityList">
+                                <div style="float: none;display: inline-block;margin-bottom: 20px;width: 100%">
+                                    <div>
+                                        <span style="font-weight: bold">客户名片（可上传多张）：</span>
+                                        <el-button size="mini" type="primary" @click="addFile(1)">
+                                            添加
+                                        </el-button>
+                                    </div>
+
+                                    <div v-if="fileType == 'image' && fileItem.fileUse == '1'"
+                                         class="img-div1" v-for="(fileItem,fileIndex) in
+                                      cusForm.fileRelationEntityList" :key="fileIndex">
+                                        <template>
+                                            <i @click="removeImg(fileIndex)"
+                                               class="el-icon-circle-close"
+                                               style="float: right;"></i>
+                                            <img height="100%" width="100%"
+                                                 :src=" hkpBaseUrl + 'file/read/' + fileItem.fileCode"
+                                                 v-if="fileItem.fileCode">
+                                            <file @selectFile="selectImage($event,fileIndex)"
+                                                  class="file_button"
+                                                  v-if="!fileItem.fileCode"></file>
+                                        </template>
+                                    </div>
+                                </div>
+                            </el-form-item>
+                        </el-row>
+                        <el-row>
+                            <div style="float: none;display: inline-block;margin-bottom: 20px;margin-left:30px;width: 100%">
+                                <div>
+                                    <span style="font-weight: bold">客户委托协议（可上传多张）：</span>
+                                    <el-button size="mini" type="primary" @click="addFile(2)">添加
+                                    </el-button>
+                                </div>
+                                <div v-if="fileType == 'image' && fileItem.fileUse == '2'"
+                                     class="img-div1" v-for="(fileItem,fileIndex) in
+                                      cusForm.fileRelationEntityList" :key="fileIndex">
+                                    <template>
+                                        <i @click="removeImg(fileIndex)"
+                                           class="el-icon-circle-close" style="float: right;"></i>
+                                        <img height="100%" width="100%"
+                                             :src=" hkpBaseUrl + 'file/read/' + fileItem.fileCode"
+                                             v-if="fileItem.fileCode">
+                                        <file @selectFile="selectImage($event,fileIndex)"
+                                              class="file_button"
+                                              v-if="!fileItem.fileCode"></file>
+                                    </template>
+                                </div>
+                            </div>
+                        </el-row>
+                        <div style="margin-top: 40px;margin-left: 30px">
+                            <span style="font-weight: bold;">更多联系人（可添加多个）</span>
+                            <el-button size="mini" type="primary" @click="addContactsEntityList()">
+                                添加
+                            </el-button>
+                        </div>
+                        <div style="margin-left: 30px"
+                             v-for="(item,index) in cusForm.customerContactsEntityList"
+                             :key="index">
+                            <el-row>
+                                <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"
+                                        style="text-align: left">
+                                    <el-form-item label="客户手机号：" prop="contactPhone">
+                                        <el-input size="mini" style="width: 200px"
+                                                  v-model="item.contactPhone"
+                                                  @blur="checkCustomerPhone"
+                                                  placeholder="客户手机号"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"
+                                        style="text-align: left">
+                                    <el-form-item label="客户姓名：" prop="contactName">
+                                        <el-input size="mini" style="width: 150px"
+                                                  v-model="item.contactName"
+                                                  placeholder="客户姓名"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6"
+                                        style="text-align: left">
+                                    <el-form-item label="性别：" prop="contactSex">
+                                        <el-radio-group v-model="item.contactSex">
+                                            <el-radio :label="Sir">先生</el-radio>
+                                            <el-radio :label="Lady">女士</el-radio>
+                                        </el-radio-group>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2" style="text-align: center">
+                                    <el-form-item label="删除联系人">
+                                        <el-button size="small" type="danger" icon="el-icon-delete" circle
+                                                   @click="deleteContractList(index)"/>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </div>
+
+                        <div style="margin-top: 200px;width:100%;">
+                            <el-button class="next_step_btn" @click.prevent="nextPanel" round size="small">
+                                下一步
+                            </el-button>
+                        </div>
+                    </v-panel>
+                    <v-panel v-show="finishNeedAreaFlag" id="2cus" header="发布找房区域全网推广" index="2"
+                             :style="customPanelStyle" class="d_jump">
+                        <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                            <el-row>
+                                <el-form-item style="margin-left: 30px" label="房源用途：" prop="houseType">
+                                    <el-radio-group v-model="cusForm.houseType">
+                                        <el-radio border size="small" style="margin-right: 20px"
+                                                  :label=twohouseType>生产
+                                        </el-radio>
+                                        <el-radio border size="small" :label=onehouseType>仓库</el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+                            </el-row>
+
+                            <el-row>
+                                <el-form-item label="需求区域" prop="customerAreaEntityList" style="margin-left: 30px">
+                                    <el-cascader style="width: 350px"
+                                                 expand-trigger="click"
+                                                 clearable
+                                                 :options="departmentOptions"
+                                                 :props="props"
+                                                 filterable
+                                                 change-on-select
+                                                 placeholder="请选择客户需求区域"
+                                                 v-model="cusForm.customerAreaEntityList"
+                                                 @change="handleChange">
+                                    </el-cascader>
+                                </el-form-item>
+                            </el-row>
+                            <el-row>
+                                <el-form-item label="配电量：" prop="needVoltage" style="margin-left: 30px">
+                                    <el-input-number style="width: 220px" size="small"
+                                                     v-model="cusForm.needVoltage" :min="0"
+                                                     controls-position="right">
+                                    </el-input-number>
+                                    <el-button size="small">KVA</el-button>
+                                </el-form-item>
+                            </el-row>
+                            <el-row>
+                                <el-form-item label="消防等级:" prop="fireLevel" style="margin-left: 30px">
+                                    <el-radio-group v-model="cusForm.fireLevel">
+                                        <el-row>
+                                            <el-radio border size="mini"
+                                                      style="width: 70px"
+                                                      label="1">甲类
+                                            </el-radio>
+                                            <el-radio border size="mini"
+                                                      style="width: 70px"
+                                                      label="2">乙类
+                                            </el-radio>
+                                            <el-radio border size="mini"
+                                                      style="width: 70px"
+                                                      label="3">丙类
+                                            </el-radio>
+                                        </el-row>
+                                        <el-row>
+                                            <el-radio border size="mini"
+                                                      style="width: 70px"
+                                                      label="4">丁类
+                                            </el-radio>
+                                            <el-radio border size="mini"
+                                                      style="width: 70px"
+                                                      label="5">戊类
+                                            </el-radio>
+                                        </el-row>
+
+                                    </el-radio-group>
+                                </el-form-item>
+                            </el-row>
+                            <el-row>
+                                <el-form-item label="其他需求描述:" style="margin-left: 30px" prop="description">
+                                    <el-input type="textarea" style="padding-right: 20px" size="small"
+                                              v-model="cusForm.description"/>
+                                </el-form-item>
+                            </el-row>
+                        </el-col>
+                        <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8"
+                                style="padding-left: 20px">
+                            <el-form-item prop="products" label="行业俗称：" style="width: 300px">
+                                <el-input size="mini" v-model="cusForm.products"
+                                          placeholder="行业俗称（客户干什么的）"></el-input>
+                            </el-form-item>
+                            <el-form-item label="需求面积：" prop="needAcreage" style="margin-left: 0px">
+                                <el-input-number style="width: 300px" size="small"
+                                                 v-model="cusForm.needAcreage" :min="0"
+                                                 controls-position="right">
+                                </el-input-number>
+                            </el-form-item>
+                            <el-form-item label="期望租期：" prop="expectTerm" style="margin-left: 0px">
+                                <el-input size="mini" style="width: 270px" v-model="cusForm.expectTerm"
+                                          placeholder="请输入期望租期（月）"></el-input>
+                            </el-form-item>
+                            <el-form-item label="选择特点进行推广展示" style="width: 430px;margin-left: 0px">
+                                <div style="margin: 10px">
+                                    <el-checkbox v-model="cusForm.hasEia" label="要办环评" border size="mini"
+                                                 style="margin: 0px 10px 0px 0px;"></el-checkbox>
+                                    <el-checkbox v-model="cusForm.hasRegistry" label="要办注册" border size="mini"
+                                                 style="margin: 0px 10px 0px 0px;"></el-checkbox>
+                                </div>
+                                <div style="margin: 10px">
+                                    <el-checkbox v-model="cusForm.hasDischargeSewage" label="产证齐全" border size="mini"
+                                                 style="margin: 0px 10px 0px 0px;"></el-checkbox>
+                                    <el-checkbox v-model="cusForm.hasOfficeArea" label="要办公区" border size="mini"
+                                                 style="margin: 0px 10px 0px 0px;"></el-checkbox>
+                                </div>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                            <el-form-item label="楼层要求：" prop="layerNum" style="margin-left: 40px">
+                                <el-radio-group size="mini"
+                                                v-model="cusForm.layerNum">
+                                    <el-radio border label="1">底楼</el-radio>
+                                    <el-radio border label="2">楼上</el-radio>
+                                    <el-radio border label="3">楼上楼下</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
+                            <el-form-item label="价格：" prop="needPrice" style="margin-left: 35px">
+                                <el-input size="mini" style="width: 270px"
+                                          v-model="cusForm.needPrice">
+                                    <el-select style="width: 100px" size="mini" slot="append" prop="priceUnit"
+                                               v-model="cusForm.priceUnit"
+                                               placeholder="请选择">
+                                        <el-option label="元/㎡/天" value="元/㎡/天"></el-option>
+                                        <el-option label="元/㎡/月" value="元/㎡/月"></el-option>
+                                        <el-option label="元/㎡/年" value="元/㎡/年"></el-option>
+                                    </el-select>
+                                </el-input>
+                            </el-form-item>
+                            <el-form-item label="层高：" prop="layerHeight" style="margin-left: 40px">
+                                <el-input size="mini" style="width: 220px" v-model="cusForm.layerHeight"
+                                          placeholder="请输入需求层高（米）"></el-input>
+                                米
+                            </el-form-item>
+                            <el-form-item label="入住时间：" prop="enterTime" style="margin-left: 40px">
+                                <el-date-picker
+                                        v-model="cusForm.enterTime"
+                                        type="date"
+                                        size="mini"
+                                        style="width: 220px"
+                                        placeholder="客户要求找到房子的时间">
+                                </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </v-panel>
+                </v-collapse>
+            </el-form>
+        </div>
+        <div style="text-align: center;height: 190px;">
+            <div class="next_step_total">
+                <div class="next_step_right">
+                    <el-button v-show="finishNeedAreaFlag" class="next_step_btn" @click="submitForm('cusForm')"
+                               type="primary" plain round size="small">发布需求
+                    </el-button>
+                    <el-button v-if="waitAdd==false && focusbtn" class="next_step_btn"
+                               @click="submitCusWaitAdd('cusForm')"
+                               type="primary" plain round size="small">加入排队新增列表
+                    </el-button>
+                </div>
+            </div>
+        </div>
+    </el-dialog>
+
+</template>
+
+
+<script>
+    import file from "../../common/components/file.vue";
+    import commonPartTimeSearch from "../../common/views/CommonPartTimeSearch.vue"
+    import ElRow from "element-ui/packages/row/src/row";
+    import ElCol from "element-ui/packages/col/src/col";
+    import ElRadioButton from "../../../node_modules/element-ui/packages/radio/src/radio-button";
+    import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
+    import cusInsertMatchHos from "./cusInsertMatchHos.vue";
+
+    export default {
+        components: {
+            ElFormItem,
+            ElRadioButton,
+            ElCol,
+            ElRow,
+            file,
+            commonPartTimeSearch,
+            cusDetails: () => import ('./cusDetails.vue'),
+            cusInsertMatchHos,
+        },
+
+        created: function () {
+
+            var vm = this;
+            vm.focusbtn =  vm.$flagMenuStore.judgeMenu("focus-cus-create");
+        },
+
+
+        mounted() {
+            window.addEventListener('scroll', this.handleScroll, true);
+            var vm = this;
+            vm.handleChange();
+            vm.loadUserList();
+            vm.loadDeptList();
+        },
+
+        data() {
+
+            //校验电话号码
+            let checkPhone = (rule, value, callback) => {
+                setTimeout(() => {
+                    let pattern = this.$MOBILE_PATTERN;
+                    if (!pattern.test(value)) {
+                        callback(new Error('请输入正确的电话号码'));
+                    } else {
+                        callback();
+                    }
+                }, 100);
+            };
+
+            return {
+                focusbtn:false,
+                waitAdd: false,
+                deptEntityList: [],
+                historyDept: {
+                    label: '历史选择记录',
+                    deptEntity: []
+                },
+                userEntity: [],
+                selectDept: {
+                    label: '部门名称',
+                    deptEntity: [],
+                },
+
+                type: '',//面板类型 1为修改 2为新增
+                ptCodeVisible: false,
+                props: {
+                    value: 'areaCode',
+                    label: 'name',
+                    children: 'cities',
+                    multiple: true,
+                    checkStrictly: true
+                },
+                departmentOptions: [],
+                dialogImageUrl: '',
+                matchHosOpenOrClose: false,
+                dialogVisible: false,
+                cusDetailsOpenOrClose: false,
+                partTimeOpenOrClose: false,
+                finishNeedAreaFlag: true,
+                communityList: [],
+                itStreetArrCpy: [],
+                itAreaArrCpy: [],
+                itCityArrBase: [],
+                title: "",
+                rules: {
+                    cusType: [
+                        {required: true, message: '请选择客户类型', trigger: 'blur'},
+                    ],
+                    cusPhone: [
+                        {required: true, message: '请填写手机号码', trigger: 'blur'},
+                    ],
+                    cusName: [
+                        {required: true, message: '请填写客户姓名', trigger: 'blur'},
+                    ],
+                    cusSex: [
+                        {required: true, message: '请填写客户姓别', trigger: 'blur'},
+                    ],
+                    industry: [
+                        {required: true, message: '请选择客户行业', trigger: 'blur'},
+                    ],
+                    products: [
+                        {required: true, message: '请填写行业俗称', trigger: 'blur'},
+                    ],
+                    cusFrom: [
+                        {required: true, message: '请选择客户来源', trigger: 'blur'},
+                    ],
+                    ptCode: [
+                        {required: true, message: '请选择兼职', trigger: 'blur'},
+                    ],
+                    houseType: [
+                        {required: true, message: '请选择房源类型', trigger: 'blur'},
+                    ],
+                    customerAreaEntityList: [
+                        {required: true, message: '请选择客户需求区域', trigger: 'blur'},
+                    ],
+                    fireLevel: [
+                        {required: true, message: '请选择消防等级', trigger: 'blur'},
+                    ],
+                    needAcreage: [
+                        {required: true, message: '请输入需求面积', trigger: 'blur'},
+                    ],
+                    needPrice: [
+                        {required: true, message: '请输入客户需求价格', trigger: 'blur'},
+                    ],
+                    expectTerm: [
+                        {required: true, message: '请输入期望租期', trigger: 'blur'},
+                    ],
+                    layerNum: [
+                        {required: true, message: '请输入楼层', trigger: 'blur'},
+                    ],
+                    layerHeight: [
+                        {required: true, message: '请输入层高', trigger: 'blur'},
+                    ],
+                    enterTime: [
+                        {required: true, message: '请选择入住时间', trigger: 'blur'},
+                    ]
+                },
+                activeNames: ['1', '2', '3', '4', '5'],
+                customPanelStyle: {
+                    background: '#ffffff',
+                    borderRadius: '4px',
+                    marginBottom: '24px',
+                    border: 0,
+                },
+                fileType: 'image',
+                partTimeVisible: false,
+                fullHeight: document.documentElement.clientHeight,
+                visible: false,
+                //对应委托Entrust跳转的对象
+                cusEntrustSendObj:{
+                    sendName:null,
+                    entrustId:null,
+                    bespeakId:null
+
+                },
+                cusForm: {
+                    id: null,
+                    cusCode: null,
+                    industry: null,
+                    products: null,
+                    cusFrom: null,
+                    ptCode: null,
+                    ptName: null,
+                    divideType: null,
+                    divideRatio: null,
+                    divideCash: null,
+                    cusPhone: null,
+                    cusName: null,
+                    cusSex: null,
+                    cusType: null,
+                    houseType: null,
+                    needAcreage: null,
+                    needVoltage: null,
+                    needPrice: null,
+                    priceUnit: '元/㎡/天',
+                    layerNum: null,
+                    layerNumName: null,
+                    layerHeight: null,
+                    enterTime: null,
+                    expectTerm: null,
+                    fireLevel: null,
+                    needEia: false,
+                    needRegister: false,
+                    needCertificate: false,
+                    hasEia: false,
+                    hasRegistry: false,
+                    hasOfficeArea: false,
+                    hasDischargeSewage: false,
+                    description: null,
+                    openFlag: null,
+                    customerAreaEntityList: [],
+                    fileRelationEntityList: [],
+                    customerContactsEntityList: [],
+                    noticeDepts: [],
+                    noticeUsers: []
+                },
+                divideTypes: [
+                    {
+                        value: 'ratio',
+                        label: '分成比例',
+                    },
+                    {
+                        value: 'cash',
+                        label: '现金奖励',
+                    }
+                ],
+                options: [{
+                    value: '线下扫街',
+                    label: '线下扫街'
+                }, {
+                    value: '400电话委托',
+                    label: '400电话委托'
+                }, {
+                    value: '网络搜索',
+                    label: '网络搜索'
+                }, {
+                    value: '赶集付费',
+                    label: '赶集付费'
+                }, {
+                    value: '兼职推荐',
+                    label: '兼职推荐'
+                }, {
+                    value: '官网委托',
+                    label: '官网委托'
+                }, {
+                    value: '兼职推荐',
+                    label: '兼职推荐'
+                }, {
+                    value: '网络搜索',
+                    label: '网络搜索'
+                }, {
+                    value: '58付费',
+                    label: '58付费'
+                }, {
+                    value: '官网预约',
+                    label: '官网预约'
+                }, {
+                    value: '微信/QQ群',
+                    label: '微信/QQ群'
+                }, {
+                    value: '户外广告',
+                    label: '户外广告'
+                }, {
+                    value: '名单拨打',
+                    label: '名单拨打'
+                }, {
+                    value: '400客服',
+                    label: '400客服'
+                }],
+                onehouseType: '1',//仓库
+                twohouseType: '2',//生产
+                fireLevel1: '1',//甲
+                fireLevel2: '2',//乙
+                fireLevel3: '3',//丙
+                fireLevel4: '4',//丁
+                fireLevel5: '5',//戍
+                Sir: 'Sir',
+                Lady: 'Lady',
+                //所属省份
+                itProvinceArrCpy: [],
+                //所属城市
+                itCityArrCpy: [],
+                //所属区域
+                itAreaArrCpy: [],
+                itStreetArrCpy: [],
+                itCommunityArrCpy: [],
+                portUserList:[],
+                portUsers: '',
+                portUserName: '',
+            }
+
+
+        },
+
+        computed: {
+            fullName: function () {
+                return this.firstName + this.lastName;
+            },
+
+
+            severalComValue() {
+                return this.cusForm.severalLayers
+            }
+        },
+        watch: {
+            fullHeight(val) {
+                if (!this.timer) {
+                    this.fullHeight = val
+                    this.timer = true
+                    let that = this
+                    setTimeout(function () {
+                        that.timer = false
+                    }, 400)
+                }
+            },
+        },
+
+        updated() {
+            const that = this
+            window.onresize = () => {
+                return (() => {
+                    window.fullHeight = document.documentElement.clientHeight
+                    that.fullHeight = window.fullHeight
+                })()
+            }
+        },
+
+        methods: {
+            portUserNameChange(item) {
+                this.portUserName = item.portUserName;
+            },
+            findPortUser() {
+                var vm = {};
+                vm = this;
+                var sendObj = {};
+                var options = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "portUser/portUserList",
+                };
+                this.$ajax(
+                    options
+                ).then(function (response) {
+                    vm.portUserList = response.data.result;
+                }).catch(() => {
+                    vm.$message.error('页面:获取数据失败! portUser/portUserList');
+                });
+            },
+            autoFillPortUser() {
+                var vm = {};
+                vm = this;
+                var sendObj = {};
+                sendObj.cusPhone = vm.cusForm.cusPhone;
+                var options = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "customer/findPortUserByCaller",
+                };
+                this.$ajax(
+                    options
+                ).then(function (response) {
+                    vm.portUsers = response.data.result[0].showPhone;
+                    vm.cusForm.noticeUsers = [];
+                    vm.cusForm.noticeDepts = [];
+                    vm.portUserName='';
+                    let deptCodes =[];
+
+                    for (var i = 0; i < response.data.result.length; i++) {
+
+                        vm.portUserName += response.data.result[i].portUserName+" ";
+                        vm.cusForm.noticeUsers.push(response.data.result[i].portUserCode);
+                       // vm.cusForm.noticeDepts.push(response.data.result[i].portDeptCode);
+                        deptCodes.push(response.data.result[i].portDeptCode);
+                    }
+                    let unique = vm.unique(deptCodes);
+                    vm.cusForm.noticeDepts = unique;
+
+                }).catch(() => {
+                    vm.$message.error('customer/findPortUserByCaller');
+                });
+            },
+
+
+            unique(deptCodes) {
+                //const res = new Map();
+                //return deptCodes.filter((deptCodes) => !res.has(deptCodes.portDeptCode) && res.set(deptCodes.portDeptCode, 1))
+
+             return   deptCodes=[...new Set(deptCodes)];
+            },
+
+
+            getWaitAddCusDetails() {
+                var vm = this;
+                var obj = {
+                    entity: vm.cusForm
+                }
+                var options = {
+                    method: "POST",
+                    data: obj,
+                    url: "customer/cusWaitAddDetail"
+                };
+                this.$ajax(
+                    options
+                ).then(response => {
+                    vm.cusForm = response.data.result;
+                    let a = vm.cusForm.customerAreaEntityList;
+                    let areaList = [];
+                    if (a != null && a.length > 0) {
+                        for (let i = 0; i < a.length; i++) {
+                            areaList.push(
+                                []
+                            )
+                            for (let j = 0; j <= 4; j++) {
+                                if (j == 0 && a[i].province != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].province + "," + a[i].provinceName
+                                    )
+                                } else if (j == 1 && a[i].city != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].city + "," + a[i].cityName
+                                    )
+                                } else if (j == 2 && a[i].region != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].region + "," + a[i].regionName
+                                    )
+                                } else if (j == 3 && a[i].street != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].street + "," + a[i].streetName
+                                    )
+                                } else if (j == 4 && a[i].community != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].community + "," + a[i].communityName
+                                    )
+                                }
+                            }
+                        }
+                        vm.cusForm.customerAreaEntityList = areaList;
+                    }
+                }).catch(error => {
+
+                    vm.$notify({
+                        type: 'info',
+                        message: '转换待新增客户详情失败'
+                    });
+                });
+
+            },
+
+            submitCusWaitAdd(formName) {
+                var vm = this;
+                if (vm.cusForm.customerAreaEntityList != null
+                    && vm.cusForm.customerAreaEntityList.length > 0) {
+                    vm.setAreaList(vm);
+                }
+                if (vm.cusForm.cusType == null || vm.cusForm.cusType == '') {
+                    vm.cusForm.cusType = 1;
+                }
+                var obj = {
+                    entity: vm.cusForm
+                }
+                var options = {
+                    method: "POST",
+                    data: obj,
+                    url: "customer/cusWaitAddCreate"
+                };
+                this.$ajax(
+                    options
+                ).then(response => {
+                    vm.$notify.success(response.data.message);
+                    vm.visible = false;
+                    vm.resetForm(formName);
+                }).catch(error => {
+                    vm.$notify({
+                        type: 'info',
+                        message: '转换待新增客户失败'
+                    });
+                });
+            },
+
+            recordDeptHistory(item) {
+                var vm = this;
+                if (item != null) {
+                    var history = localStorage.getItem("historyDept");
+                    if (history == null) {
+                        vm.historyDept.deptEntity.push(item);
+                        localStorage.setItem("historyDept", JSON.stringify(vm.historyDept), 0);
+                    } else {
+                        var hisDept = JSON.parse(history);
+                        //重复的数据不加入缓存
+                        let flag = hisDept.deptEntity.some(d => d.id == item.id);
+                        if (flag == false) {
+                            if (hisDept.deptEntity.length >= 6) {
+                                hisDept.deptEntity.shift();
+                            }
+                            hisDept.deptEntity.push(item);
+                            localStorage.setItem("historyDept", JSON.stringify(hisDept), 0);
+                        }
+                    }
+                }
+            },
+            //加载部门数据
+            loadUserList() {
+                console.log(1)
+                var vm = this;
+                var sendObj = {};
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "user/queryAllUser",
+                };
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    vm.userEntity = response.data.result;
+                }).catch(function (error) {
+
+                });
+            },
+            //加载部门数据
+            loadDeptList() {
+                var vm = this;
+                var sendObj = {};
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "dept/findDeptName",
+                };
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    vm.deptEntityList = [];
+                    let history = localStorage.getItem("historyDept");
+                    if (history != null) {
+                        console.log(JSON.parse(history))
+                        vm.historyDept.deptEntity = JSON.parse(history);
+                        console.log(vm.deptEntityList)
+                        vm.deptEntityList.push(vm.historyDept.deptEntity);
+                    }
+                    vm.selectDept.deptEntity = response.data.result;
+                    if (vm.selectDept.deptEntity != null) {
+                        vm.deptEntityList.push(vm.selectDept);
+                    }
+                }).catch(function (error) {
+
+                });
+            },
+            cusFromSelect() {
+                var vm = this;
+                if (vm.cusForm.cusFrom == "兼职推荐") {
+                    vm.ptCodeVisible = true;
+                } else {
+                    vm.ptCodeVisible = false;
+                }
+            },
+            nextPanel() {
+                var vm = this;
+                vm.finishNeedAreaFlag = true;
+                vm.custormAnchor('2cus');
+            },
+
+            changeStreetCpy(aval) {
+                //清空code
+                var vm = this;
+                vm.houseLocationObj.street = aval;
+                vm.houseLocationObj.streetName = "";
+                //赋值区域name
+                let areaObj = {};
+                areaObj = this.itStreetArrCpy.find((item) => {
+                    return item.areaCode === aval;
+                });
+                vm.houseLocationObj.streetName = areaObj.name;
+                console.log(vm.houseLocationObj.streetName);
+            },
+            /*街道查询*/
+            getStreetListCpy(aVal) {
+                if (aVal != "" && aVal != null) {
+                    var vm = this;
+                    var obj = {};
+                    obj.parentCode = aVal;
+                    var sendObj = {};
+                    sendObj.entity = obj;
+                    var options = {
+                        method: 'POST',
+                        data: sendObj,
+                        url: "cpyArea/queryNoPage",
+                    };
+                    this.$ajax(
+                        options
+                    ).then(function (response) {
+                        vm.itStreetArrCpy = response.data.result;
+                    }).catch(function (error) {
+                        vm.$message({
+                            showClose: true,
+                            message: '页面:查询街道信息失败!cpyArea/queryNoPage',
+                            type: 'error'
+                        });
+                    });
+                }
+
+
+            },
+            changeRegionCpy(aval) {
+                //清空code
+                this.houseLocationObj.street = "";
+                this.houseLocationObj.streetName = "";
+                //赋值区域name
+                let areaObj = {};
+                areaObj = this.itAreaArrCpy.find((item) => {
+                    return item.areaCode === aval;
+                });
+                this.houseLocationObj.regionName = areaObj.name;
+            },
+            /*区域查询*/
+            getAreaListCpy(bVal) {
+                if (bVal != "" && bVal != null) {
+                    var vm = this;
+                    var obj = {};
+                    obj.parentCode = bVal;
+                    var sendObj = {};
+                    sendObj.entity = obj;
+                    var options = {
+                        method: 'POST',
+                        data: sendObj,
+                        url: "cpyArea/queryNoPage",
+                    };
+                    this.$ajax(
+                        options
+                    ).then(function (response) {
+                        vm.itAreaArrCpy = response.data.result;
+                    }).catch(function (error) {
+
+                        vm.$notify({
+                            title: '警告:queryNoPage请求失败',
+                            message: '页面:查询区域信息失败!cpyArea/queryNoPage',
+                            type: 'warning'
+                        });
+                    });
+                }
+            },
+            custormAnchor(anchorName) {
+                // 找到锚点
+                let anchorElement = document.getElementById(anchorName);
+                // 如果对应id的锚点存在，就跳转到锚点
+                if (anchorElement) {
+                    anchorElement.scrollIntoView();
+                }
+            },
+            jump(index) {
+                let jump = document.querySelectorAll('.d_jump')
+                // 获取需要滚动的距离
+                let total = jump[index].offsetTop
+                // Chrome
+                document.body.scrollTop = total
+                // Firefox
+                document.documentElement.scrollTop = total
+                // Safari
+                window.pageYOffset = total
+            },
+            //关闭客户详情面板
+            closeDialog(done) {
+                var vm = this;
+                vm.resetForm('cusForm');
+                this.visible = false;
+                done();
+            },
+
+            resetForm(formName) {
+                var vm = this;
+                vm.historyDept.deptEntity = [];
+                vm.cusForm.noticeDepts = [];
+                vm.cusForm.noticeUsers = [];
+                vm.cusForm.hasEia = false;
+                vm.cusForm.hasRegistry = false,
+                vm.cusForm.hasOfficeArea = false,
+                vm.cusForm.hasDischargeSewage = false;
+                vm.portUserList=[],
+                vm.portUsers=[],
+                vm.$refs[formName].resetFields();
+            },
+
+            openPartTimeDialog() {
+                var vm = this;
+                vm.partTimeVisible = true;
+                vm.$nextTick(() => {
+                    vm.$refs.partTimes.partTimeCommonDialogFormVisible = true;
+                    vm.$refs.partTimes.handleSizeChange(30);
+                })
+            },
+
+            //关闭兼职面板
+            closePartTimePanel(data) {
+                this.$refs.refPartTime.partTimeCommonDialogFormVisible = false;
+                this.cusForm.ptCode = data.ptCode;
+                this.cusForm.ptName = data.ptName;
+            },
+
+            //添加图片 最多5张
+            addFileListImg() {
+                this.cusForm.fileList.push({
+                    fileCode: '',
+                    fileType: this.fileType
+                })
+
+            },
+
+            //删除图片
+            deleteFileListImg() {
+                this.cusForm.fileList = [{
+                    fileCode: '',
+                    fileType: ''
+                }]
+            },
+            selectFileListImage(urls, ind2) {
+                if (urls.length == 1) {
+                    this.cusForm.fileList[ind2].fileCode = urls.toString();
+                    this.cusForm.fileList[ind2].fileType = this.fileType;
+                } else {
+                    vm.$notify({
+                        message: '仅支持上传一张照片',
+                        title: '操作提示'
+                    });
+                    return;
+                }
+            },
+
+            //新增时移除图片
+            removeFileListImg(ind2) {
+                this.cusForm.fileList[ind2].fileCode = '';
+                this.cusForm.fileList[ind2].fileType = '';
+            },
+
+            setAreaList(vm) {
+                let areas = [];
+                for (let i = 0; i < vm.cusForm.customerAreaEntityList.length; i++) {
+                    areas.push({
+                        province: null,
+                        provinceName: null,
+                        city: null,
+                        cityName: null,
+                        street: null,
+                        streetName: null,
+                        community: null,
+                        communityName: null
+                    })
+                    for (let j = 0; j < vm.cusForm.customerAreaEntityList[i].length; j++) {
+                        if (j == 0) {
+                            areas[areas.length - 1].province = vm.cusForm.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].provinceName = vm.cusForm.customerAreaEntityList[i][j].split(',')[1];
+                        } else if (j == 1) {
+                            areas[areas.length - 1].city = vm.cusForm.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].cityName = vm.cusForm.customerAreaEntityList[i][j].split(',')[1];
+                        } else if (j == 2) {
+                            areas[areas.length - 1].region = vm.cusForm.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].regionName = vm.cusForm.customerAreaEntityList[i][j].split(',')[1];
+                        } else if (j == 3) {
+                            areas[areas.length - 1].street = vm.cusForm.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].streetName = vm.cusForm.customerAreaEntityList[i][j].split(',')[1];
+                        } else if (j == 4) {
+                            areas[areas.length - 1].community = vm.cusForm.customerAreaEntityList[i][j].split(',')[0];
+                            areas[areas.length - 1].communityName = vm.cusForm.customerAreaEntityList[i][j].split(',')[1];
+                        }
+                    }
+                }
+                vm.cusForm.customerAreaEntityList = areas;
+            },
+
+            clostCreatePanel(cusCode, formName) {
+                var vm = this;
+                vm.openCusMatchHos(cusCode);
+                vm.visible = false;
+                vm.resetForm(formName);
+                vm.$emit('changeCusAdd');
+            },
+            submitForm(formName) {
+                var vm = this;
+                vm.setAreaList(vm);
+                if (((vm.cusForm.noticeDepts != null && vm.cusForm.noticeDepts.length > 0)
+                    || (vm.cusForm.noticeUsers != null && vm.cusForm.noticeUsers.length > 0))
+                    && vm.cusForm.cusType != null) {
+                    vm.cusForm.cusType = 1;
+                }
+                var obj = {
+                    entity: vm.cusForm
+                }
+
+                //对应委托列表和预约列表转过来的增加发送字段
+                if(vm.cusEntrustSendObj.sendName !=null){
+                    if(vm.cusEntrustSendObj.sendName =="EntrustSend"){
+                        obj.entity.entrustId = vm.cusEntrustSendObj.entrustId;
+                    }
+                    if(vm.cusEntrustSendObj.sendName =="bespeakSend"){
+                        obj.entity.bespeakId = vm.cusEntrustSendObj.bespeakId;
+                    }
+                }
+                //对应委托列表和预约列表转过来的增加发送字段end
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        if (vm.cusForm.id == '' || vm.cusForm.id == null) {
+                            var options = {
+                                method: "POST",
+                                data: obj,
+                                url: "customer/create"
+                            };
+                            this.$ajax(
+                                options
+                            ).then(response => {
+                                vm.$notify.success(response.data.message);
+                                vm.cusForm.cusCode = response.data.result;
+                                vm.clostCreatePanel(vm.cusForm.cusCode, formName);
+
+                                if (vm.waitAdd == true) {
+                                    vm.$emit('refresh');
+                                }
+
+                            }).catch(error => {
+                                vm.$notify({
+                                    type: 'info',
+                                    message: '新增客户失败'
+                                });
+                            });
+                        } else {
+                            var options = {
+                                method: "POST",
+                                data: obj,
+                                url: "customer/update"
+                            };
+                            this.$ajax(
+                                options
+                            ).then(response => {
+                                vm.$notify({
+                                    message: '操作成功',
+                                    type: 'success'
+                                });
+
+                                vm.visible = false;
+                                vm.resetForm(formName);
+                                vm.$emit('changeCusUpdate');
+
+                            }).catch(error => {
+                                vm.$notify({
+                                    type: 'info',
+                                    message: '修改客户失败'
+                                });
+                            });
+                        }
+                    } else {
+                        vm.$notify({
+                            message: '数据填写不完整',
+                            type: 'warning'
+                        });
+                    }
+                })
+            },
+            //打开客户智能匹配房源面板
+            openCusMatchHos(cusCode) {
+                var vm = this;
+                vm.matchHosOpenOrClose = true;
+                vm.$nextTick(() => {
+                    vm.$refs.refMatchHos.visible = true;
+                    vm.$refs.refMatchHos.cusCodeMatchHos = cusCode;//传值给组件
+                    vm.$refs.refMatchHos.handleSizeChange(30);
+                })
+            },
+
+            closePartTime() {
+                this.$refs.refPartTime.partTimeCommonDialogFormVisible = false;
+            },
+
+            checkCustomerPhone(val) {
+                var vm = this;
+                var sendObj = {}
+                sendObj.cusPhone = val
+                var option = {
+                    method: 'POST',
+                    headers: {'content-type': 'application/json'},
+                    data: sendObj,
+                    url: "customer/checkCustomerPhone",
+                };
+                this.$ajax(
+                    option
+                ).then(function (response) {
+                    var cusList = response.data.result
+                    if (response.data.code == '415' && cusList.length > 0) {
+                        vm.$confirm(response.data.message, '操作提示', {
+                            confirmButtonText: '查看该客户',
+                            cancelButtonText: '继续新增',
+                            type: 'warning'
+                        }).then(() => {
+                            vm.toCusDetails(cusList);
+                        })
+                    }
+                }).catch(function (error) {
+                    vm.$notify.error('失败');
+                })
+            },
+            //跳转到客户详情
+            toCusDetails(cusList) {
+                var vm = this;
+                vm.cusDetailsOpenOrClose = true;
+                vm.$nextTick(() => {
+                    try {
+                        vm.$refs.cusDetailsx.visible = true;
+                        vm.$refs.cusDetailsx.cusCodeDetails = cusList[0].cusCode;//传值给组件
+                        vm.$refs.cusDetailsx.getCusDetails();
+                    } catch (e) {
+                        vm.toCusDetails(cusList);
+                    }
+
+                })
+            },
+            //跳转添加兼职
+            openPartTime() {
+                this.partTimeOpenOrClose = true
+                this.$nextTick(() => {
+                    this.$refs.refPartTime.partTimeCommonDialogFormVisible = true
+                })
+            },
+            //添加兼职
+            setPartTime(a) {
+                this.partTimeOpenOrClose = false;
+                this.$refs.refPartTime.partTimeCommonDialogFormVisible = false
+                if (a == 0) {
+                    return;
+                }
+                this.cusForm.ptCode = a.ptCode
+                this.cusForm.ptName = a.ptName
+
+            },
+            selectImage(urls, ind1) {
+                if (urls.length == 1) {
+                    this.cusForm.fileRelationEntityList[ind1].fileCode = urls.toString();
+                    this.cusForm.fileRelationEntityList[ind1].fileType = this.fileType;
+                } else {
+                    this.$notify({
+                        message: '仅支持上传一张照片',
+                        title: '操作提示'
+                    });
+                    return;
+                }
+            },
+            addFile(type) {
+                let arr = this.cusForm.fileRelationEntityList;
+                if (arr.length > 0) {
+                    let file = arr[arr.length - 1]
+                    if (file.fileCode.length == 0) {
+                        this.$notify.info("信息不完整");
+                        return;
+                    }
+                }
+                this.cusForm.fileRelationEntityList.push({
+                    fileCode: '',
+                    fileUse: type,
+                    fileType: 'image'
+                })
+            },
+            //新增时移除图片
+            removeImg(ind1) {
+                this.cusForm.fileRelationEntityList.splice(ind1, 1);
+            },
+
+            //更多联系人添加面板
+            addContactsEntityList() {
+                let obj = {}
+                let arr = this.cusForm.customerContactsEntityList;
+                if (arr.length > 0) {
+                    obj = arr[arr.length - 1]
+                    if (obj.contactName.length == 0 || obj.contactSex.length == 0) {
+                        this.$notify.info("联系人信息不完整");
+                        return;
+                    }
+                    var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+                    if (!myreg.test(obj.contactPhone)) {
+                        this.$notify.info("手机号不正确");
+                        return;
+                    }
+                }
+                arr.push({
+                    contactPhone: '',
+                    contactName: '',
+                    contactSex: ''
+                })
+            },
+            deleteContractList(ind) {
+                this.cusForm.customerContactsEntityList.splice(ind, 1);
+            },
+            deleteAreaList(ind) {
+                this.cusForm.customerAreaEntityList.splice(ind, 1);
+            },
+
+            //改变省
+            changeProvCpy(a, val) {
+
+                let obj = {}
+                obj = this.itProvinceArrCpy.find((i) => {
+                    return i.areaCode === a;
+                })
+                let name = obj.name;
+                this.cusForm.customerAreaEntityList[val].provinceName = name;
+                //清空code
+                this.cusForm.customerAreaEntityList[val].city = null;
+                this.cusForm.customerAreaEntityList[val].region = null;
+                this.cusForm.customerAreaEntityList[val].cityName = null;
+                this.cusForm.customerAreaEntityList[val].regionName = null;
+                this.cusForm.customerAreaEntityList[val].street = null;
+                this.cusForm.customerAreaEntityList[val].streetName = null;
+                this.cusForm.customerAreaEntityList[val].community = null;
+                this.cusForm.customerAreaEntityList[val].communityName = null;
+            },
+            //改变市
+            changeCityCpy(a, val) {
+                let obj = {}
+                obj = this.itCityArrCpy.find((i) => {
+                    return i.areaCode === a;
+                })
+                let name = obj.name;
+                this.cusForm.customerAreaEntityList[val].cityName = name;
+                this.cusForm.customerAreaEntityList[val].region = null;
+                this.cusForm.customerAreaEntityList[val].regionName = null;
+                this.cusForm.customerAreaEntityList[val].street = null;
+                this.cusForm.customerAreaEntityList[val].streetName = null;
+                this.cusForm.customerAreaEntityList[val].community = null;
+                this.cusForm.customerAreaEntityList[val].communityName = null;
+            },
+            changeCityRegion(a, val) {
+
+                let obj = {}
+                obj = this.itAreaArrCpy.find((i) => {
+                    return i.areaCode === a;
+                })
+                let name = obj.name;
+                this.cusForm.customerAreaEntityList[val].regionName = name;
+                this.cusForm.customerAreaEntityList[val].street = null;
+                this.cusForm.customerAreaEntityList[val].streetName = null;
+                this.cusForm.customerAreaEntityList[val].community = null;
+                this.cusForm.customerAreaEntityList[val].communityName = null;
+            },
+
+            changeStreet(a, val) {
+
+                let obj = {}
+                obj = this.itStreetArrCpy.find((i) => {
+                    return i.areaCode === a;
+                })
+                let name = obj.name;
+                this.cusForm.customerAreaEntityList[val].streetName = name;
+                this.cusForm.customerAreaEntityList[val].community = null;
+                this.cusForm.customerAreaEntityList[val].communityName = null;
+            },
+
+
+            changeCommunity(a, val) {
+
+                let obj = {}
+                obj = this.itCommunityArrCpy.find((i) => {
+                    return i.areaCode === a;
+                })
+                let name = obj.name;
+                this.cusForm.customerAreaEntityList[val].communityName = name;
+            },
+
+            /*省份查询*/
+            handNeedProvinceCpy() {
+                var vm = this;
+                var obj = {};
+                obj.parentCode = 0;
+                var sendObj = {};
+                sendObj.entity = obj;
+                var options = {
+                    method: 'POST',
+                    data: sendObj,
+                    url: "cpyArea/queryNoPage",
+                };
+                this.$ajax(
+                    options
+                ).then(function (response) {
+                    vm.itProvinceArrCpy = response.data.result;
+                }).catch(function (error) {
+                    vm.$message({
+                        showClose: true,
+                        message: '页面:查询省份信息失败!cpyArea/queryNoPage',
+                        type: 'error'
+                    });
+                });
+            },
+            /*市区查询*/
+            getCitieListCpy(aVal) {
+                if (aVal != null && aVal != "") {
+                    var vm = this;
+                    var obj = {};
+                    obj.parentCode = aVal;
+                    var sendObj = {};
+                    sendObj.entity = obj;
+                    var options = {
+                        method: 'POST',
+                        data: sendObj,
+                        url: "cpyArea/queryNoPage",
+                    };
+                    this.$ajax(
+                        options
+                    ).then(function (response) {
+                        vm.itCityArrCpy = response.data.result;
+                    }).catch(function (error) {
+                        vm.$message({
+                            showClose: true,
+                            message: '页面:查询城市信息失败!cpyArea/queryNoPage',
+                            type: 'error'
+                        });
+                    });
+                }
+
+            },
+            /*区域查询*/
+            getAreaListCpy(bVal) {
+                if (bVal != null && bVal != "") {
+                    var vm = this;
+                    var obj = {};
+                    obj.parentCode = bVal;
+                    var sendObj = {};
+                    sendObj.entity = obj;
+                    var options = {
+                        method: 'POST',
+                        data: sendObj,
+                        url: "cpyArea/queryNoPage",
+                    };
+                    this.$ajax(
+                        options
+                    ).then(function (response) {
+                        vm.itAreaArrCpy = response.data.result;
+                    }).catch(function (error) {
+                        vm.$message({
+                            showClose: true,
+                            message: '页面:查询区域信息失败!cpyArea/queryNoPage',
+                            type: 'error'
+                        });
+                    });
+                }
+            },
+            /*街道查询*/
+            getStreetListCpy(bVal) {
+                if (bVal != null && bVal != "") {
+                    var vm = this;
+                    var obj = {};
+                    obj.parentCode = bVal;
+                    var sendObj = {};
+                    sendObj.entity = obj;
+                    var options = {
+                        method: 'POST',
+                        data: sendObj,
+                        url: "cpyArea/queryNoPage",
+                    };
+                    this.$ajax(
+                        options
+                    ).then(function (response) {
+                        vm.itStreetArrCpy = response.data.result;
+                    }).catch(function (error) {
+                        vm.$message({
+                            showClose: true,
+                            message: '页面:查询街道信息失败!cpyArea/queryNoPage',
+                            type: 'error'
+                        });
+                    });
+                }
+            },
+            /*区域查询*/
+            getCommunityListCpy(bVal) {
+                if (bVal != null && bVal != "") {
+                    var vm = this;
+                    var obj = {};
+                    obj.parentCode = bVal;
+                    var sendObj = {};
+                    sendObj.entity = obj;
+                    var options = {
+                        method: 'POST',
+                        data: sendObj,
+                        url: "cpyArea/queryNoPage",
+                    };
+                    this.$ajax(
+                        options
+                    ).then(function (response) {
+                        vm.itCommunityArrCpy = response.data.result;
+                    }).catch(function (error) {
+                        vm.$message({
+                            showClose: true,
+                            message: '页面:查询社区信息失败!cpyArea/queryNoPage',
+                            type: 'error'
+                        });
+                    });
+                }
+            },
+            //更多需求区域
+            addAddress() {
+                let obj = {}
+                let arr = this.cusForm.customerAreaEntityList;
+                if (arr.length > 0) {
+                    obj = arr[arr.length - 1]
+                    if (
+                        obj.province == null || obj.city == null || obj.region == null ||
+                        obj.province.length == 0 || obj.city.length == 0 || obj.region.length == 0) {
+                        this.$notify.info("需求区域信息不完整");
+                        return;
+                    }
+                }
+                arr.push({
+                    province: '',
+                    city: '',
+                    region: '',
+                    street: '',
+                    community: '',
+                    provinceName: '',
+                    cityName: '',
+                    regionName: '',
+                    streetName: '',
+                    communityName: ''
+                })
+            },
+
+            //省市区街道
+            handleChange() {
+                var vm = this;
+                var options = {
+                    method: 'POST',
+                    url: "cpyArea/queryAllCascader",
+                    data: {}
+                };
+                this.$ajax(
+                    options
+                ).then(function (response) {
+                    vm.departmentOptions = response.data.result;
+                }).catch(function (error) {
+                    vm.$message.error('页面:获取数据失败! cpyArea/queryAll');
+                });
+            },
+
+            handleArea(val) {
+                var vm = this;
+                var obj = {};
+                if (val != null && val != "") {
+                    obj.parentCode = val;
+                } else {
+                    obj.parentCode = 0;
+                }
+                var sendObj = {};
+                sendObj.entity = obj;
+                var options = {
+                    method: 'POST',
+                    data: sendObj,
+                    url: "cpyArea/queryNoPage",
+                };
+                this.$ajax(
+                    options
+                ).then(function (response) {
+                    if (!val) {
+                        let items = response.data.result;
+                        this.departmentOptions = items.map((value, i) => {
+                            return {
+                                areaCode: value.areaCode,
+                                name: value.name,
+                                cities: [],
+                            }
+                        })
+                    } else if (val.length == 1) {
+                        this.departmentOptions.map((value, i) => {
+                            if (value.areaCode == val[0]) {
+
+                            }
+                        })
+                    } else if (val.length == 2) {
+
+                    } else if (val.length == 3) {
+
+                    } else if (val.length == 4) {
+
+                    }
+
+                }).catch(function (error) {
+                    vm.$message({
+                        showClose: true,
+                        message: '页面:查询信息失败!cpyArea/queryNoPage',
+                        type: 'error'
+                    });
+                });
+
+
+            },
+
+            access(val) {
+                if (this.type == '1') {
+                    var vm = this;
+                    var sendObj = {}
+                    sendObj.entity = {"cusCode": val}
+                    var option = {
+                        method: 'POST',
+                        headers: {'content-type': 'application/json'},
+                        data: sendObj,
+                        url: "customer/edit",
+                    };
+                    this.$ajax(
+                        option
+                    ).then(function (response) {
+                        vm.cusForm = response.data.result;
+                        let a = vm.cusForm.customerAreaEntityList;
+                        let areaList = [];
+                        for (let i = 0; i < a.length; i++) {
+                            areaList.push(
+                                []
+                            )
+                            for (let j = 0; j <= 4; j++) {
+                                if (j == 0 && a[i].province != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].province + "," + a[i].provinceName
+                                    )
+                                } else if (j == 1 && a[i].city != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].city + "," + a[i].cityName
+                                    )
+                                } else if (j == 2 && a[i].region != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].region + "," + a[i].regionName
+                                    )
+                                } else if (j == 3 && a[i].street != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].street + "," + a[i].streetName
+                                    )
+                                } else if (j == 4 && a[i].community != null) {
+                                    areaList[areaList.length - 1].push(
+                                        a[i].community + "," + a[i].communityName
+                                    )
+                                }
+                            }
+                        }
+                        vm.cusForm.customerAreaEntityList = areaList;
+                    }).catch(function (error) {
+                        vm.$message.error('页面:获取数据失败!customer/edit');
+                    })
+                }
+            },
+        }
+
+    }
+
+</script>
+
+
+<style scoped>
+
+    .img-div1 {
+        float: left;
+        border: 1px solid #f2f2f2;
+        height: 200px;
+        width: 200px;
+    }
+
+    .cus-div {
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-top: 1px solid gainsboro;
+    }
+
+    .word_title {
+        margin: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 0px;
+        height: auto;
+        width: auto;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn_title_1h {
+        margin: 0px 0px 0px 280px;
+        height: auto;
+        width: auto;
+    }
+
+    .btn_title_3h {
+        margin: 0px 0px 0px 50px;
+        height: auto;
+        width: auto;
+    }
+
+    .next_step_total {
+        margin: 0px 0px 0px 0px;
+        border-top: 2px solid gainsboro;
+        padding: 0px 0px 0px 0px;
+        height: 55px;
+        width: 100%;
+    }
+
+    .next_step_right {
+        margin: 10px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+        height: 55px;
+        width: 555px;
+        float: right;
+    }
+
+    .next_step_btn {
+        margin: 10px 20px 10px 0px;
+        float: right;
+        height: 30px;
+        width: 180px;
+    }
+
+    .file_button {
+        margin-top: 80px;
+        margin-left: 50px;
+    }
+
+</style>
+<style>
+
+    .ant-collapse > .ant-collapse-item > {
+        height: 38px;
+        line-height: 38px;
+        padding-left: 32px;
+        color: rgba(0, 0, 0, 0.85);
+        cursor: pointer;
+        position: relative;
+        transition: all .3s;
+        border-bottom: 2px solid #409EFF;
+    }
+
+</style>

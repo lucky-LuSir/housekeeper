@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.CustomerFollowupEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerFollowupEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="is_decision" property="isDecision" jdbcType="BOOLEAN"/>
+        <result column="is_initiative_ask" property="isInitiativeAsk" jdbcType="BOOLEAN"/>
+        <result column="is_active" property="isActive" jdbcType="BOOLEAN"/>
+        <result column="is_find_local" property="isFindLocal" jdbcType="BOOLEAN"/>
+        <result column="manager_followup" property="managerFollowup" jdbcType="BOOLEAN"/>
+        <result column="followup_code" property="followupCode" jdbcType="VARCHAR"/>
+        <result column="followup_content" property="followupContent" jdbcType="VARCHAR"/>
+        <result column="followup_type" property="followupType" jdbcType="VARCHAR"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="emp_phone" property="empPhone" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="user_img" property="userImg" jdbcType="VARCHAR"/>
+
+        <collection property="fileList" columnPrefix="f_" javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.sys.file.entity.FileRelationEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="file_code" property="fileCode" jdbcType="VARCHAR"/>
+            <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+            <result column="file_type" property="fileType" jdbcType="VARCHAR"/>
+            <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+        </collection>
+
+        <collection property="followupHouseList" columnPrefix="h_" javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.FollowupHouseEntity">
+            <result column="house_name" property="houseName" jdbcType="VARCHAR"/>
+            <result column="house_code" property="houseCode" jdbcType="VARCHAR"/>
+            <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+            <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+            <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+            <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+            <result column="area" property="area" jdbcType="NUMERIC" javaType="decimal"/>
+            <result column="price" property="price" jdbcType="NUMERIC" javaType="decimal"/>
+            <result column="unit" property="unit" jdbcType="VARCHAR"/>
+            <result column="layer_height" property="layerHeight" jdbcType="NUMERIC"
+                    javaType="decimal"/>
+            <result column="max_electric" property="maxElectric" jdbcType="NUMERIC" javaType="int"/>
+            <result column="has_eia" property="hasEia" jdbcType="BOOLEAN"/>
+            <result column="has_cut" property="hasCut" jdbcType="BOOLEAN"/>
+            <result column="has_certificate" property="hasCertificate" jdbcType="BOOLEAN"/>
+            <result column="has_registry" property="hasRegistry" jdbcType="BOOLEAN"/>
+            <result column="has_short_lease" property="hasShortLease" jdbcType="BOOLEAN"/>
+            <result column="has_parking" property="hasParking" jdbcType="BOOLEAN"/>
+
+            <result column="house_status" property="houseStatus" jdbcType="VARCHAR"/>
+            <result column="house_purpose" property="housePurpose" jdbcType="VARCHAR"/>
+
+            <result column="followup_house_code" property="followupHouseCode" jdbcType="VARCHAR"/>
+
+            <result column="remark" property="remark" jdbcType="VARCHAR"/>
+
+
+        </collection>
+
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_crm_customer_followup
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                <if test="i.followupCode != null and i.followupCode != ''">
+                    followup_code,
+                </if>
+                <if test="i.followupContent != null and i.followupContent != ''">
+                    followup_content,
+                </if>
+                <if test="i.followupType != null and i.followupType != ''">
+                    followup_type,
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code,
+                </if>
+                <if test="i.empName != null and i.empName != ''">
+                    emp_name,
+                </if>
+                <if test="i.empPhone != null and i.empPhone != ''">
+                    emp_phone,
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code,
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.isDecision !=null">
+                    is_decision,
+                </if>
+                <if test="i.isInitiativeAsk !=null">
+                    is_initiative_ask,
+                </if>
+                <if test="i.isActive !=null">
+                    is_active,
+                </if>
+                <if test="i.isFindLocal !=null">
+                    is_find_local,
+                </if>
+                <if test="i.managerFollowup !=null">
+                    manager_followup,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+                <if test="i.followupCode != null and i.followupCode != ''">
+                    #{i.followupCode},
+                </if>
+                <if test="i.followupContent != null and i.followupContent != ''">
+                    #{i.followupContent},
+                </if>
+                <if test="i.followupType != null and i.followupType != ''">
+                    #{i.followupType},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    #{i.empCode},
+                </if>
+                <if test="i.empName != null and i.empName != ''">
+                    #{i.empName},
+                </if>
+                <if test="i.empPhone != null and i.empPhone != ''">
+                    #{i.empPhone},
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    #{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    #{i.deptName},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.isDecision !=null">
+                    #{i.isDecision},
+                </if>
+                <if test="i.isInitiativeAsk !=null">
+                    #{i.isInitiativeAsk},
+                </if>
+                <if test="i.isActive !=null">
+                    #{i.isActive},
+                </if>
+                <if test="i.isFindLocal !=null">
+                    #{i.isFindLocal},
+                </if>
+                <if test="i.managerFollowup !=null">
+                    #{i.managerFollowup},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate"
+            parameterType="com.kfwy.hkp.crm.customer.entity.CustomerFollowupEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_crm_customer_followup
+            <trim prefix="set" suffixOverrides=",">
+
+                <if test="i.followupCode != null and i.followupCode != ''">
+                    followup_code=#{i.followupCode},
+                </if>
+                <if test="i.followupContent != null and i.followupContent != ''">
+                    followup_content=#{i.followupContent},
+                </if>
+                <if test="i.followupType != null and i.followupType != ''">
+                    followup_type=#{i.followupType},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code=#{i.cusCode},
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code=#{i.empCode},
+                </if>
+                <if test="i.empName != null and i.empName != ''">
+                    emp_name=#{i.empName},
+                </if>
+                <if test="i.empPhone != null and i.empPhone != ''">
+                    emp_phone=#{i.empPhone},
+                </if>
+                <if test="i.deptCode != null and i.deptCode != ''">
+                    dept_code=#{i.deptCode},
+                </if>
+                <if test="i.deptName != null and i.deptName != ''">
+                    dept_name=#{i.deptName},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+                <if test="i.isDecision !=null">
+                    is_decision=#{i.isDecision},
+                </if>
+                <if test="i.isInitiativeAsk !=null">
+                    is_initiative_ask=#{i.isInitiativeAsk},
+                </if>
+                <if test="i.isActive !=null">
+                    is_active=#{i.isActive},
+                </if>
+                <if test="i.isFindLocal !=null">
+                    is_find_local=#{i.isFindLocal},
+                </if>
+                <if test="i.managerFollowup !=null">
+                    manager_followup=#{i.managerFollowup},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                and followup_code = #{i.followupCode}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_crm_customer_followup WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="followupCode != null and followupCode != ''">
+                AND followup_code = #{followupCode}
+            </if>
+            <if test="followupType != null and followupType != ''">
+                AND followup_type = #{followupType}
+            </if>
+            <if test="followupTypes != null">
+                <choose>
+                    <when test="_followupTypes">
+                        AND followup_type IN (${_followupTypes})
+                    </when>
+                    <otherwise>
+                        AND followup_type IN
+                        <foreach collection="followupTypes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empName != null and empName != ''">
+                AND emp_name like '%'||#{empName}||'%'
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND emp_code = #{empCode}
+            </if>
+            <if test="cusCode != null and cusCode != ''">
+                AND cus_code = #{cusCode}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                AND dept_name like '%'||#{deptName}||'%'
+            </if>
+            <if test="createCode != null and createCode != ''">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createName != null and createName != ''">
+                AND create_name like '%'||#{createName}||'%'
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createDeptName != null and createDeptName != ''">
+                AND create_dept_name like '%'||#{createDeptName}||'%'
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="isDecision !=null">
+                AND is_decision=#{isDecision}
+            </if>
+            <if test="isInitiativeAsk !=null">
+                AND is_initiative_ask=#{isInitiativeAsk}
+            </if>
+            <if test="isActive !=null">
+                AND is_active=#{isActive}
+            </if>
+            <if test="isFindLocal !=null">
+                AND is_find_local=#{isFindLocal}
+            </if>
+            <if test="managerFollowup !=null">
+                AND manager_followup=#{managerFollowup}
+            </if>
+            <if test="notIn!=null and notIn!=''">
+                AND create_code != #{notIn}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="cpyCode!=null and cpyCode!=''">
+                AND cpy_code = #{cpyCode}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_crm_customer_followup
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerFollowupEntity">
+        select * from t_hkp_crm_customer_followup
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+
+    <!--
+    <result column="has_eia" property="hasEia" jdbcType="BOOLEAN"/>
+            <result column="has_cut" property="hasCut" jdbcType="BOOLEAN"/>
+            <result column="has_certificate" property="hasCertificate" jdbcType="BOOLEAN"/>
+            <result column="has_registry" property="hasRegistry" jdbcType="BOOLEAN"/>
+            <result column="has_short_lease" property="hasShortLease" jdbcType="BOOLEAN"/>
+            <result column="has_parking" property="hasParking" jdbcType="BOOLEAN"/>
+
+    -->
+    <select id="detailSee" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerFollowupEntity">
+        SELECT * FROM (
+        SELECT
+        f.*,
+        h.house_name as h_house_name,
+        h.house_code as h_house_code,
+        h.province_name as h_province_name,
+        h.city_name as h_city_name,
+        h.region_name as h_region_name,
+        h.street_name as h_street_name,
+        h.price as h_price,
+        h.unit as h_unit,
+        h.area as h_area,
+        h.max_electric as h_max_electric,
+        h.layer_height as h_layer_height,
+        h.has_eia as h_has_eia,
+        h.has_cut as h_has_cut,
+        h.has_certificate as h_has_certificate,
+        h.has_registry as h_has_registry,
+        h.has_short_lease as h_has_short_lease,
+        h.has_parking as h_has_parking,
+        h.house_status as h_house_status,
+        h.house_purpose as h_house_purpose,
+        fh.followup_house_code as h_followup_house_code,
+        fh.remark as h_remark,
+        e.user_img,
+        e.user_name as emp_name
+        FROM t_hkp_crm_customer_followup f
+        LEFT JOIN t_hkp_crm_followup_house fh ON fh.followup_code = f.followup_code
+        LEFT JOIN t_hkp_hos_house h ON h.house_code = fh.house_code
+        LEFT JOIN t_hkp_sys_user_user e ON f.emp_code = e.user_code
+        )TP
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询客户的详情
+    <select id="detail" parameterType="string" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerFollowupEntity">
+        select
+          c.*,
+          e.emp_name,e.emp_phone,e.dept_code,e.dept_name
+        from t_hkp_crm_customer_followup c
+        LEFT JOIN t_hkp_hrm_org_employee e on c.emp_code = e.emp_code
+        WHERE c.followup_code = #{followupCode}
+    </select>-->
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerFollowupEntity">
+        SELECT * from(
+        SELECT
+        c.*,
+        cus.cus_name,
+        e.user_name as emp_name,e.user_phone as emp_phone,e.owner_dept_code as
+        dept_code,e.owner_dept_name as dept_name,
+        e.user_img
+        FROM t_hkp_crm_customer_followup c
+        LEFT JOIN t_hkp_sys_user_user e ON c.emp_code = e.user_code
+        LEFT JOIN hkp.public.t_hkp_crm_customer cus ON c.cus_code=cus.cus_code
+        )TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(1) from(
+        select
+        c.*,
+        cus.cus_name,
+        e.user_name as emp_name,e.user_phone as emp_phone,e.owner_dept_code as
+        dept_code,e.owner_dept_name as dept_name
+        FROM t_hkp_crm_customer_followup c
+        LEFT JOIN t_hkp_sys_user_user e ON c.emp_code = e.user_code
+        LEFT JOIN hkp.public.t_hkp_crm_customer cus ON c.cus_code=cus.cus_code
+        )TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计带看 -->
+    <select id="selectFollowupCount" parameterType="map" resultType="int">
+        SELECT
+            COUNT (1)
+        FROM
+            t_hkp_crm_customer_followup
+        WHERE
+            ID IN (
+                SELECT
+                    MIN (ID)
+                FROM
+                    t_hkp_crm_customer_followup
+                <trim prefix="where" prefixOverrides="AND|OR">
+                    <if test="followupType != null and followupType != ''">
+                        AND followup_type = #{followupType}
+                    </if>
+                    <if test="followupTypes != null">
+                        <choose>
+                            <when test="_followupTypes">
+                                AND followup_type IN (${_followupTypes})
+                            </when>
+                            <otherwise>
+                                AND followup_type IN
+                                <foreach collection="followupTypes" item="i" open="(" separator=","
+                                         close=")">
+                                    #{i}
+                                </foreach>
+                            </otherwise>
+                        </choose>
+                    </if>
+                    <if test="createCode != null and createCode != ''">
+                        AND create_code = #{createCode}
+                    </if>
+                    <if test="createDeptCode != null and createDeptCode != ''">
+                        AND create_dept_code = #{createDeptCode}
+                    </if>
+                    <if test="createDeptCodes != null">
+                        <choose>
+                            <when test="_createDeptCodes != null">
+                                AND create_dept_code IN (${_createDeptCodes})
+                            </when>
+                            <otherwise>
+                                AND create_dept_code IN
+                                <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                         close=")">
+                                    #{i}
+                                </foreach>
+                            </otherwise>
+                        </choose>
+                    </if>
+                    <if test="createCodes != null">
+                        <choose>
+                            <when test="_createCodes != null">
+                                AND create_code IN (${_createCodes})
+                            </when>
+                            <otherwise>
+                                AND create_code IN
+                                <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                                    #{i}
+                                </foreach>
+                            </otherwise>
+                        </choose>
+                    </if>
+                    <if test="createTimeStart != null">
+                        AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+                    </if>
+                    <if test="createTimeEnd != null">
+                        AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+                    </if>
+                    <if test="isDeleted != null">
+                        AND is_deleted=#{isDeleted}
+                    </if>
+                    <if test="managerFollowup !=null">
+                        AND manager_followup=#{managerFollowup}
+                    </if>
+                </trim>
+                <if test="groupBy !=null and groupBy != ''">
+                    GROUP BY (${groupBy})
+                </if>
+            )
+    </select>
+
+    <update id="updateCoo" parameterType="map">
+        update t_hkp_union_cooperate
+        <trim prefix="set" suffixOverrides=",">
+            <if test="cooStatus != null and cooStatus != ''">
+                coo_status = #{cooStatus}
+            </if>
+        </trim>
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null">
+                id = #{id}
+            </if>
+            and house_code = #{houseCode}
+            and cus_code = #{cusCode}
+            and coo_status = '3'
+        </trim>
+    </update>
+
+    <select id="takeLookByCusEvaluate" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+            fol.create_time,
+            fol.cus_code,
+            folhos.house_code,
+            cus.cus_name,
+            fol.followup_content,
+            foluse.user_name as emp_name,
+            foluse.owner_dept_name as dept_name
+        FROM
+            t_hkp_crm_customer cus
+            INNER JOIN t_hkp_crm_customer_followup fol ON cus.cus_code = fol.cus_code
+            INNER JOIN t_hkp_crm_followup_house folhos ON fol.followup_code = folhos.followup_code
+            INNER JOIN t_hkp_hos_house hos ON folhos.house_code = hos.house_code
+            INNER JOIN t_hkp_sys_user_user foluse ON foluse.user_code = fol.create_code
+        WHERE
+            hos.house_code = #{houseCode}
+        ORDER BY
+            fol.create_time DESC
+    </select>
+
+    <select id="takeLookByCusEvaluateCount" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM (
+                 SELECT
+                     fol.create_time,
+                     fol.cus_code,
+                     folhos.house_code,
+                     cus.cus_name,
+                     fol.followup_content,
+                     foluse.user_name as emp_name,
+                     foluse.owner_dept_name as dept_name
+                 FROM
+                     t_hkp_crm_customer cus
+                     INNER JOIN t_hkp_crm_customer_followup fol ON cus.cus_code = fol.cus_code
+                     INNER JOIN t_hkp_crm_followup_house folhos
+                         ON fol.followup_code = folhos.followup_code
+                     INNER JOIN t_hkp_hos_house hos ON folhos.house_code = hos.house_code
+                     INNER JOIN t_hkp_sys_user_user foluse ON foluse.user_code = fol.create_code
+                 WHERE
+                     hos.house_code = #{houseCode}
+                 ORDER BY
+                     fol.create_time DESC
+             ) fol
+
+    </select>
+
+</mapper>

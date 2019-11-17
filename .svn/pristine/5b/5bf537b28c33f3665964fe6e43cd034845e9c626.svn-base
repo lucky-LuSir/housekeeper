@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.parttime.entity.ParttimeEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.sys.parttime.entity.ParttimeEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="pt_code" property="ptCode" jdbcType="VARCHAR"/>
+        <result column="pt_name" property="ptName" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="pt_phone" property="ptPhone" jdbcType="VARCHAR"/>
+        <result column="position" property="positions" jdbcType="VARCHAR"/>
+        <result column="profession" property="profession" jdbcType="VARCHAR"/>
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+        <result column="owner_phone" property="ownerPhone" jdbcType="VARCHAR"/>
+        <result column="owner_dept_code" property="ownerDeptCode" jdbcType="VARCHAR"/>
+        <result column="owner_dept_name" property="ownerDeptName" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+
+
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="org_password" property="orgPassword" jdbcType="VARCHAR"/>
+        <result column="from_type" property="fromType"  jdbcType="VARCHAR"/>
+        <result column="is_weixin" property="isWeixin" jdbcType="BOOLEAN"/>
+        <result column="wx_open_id" property="wxOpenId" jdbcType="VARCHAR"/>
+        <result column="wx_union_id" property="wxUnionId" jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_pt_parttimer
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.ptCode != null and i.ptCode!=''">
+                    pt_code,
+                </if>
+                <if test="i.ptName != null and i.ptName!=''">
+                    pt_name,
+                </if>
+                <if test="i.sex != null and i.sex!=''">
+                    sex,
+                </if>
+                <if test="i.ptPhone != null and i.ptPhone!=''">
+                    pt_phone,
+                </if>
+                <if test="i.positions != null and i.positions!=''">
+                    positions,
+                </if>
+                <if test="i.profession != null and i.profession!=''">
+                    profession,
+                </if>
+                <if test="i.company != null and i.company!=''">
+                    company,
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode!=''">
+                    owner_code,
+                </if>
+                <if test="i.ownerName != null and i.ownerName!=''">
+                    owner_name,
+                </if>
+                <if test="i.ownerPhone != null and i.ownerPhone!=''">
+                    owner_phone,
+                </if>
+                <if test="i.ownerDeptCode != null and i.ownerDeptCode!=''">
+                    owner_dept_code,
+                </if>
+                <if test="i.ownerDeptName != null and i.ownerDeptName!=''">
+                    owner_dept_name,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+
+                <if test="i.password != null and i.password != ''">
+                    password,
+                </if>
+                <if test="i.orgPassword != null and i.orgPassword != ''">
+                    org_password,
+                </if>
+                <if test="i.fromType != null and i.fromType != ''">
+                    from_type,
+                </if>
+                <if test="i.isWeixin != null">
+                    is_weixin,
+                </if>
+                <if test="i.wxOpenId != null and i.wxOpenId != ''">
+                    wx_open_id,
+                </if>
+                <if test="i.wxUnionId != null and i.wxUnionId != ''">
+                    wx_union_id,
+                </if>
+
+
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.ptCode != null and i.ptCode!=''">
+                    #{i.ptCode},
+                </if>
+                <if test="i.ptName != null and i.ptName!=''">
+                    #{i.ptName},
+                </if>
+                <if test="i.sex != null and i.sex!=''">
+                    #{i.sex},
+                </if>
+                <if test="i.ptPhone != null and i.ptPhone!=''">
+                    #{i.ptPhone},
+                </if>
+                <if test="i.positions != null and i.positions!=''">
+                    #{i.positions},
+                </if>
+                <if test="i.profession != null and i.profession!=''">
+                    #{i.profession},
+                </if>
+                <if test="i.company != null and i.company!=''">
+                    #{i.company},
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode!=''">
+                    #{i.ownerCode},
+                </if>
+                <if test="i.ownerName != null and i.ownerName!=''">
+                    #{i.ownerName},
+                </if>
+                <if test="i.ownerPhone != null and i.ownerPhone!=''">
+                    #{i.ownerPhone},
+                </if>
+                <if test="i.ownerDeptCode != null and i.ownerDeptCode!=''">
+                    #{i.ownerDeptCode},
+                </if>
+                <if test="i.ownerDeptName != null and i.ownerDeptName!=''">
+                    #{i.ownerDeptName},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.password != null and i.password != ''">
+                    #{i.password},
+                </if>
+                <if test="i.orgPassword != null and i.orgPassword != ''">
+                    #{i.orgPassword},
+                </if>
+                <if test="i.fromType != null and i.fromType != ''">
+                    #{i.fromType},
+                </if>
+                <if test="i.isWeixin != null">
+                    #{i.isWeixin},
+                </if>
+                <if test="i.wxOpenId != null and i.wxOpenId != ''">
+                    #{i.wxOpenId},
+                </if>
+                <if test="i.wxUnionId != null and i.wxUnionId != ''">
+                    #{i.wxUnionId},
+                </if>
+
+
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_pt_parttimer WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.parttime.entity.ParttimeEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_pt_parttimer
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.ptCode != null and i.ptCode!=''">
+                    pt_code = #{i.ptCode},
+                </if>
+                <if test="i.ptName != null and i.ptName!=''">
+                    pt_name = #{i.ptName},
+                </if>
+                <if test="i.sex != null and i.sex!=''">
+                    sex = #{i.sex},
+                </if>
+                <if test="i.ptPhone != null and i.ptPhone!=''">
+                    pt_phone = #{i.ptPhone},
+                </if>
+                <if test="i.positions != null and i.positions!=''">
+                    positions = #{i.positions},
+                </if>
+                <if test="i.profession != null and i.profession!=''">
+                    profession = #{i.profession},
+                </if>
+                <if test="i.company != null and i.company!=''">
+                    company = #{i.company},
+                </if>
+                <if test="i.ownerCode != null and i.ownerCode!=''">
+                    owner_code = #{i.ownerCode},
+                </if>
+                <if test="i.ownerName != null and i.ownerName!=''">
+                    owner_name = #{i.ownerName},
+                </if>
+                <if test="i.ownerPhone != null and i.ownerPhone!=''">
+                    owner_phone = #{i.ownerPhone},
+                </if>
+                <if test="i.ownerDeptCode != null and i.ownerDeptCode!=''">
+                    owner_dept_code = #{i.ownerDeptCode},
+                </if>
+                <if test="i.ownerDeptName != null and i.ownerDeptName!=''">
+                    owner_dept_name = #{i.ownerDeptName},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name = #{i.createName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code = #{i.createDeptCode},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name = #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted},
+                </if>
+
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                <if test="i.ptCode != null and i.ptCode != ''">
+                    AND pt_code = #{i.ptCode}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <!-- 通过主键列表查找记录 -->
+    <select id="selectByIds" parameterType="java.util.List" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.parttime.entity.ParttimeEntity">
+        SELECT * FROM t_hkp_pt_parttimer WHERE ID IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="keyword !=null">
+                AND  pt_name like '%' || #{keyword} || '%'
+            </if>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="ptCode != null and ptCode!=''">
+                AND pt_code = #{ptCode}
+            </if>
+            <if test="ptName != null and ptName!=''">
+                AND pt_name like '%' || #{ptName} || '%'
+            </if>
+            <if test="ptPhone != null and ptPhone!=''">
+                AND pt_phone = #{ptPhone}
+            </if>
+            <if test="company != null and company!=''">
+                AND company = #{company}
+            </if>
+            <if test="ownerCode != null and ownerCode!=''">
+                AND owner_code = #{ownerCode}
+            </if>
+            <if test="ownerName != null and ownerName!=''">
+                AND owner_name like '%' || #{ownerName} || '%'
+            </if>
+            <if test="ownerPhone != null and ownerPhone!=''">
+                AND owner_phone = #{ownerPhone}
+            </if>
+            <if test="ownerDeptCode != null and ownerDeptCode!=''">
+                AND owner_dept_code = #{ownerDeptCode}
+            </if>
+            <if test="ownerDeptName != null and ownerDeptName!=''">
+                AND owner_dept_name like '%' || #{ownerDeptName} || '%'
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createCode != null and createCode!=''" >
+              AND create_code = #{createCode}
+            </if>
+            <if test="createDeptCode != null and createDeptCode!=''" >
+              AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.parttime.entity.ParttimeEntity">
+        SELECT
+          *
+        FROM(
+          SELECT
+            *
+          from t_hkp_pt_parttimer
+        ) tp
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        SELECT
+          count(1)
+        FROM(
+          SELECT
+            *
+          from t_hkp_pt_parttimer
+        ) tp
+        <include refid="selectSql"/>
+
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.parttime.entity.ParttimeEntity">
+        select
+          *
+        from (
+            select
+              *
+            from t_hkp_pt_parttimer
+        ) TP
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        SELECT
+            count(*)
+        FROM(
+            SELECT
+              *
+            from t_hkp_pt_parttimer
+        ) tp
+        <include refid="selectSql"/>
+    </select>
+
+</mapper>

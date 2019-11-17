@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.dto.FinanceWagesReportDto">
+    <resultMap id="BaseResultInvoiceMap" type="com.kfwy.hkp.bi.count.dto.FinanceWagesReportDto">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <!--订单号-->
+        <result column="o_order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <!--订单状态-->
+        <result column="o_order_status" property="orderStatus" jdbcType="VARCHAR"/>
+        <!--成交日期-->
+        <result column="o_order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+        <!--客户合同佣金-->
+        <result column="o_receivable_cus" property="receivableCus" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--业主合同佣金-->
+        <result column="o_receivable_hos" property="receivableHos" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--实收佣金(合同佣金-返佣金额-兼职分钱)-->
+        <result column="o_actual_commision" property="actCommission" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--客户返佣-->
+        <result column="o_cus_rebate" property="cusRebate" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--业主返佣-->
+        <result column="o_owner_rebate" property="ownerRebate" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--客户兼职分钱-->
+        <result column="o_cus_parttime_money" property="cusPartTimeMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--业主兼职分钱-->
+        <result column="o_owner_parttime_money" property="ownerPartTimeMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--发票税额-->
+        <result column="iv_invoice_tax" property="sumTax" jdbcType="NUMERIC" javaType="decimal"/>
+        <!--操作人员编码-->
+        <result column="o_emp_code" property="clerkCode" jdbcType="VARCHAR"/>
+        <!--部门编码-->
+        <result column="o_dept_code" property="cDeptCode" jdbcType="VARCHAR"/>
+
+        <!--订单分成集合-->
+        <collection property="orderPercentageList" columnPrefix="p_" javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.trade.order.entity.OrderPercentageEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <!--参与分成员工编码-->
+            <result column="pe_emp_code" property="peEmpCode" jdbcType="VARCHAR"/>
+            <!--参与分成部门编码-->
+            <result column="pe_dept_code" property="peDeptCode" jdbcType="VARCHAR"/>
+            <result column="pe_percentage_type" property="percentageType" jdbcType="VARCHAR"/>
+            <result column="money_percent_type" property="moneyPercentType" jdbcType="VARCHAR"/>
+            <!--分成比例-->
+            <result column="percentage" property="percentage" jdbcType="NUMERIC" javaType="decimal"/>
+            <!--分成金额-->
+            <result column="profit" property="profit" jdbcType="NUMERIC" javaType="decimal"/>
+        </collection>
+        <!--回款-->
+        <collection property="orderPaybackList" columnPrefix="pay_" javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.trade.order.entity.OrderPaybackEntity">
+            <result column="back_id" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <!--回款描述-->
+            <result column="description" property="description" jdbcType="VARCHAR"/>
+            <!--回款时间-->
+            <result column="back_time" property="backTime" jdbcType="TIMESTAMP"/>
+            <!--回款金额-->
+            <result column="payment" property="payment" jdbcType="NUMERIC" javaType="decimal"/>
+        </collection>
+    </resultMap>
+
+    <!-- 人事版工资报表 -->
+   <select id="selectByMap" resultMap="BaseResultInvoiceMap" parameterType="map">
+        SELECT * FROM (
+        SELECT
+        /*订单表信息*/
+        fd.*,
+        /*发票税额*/
+        iv.invoiceTax AS iv_invoice_tax,
+        /*分成比例*/
+        P.percentage AS p_percentage,
+        /*分成金额*/
+        P.profit AS p_profit,
+        /*参与分成员工编码*/
+		P.pe_emp_code AS p_pe_emp_code,
+        /*参与分成部门编码*/
+        P.pe_dept_code AS p_pe_dept_code,
+       /*分成类型*/
+        p.pe_percentage_type as p_pe_percentage_type,
+        p.money_percent_type as p_money_percent_type,
+        /*回款时间*/
+        pay.id AS pay_back_id,
+        /*回款时间*/
+        pay.back_time AS pay_back_time,
+        /*回款描述*/
+        pay.description AS pay_description,
+        /*回款金额*/
+        pay.payment AS pay_payment
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        /*订单号*/
+        o.order_code AS o_order_code,
+        /*订单状态*/
+        o.order_status AS o_order_status,
+        /*成交日期*/
+        o.order_time AS o_order_time,
+        /*客户合同佣金*/
+        o.receivable_cus as o_receivable_cus,
+        /*业主合同佣金*/
+        o.receivable_hos as o_receivable_hos,
+        /*客户兼职分钱*/
+        o.cus_parttime_money as o_cus_parttime_money,
+        /*业主兼职分钱*/
+        o.owner_parttime_money as o_owner_parttime_money,
+        /*实收佣金*/
+        o.actual_commision AS o_actual_commision,
+        /*返佣给客户*/
+        o.cus_rebate as o_cus_rebate,
+        /*返佣给业主*/
+        o.owner_rebate as o_owner_rebate,
+        /*操作人员编码*/
+        o.emp_code AS o_emp_code,
+        /*部门编码*/
+        o.dept_code AS o_dept_code,
+        o.is_deleted
+        FROM
+        t_hkp_trade_order o
+        ) fm
+       <include refid="selectSql"/>
+       <if test="limit != null">
+           limit #{limit}
+       </if>
+       <if test="offset != null">
+           offset #{offset}
+       </if>
+        ) fd
+        LEFT JOIN
+        (
+       /*添加时间区间限制条件提升性能*/
+       /*非客服人员分成聚合*/
+       SELECT
+        /*订单号*/
+        order_code,
+        /*参与分成部门编号*/
+        pe_dept_code,
+        /*参与分成员工编号*/
+        pe_emp_code,
+        '2' as pe_percentage_type,
+        /*分成比例*/
+        sum(percentage) AS percentage,
+       money_percent_type,
+       /*占比金额*/
+        sum(profit) AS profit
+        FROM t_hkp_trade_order_percentage
+       where is_deleted=false
+       and money_percent_type!='1'
+       <if test="orderTimeStart != null">
+           AND order_time <![CDATA[>=]]> #{orderTimeStart}
+       </if>
+       <if test="orderTimeEnd != null">
+           AND order_time <![CDATA[<=]]> #{orderTimeEnd}
+       </if>
+
+        GROUP BY order_code,
+        pe_dept_code,
+        pe_emp_code,
+        money_percent_type
+       union all
+       /**客服分成不聚会*/
+       SELECT
+       /*订单号*/
+       order_code,
+       /*参与分成部门编号*/
+       pe_dept_code,
+       /*参与分成员工编号*/
+       pe_emp_code,
+       percentage_type as pe_percentage_type,
+       /*分成比例*/
+       percentage,
+       money_percent_type,
+       /*占比金额*/
+       profit
+       FROM t_hkp_trade_order_percentage
+       where is_deleted=false
+       and money_percent_type='1'
+       <if test="orderTimeStart != null">
+           AND order_time <![CDATA[>=]]> #{orderTimeStart}
+       </if>
+       <if test="orderTimeEnd != null">
+           AND order_time <![CDATA[<=]]> #{orderTimeEnd}
+       </if>
+       )  P ON P .order_code = fd.o_order_code
+        LEFT JOIN t_hkp_trade_ord_payback pay ON fd.o_order_code = pay.order_code
+        LEFT JOIN (
+        SELECT
+        order_code,
+        SUM (
+        /*税额*/
+        to_number(invoice_tax, '9999999D99')
+        ) AS invoiceTax
+        FROM
+        /*发票表*/
+        t_hkp_trade_ord_invoice
+        GROUP BY
+        order_code
+        ) AS iv ON iv.order_code = fd.o_order_code
+        ) m
+        ORDER BY
+        o_order_time desc,
+        o_order_code,
+        pay_back_time desc
+
+   </select>
+    <select id="selectByMapCount" resultType="int" parameterType="map">
+        SELECT count(*) FROM (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        /*订单号*/
+        o.order_code AS o_order_code,
+        /*订单状态*/
+        o.order_status AS o_order_status,
+        /*成交日期*/
+        o.order_time AS o_order_time,
+        /*客户合同佣金*/
+        o.receivable_cus as o_receivable_cus,
+        /*业主合同佣金*/
+        o.receivable_hos as o_receivable_hos,
+        /*客户兼职分钱*/
+        o.cus_parttime_money as o_cus_parttime_money,
+        /*业主兼职分钱*/
+        o.owner_parttime_money as o_owner_parttime_money,
+        /*实收佣金*/
+        o.actual_commision AS o_actual_commision,
+        /*返佣给客户*/
+        o.cus_rebate as o_cus_rebate,
+        /*返佣给业主*/
+        o.owner_rebate as o_owner_rebate,
+        /*操作人员编码*/
+        o.emp_code AS o_emp_code,
+        /*部门编码*/
+        o.dept_code AS o_dept_code,
+        o.is_deleted
+        FROM
+        t_hkp_trade_order o
+        ) fm
+        <include refid="selectSql"/>
+        ) o
+    </select>
+    <select id="countByMap" resultType="int" parameterType="map">
+        SELECT count(*) FROM t_hkp_trade_order
+    </select>
+    <sql id="selectSql">
+      <trim prefix="where" prefixOverrides="AND|OR">
+          <if test="orderTimeStart != null">
+              AND o_order_time <![CDATA[>=]]> #{orderTimeStart}
+          </if>
+          <if test="orderTimeEnd != null">
+              AND o_order_time <![CDATA[<=]]> #{orderTimeEnd}
+          </if>
+          <if test="createTimeStart != null">
+              AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+          </if>
+          <if test="createTimeEnd != null">
+              AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+          </if>
+          <if test="createCode != null">
+              AND create_code = #{createCode}
+          </if>
+          <if test="createDeptCode != null">
+              AND dept_code = #{createDeptCode}
+          </if>
+          <if test="isDeleted != null">
+              AND is_deleted=#{isDeleted}
+          </if>
+      </trim>
+    </sql>
+
+
+</mapper>

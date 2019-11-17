@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.LastDayReportEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.LastDayReportEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="in_time" property="inTime" jdbcType="TIMESTAMP"/>
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="call_emp_phone" property="callEmpPhone" jdbcType="NUMERIC" javaType="int"/>
+        <result column="see_hos_detail" property="seeHosDetail" jdbcType="NUMERIC" javaType="int"/>
+        <result column="see_cus_detail" property="seeCusDetail" jdbcType="NUMERIC" javaType="int"/>
+        <result column="call_house_owner_phone" property="callHouseOwnerPhone" jdbcType="NUMERIC" javaType="int"/>
+        <result column="call_cus_phone" property="callCusPhone" jdbcType="NUMERIC" javaType="int"/>
+        <result column="see_house_owner_detail" property="seeHouseOwnerDetail" jdbcType="NUMERIC" javaType="int"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_report_last_day
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.userCode != null and i.userCode!=''">
+                    user_code,
+                </if>
+                <if test="i.deptCode != null and i.deptCode!=''">
+                    dept_code,
+                </if>
+                <if test="i.inTime != null">
+                    in_time,
+                </if>
+                <if test="i.callEmpPhone != null">
+                    call_emp_phone,
+                </if>
+                <if test="i.seeHosDetail != null">
+                    see_hos_detail,
+                </if>
+                <if test="i.seeCusDetail != null">
+                    see_cus_detail,
+                </if>
+                <if test="i.callHouseOwnerPhone != null">
+                    call_house_owner_phone,
+                </if>
+                <if test="i.callCusPhone != null">
+                    call_cus_phone,
+                </if>
+                <if test="i.seeHouseOwnerDetail != null">
+                    see_house_owner_detail,
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+                <if test="i.userCode != null and i.userCode!=''">
+                    #{i.userCode},
+                </if>
+                <if test="i.deptCode != null and i.deptCode!=''">
+                    #{i.deptCode},
+                </if>
+                <if test="i.inTime != null">
+                    #{i.inTime},
+                </if>
+                <if test="i.callEmpPhone != null">
+                    #{i.callEmpPhone},
+                </if>
+                <if test="i.seeHosDetail != null">
+                    #{i.seeHosDetail},
+                </if>
+                <if test="i.seeCusDetail != null">
+                    #{i.seeCusDetail},
+                </if>
+                <if test="i.callHouseOwnerPhone != null">
+                    #{i.callHouseOwnerPhone},
+                </if>
+                <if test="i.callCusPhone != null">
+                    #{i.callCusPhone},
+                </if>
+                <if test="i.seeHouseOwnerDetail != null">
+                    #{i.seeHouseOwnerDetail},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <select id="getLastDayReport" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.LastDayReportEntity">
+        SELECT
+        la.*,
+        u.owner_dept_code as dept_code
+        from (
+        select create_code as user_code,
+        sum(case opt_type when 'callEmpPhone' then num ELSE 0 end ) call_emp_phone,
+        sum(case opt_type when 'seeHosDetail' then num ELSE 0 end ) see_hos_detail,
+        sum(case opt_type when 'seeCusDetail' then num ELSE 0 end ) see_cus_detail,
+        sum(case opt_type when 'callHouseOwnerPhone' then num ELSE 0 end ) call_house_owner_phone,
+        sum(case opt_type when 'callCusPhone' then num ELSE 0 end ) call_cus_phone,
+        sum(case opt_type when 'seeHouseOwnerDetail' then num ELSE 0 end ) see_house_owner_detail
+        from (
+        SELECT
+        create_code,
+        opt_type,
+        "count" (*) as num
+        FROM
+        t_hkp_log_operation
+        WHERE
+        create_time <![CDATA[ >= ]]> #{startTime}
+        AND create_time <![CDATA[ < ]]> #{endTime}
+        GROUP BY create_code,opt_type) re
+        GROUP BY re.create_code
+        ) as la
+        LEFT JOIN t_hkp_sys_user_user u on la.user_code=u.user_code
+    </select>
+
+
+    <select id="selectLastDayReport" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.LastDayReportEntity">
+        SELECT
+        rld.*,
+        u.user_name
+        FROM
+        t_hkp_report_last_day rld
+        left join t_hkp_sys_user_user u on rld.user_code=u.user_code
+        WHERE
+        rld.in_time <![CDATA[ >= ]]> #{startTime}
+        AND rld.in_time <![CDATA[ <= ]]> #{endTime}
+        and rld.dept_code=#{deptCode}
+        order by call_cus_phone desc
+    </select>
+</mapper>

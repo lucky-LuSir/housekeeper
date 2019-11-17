@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.CustomerPushEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerPushEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="push_code" property="pushCode" jdbcType="VARCHAR"/>
+        <result column="push_name" property="pushName" jdbcType="VARCHAR"/>
+        <result column="push_type" property="pushType" jdbcType="VARCHAR"/>
+        <result column="receive_code" property="receiveCode" jdbcType="VARCHAR"/>
+        <result column="receive_name" property="receiveName" jdbcType="VARCHAR"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="receive_dept_code" property="receiveDeptCode" jdbcType="VARCHAR"/>
+        <result column="receive_dept_name" property="receiveDeptName" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="push_open_flag" property="pushOpenFlag" jdbcType="BOOLEAN"/>
+        <result column="push_message" property="pushMessage" jdbcType="BOOLEAN"/>
+        <association property="customer" columnPrefix="c_" resultMap="customerBaseResultMap"/>
+
+    </resultMap>
+
+    <resultMap id="customerBaseResultMap" type="com.kfwy.hkp.crm.customer.entity.CustomerEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="cus_status" property="cusStatus" jdbcType="VARCHAR"/>
+        <result column="cus_type" property="cusType" jdbcType="INTEGER"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="cus_phone" property="cusPhone" jdbcType="VARCHAR"/>
+        <result column="cus_sex" property="cusSex" jdbcType="VARCHAR"/>
+        <result column="company_name" property="companyName" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="products" property="products" jdbcType="VARCHAR"/>
+        <result column="need_acreage" property="needAcreage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="need_price" property="needPrice" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="price_unit" property="priceUnit" jdbcType="VARCHAR"/>
+        <result column="layer_num" property="layerNum" jdbcType="INTEGER"/>
+        <result column="layer_height" property="layerHeight" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="need_voltage" property="needVoltage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP"/>
+        <result column="expect_term" property="expectTerm" jdbcType="VARCHAR"/>
+        <result column="fire_level" property="fireLevel" jdbcType="VARCHAR"/>
+        <result column="need_eia" property="needEia" jdbcType="BOOLEAN"/>
+        <result column="need_register" property="needRegister" jdbcType="BOOLEAN"/>
+        <result column="need_certificate" property="needCertificate" jdbcType="BOOLEAN"/>
+        <result column="need_single_building" property="needSingleBuilding" jdbcType="BOOLEAN"/>
+        <result column="has_office_area" property="hasOfficeArea" jdbcType="BOOLEAN"/>
+        <result column="open_flag" property="openFlag" jdbcType="BOOLEAN"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="emp_phone" property="empPhone" jdbcType="VARCHAR"/>
+        <result column="emp_img" property="empImg" jdbcType="VARCHAR"/>
+
+        <result column="last_followup_time" property="lastFollowupTime" jdbcType="TIMESTAMP"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <collection property="customerAreaEntityList" columnPrefix="a_"
+                    javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.CustomerAreaEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="region" property="region" jdbcType="VARCHAR"/>
+            <result column="street" property="street" jdbcType="VARCHAR"/>
+            <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+            <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+            <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+            <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+        </collection>
+
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_crm_customer_push
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                <if test="i.pushCode != null and i.pushCode != ''">
+                    push_code,
+                </if>
+                <if test="i.pushName != null and i.pushName != ''">
+                    push_name,
+                </if>
+                <if test="i.pushType != null and i.pushType != ''">
+                    push_type,
+                </if>
+                <if test="i.receiveCode != null and i.receiveCode != ''">
+                    receive_code,
+                </if>
+                <if test="i.receiveName != null and i.receiveName != ''">
+                    receive_Name,
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.receiveDeptCode != null and i.receiveDeptCode != ''">
+                    receive_dept_code,
+                </if>
+                <if test="i.receiveDeptName != null and i.receiveDeptName != ''">
+                    receive_dept_name,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.pushOpenFlag !=null">
+                    push_open_flag,
+                </if>
+                <if test="i.pushMessage !=null">
+                    push_message,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+                <if test="i.pushCode != null and i.pushCode != ''">
+                    #{i.pushCode},
+                </if>
+                <if test="i.pushName != null and i.pushName != ''">
+                    #{i.pushName},
+                </if>
+                <if test="i.pushType != null and i.pushType != ''">
+                    #{i.pushType},
+                </if>
+                <if test="i.receiveCode != null and i.receiveCode != ''">
+                    #{i.receiveCode},
+                </if>
+                <if test="i.receiveName != null and i.receiveName != ''">
+                    #{i.receiveName},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.receiveDeptCode != null and i.receiveDeptCode != ''">
+                    #{i.receiveDeptCode},
+                </if>
+                <if test="i.receiveDeptName != null and i.receiveDeptName != ''">
+                    #{i.receiveDeptName},
+                </if>
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.pushOpenFlag !=null">
+                    #{i.pushOpenFlag},
+                </if>
+                <if test="i.pushMessage !=null">
+                    #{i.pushMessage},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.crm.customer.entity.CustomerPushEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_crm_customer_push
+            <trim prefix="set" suffixOverrides=",">
+
+                <if test="i.pushCode != null and i.pushCode != ''">
+                    push_code=#{i.pushCode},
+                </if>
+                <if test="i.pushName != null and i.pushName != ''">
+                    push_name=#{i.pushName},
+                </if>
+                <if test="i.pushType != null and i.pushType != ''">
+                    push_type=#{i.pushType},
+                </if>
+                <if test="i.receiveCode != null and i.receiveCode != ''">
+                    receive_code=#{i.receiveCode},
+                </if>
+                <if test="i.receiveName != null and i.receiveName != ''">
+                    receive_name=#{i.receiveName},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code=#{i.cusCode},
+                </if>
+                <if test="i.receiveDeptCode != null and i.receiveDeptCode != ''">
+                    receive_dept_code=#{i.receiveDeptCode},
+                </if>
+                <if test="i.receiveDeptName != null and i.receiveDeptName != ''">
+                    receive_dept_name=#{i.receiveDeptName},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted},
+                </if>
+                <if test="i.pushOpenFlag!=null">
+                    push_open_flag=#{i.pushOpenFlag},
+                </if>
+                <if test="i.pushMessage !=null">
+                    push_message=#{i.pushMessage},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                id = #{i.id}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_crm_customer_push WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND
+                (
+                push_name like '%' || #{keyword} ||'%' or
+                c_cus_phone=#{keyword} or
+                c_cus_name like '%' || #{keyword} ||'%'
+                )
+            </if>
+            <if test="empName !=null and empName!=''">
+                AND c_emp_name =#{empName}
+            </if>
+            <if test="openFlag!=null and openFlag!=''">
+                AND open_flag = #{openFlag}
+            </if>
+            <if test="pushOpenFlag !=null and pushOpenFlag!=''">
+                AND push_open_flag = #{pushOpenFlag}
+            </if>
+            <if test="pushCode != null and pushCode != ''">
+                AND push_code = #{pushCode}
+            </if>
+            <if test="pushName != null and pushName != ''">
+                AND push_name like '%' || #{pushName} ||'%'
+            </if>
+            <if test="receiveCode != null and receiveCode != ''">
+                AND receive_code = #{receiveCode}
+            </if>
+            <if test="receiveName != null and receiveName != ''">
+                AND receive_name like '%' || #{receiveName}||'%'
+            </if>
+            <if test="receiveDeptCode != null and receiveDeptCode != ''">
+                AND receive_dept_code = #{receiveDeptCode}
+            </if>
+            <if test="receiveDeptName != null and receiveDeptName != ''">
+                AND receive_dept_name like '%' || #{receiveDeptName}||'%'
+            </if>
+            <if test="cusCode != null and cusCode != ''">
+                AND c_cus_code = #{cusCode}
+            </if>
+            <if test="cusPhone != null and cusPhone != ''">
+                AND c_cus_phone = #{cusPhone}
+            </if>
+            <if test="companyName != null and companyName != ''">
+                AND c_company_name like '%' || #{companyName} || '%'
+            </if>
+            <if test="needAcreageStart != null">
+                AND c_need_acreage <![CDATA[ >= ]]> #{needAcreageStart}
+            </if>
+            <if test="needAcreageEnd != null">
+                AND c_need_acreage <![CDATA[ <= ]]> #{needAcreageEnd}
+            </if>
+            <if test="needVoltageStart != null">
+                AND c_need_voltage <![CDATA[ >= ]]> #{needVoltageStart}
+            </if>
+            <if test="needVoltageEnd != null">
+                AND c_need_voltage <![CDATA[ <= ]]> #{needVoltageEnd}
+            </if>
+            <if test="needPriceStart != null">
+                AND c_need_price <![CDATA[ >= ]]> #{needPriceStart}
+            </if>
+            <if test="needPriceEnd != null">
+                AND c_need_price <![CDATA[ <= ]]> #{needPriceEnd}
+            </if>
+
+            <if test="cusStatus != null">
+                AND c_cus_status = #{cusStatus}
+            </if>
+            <if test="enterTimeStart != null">
+                AND c_enter_time <![CDATA[ >= ]]> #{enterTimeStart}
+            </if>
+            <if test="enterTimeEnd != null">
+                AND c_enter_time <![CDATA[ <= ]]> #{enterTimeEnd}
+            </if>
+
+            <if test="createTimeStart != null">
+                AND c_create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND c_create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="cusIsDeleted != null">
+                AND c_is_deleted=#{cusIsDeleted}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="cusNotFolStart !=null">
+                AND c_last_followup_time <![CDATA[ <= ]]> #{cusNotFolStart}
+            </if>
+            <if test="cusNotFolEnd!=null">
+                AND c_last_followup_time <![CDATA[ >= ]]> #{cusNotFolEnd}
+            </if>
+            <if test="industry!=null and c_industry!=''">
+                AND c_industry = #{industry}
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="selectSimpleSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="createCode != null and createCode != ''">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createDeptCode != null and createDeptCode != ''">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_crm_customer_push
+        <include refid="selectSimpleSql"/>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerPushEntity">
+        select * from t_hkp_crm_customer_push
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+
+    <sql id="area">
+        <choose>
+            <when test="street !=null">
+                AND a.street=#{street}
+            </when>
+            <when test="region != null">
+                AND a.region = #{region}
+            </when>
+            <when test="city != null">
+                AND a.city = #{city}
+            </when>
+            <when test="province != null">
+                AND a.province =#{province}
+            </when>
+        </choose>
+    </sql>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectPushByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerPushEntity">
+        SELECT
+            u.user_name AS push_name,
+            us.user_name AS receive_name,
+            dd.dept_name AS receive_dept_name,
+            CASE WHEN d.push_type = 'old' OR d.push_type = 'new'
+            THEN
+                '集中获客' ELSE d.push_type
+            END,
+                d.push_message,
+                d.create_time
+        FROM(
+            SELECT
+                cus_code,
+                create_code AS push_code,
+                focus_type AS push_type,
+                user_code AS receive_code,
+                user_dept_code AS receive_dept_code,
+                NULL AS push_message,
+                create_time
+            FROM
+                t_hkp_crm_focus_cus
+            UNION
+            SELECT
+                cus_code,
+                push_code,
+                push_type,
+                receive_code,
+                receive_dept_code push_message,
+                push_message,
+                create_time
+            FROM
+                t_hkp_crm_customer_push
+        ) d
+        LEFT JOIN t_hkp_sys_user_user u ON u.user_code = d.push_code
+        LEFT JOIN t_hkp_sys_user_user us ON u.user_code = d.receive_code
+        LEFT JOIN t_hkp_hrm_org_dept dd ON dd.dept_code = d.receive_dept_code
+        where d.cus_code = #{cusCode}
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectPushByMapCount" parameterType="map" resultType="int">
+        SELECT
+            count(*)
+        FROM(
+            SELECT
+                cus_code
+            FROM
+                t_hkp_crm_focus_cus
+            UNION
+            SELECT
+                cus_code
+            FROM
+                t_hkp_crm_customer_push
+        ) d
+        where d.cus_code = #{cusCode}
+    </select>
+
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.CustomerPushEntity">
+        select tb.*,
+        a.province as c_a_province,
+        a.city as c_a_city,
+        a.region as c_a_region,
+        a.street as c_a_street,
+        a.province_name as c_a_province_name,
+        a.city_name as c_a_city_name,
+        a.region_name as c_a_region_name,
+        a.street_name as c_a_street_name
+        from (
+        select * from (
+        select p.*,
+        c.create_time as c_create_time,
+        c.cus_code as c_cus_code,
+        c.cus_type as c_cus_type,
+        c.emp_code as c_emp_code,
+        u.user_name as c_emp_name,
+        c.cus_name as c_cus_name,
+        c.cus_phone as c_cus_phone,
+        c.cus_status as c_cus_status,
+        c.open_flag as c_open_flag,
+        c.cus_sex as c_cus_sex,
+        c.need_acreage as c_need_acreage,
+        c.house_type as c_house_type,
+        c.enter_time as c_enter_time,
+        c.need_voltage as c_need_voltage,
+        c.industry as c_industry,
+        c.products as c_products,
+        c.need_price as c_need_price,
+        c.last_followup_time as c_last_followup_time,
+        c.is_deleted as c_is_deleted,
+        c.layer_height as c_layer_height,
+        c.layer_num as c_layer_num,
+        c.cus_from as c_cus_from
+        from t_hkp_crm_customer_push p
+        left join
+        <choose>
+            <when test="province != null or city != null or region != null or street != null">
+                (SELECT * from t_hkp_crm_customer cs
+                where exists (SELECT * from t_hkp_crm_customer_area a where a.cus_code = cs.cus_code
+                <include
+                        refid="area"/>) )c
+            </when>
+            <otherwise>
+                t_hkp_crm_customer c
+            </otherwise>
+        </choose>
+        on c.cus_code = p.cus_code
+        left join t_hkp_sys_user_user u
+        on u.user_code=c.emp_code
+        ) ft
+
+        <include refid="selectSql"/>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+        <if test="offset != null">
+            offset #{offset}
+        </if>
+        ) tb left join t_hkp_crm_customer_area a on tb.cus_code = a.cus_code
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*) from(
+        select * from (
+        select p.*,
+        c.create_time as c_create_time,
+        c.cus_code as c_cus_code,
+        c.cus_type as c_cus_type,
+        c.emp_code as c_emp_code,
+        u.user_name as c_emp_name,
+        c.cus_name as c_cus_name,
+        c.cus_phone as c_cus_phone,
+        c.cus_status as c_cus_status,
+        c.open_flag as c_open_flag,
+        c.cus_sex as c_cus_sex,
+        c.need_acreage as c_need_acreage,
+        c.house_type as c_house_type,
+        c.enter_time as c_enter_time,
+        c.need_voltage as c_need_voltage,
+        c.industry as c_industry,
+        c.products as c_products,
+        c.need_price as c_need_price,
+        c.last_followup_time as c_last_followup_time,
+        c.is_deleted as c_is_deleted,
+        c.layer_height as c_layer_height,
+        c.layer_num as c_layer_num,
+        c.cus_from as c_cus_from
+        from t_hkp_crm_customer_push p
+        left join
+        <choose>
+            <when test="province != null or city != null or region != null or street != null">
+                (SELECT * from t_hkp_crm_customer cs
+                where exists (SELECT * from t_hkp_crm_customer_area a where a.cus_code = cs.cus_code
+                <include
+                        refid="area"/>) )c
+            </when>
+            <otherwise>
+                t_hkp_crm_customer c
+            </otherwise>
+        </choose>
+        on c.cus_code = p.cus_code
+        left join t_hkp_sys_user_user u
+        on u.user_code=c.emp_code
+        ) ft
+        <include refid="selectSql"/>
+        ) tb
+    </select>
+
+    <!--获取当前客户推送 的接收人与接收部门-->
+    <select id="getPushDeptOrUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select receive_code,receive_dept_code,push_type
+        from t_hkp_crm_customer_push
+        where cus_code = #{cusCode}
+    </select>
+</mapper>

@@ -1,0 +1,153 @@
+{
+  "isSuccess": true,
+  "code": "200",
+  "message": "操作成功!",
+  "isException": false,
+  "result": [
+    {
+      "id": 0,
+      "isDeleted": false,
+      "menuCode": "rootNum",
+      "menuName": "所有菜单(根菜单)",
+      "parentCode": "0",
+      "menuTypeName": "找不到指定词典",
+      "level": 0,
+      "children": [
+        {
+          "id": 1,
+          "isDeleted": false,
+          "menuCode": "1",
+          "menuName": "园区管理",
+          "parentCode": "rootNum",
+          "menuTypeName": "找不到指定词典",
+          "level": 1,
+          "children": [
+            {
+              "id": 5,
+              "isDeleted": false,
+              "menuCode": "1-1",
+              "menuName": "园区列表",
+              "parentCode": "1",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            },
+            {
+              "id": 6,
+              "isDeleted": false,
+              "menuCode": "1-2",
+              "menuName": "园区新增",
+              "parentCode": "1",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            },
+            {
+              "id": 7,
+              "isDeleted": false,
+              "menuCode": "1-3",
+              "menuName": "园区详情",
+              "parentCode": "1",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "isDeleted": false,
+          "menuCode": "2",
+          "menuName": "招商管理",
+          "parentCode": "rootNum",
+          "menuTypeName": "找不到指定词典",
+          "level": 1,
+          "children": [
+            {
+              "id": 8,
+              "isDeleted": false,
+              "menuCode": "2-1",
+              "menuName": "客户列表",
+              "parentCode": "2",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            },
+            {
+              "id": 10,
+              "isDeleted": false,
+              "menuCode": "2-2",
+              "menuName": "客户新增",
+              "parentCode": "2",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "isDeleted": false,
+          "menuCode": "3",
+          "menuName": "租户管理",
+          "parentCode": "rootNum",
+          "menuTypeName": "找不到指定词典",
+          "level": 1,
+          "children": [
+            {
+              "id": 11,
+              "isDeleted": false,
+              "menuCode": "3-1",
+              "menuName": "合同列表",
+              "parentCode": "3",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            },
+            {
+              "id": 12,
+              "isDeleted": false,
+              "menuCode": "3-2",
+              "menuName": "合同新增",
+              "parentCode": "3",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "isDeleted": false,
+          "menuCode": "4",
+          "menuName": "系统管理",
+          "parentCode": "rootNum",
+          "menuTypeName": "找不到指定词典",
+          "level": 1,
+          "children": [
+            {
+              "id": 13,
+              "isDeleted": false,
+              "menuCode": "4-1",
+              "menuName": "部门列表",
+              "parentCode": "4",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            },
+            {
+              "id": 14,
+              "isDeleted": false,
+              "menuCode": "4-2",
+              "menuName": "部门新增",
+              "parentCode": "4",
+              "menuTypeName": "找不到指定词典",
+              "level": 2,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

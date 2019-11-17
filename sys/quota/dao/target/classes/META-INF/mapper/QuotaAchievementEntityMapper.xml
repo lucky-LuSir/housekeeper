@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.quota.entity.QuotaAchievementEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.sys.quota.entity.QuotaAchievementEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="qa_time" property="qaTime" jdbcType="VARCHAR"/>
+        <result column="quota_type" property="quotaType" jdbcType="NUMERIC" javaType="int"/>
+        <result column="hos_value" property="hosValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="hos_auth_value" property="hosAuthValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="hos_follow_value" property="hosFollowValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="cus_value" property="cusValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="cus_follow_value" property="cusFollowValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="cus_effective_value" property="cusEffectiveValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="pt_value" property="ptValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="see_value" property="seeValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="negotiation" property="negotiation" jdbcType="NUMERIC" javaType="int"/>
+        <result column="owner_follow_value" property="ownerFollowValue" jdbcType="NUMERIC" javaType="int"/>
+        <result column="signing" property="signing" jdbcType="NUMERIC" javaType="Long"/>
+        <result column="total_money_value" property="totalMoneyValue" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="owner_code" property="ownerCode" jdbcType="VARCHAR"/>
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!-- 批量新增记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_quota_achievement
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.qaTime != null and i.qaTime != ''">
+                    qa_time,
+                </if>
+                <if test="i.quotaType != null and i.quotaType != ''">
+                    quota_type,
+                </if>
+                <if test="i.hosValue != null">
+                    hos_value,
+                </if>
+                <if test="i.hosAuthValue != null">
+                    hos_auth_value,
+                </if>
+                <if test="i.cusValue != null">
+                    cus_value,
+                </if>
+                <if test="i.ptValue != null">
+                    pt_value,
+                </if>
+                <if test="i.seeValue != null">
+                    see_value,
+                </if>
+                <if test="i.negotiation != null">
+                    negotiation,
+                </if>
+                <if test="i.cusEffectiveValue != null">
+                    cus_effective_value,
+                </if>
+                <if test="i.hosFollowValue != null">
+                    hos_follow_value,
+                </if>
+                <if test="i.ownerFollowValue != null">
+                    owner_follow_value,
+                </if>
+                <if test="i.cusFollowValue != null">
+                    cus_follow_value,
+                </if>
+                <if test="i.totalMoneyValue != null">
+                    total_money_value,
+                </if>
+                <if test="i.signing != null">
+                    signing,
+                </if>
+
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    owner_code,
+                </if>
+
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.qaTime != null and i.qaTime != ''">
+                    #{i.qaTime},
+                </if>
+                <if test="i.quotaType != null and i.quotaType != ''">
+                    #{i.quotaType},
+                </if>
+                <if test="i.hosValue != null">
+                    #{i.hosValue},
+                </if>
+                <if test="i.hosAuthValue != null">
+                    #{i.hosAuthValue},
+                </if>
+                <if test="i.cusValue != null">
+                    #{i.cusValue},
+                </if>
+                <if test="i.ptValue != null">
+                    #{i.ptValue},
+                </if>
+                <if test="i.seeValue != null">
+                    #{i.seeValue},
+                </if>
+                <if test="i.negotiation != null">
+                    #{i.negotiation},
+                </if>
+                <if test="i.cusEffectiveValue != null">
+                    #{i.cusEffectiveValue},
+                </if>
+                <if test="i.hosFollowValue != null">
+                    #{i.hosFollowValue},
+                </if>
+                <if test="i.ownerFollowValue != null">
+                    #{i.ownerFollowValue},
+                </if>
+                <if test="i.cusFollowValue != null">
+                    #{i.cusFollowValue},
+                </if>
+                <if test="i.totalMoneyValue != null">
+                    #{i.totalMoneyValue},
+                </if>
+                <if test="i.signing != null">
+                    #{i.signing},
+                </if>
+
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    #{i.ownerCode},
+                </if>
+
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    #{i.createName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_quota_achievement WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.quota.entity.QuotaAchievementEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_quota_achievement
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.quotaType != null and i.quotaType != ''">
+                    quota_type = #{i.quotaType},
+                </if>
+                <if test="i.hosValue != null">
+                    hos_value = #{i.hosValue},
+                </if>
+                <if test="i.hosAuthValue != null">
+                    hos_auth_value = #{i.hosAuthValue},
+                </if>
+                <if test="i.ptValue != null">
+                    pt_value = #{i.ptValue},
+                </if>
+                <if test="i.cusValue != null">
+                    cus_value = #{i.cusValue},
+                </if>
+                <if test="i.seeValue != null">
+                    see_value = #{i.seeValue},
+                </if>
+                <if test="i.negotiation != null">
+                    negotiation = #{i.negotiation},
+                </if>
+                <if test="i.cusEffectiveValue != null">
+                    cus_effective_value = #{i.cusEffectiveValue},
+                </if>
+                <if test="i.hosFollowValue != null">
+                    hos_follow_value = #{i.hosFollowValue},
+                </if>
+                <if test="i.ownerFollowValue != null">
+                    owner_follow_value = #{i.ownerFollowValue},
+                </if>
+                <if test="i.cusFollowValue != null">
+                    cus_follow_value = #{i.cusFollowValue},
+                </if>
+                <if test="i.totalMoneyValue != null">
+                    total_money_value = #{i.totalMoneyValue},
+                </if>
+                <if test="i.signing != null">
+                    signing = #{i.signing},
+                </if>
+
+                <if test="i.ownerCode != null and i.ownerCode != ''">
+                    owner_code = #{i.ownerCode},
+                </if>
+
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark = #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.createName != null and i.createName != ''">
+                    create_name = #{i.createName},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code = #{i.createDeptCode},
+                </if>
+                <if test="i.createDeptName != null and i.createDeptName != ''">
+                    create_dept_name = #{i.createDeptName},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted = #{i.isDeleted},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 通过主键列表查找记录 -->
+    <select id="selectByIds" parameterType="java.util.List" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.quota.entity.QuotaAchievementEntity">
+        select * from t_hkp_quota_achievement where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="qaTime != null and qaTime != ''">
+                AND qa_time = #{qaTime}
+            </if>
+            <if test="ownerCode != null">
+                and owner_code = #{ownerCode}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                and create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                and create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.quota.entity.QuotaAchievementEntity">
+        select * from t_hkp_quota_achievement
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询需求信息 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.quota.entity.QuotaAchievementEntity">
+        select * from (
+            SELECT
+              *,
+                CASE
+                WHEN q.quota_type = 1 THEN(
+                    SELECT
+                      d.dept_name AS owner_name
+                    FROM
+                      t_hkp_hrm_org_dept d
+                    WHERE
+                      d.dept_code = q.owner_code
+                )
+                ELSE(
+                    SELECT
+                      u.user_name AS owner_name
+                    FROM
+                      t_hkp_sys_user_user u
+                    WHERE
+                      u.user_code = q.owner_code
+                )END owner_name
+            FROM
+              t_hkp_quota_achievement q
+        ) tp
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 查询需求总量 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(1) from (
+            select * from t_hkp_quota_achievement
+        ) tp
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.quota.entity.QuotaAchievementEntity">
+        ${value}
+    </select>
+
+</mapper>

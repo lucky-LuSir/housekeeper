@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.trade.wage.entity.WageEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.trade.wage.entity.WageEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+        <result column="post_code" property="postCode" jdbcType="VARCHAR"/>
+        <result column="post_name" property="postName" jdbcType="VARCHAR"/>
+        <result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+        <result column="wage" property="wage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="work_number" property="workNumber" jdbcType="VARCHAR"/>
+        <result column="pay_back_amount" property="payBackAmount" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="pay_back_achievements" property="payBackAchievements" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="real_pay_back_achievements" property="realPayBackAchievements" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+        <result column="pe_order_code" property="peOrderCode" jdbcType="VARCHAR"/>
+        <result column="pay_back_code" property="payBackCode" jdbcType="VARCHAR"/>
+        <result column="commission_wage_code" property="commissionWageCode" jdbcType="VARCHAR"/>
+        <result column="commission_ratio_code" property="commissionRatioCode" jdbcType="VARCHAR"/>
+        <result column="pay_back_time" property="payBackTime" jdbcType="TIMESTAMP"/>
+        <result column="commission_type" property="commissionType" jdbcType="VARCHAR"/>
+        <result column="has_changed" property="hasChanged" jdbcType="BOOLEAN"/>
+        <result column="is_settlement" property="settlement" jdbcType="BOOLEAN"/>
+        <result column="wage_type" property="wageType" jdbcType="VARCHAR"/>
+        <result column="quit_time" property="quitTime" jdbcType="TIMESTAMP"/>
+        <result column="entry_time" property="entryTime" jdbcType="TIMESTAMP"/>
+        <result column="percentage" property="percentage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="commission_ratio" property="commissionRatio" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="commissionWageCode != null and commissionWageCode != ''">
+                AND commission_wage_code = #{commissionWageCode}
+            </if>
+            <if test="commissionRatioCode != null and commissionRatioCode != ''">
+                AND commission_ratio_code = #{commissionRatioCode}
+            </if>
+            <if test="orderCode != null and orderCode != ''">
+                AND order_code = #{orderCode}
+            </if>
+            <if test="peOrderCode != null and peOrderCode != ''">
+                AND pe_order_code = #{peOrderCode}
+            </if>
+            <if test="payBackOrderCode != null and payBackOrderCode != ''">
+                AND pay_back_order_code = #{payBackOrderCode}
+            </if>
+            <if test="userCode != null and userCode != ''">
+                AND user_code = #{userCode}
+            </if>
+            <if test="commissionType != null and commissionType != ''">
+                AND commission_type = #{commissionType}
+            </if>
+            <if test="payBackTimeStart != null">
+                AND pay_back_time <![CDATA[ >= ]]> #{payBackTimeStart}
+            </if>
+            <if test="payBackTimeEnd != null">
+                AND pay_back_time <![CDATA[ < ]]> #{payBackTimeEnd}
+            </if>
+            <if test="isSettlement != null">
+                AND is_settlement=#{isSettlement}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.wage.entity.WageEntity">
+        SELECT
+        wage.*,
+        u.user_name,
+        u.work_number,
+        u.emp_post_code as post_code,
+        u.emp_post_name as post_name,
+        u.is_deleted,
+        u.group_name,
+        d.dept_code,
+        d.dept_name,
+        u.quit_time,
+        u.entry_time
+        FROM
+        (
+        SELECT
+        user_code,
+        sum (commission_wage) as wage
+        FROM
+        t_hkp_trade_order_commission_wage
+        <include refid="selectSql"/>
+        GROUP BY
+        user_code
+        ) wage
+        LEFT JOIN t_hkp_sys_user_user u ON wage.user_code = u.user_code
+        LEFT JOIN t_hkp_hrm_org_dept d ON u.owner_dept_code = d.dept_code
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select count(*) from (
+        SELECT
+        wage.*, u.user_name,
+        u.work_number,
+        u.emp_post_code,
+        u.emp_post_name,
+        u.is_deleted,
+        d.dept_code,
+        d.dept_name
+        FROM
+        (
+        SELECT
+        user_code,
+        sum (commission_wage) as sum_wage
+
+        FROM
+        t_hkp_trade_order_commission_wage
+        <include refid="selectSql"/>
+        GROUP BY
+        user_code
+        ) wage
+        LEFT JOIN t_hkp_sys_user_user u ON wage.user_code = u.user_code
+        LEFT JOIN t_hkp_hrm_org_dept d ON u.owner_dept_code = d.dept_code
+        ) TPD
+    </select>
+    <select id="wageDetailsReport"  parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.trade.wage.entity.WageEntity">
+            SELECT
+                wage.user_code,
+                u.user_name,
+                u.emp_post_code as post_code,
+                u.emp_post_name as post_name,
+                wage.commission_wage as wage,
+                u.work_number,
+                u.owner_dept_code as dept_code,
+                u.is_deleted,
+                u.quit_time,
+                u.entry_time,
+            dept.dept_name,
+            wage.pay_back_amount,
+            wage.pay_back_achievements,
+            wage.pay_back_achievements*ratio.percentage*wage.commission_ratio/10000 as real_pay_back_achievements,
+            wage.pay_back_time,
+            wage.order_code,
+            ord.order_time,
+            wage.pe_order_code,
+            wage.pay_back_order_code as pay_back_code,
+            wage.commission_type,
+            wage.commission_ratio,
+            wage.wage_type,
+            ratio.has_changed,
+            wage.is_settlement,
+            ratio.commission_ratio_code,
+            ratio.percentage
+            FROM
+                t_hkp_trade_order_commission_wage wage
+            LEFT JOIN t_hkp_sys_user_user u on u.user_code=wage.user_code
+            LEFT JOIN t_hkp_hrm_org_dept dept on u.owner_dept_code=dept.dept_code
+            LEFT JOIN t_hkp_trade_order_commission_ratio ratio  on wage.commission_ratio_code=ratio.commission_ratio_code
+            LEFT JOIN t_hkp_trade_order_percentage pe on wage.pe_order_code=pe.percentage_code
+             join t_hkp_trade_order ord on ord.order_code=wage.order_code
+            where wage.is_deleted=false
+            and ord.is_deleted=false
+            and pe.is_deleted=false
+        <if test="payBackTimeStart != null">
+            AND wage.pay_back_time <![CDATA[ >= ]]> #{payBackTimeStart}
+        </if>
+        <if test="payBackTimeEnd != null">
+            AND wage.pay_back_time <![CDATA[ < ]]> #{payBackTimeEnd}
+        </if>
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.notice.entity.NoticeRecordEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.sys.notice.entity.NoticeRecordEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="record_code" property="recordCode" jdbcType="VARCHAR"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="notice_code" property="noticeCode" jdbcType="VARCHAR"/>
+        <result column="has_read" property="hasRead" jdbcType="BOOLEAN"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_sys_notice_record
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.recordCode != null and i.recordCode!=''">
+                    record_code,
+                </if>
+                <if test="i.empCode != null and i.empCode!=''">
+                    emp_code,
+                </if>
+                <if test="i.noticeCode != null and i.noticeCode!=''">
+                    notice_code,
+                </if>
+                <if test="i.hasRead != null">
+                    has_read,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.recordCode != null and i.recordCode!=''">
+                    #{i.recordCode},
+                </if>
+                <if test="i.empCode != null and i.empCode!=''">
+                    #{i.empCode},
+                </if>
+                <if test="i.noticeCode != null and i.noticeCode!=''">
+                    #{i.noticeCode},
+                </if>
+                <if test="i.hasRead != null">
+                    #{i.hasRead},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_sys_notice_record WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByRecordCode" parameterType="java.util.List">
+        delete  from  t_hkp_sys_notice_record where record_code in
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.notice.entity.NoticeRecordEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_sys_notice_record
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.empCode != null and i.empCode != ''">
+                    emp_code = #{i.empCode},
+                </if>
+                <if test="i.recordCode != null and i.recordCode != ''">
+                    record_code = #{i.recordCode},
+                </if>
+                <if test="i.noticeCode != null and i.noticeCode != ''">
+                    notice_code = #{i.noticeCode},
+                </if>
+                <if test="i.hasRead != null">
+                    has_read = #{i.hasRead},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                <if test="i.recordCode != null and i.recordCode != ''">
+                    AND record_code = #{i.recordCode}
+                </if>
+                <if test="i.noticeCode != null and i.noticeCode != ''">
+                    AND notice_code = #{i.noticeCode}
+                </if>
+                <if test="i.empCode != null and i.empCode != ''">
+                    AND emp_code = #{i.empCode}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <!-- 通过主键列表查找记录 -->
+    <select id="selectByIds" parameterType="java.util.List" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.notice.entity.NoticeRecordEntity">
+        SELECT * FROM t_hkp_sys_notice_record WHERE ID IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="recordCode != null and recordCode!=''">
+                AND record_code = #{recordCode}
+            </if>
+            <if test="noticeCode != null and noticeCode!=''">
+                AND notice_code = #{noticeCode}
+            </if>
+            <if test="noticeType != null and noticeType!=''">
+                AND notice_type = #{noticeType}
+            </if>
+            <if test="empCode != null and empCode!=''">
+                AND emp_code = #{empCode}
+            </if>
+            <if test="hasRead != null">
+                AND has_read = #{hasRead}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.notice.entity.NoticeRecordEntity">
+        SELECT *  FROM
+        (
+        SELECT  r.*
+        from t_hkp_sys_notice_record r
+        inner join t_hkp_sys_notice n on r.notice_code = n.notice_code
+        ) nr
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="long">
+        SELECT count(*) FROM
+        (
+        SELECT r.*
+        from t_hkp_sys_notice_record r
+        inner join t_hkp_sys_notice n on r.notice_code = n.notice_code
+        ) nr
+        <include refid="selectSql"/>
+    </select>
+
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        SELECT count(1) FROM
+        (
+          SELECT n.notice_type
+          from t_hkp_sys_notice_record r
+          inner JOIN t_hkp_sys_notice n on r.notice_code = n.notice_code
+            <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="recordCode != null and recordCode!=''">
+                AND r.record_code = #{recordCode}
+            </if>
+            <if test="noticeCode != null and noticeCode!=''">
+                AND r.notice_code = #{noticeCode}
+            </if>
+            <if test="noticeType != null and noticeType!=''">
+                AND n.notice_type = #{noticeType}
+            </if>
+            <if test="empCode != null and empCode!=''">
+                AND r.emp_code = #{empCode}
+            </if>
+            <if test="hasRead != null">
+                AND r.has_read = #{hasRead}
+            </if>
+            <if test="isDeleted != null">
+                AND r.IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND r.create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND r.create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+          limit 100
+        ) rd
+    </select>
+
+
+    <!-- 批量更新已读 -->
+    <update id="updateReadAllSelf" parameterType="com.kfwy.hkp.sys.notice.entity.NoticeRecordEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_sys_notice_record
+            <trim prefix="set" suffixOverrides=",">
+                    has_read = true,
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    AND id = #{i.id}
+                </if>
+                <if test="i.recordCode != null and i.recordCode != ''">
+                    AND record_code = #{i.recordCode}
+                </if>
+
+            </trim>
+        </foreach>
+    </update>
+
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectReadAllSelf" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.sys.notice.entity.NoticeRecordEntity">
+
+        SELECT * from
+
+        (SELECT nn.notice_type,nr.* FROM t_hkp_sys_notice_record nr LEFT JOIN  t_hkp_sys_notice nn on nr.notice_code= nn.notice_code
+        WHERE nr.emp_code=#{empCode} and has_read=false)  nrandnn
+
+        WHERE nrandnn.notice_type = '1' or nrandnn.notice_type='2' or nrandnn.notice_type='6' ORDER BY nrandnn.id DESC LIMIT 2000
+    </select>
+
+</mapper>

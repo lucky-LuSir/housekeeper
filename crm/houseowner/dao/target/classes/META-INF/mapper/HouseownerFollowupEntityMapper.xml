@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.houseowner.entity.HouseownerFollowupEntity">
+
+    <resultMap id="BaseResultMap"
+               type="com.kfwy.hkp.crm.houseowner.entity.HouseownerFollowupEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="houseowner_code" property="houseownerCode" jdbcType="VARCHAR"/>
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+        <result column="followup_type" property="followupType" jdbcType="VARCHAR"/>
+        <result column="followup_context" property="followupContext" jdbcType="VARCHAR"/>
+        <result column="emp_phone" property="empPhone" jdbcType="VARCHAR"/>
+        <result column="owner_phone" property="ownerPhone" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="create_dept_name" property="createDeptName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_hos_houseowner_followup
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                <if test="i.houseownerCode != null and i.houseownerCode!=''">
+                    houseowner_code,
+                </if>
+                <if test="i.followupType != null and i.followupType!=''">
+                    followup_type,
+                </if>
+                <if test="i.followupContext != null and i.followupContext!=''">
+                    followup_context,
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark,
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.houseownerCode != null and i.houseownerCode!=''">
+                    #{i.houseownerCode},
+                </if>
+                <if test="i.followupType != null and i.followupType!=''">
+                    #{i.followupType},
+                </if>
+                <if test="i.followupContext != null and i.followupContext!=''">
+                    #{i.followupContext},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    #{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    #{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_hos_houseowner_followup WHERE ID IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate"
+            parameterType="com.kfwy.hkp.crm.houseowner.entity.HouseownerFollowupEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_hos_houseowner_followup
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.houseownerCode != null and i.houseownerCode!=''">
+                    houseowner_code= #{i.houseownerCode},
+                </if>
+                <if test="i.followupType != null and i.followupType!=''">
+                    followup_type= #{i.followupType},
+                </if>
+                <if test="i.followupContext != null and i.followupContext!=''">
+                    followup_context=#{i.followupContext},
+                </if>
+
+                <if test="i.remark != null and i.remark != ''">
+                    remark=#{i.remark},
+                </if>
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code=#{i.cpyCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time=#{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time=#{i.lastUpdateTime},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code=#{i.createCode},
+                </if>
+                <if test="i.createDeptCode != null and i.createDeptCode != ''">
+                    create_dept_code=#{i.createDeptCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code=#{i.lastUpdateCode},
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted=#{i.isDeleted}
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                <if test="i.id != null">
+                    AND ID = #{i.id}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_hos_houseowner_followup
+        <include refid="selectSql"/>
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="houseownerCode != null and houseownerCode!=''">
+                AND houseowner_code = #{houseownerCode}
+            </if>
+            <if test="followupType != null and followupType!=''">
+                AND followup_type = #{followupType}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[>=]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[<=]]> #{createTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted = #{isDeleted}
+            </if>
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createDeptCode != null">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="ownerName!=null">
+                AND owner_name = #{ownerName}
+            </if>
+            <if test="ownerPhone!=null">
+                and owner_phone = #{ownerPhone}
+            </if>
+            <if test="createName!=null">
+                AND create_name = #{createName}
+            </if>
+            <if test="empPhone!=null">
+                AND emp_phone = #{empPhone}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.houseowner.entity.HouseownerFollowupEntity">
+        SELECT * from (
+        SELECT
+        f.*,
+        owner.houseowner_phone as owner_phone,
+        owner.houseowner_name as owner_name,
+        e.user_name as create_name,
+        e.user_phone as emp_phone,
+        e.owner_dept_name as create_dept_name
+        FROM t_hkp_hos_houseowner_followup f
+        left join t_hkp_sys_user_user e on e.user_code = f.create_code
+        LEFT JOIN t_hkp_hos_houseowner owner ON owner.houseowner_code = f.houseowner_code
+        )TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        SELECT count(1) from (
+        SELECT
+        f.*,
+        owner.houseowner_phone as owner_phone,
+        owner.houseowner_name as owner_name,
+        e.user_name as create_name,
+        e.user_phone as emp_phone,
+        e.owner_dept_name as create_dept_name
+        FROM t_hkp_hos_houseowner_followup f
+        left join t_hkp_sys_user_user e on e.user_code = f.create_code
+        LEFT JOIN t_hkp_hos_houseowner owner ON owner.houseowner_code = f.houseowner_code
+        )TP
+        <include refid="selectSql"/>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.houseowner.entity.HouseownerFollowupEntity">
+        SELECT
+        f.*,
+        owner.houseowner_phone as owner_phone,
+        owner.houseowner_name as owner_name,
+        e.user_name as create_name,
+        e.user_phone as emp_phone,
+        e.owner_dept_name as create_dept_name
+        FROM t_hkp_hos_houseowner_followup f
+        left join t_hkp_sys_user_user e on e.user_code = f.create_code
+        LEFT JOIN t_hkp_hos_houseowner owner ON owner.houseowner_code = f.houseowner_code
+        <include refid="selectSql"/>
+    </select>
+</mapper>

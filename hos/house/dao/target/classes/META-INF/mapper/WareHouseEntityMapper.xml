@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.hos.house.entity.WarehouseEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.hos.house.entity.WarehouseEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="wh_code" property="whCode" jdbcType="VARCHAR"/>
+        <result column="house_number" property="houseNumber" jdbcType="VARCHAR"/>
+        <result column="wh_name" property="whName" jdbcType="VARCHAR"/>
+        <result column="house_code" property="houseCode" jdbcType="VARCHAR"/>
+        <result column="house_name" property="houseName" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="layer_height" property="layerHeight" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="voltage" property="voltage" jdbcType="VARCHAR"/>
+        <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+        <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+        <result column="has_eia" property="hasEia" jdbcType="BOOLEAN"/>
+        <result column="has_certificate" property="hasCertificate" jdbcType="BOOLEAN"/>
+        <result column="has_cut" property="hasCut" jdbcType="BOOLEAN"/>
+        <result column="house_purpose" property="houseType" jdbcType="VARCHAR"/>
+        <result column="traffic_facilities" property="trafficFacilities" jdbcType="VARCHAR"/>
+        <result column="for_insdustry" property="forInsdustry" jdbcType="VARCHAR"/>
+        <result column="features" property="features" jdbcType="VARCHAR"/>
+        <result column="pic_code" property="picCode" jdbcType="VARCHAR"/>
+        <result column="acreage" property="acreage" jdbcType="NUMERIC" javaType="float"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="bearing" property="bearing"/>
+        <result column="lease_negotiable" property="leaseNegotiable" jdbcType="BOOLEAN"/>
+        <result column="of_the_area" property="ofTheArea"/>
+    </resultMap>
+
+    <select id="selectByMapSimple" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.hos.house.entity.WarehouseEntity">
+        SELECT * FROM(
+            SELECT
+                h.house_code,
+                h.house_name,
+                h.house_code AS wh_code,
+                h.house_code AS code,
+                h.house_name AS wh_name,
+                h.house_name AS name,
+                h.layer_height,
+                h.price,
+                h.unit,
+                h.max_electric AS voltage,
+                h.area AS acreage,
+                h.for_insdustry,
+                h.features,
+                h.create_time,
+                h.last_update_time,
+                f.file_code AS pic_code,
+                l.traffic_facilities,
+                h.region_name,
+                h.street_name,
+                h.has_eia,
+                h.has_certificate,
+                h.house_purpose,
+                h.has_cut,
+                h.bearing,
+                h.lease_negotiable,
+                h.of_the_area,
+                l.longitude,
+                l.latitude,
+                h.house_number
+            FROM
+                t_hkp_hos_house h
+            LEFT JOIN t_hkp_hos_location l ON l.location_code = h.location_code
+            LEFT JOIN t_hkp_sys_file_relation f ON f.owner_code = h.house_code
+            AND file_use = '1'
+            <include refid="selectSql4Simple"/>
+        ) TP
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <select id="selectByMapSimpleCount" parameterType="map" resultType="int">
+        SELECT count(1) FROM(
+            SELECT
+                h.house_code,
+                h.house_name,
+                h.house_code AS wh_code,
+                h.house_code AS code,
+                h.house_name AS wh_name,
+                h.house_name AS name,
+                h.layer_height,
+                h.price,
+                h.unit,
+                h.max_electric AS voltage,
+                h.area AS acreage,
+                h.for_insdustry,
+                h.features,
+                h.create_time,
+                f.file_code AS pic_code,
+                l.traffic_facilities,
+                h.region_name,
+                h.street_name,
+                h.has_eia,
+                h.has_certificate,
+                h.house_purpose,
+                h.has_cut,
+                h.bearing,
+                h.lease_negotiable,
+                h.of_the_area,
+                l.longitude,
+                l.latitude,
+                h.house_number
+            FROM
+                t_hkp_hos_house h
+            LEFT JOIN t_hkp_hos_location l ON l.location_code = h.location_code
+            LEFT JOIN t_hkp_sys_file_relation f ON f.owner_code = h.house_code
+            AND file_use = '1'
+            <include refid="selectSql4Simple"/>
+        ) TP
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <sql id="selectSql4Simple">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="keyWord != null and keyWord!=''">
+                AND (h.community_name like '%'|| #{keyWord} or h.street_name like '%'|| #{keyWord} || '%'
+                or h.region_name like '%'|| #{keyWord} ||'%' or h.house_name like '%' || #{keyWord} || '%'
+                or h.house_number like '%'|| #{keyWord} ||'%')
+            </if>
+            <if test="warehouseType != null">
+                and h.house_style = #{warehouseType}
+            </if>
+            <if test="houseType != null">
+                AND h.house_purpose = #{houseType}
+            </if>
+            <if test="houseTypes != null">
+                <choose>
+                    <when test="_houseTypes != null">
+                        AND h.house_purpose IN (${_houseTypes})
+                    </when>
+                    <otherwise>
+                        AND h.house_purpose IN
+                        <foreach collection="houseTypes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="statusList != null">
+                AND h.house_status = #{statusList}
+            </if>
+            <if test="status != null">
+                AND h.house_status = #{status}
+            </if>
+            <if test="houseName != null and houseName !='' ">
+                AND h.house_name like '%'|| #{houseName} ||'%'
+            </if>
+            <choose>
+                <when test="community !=null and community != ''">
+                    AND h.community = #{community}
+                </when>
+                <when test="street !=null and street != ''">
+                    AND h.street = #{street}
+                </when>
+                <when test="region != null and region != ''">
+                    AND h.region = #{region}
+                </when>
+                <when test="city !=null and city != ''">
+                    and h.city = #{city}
+                </when>
+                <when test="province != null and province !=''">
+                    and h.province = #{province}
+                </when>
+                <otherwise></otherwise>
+            </choose>
+            <if test="acreageStart != null">
+                AND h.area <![CDATA[>=]]> #{acreageStart}
+            </if>
+            <if test="acreageEnd != null">
+                AND h.area <![CDATA[<=]]> #{acreageEnd}
+            </if>
+            <if test="priceStart != null ">
+                AND h.price <![CDATA[>=]]> #{priceStart}
+            </if>
+            <if test="priceEnd != null ">
+                AND h.price <![CDATA[<=]]> #{priceEnd}
+            </if>
+            <if test="exceptCodes != null">
+                <choose>
+                    <when test="_exceptCodes != null">
+                        AND h.house_code NOT IN (${_exceptCodes})
+                    </when>
+                    <otherwise>
+                        AND h.house_code NOT IN
+                        <foreach collection="exceptCodes" item="i" open="(" close=")" separator=",">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+        </trim>
+    </sql>
+
+</mapper>

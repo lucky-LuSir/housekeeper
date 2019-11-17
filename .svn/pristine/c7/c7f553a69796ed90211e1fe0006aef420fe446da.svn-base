@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.user.entity.UserRelationEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.sys.user.entity.UserRelationEntity">
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="user_group_code" property="userGroupCode" jdbcType="VARCHAR"/>
+        <result column="leader_code" property="leaderCode" jdbcType="VARCHAR"/>
+		<result column="manager_code" property="managerCode" jdbcType="VARCHAR"/>
+		<result column="recommend_code" property="recommendCode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 查询唯一的信息 -->
+    <select id="getUserRelationEntity" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.user.entity.UserRelationEntity">
+			SELECT
+				user_code,
+				(
+					SELECT
+						le.user_code as leader_code
+					FROM
+						t_hkp_sys_user_user le
+					JOIN t_hkp_sys_user_user u ON le.owner_dept_code = u.owner_dept_code
+					WHERE
+						u.user_code = #{userCode}
+					AND le.emp_post_code = 'PT201603310001'
+					AND le.is_deleted = FALSE
+				),
+				(
+					SELECT
+						ug.user_code AS user_group_code
+					FROM
+						t_hkp_sys_user_user uu
+					LEFT JOIN t_hkp_sys_user_user ug ON uu.group_name = ug.group_name
+					AND uu.owner_dept_code = ug.owner_dept_code
+					WHERE
+						uu.user_code = #{userCode}
+					AND ug.emp_post_code = 'PT20190315000194c5'
+					AND ug.is_deleted = FALSE
+				),
+				(
+					SELECT
+						d.manager_code
+					FROM
+						t_hkp_sys_user_user u
+					LEFT JOIN t_hkp_hrm_org_dept d ON u.owner_dept_code = d.dept_code
+					JOIN t_hkp_sys_user_user mu ON d.manager_code = mu.user_code
+					WHERE
+						u.user_code = #{userCode}
+					AND mu.emp_post_code = 'PT201903250001feae'
+					AND mu.is_deleted = FALSE
+				),
+				(
+					SELECT
+						ur.user_code AS recommend_code
+					FROM
+						t_hkp_sys_user_user uu
+					LEFT JOIN t_hkp_sys_user_user ur ON uu.referrer_code = ur.user_code
+					WHERE
+						uu.user_code = #{userCode}
+					AND uu.is_referrer = TRUE
+					AND ur.is_deleted = FALSE
+				)
+			FROM
+				t_hkp_sys_user_user
+			WHERE
+				user_code = #{userCode}
+    </select>
+
+</mapper>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="auth-dao" />
+        <module name="auth-entity" />
+        <module name="auth-manager" />
+        <module name="base-sync" />
+        <module name="bi-count" />
+        <module name="cooperate-dao" />
+        <module name="cooperate-entity" />
+        <module name="cooperate-manager" />
+        <module name="customer-dao" />
+        <module name="customer-entity" />
+        <module name="customer-manager" />
+        <module name="dao-quit" />
+        <module name="dept-dao" />
+        <module name="dept-entity" />
+        <module name="dept-manager" />
+        <module name="employee-dao" />
+        <module name="employee-entity" />
+        <module name="employee-manager" />
+        <module name="entity-quit" />
+        <module name="file-dao" />
+        <module name="file-entity" />
+        <module name="file-manager" />
+        <module name="file-service" />
+        <module name="history-dao" />
+        <module name="history-entity" />
+        <module name="history-manager" />
+        <module name="hkp-common" />
+        <module name="hkp-job" />
+        <module name="house-dao" />
+        <module name="house-entity" />
+        <module name="house-manager" />
+        <module name="houseowner-dao" />
+        <module name="houseowner-entity" />
+        <module name="houseowner-manager" />
+        <module name="log-dao" />
+        <module name="log-entity" />
+        <module name="log-manager" />
+        <module name="manager-quit" />
+        <module name="notice-dao" />
+        <module name="notice-entity" />
+        <module name="notice-manager" />
+        <module name="notice-service" />
+        <module name="order-dao" />
+        <module name="order-entity" />
+        <module name="order-manager" />
+        <module name="parttime-dao" />
+        <module name="parttime-entity" />
+        <module name="parttime-manager" />
+        <module name="parttime-service" />
+        <module name="payment-dao" />
+        <module name="payment-entity" />
+        <module name="payment-manager" />
+        <module name="permission-dao" />
+        <module name="permission-entity" />
+        <module name="permission-manager" />
+        <module name="post-dao" />
+        <module name="post-entity" />
+        <module name="post-manager" />
+        <module name="quota-dao" />
+        <module name="quota-entity" />
+        <module name="quota-manager" />
+        <module name="quota-service" />
+        <module name="remind-dao" />
+        <module name="remind-entity" />
+        <module name="remind-manager" />
+        <module name="remind-service" />
+        <module name="srv-base" />
+        <module name="srv-bi" />
+        <module name="srv-bundle" />
+        <module name="srv-crm" />
+        <module name="srv-hos" />
+        <module name="srv-hrm" />
+        <module name="srv-payment" />
+        <module name="srv-quit" />
+        <module name="srv-sys" />
+        <module name="srv-trade" />
+        <module name="srv-union" />
+        <module name="sys-announcement" />
+        <module name="sys-area" />
+        <module name="sys-cpy" />
+        <module name="systemconfig-dao" />
+        <module name="systemconfig-entity" />
+        <module name="systemconfig-manager" />
+        <module name="user-dao" />
+        <module name="user-entity" />
+        <module name="user-manager" />
+        <module name="version-dao" />
+        <module name="version-entity" />
+        <module name="version-manager" />
+        <module name="version-service" />
+        <module name="wage-dao" />
+        <module name="wage-entity" />
+        <module name="wage-manager" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="auth-dao" target="1.8" />
+      <module name="auth-entity" target="1.8" />
+      <module name="auth-manager" target="1.8" />
+      <module name="base-history" target="1.8" />
+      <module name="base-log" target="1.8" />
+      <module name="base-permission" target="1.8" />
+      <module name="base-sync" target="1.8" />
+      <module name="base-systemconfig" target="1.8" />
+      <module name="bi-count" target="1.8" />
+      <module name="cooperate-dao" target="1.8" />
+      <module name="cooperate-entity" target="1.8" />
+      <module name="cooperate-manager" target="1.8" />
+      <module name="crm-customer" target="1.8" />
+      <module name="crm-houseowner" target="1.8" />
+      <module name="customer-dao" target="1.8" />
+      <module name="customer-entity" target="1.8" />
+      <module name="customer-manager" target="1.8" />
+      <module name="dao-quit" target="1.8" />
+      <module name="data-transfer-quit" target="1.8" />
+      <module name="dept-dao" target="1.8" />
+      <module name="dept-entity" target="1.8" />
+      <module name="dept-manager" target="1.8" />
+      <module name="employee-dao" target="1.8" />
+      <module name="employee-entity" target="1.8" />
+      <module name="employee-manager" target="1.8" />
+      <module name="entity-quit" target="1.8" />
+      <module name="file-dao" target="1.8" />
+      <module name="file-entity" target="1.8" />
+      <module name="file-manager" target="1.8" />
+      <module name="file-service" target="1.8" />
+      <module name="history-dao" target="1.8" />
+      <module name="history-entity" target="1.8" />
+      <module name="history-manager" target="1.8" />
+      <module name="hkp" target="1.8" />
+      <module name="hkp-base" target="1.8" />
+      <module name="hkp-bi" target="1.8" />
+      <module name="hkp-common" target="1.8" />
+      <module name="hkp-crm" target="1.8" />
+      <module name="hkp-hos" target="1.8" />
+      <module name="hkp-hrm" target="1.8" />
+      <module name="hkp-job" target="1.8" />
+      <module name="hkp-payment" target="1.8" />
+      <module name="hkp-quit" target="1.8" />
+      <module name="hkp-service" target="1.8" />
+      <module name="hkp-sys" target="1.8" />
+      <module name="hkp-trade" target="1.8" />
+      <module name="hkp-union" target="1.8" />
+      <module name="hos-house" target="1.8" />
+      <module name="house-dao" target="1.8" />
+      <module name="house-entity" target="1.8" />
+      <module name="house-manager" target="1.8" />
+      <module name="houseowner-dao" target="1.8" />
+      <module name="houseowner-entity" target="1.8" />
+      <module name="houseowner-manager" target="1.8" />
+      <module name="hrm-dept" target="1.8" />
+      <module name="hrm-employee" target="1.8" />
+      <module name="hrm-org" target="1.8" />
+      <module name="hrm-post" target="1.8" />
+      <module name="log-dao" target="1.8" />
+      <module name="log-entity" target="1.8" />
+      <module name="log-manager" target="1.8" />
+      <module name="manager-quit" target="1.8" />
+      <module name="notice-dao" target="1.8" />
+      <module name="notice-entity" target="1.8" />
+      <module name="notice-manager" target="1.8" />
+      <module name="notice-service" target="1.8" />
+      <module name="order-dao" target="1.8" />
+      <module name="order-entity" target="1.8" />
+      <module name="order-manager" target="1.8" />
+      <module name="parttime-dao" target="1.8" />
+      <module name="parttime-entity" target="1.8" />
+      <module name="parttime-manager" target="1.8" />
+      <module name="parttime-service" target="1.8" />
+      <module name="payment" target="1.8" />
+      <module name="payment-dao" target="1.8" />
+      <module name="payment-entity" target="1.8" />
+      <module name="payment-manager" target="1.8" />
+      <module name="permission-dao" target="1.8" />
+      <module name="permission-entity" target="1.8" />
+      <module name="permission-manager" target="1.8" />
+      <module name="post-dao" target="1.8" />
+      <module name="post-entity" target="1.8" />
+      <module name="post-manager" target="1.8" />
+      <module name="quota-dao" target="1.8" />
+      <module name="quota-entity" target="1.8" />
+      <module name="quota-manager" target="1.8" />
+      <module name="quota-service" target="1.8" />
+      <module name="remind-dao" target="1.8" />
+      <module name="remind-entity" target="1.8" />
+      <module name="remind-manager" target="1.8" />
+      <module name="remind-service" target="1.8" />
+      <module name="srv-base" target="1.8" />
+      <module name="srv-bi" target="1.8" />
+      <module name="srv-bundle" target="1.8" />
+      <module name="srv-crm" target="1.8" />
+      <module name="srv-hos" target="1.8" />
+      <module name="srv-hrm" target="1.8" />
+      <module name="srv-payment" target="1.8" />
+      <module name="srv-quit" target="1.8" />
+      <module name="srv-sys" target="1.8" />
+      <module name="srv-trade" target="1.8" />
+      <module name="srv-union" target="1.8" />
+      <module name="sys-announcement" target="1.8" />
+      <module name="sys-area" target="1.8" />
+      <module name="sys-auth" target="1.8" />
+      <module name="sys-cpy" target="1.8" />
+      <module name="sys-file" target="1.8" />
+      <module name="sys-notice" target="1.8" />
+      <module name="sys-parttime" target="1.8" />
+      <module name="sys-quota" target="1.8" />
+      <module name="sys-remind" target="1.8" />
+      <module name="sys-user" target="1.8" />
+      <module name="sys-version" target="1.8" />
+      <module name="systemconfig-dao" target="1.8" />
+      <module name="systemconfig-entity" target="1.8" />
+      <module name="systemconfig-manager" target="1.8" />
+      <module name="trade-order" target="1.8" />
+      <module name="trade-wage" target="1.8" />
+      <module name="union-cooperate" target="1.8" />
+      <module name="user-dao" target="1.8" />
+      <module name="user-entity" target="1.8" />
+      <module name="user-manager" target="1.8" />
+      <module name="version-dao" target="1.8" />
+      <module name="version-entity" target="1.8" />
+      <module name="version-manager" target="1.8" />
+      <module name="version-service" target="1.8" />
+      <module name="wage-dao" target="1.8" />
+      <module name="wage-entity" target="1.8" />
+      <module name="wage-manager" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

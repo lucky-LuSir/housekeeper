@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.SelectHouseEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.crm.customer.entity.SelectHouseEntity">
+        <result column="id" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="select_house_code" property="selectHouseCode" jdbcType="VARCHAR"/>
+        <result column="select_address_code" property="selectAddressCode" jdbcType="VARCHAR"/>
+        <result column="house_code" property="houseCode" jdbcType="VARCHAR"/>
+        <result column="house_name" property="houseName" jdbcType="VARCHAR"/>
+        <result column="house_url" property="houseUrl" jdbcType="VARCHAR"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="last_update_name" property="lastUpdateName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+
+    </resultMap>
+
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_crm_select_house
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.selectAddressCode != null and i.selectAddressCode != ''">
+                    select_address_code,
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    house_code,
+                </if>
+                <if test="i.houseName != null and i.houseName != ''">
+                    house_name,
+                </if>
+                <if test="i.selectHouseCode != null and i.selectHouseCode != ''">
+                    select_house_code,
+                </if>
+                <if test="i.houseUrl != null and i.houseUrl != ''">
+                    house_url,
+                </if>
+
+
+                <if test="i.remark != null and i.remark!=''">
+                    remark,
+                </if>
+                <if test="i.isDeleted != null">
+                    is_deleted,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.selectAddressCode != null and i.selectAddressCode != ''">
+                    #{i.selectAddressCode},
+                </if>
+                <if test="i.houseCode != null and i.houseCode != ''">
+                    #{i.houseCode},
+                </if>
+                <if test="i.houseName != null and i.houseName != ''">
+                    #{i.houseName},
+                </if>
+                <if test="i.selectHouseCode != null and i.selectHouseCode != ''">
+                    #{i.selectHouseCode},
+                </if>
+                <if test="i.houseUrl != null and i.houseUrl != ''">
+                    #{i.houseUrl},
+                </if>
+
+
+                <if test="i.remark != null and i.remark!=''">
+                    #{i.remark},
+                </if>
+
+                <if test="i.isDeleted != null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime}
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+
+    <!-- 批量更新数据信息 选址报告暂不需要修改11month27-->
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_crm_select_house WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <if test="selectAddressCode != null and selectAddressCode !=''">
+                AND select_address_code = #{selectAddressCode}
+            </if>
+            <if test="houseCode != null and houseCode !=''">
+                AND house_code = #{houseCode}
+            </if>
+
+            <if test="houseName != null and houseName !=''">
+                AND house_name like '%'||#{houseName}||'%'
+            </if>
+            <if test="selectHouseCode != null and selectHouseCode !=''">
+                AND select_house_code = #{selectHouseCode}
+            </if>
+            <if test="houseUrl != null and houseUrl !=''">
+                AND house_url = #{houseUrl}
+            </if>
+
+
+            <if test="remark != null and remark !=''">
+                AND remark = #{remark}
+            </if>
+            <if test="isDeleted != null">
+                AND IS_DELETED = #{isDeleted}
+            </if>
+            <if test="createTimeStart != null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <!--<select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.SelectHouseEntity">
+        SELECT * FROM t_hkp_crm_select_house
+        <include refid="selectSql"/>
+    </select>-->
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <!--<select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_crm_select_house
+        <include refid="selectSql"/>
+    </select>-->
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.SelectHouseEntity">
+        SELECT * FROM t_hkp_crm_select_house
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <!--<select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_crm_select_house
+        <include refid="selectSql"/>
+    </select>-->
+
+
+</mapper>

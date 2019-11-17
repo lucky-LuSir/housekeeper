@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.FocusCusEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.crm.customer.entity.FocusCusEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="focus_type" property="focusType"/>
+        <result column="cus_code" property="cusCode"/>
+        <result column="user_code" property="userCode"/>
+        <result column="user_dept_code" property="userDeptCode"/>
+        <result column="handle_status" property="handleStatus"/>
+        <result column="has_handle" property="handle"/>
+        <result column="create_code" property="createCode"/>
+        <result column="create_name" property="createName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+        <result column="last_update_code" property="lastUpdateCode"/>
+        <result column="see_cus_time" property="seeCusTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="special_push" property="specialPush"/>
+    </resultMap>
+
+    <resultMap id="focusCusResultMap" type="com.kfwy.hkp.crm.customer.dto.CustomerFocusCusDto">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="cus_status" property="cusStatus" jdbcType="VARCHAR"/>
+        <result column="cus_type" property="cusType" jdbcType="INTEGER"/>
+        <result column="cus_from" property="cusFrom" jdbcType="VARCHAR"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="cus_sex" property="cusSex" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="products" property="products" jdbcType="VARCHAR"/>
+        <result column="need_acreage" property="needAcreage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP"/>
+        <result column="open_flag" property="openFlag" jdbcType="BOOLEAN"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="last_followup_time" property="lastFollowupTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="level" property="level" jdbcType="SMALLINT"/>
+        <result column="cus_prop" property="cusProp" jdbcType="SMALLINT"/>
+        <result column="need_nearby_facilities" property="needNearbyFacilities" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="gain_type" property="gainType" jdbcType="VARCHAR"/>
+        <result column="last_upshelf_time" property="lastUpshelfTime" jdbcType="TIMESTAMP"/>
+        <association property="focusCus" javaType="com.kfwy.hkp.crm.customer.entity.FocusCusEntity">
+            <result column="handle_status" property="handleStatus"/>
+            <result column="has_handle" property="handle"/>
+            <result column="create_time" property="createTime"/>
+            <result column="special_push" property="specialPush"/>
+        </association>
+
+        <collection property="customerAreaEntityList" columnPrefix="a_"
+                    javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.CustomerAreaEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="region" property="region" jdbcType="VARCHAR"/>
+            <result column="street" property="street" jdbcType="VARCHAR"/>
+            <result column="community" property="community" jdbcType="VARCHAR"/>
+            <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+            <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+            <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+            <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+            <result column="community_name" property="communityName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="focusCusUserScoreMatchBoResultMap"
+               type="com.kfwy.hkp.crm.customer.bo.FocusCusUserScoreMatchBo">
+        <result column="user_code" property="userCode"/>
+        <result column="entry_time" property="entryTime"/>
+        <result column="house_count" property="houseCount"/>
+        <result column="add_cus_count" property="addCusCount"/>
+        <result column="add_hos_count" property="addHosCount"/>
+        <result column="call_phone_count" property="callPhoneCount"/>
+        <result column="followup_count" property="followupCount"/>
+    </resultMap>
+
+    <resultMap id="userFocusCusBoMap" type="com.kfwy.hkp.sys.user.entity.UserFocusCusBo">
+        <result column="focus_count" property="focusCount"/>
+        <result column="user_code" property="userCode"/>
+        <result column="user_name" property="userName"/>
+        <result column="owner_dept_code" property="ownerDeptCode"/>
+        <result column="owner_dept_name" property="ownerDeptName"/>
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_crm_focus_cus
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.focusType != null and i.focusType != ''">
+                    focus_type,
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code,
+                </if>
+                <if test="i.userCode != null and i.userCode != ''">
+                    user_code,
+                </if>
+                <if test="i.userDeptCode != null and i.userDeptCode != ''">
+                    user_dept_code,
+                </if>
+                <if test="i.handleStatus != null">
+                    handle_status,
+                </if>
+                <if test="i.handle != null">
+                    has_handle,
+                </if>
+                <if test="i.isDeleted!=null">
+                    is_deleted,
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    create_code,
+                </if>
+                <if test="i.createTime != null">
+                    create_time,
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code,
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time,
+                </if>
+                <if test="i.seeCusTime!=null">
+                    see_cus_time,
+                </if>
+                <if test="i.specialPush!=null">
+                    special_push,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.focusType != null and i.focusType != ''">
+                    #{i.focusType},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    #{i.cusCode},
+                </if>
+                <if test="i.userCode != null and i.userCode != ''">
+                    #{i.userCode},
+                </if>
+                <if test="i.userDeptCode != null and i.userDeptCode != ''">
+                    #{i.userDeptCode},
+                </if>
+                <if test="i.handleStatus != null">
+                    #{i.handleStatus},
+                </if>
+                <if test="i.handle != null">
+                    #{i.handle},
+                </if>
+                <if test="i.isDeleted!=null">
+                    #{i.isDeleted},
+                </if>
+                <if test="i.createCode != null and i.createCode != ''">
+                    #{i.createCode},
+                </if>
+                <if test="i.createTime != null">
+                    #{i.createTime},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    #{i.lastUpdateCode},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    #{i.lastUpdateTime},
+                </if>
+                <if test="i.seeCusTime!=null">
+                    #{i.seeCusTime},
+                </if>
+                <if test="i.specialPush!=null">
+                    #{i.specialPush},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 批量更新记录 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.crm.customer.entity.FocusCusEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            update t_hkp_crm_focus_cus
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.focusType != null and i.focusType != ''">
+                    focus_type = #{i.focusType},
+                </if>
+                <if test="i.cusCode != null and i.cusCode != ''">
+                    cus_code = #{i.cusCode},
+                </if>
+                <if test="i.userCode != null and i.userCode != ''">
+                    user_code = #{i.userCode},
+                </if>
+                <if test="i.userDeptCode != null and i.userDeptCode != ''">
+                    user_dept_code = #{i.userDeptCode},
+                </if>
+                <if test="i.handleStatus != null and i.handleStatus != ''">
+                    handle_status = #{i.handleStatus},
+                </if>
+                <if test="i.handle != null">
+                    has_handle = #{i.handle},
+                </if>
+                <if test="i.isDeleted!=null">
+                    is_deleted = #{i.isDeleted},
+                </if>
+                <if test="i.createCode != null">
+                    create_code = #{i.createCode},
+                </if>
+                <if test="i.createTime != null">
+                    create_time = #{i.createTime},
+                </if>
+                <if test="i.lastUpdateCode != null and i.lastUpdateCode != ''">
+                    last_update_code = #{i.lastUpdateCode},
+                </if>
+                <if test="i.lastUpdateTime != null">
+                    last_update_time = #{i.lastUpdateTime},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="and|or">
+                <if test="i.id != null">
+                    id = #{i.id}
+                </if>
+                <if test="i.cusCode!=null">
+                    and cus_code = #{i.cusCode}
+                </if>
+                <if test="i.userCode!=null">
+                    and user_code = #{i.userCode}
+                </if>
+            </trim>
+        </foreach>
+    </update>
+
+
+    <!-- 通过主键批量删除记录 -->
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_crm_focus_cus WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+
+    <!--执行本地更新 -->
+    <update id="updateByNativeSql" parameterType="string">
+        ${value}
+    </update>
+
+    <!-- 根据原生Sql查询记录 -->
+    <select id="selectByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生SQL查询单条记录-->
+    <select id="selectOneByNativeSql" parameterType="string" resultMap="BaseResultMap">
+        ${value}
+    </select>
+
+    <!-- 根据原生Sql统计数量 -->
+    <select id="countByNativeSql" parameterType="string" resultType="int">
+        ${value}
+    </select>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="cusPhone!=null and cusPhone!=''">
+                AND cus_phone like '%'||#{cusPhone}||'%'
+            </if>
+            <if test="cusCode != null and cusCode != ''">
+                AND cus_code = #{cusCode}
+            </if>
+            <if test="userCode != null and userCode != ''">
+                AND user_code = #{userCode}
+            </if>
+            <if test="handleStatus!=null">
+                AND handle_status = #{handleStatus}
+            </if>
+            <if test="handle!=null">
+                AND has_handle = #{handle}
+            </if>
+            <if test="cusType!=null">
+                AND cus_type = #{cusType}
+            </if>
+            <if test="updateFocusCusToPlatform!=null">
+                AND last_upshelf_time  <![CDATA[ + INTERVAL ]]>  '${focusToPlatformTime}' <![CDATA[ <= ]]>
+                now()
+                AND cus_type = '5'
+            </if>
+            <if test="excludeUserCode!=null and excludeUserCode!=''">
+                AND user_code != #{excludeUserCode}
+            </if>
+            <if test="seeCusTimeStart!=null">
+                AND see_cus_time <![CDATA[ >= ]]> #{seeCusTimeStart}
+            </if>
+            <if test="specialPush!=null">
+                AND special_push = #{specialPush}
+            </if>
+            <if test="ownerDeptCode!=null and ownerDeptCode!=''">
+                AND owner_dept_code = #{ownerDeptCode}
+            </if>
+            <if test="ownerDeptCodes != null">
+                <choose>
+                    <when test="_ownerDeptCodes != null">
+                        AND owner_dept_code IN (${_ownerDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND owner_dept_code IN
+                        <foreach collection="ownerDeptCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 统计查询 -->
+    <select id="countByMap" parameterType="map" resultType="int">
+        select count(id) from t_hkp_crm_focus_cus
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 查询符合条件的唯一记录 -->
+    <select id="selectUniqueByProp" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.crm.customer.entity.FocusCusEntity">
+        select * from t_hkp_crm_focus_cus
+        <include refid="selectSql"></include>
+        LIMIT 1;
+    </select>
+
+
+    <!-- 查询符合条件的实体对象 -->
+    <select id="selectByMap" parameterType="map" resultMap="focusCusResultMap">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        fo.*, area.province AS a_province,
+        area.city AS a_city,
+        area.region AS a_region,
+        area.street AS a_street,
+        area.province_name AS a_province_name,
+        area.city_name AS a_city_name,
+        area.region_name AS a_region_name,
+        area.street_name AS a_street_name,
+        area.community_name AS a_community_name
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        focus. ID,
+        focus.user_code,
+        focus.handle_status,
+        focus.has_handle,
+        focus.see_cus_time,
+        focus.special_push,
+        cus.products,
+        cus.last_followup_time,
+        cus.create_time,
+        cus.cus_code,
+        cus.cus_type,
+        cus.emp_code,
+        cus.cus_name,
+        cus.cus_phone,
+        cus.cus_status,
+        cus.open_flag,
+        cus.cus_sex,
+        cus.need_acreage,
+        cus.house_type,
+        cus.enter_time,
+        cus.need_voltage,
+        cus.industry,
+        cus.description,
+        cus.last_upshelf_time,
+        u.user_name AS emp_name,
+        u.owner_dept_code
+        FROM
+        t_hkp_crm_focus_cus focus
+        INNER JOIN t_hkp_crm_customer cus ON focus.cus_code = cus.cus_code
+        INNER JOIN t_hkp_sys_user_user u ON u.user_code = cus.emp_code
+        ) focus
+        <include refid="selectSql"/>
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+        <if test="offset != null">
+            offset #{offset}
+        </if>
+        ) fo
+        INNER JOIN t_hkp_crm_customer_area area ON fo.cus_code = area.cus_code
+        ) fo
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 统计符合条件的实体对象个数 -->
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        SELECT count(*) FROM (
+        SELECT
+        focus.id,
+        focus.user_code,
+        focus.handle_status,
+        focus.has_handle,
+        focus.see_cus_time,
+        focus.special_push,
+        cus.products,
+        cus.last_followup_time,
+        cus.create_time,
+        cus.cus_code,
+        cus.cus_type,
+        cus.emp_code,
+        cus.cus_name,
+        cus.cus_phone,
+        cus.cus_status,
+        cus.open_flag,
+        cus.cus_sex,
+        cus.need_acreage,
+        cus.house_type,
+        cus.enter_time,
+        cus.need_voltage,
+        cus.industry,
+        cus.description,
+        cus.last_upshelf_time,
+        u.user_name as emp_name,
+        u.owner_dept_code
+        FROM
+        t_hkp_crm_focus_cus focus
+        INNER JOIN t_hkp_crm_customer cus ON focus.cus_code = cus.cus_code
+        INNER JOIN t_hkp_sys_user_user u ON u.user_code = cus.emp_code
+        ) focus
+        <include refid="selectSql"/>
+    </select>
+
+    <update id="updateFocusCusToPlatform">
+        UPDATE t_hkp_crm_customer
+        SET cus_type = '1',last_update_time = now()
+        WHERE
+        cus_code IN (
+        SELECT DISTINCT cus.cus_code FROM (
+        SELECT
+        cus.cus_code,
+        cus.last_upshelf_time
+        FROM
+        t_hkp_crm_customer cus
+        ) cus
+        <include refid="selectSql"/>
+        );
+    </update>
+
+    <select id="findFocusCusToPlatForm" parameterType="map" resultMap="focusCusResultMap">
+        select *
+        from t_hkp_crm_customer
+        <include refid="selectSql"/>
+    </select>
+
+    <sql id="houseMatchSql">
+        SELECT
+        COUNT(*)
+        FROM
+        t_hkp_hos_house
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="userCodes!=null">
+                AND emp_code = user_code
+            </if>
+            <if test="minArea != null and area != null and hasCut != null">
+                AND (
+
+                (area  <![CDATA[ >= ]]> #{area} and min_acreage between 0 and #{area} and
+                has_cut = #{hasCut})
+                or
+                (area  <![CDATA[ >= ]]> #{minArea} and area  <![CDATA[ <= ]]> #{area})
+
+                )
+            </if>
+
+            <if test="houseStatus != null and houseStatus != ''">
+                AND house_status = #{houseStatus}
+            </if>
+
+            <if test="housePurposes != null">
+                AND house_purpose IN (${housePurposes})
+            </if>
+
+            <if test="communitys!=null || streets!=null || regions!=null || citys!=null">
+                <trim prefix="AND (" suffix=")" suffixOverrides="," prefixOverrides="AND|OR">
+                    <if test="communitys!=null">
+                        OR community IN (${communitys})
+                    </if>
+                    <if test="streets!=null">
+                        OR street IN (${streets})
+                    </if>
+                    <if test="regions!=null">
+                        OR region IN (${regions})
+                    </if>
+                    <if test="citys!=null">
+                        OR city IN (${citys})
+                    </if>
+                </trim>
+            </if>
+        </trim>
+    </sql>
+
+    <select id="focusCusUserScoreMatch" parameterType="map"
+            resultMap="focusCusUserScoreMatchBoResultMap">
+        SELECT
+        user_code,
+        entry_time,
+        (
+     <!--
+           SELECT
+        COUNT(*)
+        FROM
+        t_hkp_hos_house
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="userCodes!=null">
+                AND emp_code = user_code
+            </if>
+            <if test="minArea != null and area != null and hasCut != null">
+                AND (
+
+                (area  <![CDATA[ >= ]]> #{area} and min_acreage between 0 and #{area} and
+                has_cut = #{hasCut})
+                or
+                (area  <![CDATA[ >= ]]> #{minArea} and area  <![CDATA[ <= ]]> #{area})
+
+                )
+            </if>
+
+            <if test="houseStatus != null and houseStatus != ''">
+                AND house_status = #{houseStatus}
+            </if>
+
+            <if test="housePurposes != null">
+                AND house_purpose IN (${housePurposes})
+            </if>
+
+            <if test="communitys!=null || streets!=null || regions!=null || citys!=null">
+                <trim prefix="AND (" suffix=")" suffixOverrides="," prefixOverrides="AND|OR">
+                    <if test="communitys!=null">
+                        OR community IN (${communitys})
+                    </if>
+                    <if test="streets!=null">
+                        OR street IN (${streets})
+                    </if>
+                    <if test="regions!=null">
+                        OR region IN (${regions})
+                    </if>
+                    <if test="citys!=null">
+                        OR city IN (${citys})
+                    </if>
+                </trim>
+            </if>
+        </trim>-->
+        <include refid="houseMatchSql"/>
+        ) as house_count,
+        (
+        SELECT
+        COUNT (*)
+        FROM
+        t_hkp_crm_customer
+        WHERE
+        create_code = user_code
+        AND create_time BETWEEN #{createTimeStart}
+        AND now()
+        ) AS add_cus_count,
+        (
+        <include refid="houseMatchSql"/>
+        AND create_time BETWEEN #{createTimeStart}
+        AND now()
+        ) AS add_hos_count,
+
+        (
+        SELECT
+        COUNT (*)
+        FROM
+        t_hkp_crm_customer_followup
+        WHERE
+        create_code = user_code
+        AND create_time BETWEEN #{createTimeStart}
+        AND now()
+        AND followup_type = '2'
+        ) AS call_phone_count,
+        (
+        SELECT
+        COUNT (*)
+        FROM
+        t_hkp_crm_customer_followup
+        WHERE
+        create_code = user_code
+        AND create_time BETWEEN #{createTimeStart}
+        AND now()
+        AND followup_type = '1'
+        ) AS followup_count
+        FROM
+        t_hkp_sys_user_user
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="userCodes!=null">
+                user_code in (${userCodes})
+            </if>
+        </trim>
+    </select>
+
+    <select id="checkFocusCusNotice" parameterType="map" resultType="integer">
+        select count(*) from (
+        select focus.*,cus.cus_type from t_hkp_crm_focus_cus focus
+        inner join t_hkp_crm_customer cus on focus.cus_code=cus.cus_code
+        ) focus
+        <include refid="selectSql"/>
+
+    </select>
+
+    <resultMap id="focusDtoMap" type="com.kfwy.hkp.crm.customer.dto.FocusCusDto">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cus_code" property="cusCode" jdbcType="VARCHAR"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="cus_status" property="cusStatus" jdbcType="VARCHAR"/>
+        <result column="cus_type" property="cusType" jdbcType="INTEGER"/>
+        <result column="cus_from" property="cusFrom" jdbcType="VARCHAR"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="cus_phone" property="cusPhone" jdbcType="VARCHAR"/>
+        <result column="cus_sex" property="cusSex" jdbcType="VARCHAR"/>
+        <result column="company_name" property="companyName" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="products" property="products" jdbcType="VARCHAR"/>
+        <result column="need_acreage" property="needAcreage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="need_price" property="needPrice" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="price_unit" property="priceUnit" jdbcType="VARCHAR"/>
+        <result column="layer_num" property="layerNum" jdbcType="INTEGER"/>
+        <result column="layer_height" property="layerHeight" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="need_voltage" property="needVoltage" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP"/>
+        <result column="expect_term" property="expectTerm" jdbcType="VARCHAR"/>
+        <result column="fire_level" property="fireLevel" jdbcType="VARCHAR"/>
+        <result column="need_eia" property="needEia" jdbcType="BOOLEAN"/>
+        <result column="need_register" property="needRegister" jdbcType="BOOLEAN"/>
+        <result column="need_certificate" property="needCertificate" jdbcType="BOOLEAN"/>
+        <result column="need_single_building" property="needSingleBuilding" jdbcType="BOOLEAN"/>
+        <result column="has_office_area" property="hasOfficeArea" jdbcType="BOOLEAN"/>
+        <result column="open_flag" property="openFlag" jdbcType="BOOLEAN"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="emp_phone" property="empPhone" jdbcType="VARCHAR"/>
+        <result column="emp_img" property="empImg" jdbcType="VARCHAR"/>
+
+        <result column="last_followup_time" property="lastFollowupTime" jdbcType="TIMESTAMP"/>
+
+        <result column="pt_code" property="ptCode" jdbcType="VARCHAR"/>
+        <result column="pt_name" property="ptName" jdbcType="VARCHAR"/>
+        <result column="divide_type" property="divideType" jdbcType="VARCHAR"/>
+        <result column="divide_ratio" property="divideRatio" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="divide_cash" property="divideCash" jdbcType="NUMERIC" javaType="decimal"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_code" property="createCode" jdbcType="VARCHAR"/>
+        <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+        <result column="create_dept_code" property="createDeptCode" jdbcType="VARCHAR"/>
+        <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="BOOLEAN"/>
+        <result column="level" property="level" jdbcType="SMALLINT"/>
+        <result column="cus_prop" property="cusProp" jdbcType="SMALLINT"/>
+        <result column="contract_start_time" property="contractStartTime" jdbcType="TIMESTAMP"/>
+        <result column="contract_end_time" property="contractEndTime" jdbcType="TIMESTAMP"/>
+        <result column="need_nearby_facilities" property="needNearbyFacilities" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="gain_type" property="gainType" jdbcType="VARCHAR"/>
+        <result column="has_favorite" property="hasFavorite" jdbcType="BOOLEAN"/>
+        <result column="last_upshelf_time" property="lastUpshelfTime" jdbcType="TIMESTAMP"/>
+        <result column="last_downshelf_time" property="lastDownshelfTime" jdbcType="TIMESTAMP"/>
+        <result column="down_shelf_reason" property="downShelfReason" jdbcType="VARCHAR"/>
+
+        <result column="cus_up_user" property="cusUpUser" jdbcType="VARCHAR"/>
+        <result column="cus_down_user" property="cusDownUser" jdbcType="VARCHAR"/>
+
+        <result column="cus_up_user_name" property="cusUpUserName" jdbcType="VARCHAR"/>
+        <result column="cus_down_user_name" property="cusDownUserName" jdbcType="VARCHAR"/>
+        <result property="userCode" column="user_code"/>
+        <result column="user_name" property="userName"/>
+        <result column="owner_dept_code" property="ownerDeptCode"/>
+        <result column="owner_dept_name" property="ownerDeptName"/>
+        <result column="focus_time" property="focusTime" jdbcType="TIMESTAMP"/>
+        <result column="see_cus_time" property="seeCusTime" jdbcType="TIMESTAMP"/>
+        <result column="follow_count" property="followCount"/>
+        <result column="special_push" property="specialPush"/>
+        <collection property="userList" javaType="java.util.ArrayList" ofType="com.kfwy.hkp.sys.user.entity.UserEntity"
+                    columnPrefix="a_">
+            <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="owner_dept_code" property="ownerDeptCode"/>
+            <result column="owner_dept_name" property="ownerDeptName"/>
+            <result column="focus_time" property="focusTime"/>
+            <result column="has_handle" property="handle"/>
+            <result column="follow_count" property="followCount"/>
+            <result column="see_cus_time" property="seeCusTime" jdbcType="TIMESTAMP"/>
+            <result column="special_push" property="specialPush"/>
+        </collection>
+        <collection property="customerAreaEntityList" columnPrefix="b_"
+                    javaType="java.util.ArrayList"
+                    ofType="com.kfwy.hkp.crm.customer.entity.CustomerAreaEntity">
+            <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="region" property="region" jdbcType="VARCHAR"/>
+            <result column="street" property="street" jdbcType="VARCHAR"/>
+            <result column="community" property="community" jdbcType="VARCHAR"/>
+            <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+            <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+            <result column="region_name" property="regionName" jdbcType="VARCHAR"/>
+            <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+            <result column="community_name" property="communityName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="focusCusQuery" parameterType="map" resultMap="focusDtoMap">
+        SELECT
+        (
+        SELECT
+        COUNT (*)
+        FROM
+        t_hkp_crm_customer_followup f
+        WHERE
+        f.cus_code = cus.cus_code
+        AND f.create_code = u.user_code
+        ) AS a_follow_count,
+        cus.*,
+        focus.create_time AS a_focus_time,
+        focus.has_handle as a_has_handle,
+        focus.see_cus_time as a_see_cus_time,
+        focus.special_push as a_special_push,
+        u.user_code as a_user_code,
+        u.user_name as a_user_name,
+        u.owner_dept_code as a_owner_dept_code,
+        u.owner_dept_name as a_owner_dept_name,
+        area.province AS b_province,
+        area.city AS b_city,
+        area.region AS b_region,
+        area.street AS b_street,
+        area.province_name AS b_province_name,
+        area.city_name AS b_city_name,
+        area.region_name AS b_region_name,
+        area.street_name AS b_street_name,
+        area.community_name AS b_community_name
+        FROM
+        (
+        SELECT
+        cus.*
+        FROM
+        t_hkp_crm_customer cus
+        INNER JOIN (
+        SELECT
+        DISTINCT cus.cus_code
+        FROM
+        t_hkp_crm_customer cus
+        INNER JOIN t_hkp_crm_focus_cus focus ON cus.cus_code = focus.cus_code
+        INNER JOIN t_hkp_sys_user_user u ON focus.user_code = u.user_code
+        <include refid="selectSql"/>
+        ) f ON f.cus_code = cus.cus_code
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+        <if test="offset != null">
+            offset #{offset}
+        </if>
+        ) cus
+        INNER JOIN t_hkp_crm_focus_cus focus ON cus.cus_code = focus.cus_code
+        INNER JOIN t_hkp_sys_user_user u ON focus.user_code = u.user_code
+        INNER JOIN t_hkp_crm_customer_area area ON cus.cus_code = area.cus_code
+    </select>
+
+
+    <select id="focusCusQueryCount" parameterType="map" resultType="integer">
+        SELECT COUNT(*)
+        FROM (
+        SELECT
+        DISTINCT cus.cus_code
+        FROM
+        t_hkp_crm_customer cus
+        INNER JOIN t_hkp_crm_focus_cus focus ON cus.cus_code = focus.cus_code
+        INNER JOIN t_hkp_sys_user_user u ON focus.user_code = u.user_code
+        <include refid="selectSql"/>
+        ) focus
+    </select>
+    <select id="myDeptFocusCusQuery" parameterType="map" resultMap="focusDtoMap">
+        SELECT
+        (
+        SELECT
+        COUNT (*)
+        FROM
+        t_hkp_crm_customer_followup f
+        WHERE
+        f.cus_code = cus.cus_code
+        AND f.create_code = u.user_code
+        ) AS follow_count,
+        cus.*,
+        focus.create_time as focus_time,
+        focus.see_cus_time,
+        focus.special_push,
+        u.user_code,
+        u.user_name,
+        u.owner_dept_code,
+        u.owner_dept_name
+        FROM
+        t_hkp_crm_customer cus
+        INNER JOIN t_hkp_crm_focus_cus focus ON cus.cus_code = focus.cus_code
+        INNER JOIN t_hkp_sys_user_user u ON u.user_code = focus.user_code
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="ownerDeptCode!=null and ownerDeptCode!=''">
+                AND u.owner_dept_code = #{ownerDeptCode}
+            </if>
+            <if test="userName!=null and userName!=''">
+                AND u.user_name like '%'||#{userName}||'%'
+            </if>
+            <if test="cusPhone!=null and cusPhone!=''">
+                AND cus.cus_phone like '%'||#{cusPhone}||'%'
+            </if>
+            <if test="cusName!=null and cusName!=''">
+                AND cus.cus_name like '%'||#{cusName}||'%'
+            </if>
+        </trim>
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null and order != ''">
+            ${order}
+        </if>
+    </select>
+    <select id="myDeptFocusCusQueryCount" parameterType="map" resultType="integer">
+        select count(*) from (
+        SELECT
+        cus.*,
+        focus.create_time as focus_time,
+        focus.see_cus_time,
+        focus.special_push,
+        u.user_code,
+        u.user_name,
+        u.owner_dept_code,
+        u.owner_dept_name
+        FROM
+        t_hkp_crm_customer cus
+        INNER JOIN t_hkp_crm_focus_cus focus ON cus.cus_code = focus.cus_code
+        INNER JOIN t_hkp_sys_user_user u ON u.user_code = focus.user_code
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="ownerDeptCode!=null and ownerDeptCode!=''">
+                AND u.owner_dept_code = #{ownerDeptCode}
+            </if>
+            <if test="userName!=null and userName!=''">
+                AND u.user_name like '%'||#{userName}||'%'
+            </if>
+            <if test="cusPhone!=null and cusPhone!=''">
+                AND cus.cus_phone like '%'||#{cusPhone}||'%'
+            </if>
+            <if test="cusName!=null and cusName!=''">
+                AND cus.cus_name like '%'||#{cusName}||'%'
+            </if>
+        </trim>
+        ) focus
+
+    </select>
+
+
+    <select id="leastGetGuestQuery" parameterType="map" resultMap="userFocusCusBoMap">
+        SELECT e.user_code,
+               e.user_name,
+               e.owner_dept_code,
+               e.owner_dept_name,
+               CASE
+                   WHEN fo.focus_count IS NULL THEN
+                       0
+                   ELSE
+                       fo.focus_count
+                   END AS focus_count
+        FROM t_hkp_sys_user_user e
+                 LEFT JOIN (
+            SELECT us.user_code,
+                   "count"(*) AS focus_count
+            FROM t_hkp_sys_user_user us
+                     LEFT JOIN t_hkp_crm_focus_cus fo ON us.user_code = fo.user_code
+            WHERE us.owner_dept_code IN (${ownerDeptCodes})
+              AND fo.create_time BETWEEN #{createTimeStart}
+                AND #{createTimeEnd}
+              AND us.is_deleted = FALSE
+            GROUP BY us.user_code
+        ) fo ON e.user_code = fo.user_code
+        WHERE e.owner_dept_code IN (${ownerDeptCodes})
+          AND e.is_deleted = FALSE
+        ORDER BY focus_count asc
+    </select>
+
+
+    <delete id="deleteByCudCode" parameterType="string">
+        DELETE  FROM  t_hkp_crm_focus_cus WHERE cus_code = #{cusCode}
+    </delete>
+
+</mapper>

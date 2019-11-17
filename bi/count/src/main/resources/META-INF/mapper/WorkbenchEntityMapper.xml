@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.WorkbenchEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.WorkbenchEntity">
+        <result column="total_profit" property="totalProfit" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="moon_profit" property="moonProfit" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="house_count" property="houseCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="cus_count" property="cusCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="union_count" property="unionCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="followup_count" property="followupCount" jdbcType="NUMERIC" javaType="int"/>
+
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="emp_img" property="empImg" jdbcType="VARCHAR"/>
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+        <result column="income" property="income" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="cpy_code" property="cpyCode" />
+    </resultMap>
+
+    <!-- 个人工作台 -->
+    <select id="queryWorkCount" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.WorkbenchEntity">
+        SELECT
+            COALESCE (
+              (SELECT SUM (1) FROM t_hkp_hos_house
+                WHERE emp_code = #{empCode}
+                AND is_deleted = FALSE),0
+            ) house_count,
+            COALESCE (
+              (SELECT SUM (1) FROM t_hkp_crm_customer
+                WHERE emp_code = #{empCode}
+                AND is_deleted = FALSE),0
+            ) cus_count,
+            COALESCE (
+            (SELECT SUM (1) FROM t_hkp_union_cooperate
+                WHERE coo_status = '3'
+                AND (apply_code = #{empCode}
+                OR receive_code = #{empCode})
+                AND is_deleted = FALSE),0
+            ) union_count,
+            COALESCE (
+            (SELECT COUNT (*) FROM  (
+                SELECT COUNT(*) FROM t_hkp_crm_customer_followup
+                WHERE followup_type = '1'
+                AND emp_code = #{empCode}
+                AND is_deleted = FALSE
+                AND create_time  <![CDATA[ >= ]]> #{createTimeStart}
+                AND create_time <![CDATA[ <= ]]>#{createTimeEnd}
+                GROUP BY emp_code,cus_code,date_trunc('day',create_time)
+                ) TP ),0
+            ) followup_count,
+            COALESCE (
+              (SELECT round(SUM (profit),2) FROM t_hkp_trade_order_percentage
+                WHERE pe_emp_code = #{empCode}
+                AND is_deleted = FALSE),0
+             )total_profit,
+             COALESCE (
+              (SELECT round(SUM (profit),2) FROM t_hkp_trade_order_percentage
+                WHERE pe_emp_code = #{empCode}
+                AND is_deleted = FALSE
+                AND create_time  <![CDATA[ >= ]]> #{createTimeStart}
+                AND create_time <![CDATA[ <= ]]>#{createTimeEnd}),0
+              )moon_profit
+    </select>
+
+    <!-- 排行榜 -->
+    <select id="richList" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.WorkbenchEntity">
+            SELECT
+                P .pe_emp_code AS emp_code,
+                e.user_name as emp_name,
+                e.user_img as emp_img,
+                e.owner_dept_name as dept_name,
+                SUM (profit) AS income
+            FROM
+                t_hkp_trade_order_percentage P
+            LEFT JOIN t_hkp_sys_user_user e ON e.user_code = P .pe_emp_code
+            WHERE
+              p.order_time <![CDATA[ >= ]]> #{createTimeStart} AND
+              p.order_time <![CDATA[ <= ]]>#{createTimeEnd} AND p.is_deleted = #{isDeleted}
+              /*排除系统角色分成*/
+              and e.user_code not in ('E201908070001567d','E2019082200045146')
+              <if test="cpyCode!=null and cpyCode!=''">
+                  and e.cpy_code =#{cpyCode}
+              </if>
+            GROUP BY
+                (
+                    P .pe_emp_code,
+                    e.user_name,
+                    e.user_img,
+                    e.owner_dept_name
+                )
+            ORDER BY
+                income DESC
+            LIMIT 6
+    </select>
+
+    <!-- 排行榜外部公司 -->
+    <select id="richListCpy" parameterType="map" resultMap="BaseResultMap"
+            resultType="com.kfwy.hkp.bi.count.entity.WorkbenchEntity">
+        SELECT
+        P .pe_emp_code AS emp_code,
+        e.user_name as emp_name,
+        e.user_img as emp_img,
+        e.owner_dept_name as dept_name,
+        SUM (profit) AS income
+        FROM
+        t_hkp_trade_order_percentage P
+        LEFT JOIN t_hkp_sys_user_user e ON e.user_code = P .pe_emp_code
+        WHERE
+        e.owner_dept_code = #{ownerDeptCode} AND
+        p.order_time <![CDATA[ >= ]]> #{createTimeStart} AND
+        p.order_time <![CDATA[ <= ]]>#{createTimeEnd} AND p.is_deleted = #{isDeleted}
+        GROUP BY
+        (
+        P .pe_emp_code,
+        e.user_name,
+        e.user_img,
+        e.owner_dept_name
+        )
+        ORDER BY
+        income DESC
+        LIMIT 6
+    </select>
+
+</mapper>

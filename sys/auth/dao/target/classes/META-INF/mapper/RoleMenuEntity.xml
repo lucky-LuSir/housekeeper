@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.auth.entity.RoleMenuEntity">
+
+    <resultMap id="baseResultMap" type="com.kfwy.hkp.sys.auth.entity.RoleMenuEntity">
+        <result column="ID" property="id" jdbcType="NUMERIC" javaType="long"/>
+        <result column="cpy_code" property="cpyCode" jdbcType="VARCHAR"/>
+        <result column="role_code" property="roleCode" jdbcType="VARCHAR"/>
+        <result column="menu_code" property="menuCode" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <!-- 批量新增信息到数据库中 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" separator=";">
+            INSERT INTO t_hkp_sys_auth_role_menu
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code,
+                </if>
+                <if test="i.roleCode != null and i.roleCode != ''">
+                    role_code,
+                </if>
+                <if test="i.menuCode != null and i.menuCode != ''">
+                    menu_code,
+                </if>
+
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    #{i.cpyCode},
+                </if>
+                <if test="i.roleCode != null and i.roleCode != ''">
+                    #{i.roleCode},
+                </if>
+                <if test="i.menuCode != null and i.menuCode != ''">
+                    #{i.menuCode},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+
+    <!-- 批量更新数据信息 -->
+    <update id="batchUpdate" parameterType="com.kfwy.hkp.sys.auth.entity.RoleMenuEntity">
+        <foreach collection="list" item="i" index="index" separator=";">
+            UPDATE t_hkp_sys_auth_role_menu
+            <trim prefix="set" suffixOverrides=",">
+                <if test="i.cpyCode != null and i.cpyCode != ''">
+                    cpy_code = #{i.cpyCode},
+                </if>
+                <if test="i.roleCode != null">
+                    role_code = #{i.roleCode},
+                </if>
+                <if test="i.menuCode != null and i.menuCode != ''">
+                    menu_code = #{i.menuCode},
+                </if>
+            </trim>
+            <trim prefix="where" prefixOverrides="AND|OR">
+                id = #{i.id}
+            </trim>
+        </foreach>
+    </update>
+
+    <!-- 通过主键批量物理删除数据 -->
+    <delete id="batchDeletedByIds" parameterType="java.util.List">
+        DELETE FROM t_hkp_sys_auth_role_menu WHERE ID IN
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </delete>
+    <!--通过角色Code删除角色菜单权限-->
+    <delete id="deleteByRoleCode" parameterType="string">
+        DELETE FROM t_hkp_sys_auth_role_menu WHERE role_code = #{roleCode}
+    </delete>
+
+    <!-- 通用脚本查询条件 -->
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND ID = #{id}
+            </if>
+            <!-- codes 和 _codes 二选一条件-->
+            <if test="roleCodes != null and roleCodes !=''">
+                AND role_code IN
+                <foreach collection="roleCodes" item="i" open="(" separator="," close=")">
+                    #{i}
+                </foreach>
+            </if>
+            <if test="_roleCodes != null">
+                AND role_code IN (${_roleCodes})
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询唯一的信息 -->
+    <select id="selectUniqueByProp" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.auth.entity.RoleMenuEntity">
+        SELECT * FROM t_hkp_sys_auth_role_menu
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="countByMap" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_sys_auth_role_menu
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 通过指定条件查询信息 -->
+    <select id="selectByMap" parameterType="java.util.Map" resultMap="baseResultMap"
+            resultType="com.kfwy.hkp.sys.auth.entity.RoleMenuEntity">
+        SELECT * FROM t_hkp_sys_auth_role_menu
+        <include refid="selectSql"/>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="order != null">
+            ${order}
+        </if>
+    </select>
+
+    <!-- 通过指定条件查询信息总数，用于分页展示 -->
+    <select id="selectByMapCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(id) FROM t_hkp_sys_auth_role_menu
+        <include refid="selectSql"/>
+    </select>
+    <select id="findRootMenuCode" resultType="string">
+        SELECT menu_code FROM t_hkp_sys_auth_menu WHERE parent_code='0'
+    </select>
+</mapper>

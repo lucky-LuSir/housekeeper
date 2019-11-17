@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.sys.quota.entity.MyAchievementEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.sys.quota.entity.MyAchievementEntity">
+        <result column="order_profit" property="orderProfit" jdbcType="NUMERIC" javaType="decimal"></result>
+        <result column="divide_profit" property="divideProfit" jdbcType="NUMERIC" javaType="decimal"></result>
+        <result column="add_cus_count" property="addCusCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="followup_count" property="followupCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="look_followup_count" property="lookFollowupCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="add_hos_count" property="addHosCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="owner_visit_count" property="ownerVisitCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="add_user_count" property="addUserCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="rec_hos_count" property="recHosCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="rec_cus_count" property="recCusCount" jdbcType="NUMERIC" javaType="int"/>
+        <result column="rec_cus_money" property="recCusMoney" jdbcType="NUMERIC" javaType="decimal"/>
+        <result column="rec_hos_money" property="recHosMoney" jdbcType="NUMERIC" javaType="decimal"/>
+    </resultMap>
+
+    <select id="selectAchievementByMap" resultMap="BaseResultMap" parameterType="map"
+            resultType="com.kfwy.hkp.sys.quota.entity.MyAchievementEntity">
+        SELECT
+        COALESCE((select SUM (profit) from t_hkp_trade_order_percentage WHERE pe_emp_code = #{userCode} AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd} GROUP BY(pe_emp_code)),0) divide_profit,
+        (select case when SUM (commission) is null then 0 else SUM (commission) END from t_hkp_trade_order where emp_code =#{userCode} AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}) order_profit,
+        (select count(1) from t_hkp_crm_customer  where emp_code = #{userCode} AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}) add_cus_count,
+        (select count(1) from t_hkp_crm_customer_followup  WHERE create_code = #{userCode} AND followup_type <![CDATA[ <> ]]> '1' AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}) followup_count,
+        (SELECT count(1) from t_hkp_crm_customer_followup  WHERE create_code = #{userCode} AND followup_type = '1' AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}) look_followup_count,
+        (select count(1) from t_hkp_hos_house  WHERE emp_code = #{userCode} AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}) add_hos_count,
+        (SELECT count(1) from t_hkp_hos_houseowner_followup  WHERE create_code = #{userCode} AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}) owner_visit_count,
+        (select count(1) from t_hkp_pt_parttimer  WHERE owner_code = #{userCode} AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}) add_user_count,
+        (select count(1) from t_hkp_hos_house WHERE emp_code = #{userCode} AND house_from = '兼职推荐' AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd} ) rec_hos_count,
+        (select count(1) from t_hkp_crm_customer where emp_code = #{userCode} AND cus_from= '兼职推荐' AND
+        create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}) rec_cus_count,
+        (select SUM (cus_parttime_money) from t_hkp_trade_order where emp_code = #{userCode} AND create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}
+        ) rec_cus_money,
+        (select SUM (owner_parttime_money) from t_hkp_trade_order where emp_code = #{userCode} AND create_time <![CDATA[ >= ]]> #{createTimeStart} AND create_time <![CDATA[ <= ]]>#{createTimeEnd}
+        ) rec_hos_money
+    </select>
+
+</mapper>

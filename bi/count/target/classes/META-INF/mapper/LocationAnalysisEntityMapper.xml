@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.LocationAnalysisEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.LocationAnalysisEntity">
+
+    </resultMap>
+
+
+    <!-- 查询面积-->
+    <select id="selectRentArea" parameterType="map" resultType="int">
+        select sum(hh.area)
+        from
+        t_hkp_hos_house hh
+        where hh.location_code =  #{locationCode} and hh.house_status = #{houseStatus};
+    </select>
+
+    <!-- 查询套数-->
+    <select id="countSuitArea" parameterType="map" resultType="int">
+        select count(hh.id)
+        from
+        t_hkp_hos_house hh
+        where hh.location_code =  #{locationCode} and hh.house_status = #{houseStatus};
+    </select>
+
+
+
+
+    <sql id="selectSql">
+      <trim prefix="where" prefixOverrides="AND|OR">
+          <if test="createTimeStart != null">
+              AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+          </if>
+          <if test="createTimeEnd != null">
+              AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+          </if>
+          <if test="createCode != null">
+              AND create_code = #{createCode}
+          </if>
+          <if test="createDeptCode != null">
+              AND create_dept_code = #{createDeptCode}
+          </if>
+          <if test="isDeleted != null">
+              AND is_deleted=#{isDeleted}
+          </if>
+      </trim>
+    </sql>
+
+
+</mapper>

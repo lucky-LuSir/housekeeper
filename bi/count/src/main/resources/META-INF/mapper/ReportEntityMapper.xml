@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kfwy.hkp.bi.count.entity.ReportEntity">
+
+    <resultMap id="BaseResultMap" type="com.kfwy.hkp.bi.count.entity.ReportEntity">
+
+    </resultMap>
+
+    <!-- 查询有效客户 -->
+    <select id="selectValidCus" parameterType="map" resultType="int">
+        SELECT
+          COUNT(1)
+        FROM
+          t_hkp_crm_customer C
+        INNER JOIN (
+            SELECT
+              cus_code
+            FROM
+              t_hkp_crm_customer_followup
+        <trim prefix="where" prefixOverrides="AND|OR">
+              ID IN (
+                SELECT
+                  MIN (ID)
+                FROM
+                  t_hkp_crm_customer_followup
+                WHERE
+                  followup_type = '1'
+                  AND IS_DELETED = FALSE
+                GROUP BY
+                  cus_code
+                HAVING
+                  MIN (create_time) <![CDATA[ >= ]]> #{createTimeStart}
+                  AND MIN (create_time) <![CDATA[ <= ]]> #{createTimeEnd}
+            )
+            <if test="createCode != null">
+                AND create_code = #{createCode}
+            </if>
+            <if test="createDeptCode != null">
+                AND create_dept_code = #{createDeptCode}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND create_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND create_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="createCodes != null">
+                <choose>
+                    <when test="_createCodes != null">
+                        AND create_code IN (${_createCodes})
+                    </when>
+                    <otherwise>
+                        AND create_code IN
+                        <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+        </trim>
+        ) tp ON tp.cus_code = C .cus_code
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+        </trim>
+    </select>
+
+
+    <!-- 查询房源委托协议-->
+    <select id="selectHouseDepute" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM(
+            SELECT
+                COUNT (*)
+            FROM (
+                SELECT
+                    owner_code,create_code
+                FROM
+                    t_hkp_sys_file_relation
+                <include refid="selectSql"/>
+                and file_use = 'HouseProtocal'
+            ) tp
+            LEFT JOIN t_hkp_hos_house h ON h.house_code = tp.owner_code
+            group by (tp.create_code,h.location_code)
+        )TPS
+    </select>
+
+
+    <!-- 查询客户上架数-->
+    <select id="selectCusUpCount" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM(
+            SELECT
+                cu.create_code,
+                cu.create_dept_code,
+                cu.create_time,
+                cu.is_deleted
+	        FROM
+		        t_hkp_crm_customer_updown cu
+		    WHERE
+	            cu.cus_down_type = '上架'
+        ) tp
+        <include refid="selectSql"/>
+    </select>
+
+
+    <!-- 查询房源上架数-->
+    <select id="selectHosUpCount" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM(
+            SELECT
+                hu.create_code,
+                hu.create_dept_code,
+                hu.create_time,
+                hu.is_deleted
+            FROM
+               t_hkp_hos_updown_log hu
+            WHERE
+                hu.aft_status = '1'
+        ) tp
+        <include refid="selectSql"/>
+    </select>
+
+    <!-- 部门维度查询获客 -->
+    <select id="selectByDeptFocusCount" parameterType="map" resultType="int">
+        SELECT
+            count(*)
+        FROM(
+            SELECT
+                DISTINCT fc.cus_code
+            FROM
+                t_hkp_crm_focus_cus fc
+            <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="createTimeStart != null">
+                AND fc.create_time <![CDATA[ >= ]]> #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                AND fc.create_time <![CDATA[ <= ]]> #{createTimeEnd}
+            </if>
+            <if test="createDeptCode != null">
+                AND fc.user_dept_code = #{createDeptCode}
+            </if>
+            <if test="createDeptCodes != null">
+                <choose>
+                    <when test="_createDeptCodes != null">
+                        AND fc.user_dept_code IN (${_createDeptCodes})
+                    </when>
+                    <otherwise>
+                        AND fc.user_dept_code IN
+                        <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="isDeleted != null">
+                AND fc.is_deleted=#{isDeleted}
+            </if>
+        </trim>
+        )tp
+    </select>
+
+    <!-- 人员维度查询获客 -->
+    <select id="selectByUserFocusCount" parameterType="map" resultType="int">
+        SELECT
+            count(*)
+        FROM(
+            SELECT
+                fc.user_code as create_code,
+                fc.cus_code,
+                fc.create_time,
+                fc.is_deleted
+            FROM
+                t_hkp_crm_focus_cus fc
+        )tp
+        <include refid="selectSql"/>
+    </select>
+
+    <sql id="selectSql">
+      <trim prefix="where" prefixOverrides="AND|OR">
+          <if test="createTimeStart != null">
+              AND create_time <![CDATA[ >= ]]> #{createTimeStart}
+          </if>
+          <if test="createTimeEnd != null">
+              AND create_time <![CDATA[ <= ]]> #{createTimeEnd}
+          </if>
+          <if test="createCode != null">
+              AND create_code = #{createCode}
+          </if>
+          <if test="createDeptCode != null">
+              AND create_dept_code = #{createDeptCode}
+          </if>
+          <if test="createDeptCodes != null">
+              <choose>
+                  <when test="_createDeptCodes != null">
+                      AND create_dept_code IN (${_createDeptCodes})
+                  </when>
+                  <otherwise>
+                      AND create_dept_code IN
+                      <foreach collection="createDeptCodes" item="i" open="(" separator=","
+                               close=")">
+                          #{i}
+                      </foreach>
+                  </otherwise>
+              </choose>
+          </if>
+          <if test="createCodes != null">
+              <choose>
+                  <when test="_createCodes != null">
+                      AND create_code IN (${_createCodes})
+                  </when>
+                  <otherwise>
+                      AND create_code IN
+                      <foreach collection="createCodes" item="i" open="(" separator="," close=")">
+                          #{i}
+                      </foreach>
+                  </otherwise>
+              </choose>
+          </if>
+          <if test="isDeleted != null">
+              AND is_deleted=#{isDeleted}
+          </if>
+      </trim>
+    </sql>
+
+
+    <!-- 查询订单金额 -->
+    <select id="selectOrderTotalMoney" parameterType="map" resultType="java.math.BigDecimal">
+        SELECT
+            tp.commission
+        FROM(
+            SELECT
+                emp_code,
+                dept_code,
+                commission,
+                order_time,
+                order_status,
+                is_deleted
+            FROM
+                t_hkp_trade_order
+        )tp
+        <include refid="selectOrderSql"/>
+    </select>
+
+    <!-- 查询实际营收 -->
+    <select id="selectOrderActualMoney" parameterType="map" resultType="java.math.BigDecimal">
+        SELECT
+            sum(tp.actual_commision)
+        FROM(
+            SELECT
+                emp_code,
+                dept_code,
+                actual_commision,
+                order_time,
+                order_status,
+                is_deleted
+            FROM
+                t_hkp_trade_order
+        )tp
+        <include refid="selectOrderSql"/>
+    </select>
+
+    <sql id="selectOrderSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="orderStatus != null and orderStatus != ''">
+                AND order_status = #{orderStatus}
+            </if>
+            <if test="noOrderStatuses != null">
+                <choose>
+                    <when test="_noOrderStatuses">
+                        AND order_status NOT IN (${_noOrderStatuses})
+                    </when>
+                    <otherwise>
+                        AND order_status NOT IN
+                        <foreach collection="noOrderStatuses" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="empCode != null and empCode != ''">
+                AND emp_code = #{empCode}
+            </if>
+            <if test="empCodes != null">
+                <choose>
+                    <when test="_empCodes != null">
+                        AND emp_code IN (${_empCodes})
+                    </when>
+                    <otherwise>
+                        AND emp_code IN
+                        <foreach collection="empCodes" item="i" open="(" separator=","
+                                 close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="orderTimeStart != null">
+                AND order_time <![CDATA[ >= ]]> #{orderTimeStart}
+            </if>
+            <if test="orderTimeEnd != null">
+                AND order_time <![CDATA[ <= ]]> #{orderTimeEnd}
+            </if>
+            <if test="isDeleted != null">
+                AND is_deleted=#{isDeleted}
+            </if>
+            <if test="deptCodes != null">
+                <choose>
+                    <when test="_deptCodes != null and _deptCodes != ''">
+                        AND dept_code IN (${_deptCodes})
+                    </when>
+                    <otherwise>
+                        AND dept_code IN
+                        <foreach collection="deptCodes" item="i" open="(" separator="," close=")">
+                            #{i}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+        </trim>
+    </sql>
+
+
+</mapper>

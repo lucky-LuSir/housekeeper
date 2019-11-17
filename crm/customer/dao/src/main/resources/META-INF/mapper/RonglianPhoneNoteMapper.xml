@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.RonglianPhoneNoteEntity">
+
+    <resultMap type="com.kfwy.hkp.crm.customer.entity.RonglianPhoneNoteEntity" id="baseResultMap">
+        <result property="id" column="id" jdbcType="NUMERIC" javaType="long"/>
+        <result property="callNo" column="call_no" jdbcType="VARCHAR"/>
+        <result property="calledNo" column="called_no" jdbcType="VARCHAR"/>
+        <result property="refCallSheetId" column="ref_call_sheet_id" jdbcType="VARCHAR"/>
+        <result property="callSheetId" column="call_sheet_id" jdbcType="VARCHAR"/>
+        <result property="callId" column="call_id" jdbcType="VARCHAR"/>
+        <result property="callType" column="call_type" jdbcType="VARCHAR"/>
+        <result property="ring" column="ring" jdbcType="TIMESTAMP"/>
+        <result property="ringingDate" column="ringing_date" jdbcType="TIMESTAMP"/>
+        <result property="ringingTimestamp" column="ringing_timestamp" jdbcType="TIMESTAMP"/>
+        <result property="begin" column="begin" jdbcType="TIMESTAMP"/>
+        <result property="end" column="END" jdbcType="TIMESTAMP"/>
+        <result property="queueTime" column="queue_time" jdbcType="TIMESTAMP"/>
+        <result property="agent" column="agent" jdbcType="VARCHAR"/>
+        <result property="queue" column="queue" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="callState" column="call_state" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="district" column="district" jdbcType="VARCHAR"/>
+        <result property="ivrkey" column="ivrkey" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_ronglian_phone_note
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.callNo != null and i.callNo != ''">
+                    call_no,
+                </if>
+                <if test="i.calledNo!=null and i.calledNo!=''">
+                    called_no,
+                </if>
+                <if test="i.refCallSheetId != null and i.refCallSheetId != ''">
+                    ref_call_sheet_id,
+                </if>
+                <if test="i.callSheetId != null and i.callSheetId != ''">
+                    call_sheet_id,
+                </if>
+                <if test="i.callId != null and i.callId != ''">
+                    call_id,
+                </if>
+                <if test="i.callType != null">
+                    call_type,
+                </if>
+                <if test="i.ring != null">
+                    ring,
+                </if>
+                <if test="i.ringingDate != null">
+                    ringing_date,
+                </if>
+                <if test="i.ringingTimestamp != null">
+                    ringing_timestamp,
+                </if>
+                <if test="i.begin != null">
+                    "begin",
+                </if>
+                <if test="i.end != null">
+                    "end",
+                </if>
+                <if test="i.queueTime!=null">
+                    queue_time,
+                </if>
+                <if test="i.agent!=null and i.agent!=''">
+                    agent,
+                </if>
+                <if test="i.queue !=null and i.queue!=''">
+                    queue,
+                </if>
+                <if test="i.state !=null and i.state!=''">
+                    state,
+                </if>
+                <if test="i.callState!=null and i.callState!=''">
+                    call_state,
+                </if>
+                <if test="i.province!=null and i.province!=''">
+                    province,
+                </if>
+                <if test="i.district!=null and i.district!=''">
+                    district,
+                </if>
+                <if test="i.ivrkey!=null and i.ivrkey!=''">
+                    ivrkey,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.callNo != null and i.callNo != ''">
+                    #{i.callNo},
+                </if>
+                <if test="i.calledNo!=null and i.calledNo!=''">
+                    #{i.calledNo},
+                </if>
+                <if test="i.refCallSheetId != null and i.refCallSheetId != ''">
+                    #{i.refCallSheetId},
+                </if>
+                <if test="i.callSheetId != null and i.callSheetId != ''">
+                    #{i.callSheetId},
+                </if>
+                <if test="i.callId != null and i.callId != ''">
+                    #{i.callId},
+                </if>
+                <if test="i.callType != null">
+                    #{i.callType},
+                </if>
+                <if test="i.ring != null">
+                    #{i.ring},
+                </if>
+                <if test="i.ringingDate != null">
+                    #{i.ringingDate},
+                </if>
+                <if test="i.ringingTimestamp != null">
+                    #{i.ringingTimestamp},
+                </if>
+                <if test="i.begin != null">
+                    #{i.begin},
+                </if>
+                <if test="i.end != null">
+                    #{i.end},
+                </if>
+                <if test="i.queueTime!=null">
+                    #{i.queueTime},
+                </if>
+                <if test="i.agent!=null and i.agent!=''">
+                    #{i.agent},
+                </if>
+                <if test="i.queue !=null and i.queue!=''">
+                    #{i.queue},
+                </if>
+                <if test="i.state !=null and i.state!=''">
+                    #{i.state},
+                </if>
+                <if test="i.callState!=null and i.callState!=''">
+                    #{i.callState},
+                </if>
+                <if test="i.province!=null and i.province!=''">
+                    #{i.province},
+                </if>
+                <if test="i.district!=null and i.district!=''">
+                    #{i.district},
+                </if>
+                <if test="i.ivrkey!=null and i.ivrkey!=''">
+                    #{i.ivrkey},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="com.kfwy.hkp.crm.customer.entity.RonglianPhoneNoteEntity">
+        INSERT INTO t_hkp_ronglian_phone_note
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="callNo != null and callNo != ''">
+                call_no,
+            </if>
+            <if test="calledNo!=null and calledNo!=''">
+                called_no,
+            </if>
+            <if test="refCallSheetId != null and refCallSheetId != ''">
+                ref_call_sheet_id,
+            </if>
+            <if test="callSheetId != null and callSheetId != ''">
+                call_sheet_id,
+            </if>
+            <if test="callId != null and callId != ''">
+                call_id,
+            </if>
+            <if test="callType != null">
+                call_type,
+            </if>
+            <if test="ring != null">
+                ring,
+            </if>
+            <if test="ringingDate != null">
+                ringing_date,
+            </if>
+            <if test="ringingTimestamp != null">
+                ringing_timestamp,
+            </if>
+            <if test="begin != null">
+                "begin",
+            </if>
+            <if test="end != null">
+                "end",
+            </if>
+            <if test="queueTime!=null">
+                queue_time,
+            </if>
+            <if test="agent!=null and i.agent!=''">
+                agent,
+            </if>
+            <if test="queue !=null and queue!=''">
+                queue,
+            </if>
+            <if test="state !=null and state!=''">
+                state,
+            </if>
+            <if test="callState!=null and callState!=''">
+                call_state,
+            </if>
+            <if test="province!=null and province!=''">
+                province,
+            </if>
+            <if test="district!=null and district!=''">
+                district,
+            </if>
+            <if test="ivrkey!=null and ivrkey!=''">
+                ivrkey,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="callNo != null and callNo != ''">
+                #{callNo},
+            </if>
+            <if test="calledNo!=null and calledNo!=''">
+                #{calledNo},
+            </if>
+            <if test="refCallSheetId != null and refCallSheetId != ''">
+                #{refCallSheetId},
+            </if>
+            <if test="callSheetId != null and callSheetId != ''">
+                #{callSheetId},
+            </if>
+            <if test="callId != null and callId != ''">
+                #{callId},
+            </if>
+            <if test="callType != null">
+                #{callType},
+            </if>
+            <if test="ring != null">
+                #{ring},
+            </if>
+            <if test="ringingDate != null">
+                #{ringingDate},
+            </if>
+            <if test="ringingTimestamp != null">
+                #{ringingTimestamp},
+            </if>
+            <if test="begin != null">
+                #{begin},
+            </if>
+            <if test="end != null">
+                #{end},
+            </if>
+            <if test="queueTime!=null">
+                #{queueTime},
+            </if>
+            <if test="agent!=null and agent!=''">
+                #{agent},
+            </if>
+            <if test="queue !=null and queue!=''">
+                #{queue},
+            </if>
+            <if test="state !=null and state!=''">
+                #{state},
+            </if>
+            <if test="callState!=null and callState!=''">
+                #{callState},
+            </if>
+            <if test="province!=null and province!=''">
+                #{province},
+            </if>
+            <if test="district!=null and district!=''">
+                #{district},
+            </if>
+            <if test="ivrkey!=null and ivrkey!=''">
+                #{ivrkey},
+            </if>
+        </trim>
+    </insert>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="callNo != null and callNo != ''">
+                and call_no = #{callNo}
+            </if>
+            <if test="calledNo != null and calledNo != ''">
+                and called_no = #{calledNo}
+            </if>
+            <if test="refCallSheetId != null and refCallSheetId != ''">
+                and ref_call_sheet_id = #{refCallSheetId}
+            </if>
+            <if test="callSheetId != null and callSheetId != ''">
+                and call_sheet_id = #{callSheetId}
+            </if>
+            <if test="callId != null and callId != ''">
+                and call_id = #{callId}
+            </if>
+            <if test="callType != null and callType != ''">
+                and call_type = #{callType}
+            </if>
+            <if test="ring != null">
+                and ring = #{ring}
+            </if>
+            <if test="ringingDate != null">
+                and ringing_date = #{ringingDate}
+            </if>
+            <if test="ringingTimestamp != null">
+                and ringing_timestamp = #{ringingTimestamp}
+            </if>
+            <if test="begin != null">
+                and "begin" = #{begin}
+            </if>
+            <if test="end != null">
+                and "end" = #{end}
+            </if>
+            <if test="queueTime != null">
+                and queue_time = #{queueTime}
+            </if>
+            <if test="agent != null and agent != ''">
+                and agent = #{agent}
+            </if>
+            <if test="queue != null and queue != ''">
+                and queue = #{queue}
+            </if>
+            <if test="state != null and state != ''">
+                and STATE = #{state}
+            </if>
+            <if test="callState != null and callState != ''">
+                and call_state = #{callState}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="district != null and district != ''">
+                and district = #{district}
+            </if>
+            <if test="ivrkey != null and ivrkey != ''">
+                and ivrkey = #{ivrkey}
+            </if>
+        </trim>
+    </sql>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectByMap" parameterType="map" resultMap="baseResultMap">
+        select
+        *
+        from t_hkp_ronglian_phone_note
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select
+        count(*)
+        from t_hkp_ronglian_phone_note
+        <include refid="selectSql"/>
+    </select>
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update t_hkp_ronglian_phone_note
+        <set>
+            <if test="callNo != null and callNo != ''">
+                call_no = #{callNo},
+            </if>
+            <if test="calledNo != null and calledNo != ''">
+                called_no = #{calledNo},
+            </if>
+            <if test="refCallSheetId != null and refCallSheetId != ''">
+                ref_call_sheet_id = #{refCallSheetId},
+            </if>
+            <if test="callSheetId != null and callSheetId != ''">
+                call_sheet_id = #{callSheetId},
+            </if>
+            <if test="callId != null and callId != ''">
+                call_id = #{callId},
+            </if>
+            <if test="callType != null and callType != ''">
+                call_type = #{callType},
+            </if>
+            <if test="ring != null">
+                ring = #{ring},
+            </if>
+            <if test="ringingDate != null">
+                ringing_date = #{ringingDate},
+            </if>
+            <if test="ringingTimestamp != null">
+                ringing_timestamp = #{ringingTimestamp},
+            </if>
+            <if test="begin != null">
+                "BEGIN" = #{begin},
+            </if>
+            <if test="end != null">
+                "END" = #{end},
+            </if>
+            <if test="queueTime != null">
+                queue_time = #{queueTime},
+            </if>
+            <if test="agent != null and agent != ''">
+                agent = #{agent},
+            </if>
+            <if test="queue != null and queue != ''">
+                queue = #{queue},
+            </if>
+            <if test="state != null and state != ''">
+                STATE = #{state},
+            </if>
+            <if test="call State != null and callState != ''">
+                call_state = #{callState},
+            </if>
+            <if test="province != null and province != ''">
+                province = #{province},
+            </if>
+            <if test="district != null and district != ''">
+                district = #{district},
+            </if>
+            <if test="ivrkey != null and ivrkey != ''">
+                ivrkey = #{ivrkey},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from public.t_hkp_ronglian_phone_note
+        where id = #{id}
+    </delete>
+
+</mapper>

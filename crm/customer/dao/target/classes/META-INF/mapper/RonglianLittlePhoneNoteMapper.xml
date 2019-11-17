@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfwy.hkp.crm.customer.entity.RonlianPhoneLittleNoteEntity">
+
+    <resultMap type="com.kfwy.hkp.crm.customer.entity.RonlianPhoneLittleNoteEntity" id="baseResultMap">
+        <result property="id" column="id" jdbcType="NUMERIC" javaType="long"/>
+        <result property="alertingTime" column="alerting_time" jdbcType="TIMESTAMP"/>
+        <result property="called" column="called" jdbcType="VARCHAR"/>
+        <result property="recorderId" column="recorder_id" jdbcType="VARCHAR"/>
+        <result property="callerArea" column="caller_area" jdbcType="VARCHAR"/>
+        <result property="beginTime" column="begin_time" jdbcType="TIMESTAMP"/>
+        <result property="calledArea" column="called_area" jdbcType="VARCHAR"/>
+        <result property="caller" column="caller" jdbcType="TIMESTAMP"/>
+        <result property="calledShow" column="called_show" jdbcType="VARCHAR"/>
+        <result property="connectTime" column="connect_time" jdbcType="TIMESTAMP"/>
+        <result property="result" column="result" jdbcType="VARCHAR"/>
+        <result property="releaseTime" column="release_Time" jdbcType="TIMESTAMP"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="mappingId" column="mappingId" jdbcType="VARCHAR"/>
+        <result property="appId" column="appId" jdbcType="VARCHAR"/>
+        <result property="callDuration" column="call_duration" jdbcType="VARCHAR"/>
+        <result property="userData" column="user_data" jdbcType="VARCHAR"/>
+        <result property="answerTime" column="answer_time" jdbcType="TIMESTAMP"/>
+        <result property="smallNumberType" column="small_number_type" jdbcType="VARCHAR"/>
+        <result property="calldisplay" column="calldisplay" jdbcType="VARCHAR"/>
+        <result property="recordFileUrl" column="record_file_url"/>
+    </resultMap>
+
+    <!-- 批量插入记录 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="i" index="index" separator=";">
+            INSERT INTO t_hkp_ronglian_little_phone_note
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.alertingTime != null">
+                    alerting_time,
+                </if>
+                <if test="i.called != null and i.called != ''">
+                    "called",
+                </if>
+                <if test="i.recorderId != null and i.recorderId != ''">
+                    recorder_id,
+                </if>
+                <if test="i.callerArea != null and i.callerArea != ''">
+                    caller_area,
+                </if>
+                <if test="i.beginTime != null">
+                    begin_time,
+                </if>
+                <if test="i.calledArea != null">
+                    called_area,
+                </if>
+                <if test="i.caller != null and i.caller!=''">
+                    caller,
+                </if>
+                <if test="i.calledShow != null and i.calledShow!=''">
+                    called_show,
+                </if>
+                <if test="i.connectTime != null">
+                    connect_time,
+                </if>
+                <if test="i.result != null and i.result!=''">
+                    result,
+                </if>
+                <if test="i.releaseTime!=null">
+                    release_time,
+                </if>
+                <if test="i.account!=null and i.account!=''">
+                    account,
+                </if>
+                <if test="i.mappingId !=null and i.mappingId!=''">
+                    mapping_id,
+                </if>
+                <if test="i.appId !=null and i.appId!=''">
+                    app_id,
+                </if>
+                <if test="i.callDuration!=null and i.callDuration!=''">
+                    call_duration,
+                </if>
+                <if test="i.userData!=null and i.userData!=''">
+                    user_data,
+                </if>
+                <if test="i.answerTime!=null">
+                    answer_time,
+                </if>
+                <if test="i.smallNumberType!=null and i.smallNumberType!=''">
+                    small_number_type,
+                </if>
+                <if test="i.calldisplay!=null and i.calldisplay!=''">
+                    calldisplay,
+                </if>
+                <if test="i.recordFileUrl!=null and i.recordFileUrl!=''">
+                    record_file_url,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.alertingTime != null">
+                    #{i.alertingTime},
+                </if>
+                <if test="i.called != null and i.called != ''">
+                    #{i.called},
+                </if>
+                <if test="i.recorderId != null and i.recorderId != ''">
+                    #{i.recorderId},
+                </if>
+                <if test="i.callerArea != null and i.callerArea != ''">
+                    #{i.callerArea},
+                </if>
+                <if test="i.beginTime != null">
+                    #{i.beginTime},
+                </if>
+                <if test="i.calledArea != null">
+                    #{i.calledArea},
+                </if>
+                <if test="i.caller != null and i.caller!=''">
+                    #{i.caller},
+                </if>
+                <if test="i.calledShow != null and i.calledShow!=''">
+                    #{i.calledShow},
+                </if>
+                <if test="i.connectTime != null">
+                    #{i.connectTime},
+                </if>
+                <if test="i.result != null and i.result!=''">
+                    #{i.result},
+                </if>
+                <if test="i.releaseTime!=null">
+                    #{i.releaseTime},
+                </if>
+                <if test="i.account!=null and i.account!=''">
+                    #{i.account},
+                </if>
+                <if test="i.mappingId !=null and i.mappingId!=''">
+                    #{i.mappingId },
+                </if>
+                <if test="i.appId !=null and i.appId!=''">
+                    #{i.appId},
+                </if>
+                <if test="i.callDuration!=null and i.callDuration!=''">
+                    #{i.callDuration},
+                </if>
+                <if test="i.userData!=null and i.userData!=''">
+                    #{i.userData},
+                </if>
+                <if test="i.answerTime!=null">
+                    #{i.answerTime},
+                </if>
+                <if test="i.smallNumberType!=null and i.smallNumberType!=''">
+                    #{i.smallNumberType},
+                </if>
+                <if test="i.calldisplay!=null and i.calldisplay!=''">
+                    #{i.calldisplay},
+                </if>
+                <if test="i.recordFileUrl!=null and i.recordFileUrl!=''">
+                    #{i.recordFileUrl},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <sql id="selectSql">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="alertingTime != null">
+                and alerting_time = #{alertingTime},
+            </if>
+            <if test="called != null and called != ''">
+                and "called" = #{called},
+            </if>
+            <if test="recorderId != null and recorderId != ''">
+                and recorder_id = #{recorderId},
+            </if>
+            <if test="callerArea != null and callerArea != ''">
+                and caller_area = #{callerArea},
+            </if>
+            <if test="beginTime != null">
+                and begin_time = #{i.beginTime},
+            </if>
+            <if test="i.calledArea != null">
+                and called_area = #{calledArea},
+            </if>
+            <if test="caller != null and caller!=''">
+                and caller = #{caller},
+            </if>
+            <if test="calledShow != null and calledShow!=''">
+                and called_show = #{calledShow},
+            </if>
+            <if test="connectTime != null">
+                and connent_time = #{connectTime},
+            </if>
+            <if test="result != null and result!=''">
+                and result = #{result},
+            </if>
+            <if test="releaseTime!=null">
+                and release_time = #{releaseTime},
+            </if>
+            <if test="i.account!=null and i.account!=''">
+                and account = #{account},
+            </if>
+            <if test="mappingId !=null and mappingId!=''">
+                and mapping_id = #{mappingId },
+            </if>
+            <if test="appId !=null and appId!=''">
+                and app_id = #{appId},
+            </if>
+            <if test="callDuration!=null and callDuration!=''">
+                and call_duration = #{callDuration},
+            </if>
+            <if test="userData!=null and userData!=''">
+                and user_data= #{userData},
+            </if>
+            <if test="answerTime!=null and answerTime!=''">
+                and answer_time = #{answerTime},
+            </if>
+            <if test="smallNumberType!=null and smallNumberType!=''">
+                and small_number_type = #{smallNumberType},
+            </if>
+            <if test="calldisplay!=null and calldisplay!=''">
+                and calldisplay = #{calldisplay},
+            </if>
+        </trim>
+    </sql>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectByMap" parameterType="map" resultMap="baseResultMap">
+        select
+        *
+        from t_hkp_ronglian_little_phone_note
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="selectByMapCount" parameterType="map" resultType="int">
+        select
+        count(*)
+        from t_hkp_ronglian_little_phone_note
+        <include refid="selectSql"/>
+    </select>
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update t_hkp_ronglian_little_phone_note
+        <set>
+            <if test="alertingTime != null">
+                alerting_time = #{alertingTime},
+            </if>
+            <if test="called != null and called != ''">
+                "called" = #{called},
+            </if>
+            <if test="recorderId != null and recorderId != ''">
+                recorder_id = #{recorderId},
+            </if>
+            <if test="callerArea != null and callerArea != ''">
+                caller_area = #{callerArea},
+            </if>
+            <if test="beginTime != null">
+                begin_time = #{i.beginTime},
+            </if>
+            <if test="i.calledArea != null">
+                called_area = #{calledArea},
+            </if>
+            <if test="caller != null and caller!=''">
+                caller = #{caller},
+            </if>
+            <if test="calledShow != null and calledShow!=''">
+                called_show = #{calledShow},
+            </if>
+            <if test="connectTime != null">
+                connent_time = #{connectTime},
+            </if>
+            <if test="result != null and result!=''">
+                result = #{result},
+            </if>
+            <if test="releaseTime!=null">
+                release_time = #{releaseTime},
+            </if>
+            <if test="i.account!=null and i.account!=''">
+                account = #{account},
+            </if>
+            <if test="mappingId !=null and mappingId!=''">
+                mapping_id = #{mappingId },
+            </if>
+            <if test="appId !=null and appId!=''">
+                app_id = #{appId},
+            </if>
+            <if test="callDuration!=null and callDuration!=''">
+                call_duration = #{callDuration},
+            </if>
+            <if test="userData!=null and userData!=''">
+                user_data= #{userData},
+            </if>
+            <if test="answerTime!=null and answerTime!=''">
+                answer_time = #{answerTime},
+            </if>
+            <if test="smallNumberType!=null and smallNumberType!=''">
+                small_number_type = #{smallNumberType},
+            </if>
+            <if test="calldisplay!=null and calldisplay!=''">
+                calldisplay = #{calldisplay},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from t_hkp_ronglian_little_phone_note
+        where id = #{id}
+    </delete>
+
+</mapper>

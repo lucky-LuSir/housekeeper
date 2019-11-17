@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <context:component-scan base-package="com.kfwy.hkp.controller"/>
+
+
+
+    <!-- 配置文件的处理-->
+    <context:property-placeholder
+            ignore-resource-not-found="true"
+            location="classpath:application.properties"/>
+
+    <!-- 要是matrix variables启用必须设置为true，默认为false -->
+    <!-- 从MvcNamespaceHandler知道，此注解会创建RequestMappingHandlerMapping放入ApplicationContext中，
+      替代了以前的DefaultAnnotationHandlerMapping,这个HandlerMapping已经过时
+    -->
+
+    <!-- 可以配置其中objectMapper-->
+    <bean id="mappingJackson2HttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+
+
+    <!-- 来源判断拦截器-->
+    <bean id="clientFromInterceptor" class="com.gniuu.framework.common.interceptor.ClientFromInterceptor"></bean>
+
+    <!--登录验证拦截器-->
+    <bean id="authenticationInterceptor" class="com.gniuu.framework.common.interceptor.AuthenticationInterceptor">
+        <property name="checkOrIgnoreUrl">
+            <list>
+                <value>/appUser/login</value>
+                <value>/appUser/registered</value>
+                <value>/appUser/verifyCode</value>
+                <!--<value>/appUser/remakePwd</value>-->
+                <value>/cpyArea/queryNoPage</value>
+                <value>/baseArea/queryNoPage</value>
+                <value>/baseArea/enableArea</value>
+                <value>/appService/getVersion</value>
+                <value>/appService/checkUpdate</value>
+                <value>/file/read</value>
+                <value>/user/login</value>
+                <value>/selectaddress/mbwebquery</value>
+                <value>/selectaddress/selectHos</value>
+                <value>/houseMap/count</value>
+                <value>/houseMap/detail</value>
+                <value>/houseMap/point/count</value>
+                <value>/houseMap/query</value>
+                <value>/houseMap/monthPrice</value>
+                <value>/houseMap/avgPriceByMonth</value>
+                <value>/houseMap/achievement</value>
+                <value>/sync/user</value>
+                <value>/sync/dept</value>
+                <value>/fileApi/read</value>
+                <value>/appUser/sendUnBindVerifyCode</value>
+                <value>/quit/dataTransfer</value>
+                <value>/quit/withdraw</value>
+                <value>/quit/deleteEmp</value>
+                <value>/reportApi/cusMuchFollowup</value>
+                <value>/reportApi/achievement</value>
+                <value>/reportApi/marketAnalysis</value>
+                <value>/reportApi/convertRate</value>
+                <value>/reportApi/record</value>
+                <value>/reportApi/orderDivideRatio</value>
+                <value>/reportApi/notOrderPerson</value>
+                <value>/reportApi/newPersonOrder</value>
+                <value>/tools/transfer</value>
+                <value>/user/ssoLogin</value>
+                <value>/erpNoticeApi/details</value>
+                <value>/cpyArea/queryByLetterBook</value>
+                <value>/employee/frost</value>
+                <value>/customer/rongLianPhoneNote</value>
+                <value>/customer/rongLianLittlePhoneNote</value>
+            </list>
+        </property>
+        <property name="check" value="true"/>
+    </bean>
+
+
+    <!--本地调试打开-->
+   <!--  <bean id="authenticationInterceptor" class="com.gniuu.framework.common.interceptor.AuthenticationInterceptor">
+         <property name="checkOrIgnoreUrl">
+             <list/>
+         </property>
+         &lt;!&ndash; 表示这个是忽略检查的URL，否则就是需要检查的URL&ndash;&gt;
+         <property name="check" value="true"/>
+     </bean>-->
+    <bean class="com.kfwy.hkp.common.utils.MySwaggerConfig"/>
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <bean class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"
+          id="swagger2Config"/>
+    <!--上传解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="10485760000"></property>
+        <property name="maxInMemorySize" value="40960"></property>
+    </bean>
+
+    <!--转换格式服务工厂bean，应用于所有带spring注解类型的参数-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="com.kfwy.hkp.common.utils.StringToDateConverter">
+                    <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
+                </bean>
+            </list>
+        </property>
+
+    </bean>
+
+
+    <mvc:annotation-driven conversion-service="conversionService" enable-matrix-variables="true">
+        <!--<mvc:async-support task-executor="" default-timeout=""/>-->
+        <mvc:message-converters>
+            <ref bean="mappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 日志拦截器配置-->
+    <bean id="operationInterceptor" class="com.kfwy.hkp.interceptor.OperationInterceptor">
+
+    </bean>
+
+    <mvc:interceptors>
+        <ref bean="clientFromInterceptor"/>
+        <ref bean="authenticationInterceptor"/>
+  <!--      <ref bean="operationInterceptor"/>-->
+    </mvc:interceptors>
+
+    <mvc:view-resolvers>
+        <ref bean="freemarkerResolver"/>
+    </mvc:view-resolvers>
+
+
+    <!-- 使用默认注解方式 -->
+    <!--<mvc:annotation-driven/>-->
+
+    <!-- 配置静态资源(JS、CSS、图片等)的访问路径 -->
+    <mvc:resources mapping="/css/**" location="/ftl/css/"/>
+    <mvc:resources mapping="/img/**" location="/ftl/img/"/>
+    <mvc:resources mapping="/js/**" location="/ftl/js/"/>
+    <mvc:cors>
+        <mvc:mapping path="/**" allowed-origins="*" allow-credentials="true" max-age="1800"
+                     allowed-methods="GET,POST,OPTIONS"/>
+    </mvc:cors>
+
+    <!-- 试图解析器-->
+
+    <!-- freemarker 视图解析器-->
+    <bean id="freemarkerResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <!--设置是否缓存View对象，如果缓存就直接返回View对象-->
+        <property name="cache" value="true"/>
+        <property name="order" value="1"/>
+        <property name="suffix" value=".html"/>
+        <property name="contentType" value="text/html;charset=utf-8"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <!-- 是否把HttpServletRequest里面所有的属性都设置到model里面，默认是false-->
+        <property name="exposeRequestAttributes" value="true"/>
+        <!-- 默认是false，是否允许覆盖session暴露给MOdelMap的属性，如果false的话通过ModelMap设置的属性与session暴露给ModelMap的属性名字冲突就会抛异常-->
+        <property name="allowRequestOverride" value="false"/>
+        <!-- 默认是false，true表示把HttpSession的属性设置到model里面-->
+        <property name="exposeSessionAttributes" value="true"/>
+        <!--默认false，是否允许覆盖session里面的属性,如果false的时候通过ModelMap设置的属性与session暴露给ModelMap的属性名字冲突就会抛异常-->
+        <property name="allowSessionOverride" value="false"/>
+        <!--默认true，设置true表示，ModelMap里面会自带属性springMacroRequestContext，这个属性的值为一个
+        org.springframework.web.servlet.support.RequestContext对象，对象里面持有了HttpServletRequest，
+        HttpServletResponse，ServletContext，以及ModelMap对象本身-->
+        <property name="exposeSpringMacroHelpers" value="false"/>
+
+        <!--在AbstractView中如果此属性不为空就会创建org.springframework.web.servlet.support.RequestContext对象放到ModelMap中，
+         此处基本就会与exposeSpringMacroHelpers相同了，只是存储RequestContext的属性名字不一样而已-->
+        <property name="requestContextAttribute" value="requestContext"/>
+    </bean>
+
+    <!--freemarker配置-->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <!-- 配置freemark模版路径-->
+        <property name="templateLoaderPaths" value="/ftl"></property>
+
+        <!-- freemark的一些配置项目，可以通过PropertiesFactoryBean来配置-->
+        <property name="freemarkerSettings"><!--设置FreeMarker环境属性 -->
+            <props>
+                <prop key="template_update_delay">5</prop><!--刷新模板的周期，单位为秒 -->
+                <prop key="default_encoding">UTF-8</prop><!--模板的编码格式 -->
+                <prop key="locale">UTF-8</prop><!-- 本地化设置 -->
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">0.####</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="whitespace_stripping">true</prop>
+                <prop key="tag_syntax">auto_detect</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+                <prop key="template_exception_handler">com.kfwy.hkp.common.handler.FreemarkerExceptionHandler</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <aop:aspectj-autoproxy/>
+
+</beans>
